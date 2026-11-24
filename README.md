@@ -20,7 +20,7 @@ bawah. `libclang-rt-dev` menyediakan runtime sanitizer untuk build uji Clang.
 
 ```sh
 apt-get update
-apt-get install --no-install-recommends cmake make gcc clang libc6-dev libclang-rt-dev python3-jsonschema
+apt-get install --no-install-recommends cmake make gcc clang libc6-dev libclang-rt-dev libssl-dev python3-jsonschema
 ```
 
 Dari root repositori, gunakan direktori terpisah untuk setiap konfigurasi.
@@ -39,7 +39,7 @@ ctest --test-dir build/sanitizer --output-on-failure --no-tests=error
 ```
 
 Opsi sanitizer dinonaktifkan secara bawaan dan dapat diaktifkan satu per satu.
-Build dari source memakai Python dan jsonschema untuk codegen IR; executable produk tidak membutuhkan Python saat berjalan.
+Build dari source memakai Python dan jsonschema untuk codegen IR; executable produk tidak membutuhkan Python saat berjalan. Library OpenSSL libcrypto (>=3.0) digunakan untuk SHA-256 identitas/digest, bukan approval atau signature; versi dan link dicatat CI.
 
 ## CLI saat ini
 

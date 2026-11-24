@@ -33,7 +33,7 @@ jobs:
       - name: Pasang toolchain Debian
         run: |
           apt-get -o APT::Update::Error-Mode=any update
-          packages=(ca-certificates git cmake make libc6-dev python3-jsonschema "$CC")
+          packages=(ca-certificates git cmake make libc6-dev libssl-dev python3-jsonschema "$CC")
           if [[ "$CC" == clang && "$SANITIZERS" == ON ]]; then
             packages+=(libclang-rt-dev)
           fi
@@ -58,6 +58,7 @@ jobs:
           test "$checked_sha" = "$GITHUB_SHA"
           "$CC" --version
           cmake --version
+          dpkg-query -W libssl-dev libssl3t64
           cmake -S . -B build/ci \
             -DCMAKE_BUILD_TYPE="$BUILD_TYPE" \
             -DCMAKE_COMPILE_WARNING_AS_ERROR=ON \
@@ -66,6 +67,12 @@ jobs:
 
       - name: Kompilasi
         run: cmake --build build/ci --parallel 2 --verbose
+
+      - name: Audit link artefak
+        run: |
+          ldd build/ci/dictum
+          ldd build/ci/ir_probe
+          grep -m 1 '^License:' /usr/share/doc/libssl-dev/copyright
 
       - name: Uji CLI dan native IR
         run: ctest --test-dir build/ci --verbose --output-on-failure --no-tests=error
@@ -78,7 +85,7 @@ jobs:
             -Wstrict-prototypes -Wmissing-prototypes -Wundef -Wvla -Werror \
             -fsanitize=fuzzer,address,undefined -fno-sanitize-recover=undefined \
             -Iruntime/native -Ibuild/ci runtime/native/ir_wire.c runtime/native/ir_schema.c runtime/native/ir_digest.c \
-            tests/ir/fuzz.c -o build/ci/ir-fuzz
+            tests/ir/fuzz.c -lcrypto -o build/ci/ir-fuzz
           build/ci/ir-fuzz -seed=23004 -runs=25000 -max_len=32769 -timeout=5 \
             -artifact_prefix=build/ci/ build/ci/fuzz-corpus
 

@@ -47,3 +47,16 @@ endif()
 add_test(NAME ir.differential COMMAND "${Python3_EXECUTABLE}" -B
     "${CMAKE_CURRENT_SOURCE_DIR}/ir/differential.py" "$<TARGET_FILE:ir_probe>")
 set_tests_properties(ir.differential PROPERTIES TIMEOUT 180)
+
+add_executable(ir_span ir/span.c)
+target_link_libraries(ir_span PRIVATE dictum_ir)
+set_target_properties(ir_span PROPERTIES C_STANDARD 17 C_STANDARD_REQUIRED YES C_EXTENSIONS NO)
+target_compile_options(ir_span PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wformat=2
+    -Wstrict-prototypes -Wmissing-prototypes -Wundef -Wvla)
+if(dictum_sanitizers)
+    target_compile_options(ir_span PRIVATE "${dictum_sanitizer_flag}" -fno-omit-frame-pointer)
+    if(DICTUM_ENABLE_UBSAN)
+        target_compile_options(ir_span PRIVATE -fno-sanitize-recover=undefined)
+    endif()
+endif()
+add_test(NAME ir.span COMMAND ir_span)

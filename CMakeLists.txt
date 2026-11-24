@@ -22,7 +22,7 @@ file(GLOB ir_schemas CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/spec/ir/*.sc
 set(ir_generated "${CMAKE_CURRENT_BINARY_DIR}/ir_generated.inc")
 add_custom_command(OUTPUT "${ir_generated}"
     COMMAND "${Python3_EXECUTABLE}" -B "${CMAKE_CURRENT_SOURCE_DIR}/tools/generate_ir.py" "${ir_generated}"
-    DEPENDS ${ir_schemas} tools/generate_ir.py tests/ir/schema_profile.py tests/ir/wire.py tests/ir/run.py
+    DEPENDS ${ir_schemas} tools/generate_ir.py tests/ir/schema_profile.py tests/ir/wire.py tests/ir/run.py tests/ir/semantics.py
     VERBATIM)
 add_library(dictum_ir STATIC runtime/native/ir_wire.c runtime/native/ir_schema.c "${ir_generated}")
 target_include_directories(dictum_ir PUBLIC runtime/native PRIVATE "${CMAKE_CURRENT_BINARY_DIR}")

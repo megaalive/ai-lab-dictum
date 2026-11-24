@@ -71,11 +71,14 @@ def main():
         {name: read_source(SCHEMA_DIR / name) for name in SCHEMAS.values()})
     stats = Counter()
     seen = set()
+    gold_unique = set()
     failures = []
     rng = random.Random(SEED)
 
     def case(label, mode, data, gold=None, strict=True):
         key = mode, data
+        if gold is not None:
+            gold_unique.add(key)
         if key in seen:
             return
         seen.add(key)
@@ -120,9 +123,9 @@ def main():
     for i, data in enumerate((b'""', b'{"":""}', b'null', b'true', b'false',
                               b'{"x":"\\u0061","y":"a"}', b'{"x":"\\ud83d\\ude42"}')):
         case(f"typed-{i}", "raw", data, "ok")
-    print("seed", SEED, "unique", len(seen), "counts", sorted(stats.items()),
+    print("seed", SEED, "unique", len(seen), "gold_unique", len(gold_unique), "counts", sorted(stats.items()),
           "failures", len(failures), "retrievals", len(retrievals))
-    return int(bool(failures or retrievals or len(seen) < 100))
+    return int(bool(failures or retrievals or len(gold_unique) < 100 or not all(stats[s, "positive"] and stats[s, "negative"] for s in SCHEMAS)))
 
 
 if __name__ == "__main__":

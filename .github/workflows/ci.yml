@@ -67,8 +67,20 @@ jobs:
       - name: Kompilasi
         run: cmake --build build/ci --parallel 2 --verbose
 
-      - name: Uji CLI
-        run: ctest --test-dir build/ci --output-on-failure --no-tests=error
+      - name: Uji CLI dan native IR
+        run: ctest --test-dir build/ci --verbose --output-on-failure --no-tests=error
+
+      - name: Fuzz parser langsung
+        if: matrix.compiler == 'clang' && matrix.config.sanitizers == 'ON'
+        run: |
+          python3 -B tests/ir/fuzz_corpus.py build/ci/fuzz-corpus
+          clang -std=c17 -O1 -g -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wformat=2 \
+            -Wstrict-prototypes -Wmissing-prototypes -Wundef -Wvla -Werror \
+            -fsanitize=fuzzer,address,undefined -fno-sanitize-recover=undefined \
+            -Iruntime/native -Ibuild/ci runtime/native/ir_wire.c runtime/native/ir_schema.c \
+            tests/ir/fuzz.c -o build/ci/ir-fuzz
+          build/ci/ir-fuzz -seed=23004 -runs=25000 -max_len=32769 -timeout=5 \
+            -artifact_prefix=build/ci/ build/ci/fuzz-corpus
 
   ir-contract:
     name: Kontrak IR Draft 2020-12

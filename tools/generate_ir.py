@@ -10,6 +10,11 @@ from run import SCHEMAS
 
 schemas = {name: read_source(ROOT / "spec/ir" / name) for name in SCHEMAS.values()}
 prepare_validators(schemas)
+# Match the typed-slot vocabulary across the four schemas, as in the oracle.
+nlu = schemas[SCHEMAS["nlu"]]["$defs"]["slot_kind"]["enum"]
+variants = schemas[SCHEMAS["ir"]]["$defs"]["slot_value"]["oneOf"]
+if set(nlu) != {x["properties"]["kind"]["const"] for x in variants}:
+    raise ValueError("Inconsistent typed-slot vocabulary")
 functions = []
 definitions = {}
 patterns = {
@@ -52,6 +57,8 @@ def compile_node(file, node):
                          f"        seen |= UINT32_C({1 << j});", "    }"])
         body += ["    else return false;" if children else "    return false;", "}",
                  f"return (seen & UINT32_C({required})) == UINT32_C({required});"]
+        if not children:
+            body = ["return n->kind == IR_OBJECT && n->count == 0;"]
     elif node["type"] == "array":
         child = compile_node(file, node["items"])
         body = [f"if (n->kind != IR_ARRAY || !bounds(n->count, {node['minItems']}u, {node['maxItems']}u)) return false;",

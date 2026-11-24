@@ -33,7 +33,8 @@ struct ir_node {
 
 /* An owned document. Index 0 is reserved, root is 1. Zero-init before
  * first parse; destroy once finished. Parse replaces any previous document
- * and leaves an empty document on error. No pointer into input is retained.
+ * and leaves an empty document on error. No pointer into input is retained. Input must not alias the
+ * document's owned storage.
  * Do not mutate nodes or pass fabricated documents to the validator. */
 struct ir_document {
     struct ir_node *nodes;

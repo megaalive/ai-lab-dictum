@@ -6,6 +6,7 @@ import re
 import sys
 import tempfile
 from pathlib import Path
+from catalog_lookup import rows as catalog_rows, check as check_catalog, check_inspect
 
 HERE=Path(__file__).resolve().parent
 ROOT=HERE.parents[1]
@@ -159,6 +160,16 @@ def main():
             rc,out,err=traced(args,trace,cwd)
             need(rc==expected,"extra-cli-exit")
             checks+=1
+        # Additional F1 catalog-only paths: execute actual CLI, no product target access.
+        for row,binding in catalog_rows():
+            rc,out,err=traced(["search",row["id"]],trace,cwd)
+            need(rc==0 and not err,"catalog-trace-exit")
+            check_catalog(json.loads(out),row,binding)
+            checks+=1
+        rc,out,err=traced(["inspect"],trace,cwd)
+        need(rc==0 and not err,"inspect-trace-exit")
+        check_inspect(json.loads(out))
+        checks+=1
     need(all(s1.sha(p)==h for p,h in hashes.items()),"fixture-mutation")
     print("C06_C07_ACTUAL_CLI",checks,"initial launches",checks,
           "post-launch execs 0; process spawn 0; network attempts 0; target file access 0; canary leaks 0")

@@ -19,14 +19,24 @@ def pin(path, expected):
 paths = ["catalog/core/intents-v1.json", "catalog/debian-13/v1.json",
          "tests/spikes/s2/development-v1.json"]
 catalog, profile, s2 = [pin(path, f["source_git_blobs"][path]) for path in paths]
-registry = {x["id"]: x for x in json.loads(catalog)["intents"] if x["skeleton"]}
+all_intents = json.loads(catalog)["intents"]
+all_registry = {x["id"]: x for x in all_intents}
+need(len(all_intents) == len(all_registry) == 48, "Canonical registry coverage")
+need([x["ordinal"] for x in all_intents] == list(range(1, 49)), "Canonical ordinals")
+registry = {x["id"]: x for x in all_intents if x["skeleton"]}
 p = json.loads(profile)
 bindings = {x["intent"]: x for x in p["bindings"]}
 ids = list(f["patterns"])
 need(len(ids) == len(registry) == 8 and set(ids) == set(registry), "Skeleton coverage")
 need(p["trust_status"] == "NOT VERIFIED", "Profile must remain unverified")
+need(len(p["bindings"]) == len(bindings) == 48 and set(bindings) == set(all_registry),
+     "Complete profile registry bijection")
 need(all(bindings[i]["capability_status"] == "BLOCKED" and
-         bindings[i]["compatibility"] == "NOT VERIFIED" for i in ids), "No opened capability")
+         bindings[i]["compatibility"] == "NOT VERIFIED" and
+         bindings[i]["version_status"] == "NOT VERIFIED" for i in all_registry),
+     "No opened capability")
+need(all(not x["execute_eligible"] and not x["source"]["external_content_imported"]
+         for x in all_intents), "Metadata must not imply execute authority or external import")
 need(f["mode"] == "F0-C-SYNTHETIC-NONEXECUTABLE", "Fixture trust only")
 recipes = {x["intent"]: x for x in f["recipes"]}
 need(len(f["recipes"]) == len(recipes) == 8 and set(recipes) == set(ids), "Recipe coverage")
@@ -86,5 +96,24 @@ refs = json.loads(s2)["reference"]
 need(len(refs) == 32 and len({x["id"] for x in refs}) == 32, "S2 refs")
 for x in refs:
     lines.append(f"    {{{ids.index(x['intent'])}u,{c(x['text'])}}},")
+lines.append("};")
+# Static metadata is deliberately separate from the eight runtime rules.
+# Do not feed this table to NLU, resolver, plan compiler or renderer.
+lines.append("static const struct catalog_entry catalog_entries[] = {")
+for x in all_intents:
+    i = x["id"]
+    binding = bindings[i]
+    row = {"intent": i, "id": x["description"]["id"], "en": x["description"]["en"],
+           "ordinal": x["ordinal"], "effect": x["effect"]["class"],
+           "catalogued": True, "catalog_proposal_eligible": x["proposal_eligible"],
+           "pipeline_status": "SYNTHETIC_PROPOSAL" if i in registry else "NOT_IMPLEMENTED",
+           "typed_slot_count": len(x["slots"]), "deferred_slot_count": len(x["deferred_slots"]),
+           "capability_status": binding["capability_status"],
+           "compatibility": binding["compatibility"], "version_status": binding["version_status"],
+           "source": "pinned original catalog metadata; not observed OS data",
+           "copyable": False, "execution_allowed": False, "observed_os_data": False}
+    encoded = json.dumps(row, ensure_ascii=True, separators=(",", ":"))
+    need(len(encoded) < 8192, "Metadata frame limit")
+    lines.append("    {" + c(i) + "," + c(encoded) + "},")
 lines.append("};")
 Path(sys.argv[1]).write_text("\n".join(lines)+"\n",encoding="ascii")

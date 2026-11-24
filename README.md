@@ -41,12 +41,13 @@ ctest --test-dir build/sanitizer --output-on-failure --no-tests=error
 Opsi sanitizer dinonaktifkan secara bawaan dan dapat diaktifkan satu per satu.
 Build dari source memakai Python dan jsonschema untuk codegen IR; executable produk tidak membutuhkan Python saat berjalan. Library OpenSSL libcrypto (>=3.0) digunakan untuk SHA-256 identitas/digest, bukan approval atau signature; versi dan link dicatat CI.
 
-## CLI F0-C
+## CLI F1 — metadata / pipeline F0-C
 
 ```sh
 ./build/release/dictum ask "siapa yang menggunakan port 5432?"
 ./build/release/dictum explain "show available memory"
 ./build/release/dictum search memory.summary
+./build/release/dictum search network.route.table
 ./build/release/dictum inspect
 ./build/release/dictum run "restart demo.service"
 ```
@@ -57,7 +58,10 @@ sumber, typed slots yang diizinkan pada fixture, dan batasan. Exit 0 proposal,
 `run` selalu ditolak, termasuk tanpa atau dengan argumen tambahan.
 Tidak ada hasil OS palsu, command copyable, akses filesystem target, spawn
 atau jaringan. Scope hanya literal synthetic allowlist; bukan klaim target ada.
-`search` adalah lookup ID persis; `inspect` melaporkan identitas versi/hash
+`search` adalah lookup ID persis untuk seluruh 48 intent, metadata saja.
+`pipeline_status` membedakan 8 SYNTHETIC_PROPOSAL dari 40 NOT_IMPLEMENTED;
+semua binding aktual tetap BLOCKED/NOT VERIFIED, tidak ada output OS.
+`inspect` memisahkan jumlah katalog, pipeline sintetis, dan binding terverifikasi, serta melaporkan identitas versi/hash
 dan tidak mengklaim pengukuran latency. B0 primary; B1 guarded retrieval
 hanya tersedia melalui probe development dengan interface pipeline yang sama.
 

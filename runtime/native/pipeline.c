@@ -29,6 +29,7 @@ struct intent_rule {
 };
 struct grammar { size_t intent; const char *pattern; };
 struct reference { size_t intent; const char *text; };
+struct catalog_entry { const char *id; const char *metadata_json; };
 #include "pipeline_generated.inc"
 
 struct token { size_t start,end; bool quoted; };
@@ -728,10 +729,11 @@ bool pipeline_search(const char *id,char out[PIPE_FRAME])
 {
     if (id==NULL || out==NULL) return false;
     struct writer w=writer(out,PIPE_FRAME);
-    for (size_t i=0;i<COUNT(rules);++i) if (strcmp(id,rules[i].id)==0) {
-        add(&w,"{"); field(&w,"intent",rules[i].id); add(&w,","); field(&w,"id",rules[i].description_id);
-        add(&w,","); field(&w,"en",rules[i].description_en);
-        add(&w,",\"copyable\":false,\"execution_allowed\":false}"); return w.ok;
+    for (size_t i=0;i<COUNT(catalog_entries);++i) {
+        if (strcmp(id,catalog_entries[i].id)==0) {
+            add(&w,catalog_entries[i].metadata_json);
+            return w.ok;
+        }
     }
     return false;
 }
@@ -739,8 +741,14 @@ bool pipeline_inspect(char out[PIPE_FRAME])
 {
     if (out==NULL) return false;
     struct writer w=writer(out,PIPE_FRAME);
-    add(&w,"{\"mode\":\"F0-C synthetic proposal-only\",\"primary\":\"B0-rules\",\"alternative\":\"B1-guarded-word-retrieval\","
-        "\"neural_parameters\":0,\"intent_count\":8,\"profile\":\"debian-13 NOT VERIFIED\",");
+    add(&w,"{\"mode\":\"F1 catalog metadata; F0-C synthetic proposal-only pipeline\",\"primary\":\"B0-rules\",\"alternative\":\"B1-guarded-word-retrieval\","
+        "\"neural_parameters\":0,\"intent_count\":");
+    number(&w,(int64_t)COUNT(rules));
+    add(&w,",\"implemented_synthetic_intent_count\":");
+    number(&w,(int64_t)COUNT(rules));
+    add(&w,",\"catalogued_intent_count\":");
+    number(&w,(int64_t)COUNT(catalog_entries));
+    add(&w,",\"verified_binding_count\":0,\"profile\":\"debian-13 NOT VERIFIED\",");
     field(&w,"catalog_sha256",FIXTURE_CATALOG_SHA); add(&w,","); field(&w,"profile_sha256",FIXTURE_PROFILE_SHA);
     add(&w,","); field(&w,"policy_sha256",FIXTURE_POLICY_SHA);
     add(&w,",\"execution_allowed\":false,\"latency\":\"not measured by inspect\"}");

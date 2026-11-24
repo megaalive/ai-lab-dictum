@@ -14,7 +14,9 @@ RUN mkdir -p /fixture/data /fixture/private /fixture/logs /fixture/projects && p
 COPY source/tests/spikes/s1/run.py /lab/tests/spikes/s1/run.py
 COPY source/tests/renderer/run.py source/tests/renderer/native_run.py /lab/tests/renderer/
 COPY source/tests/renderer/fixtures/preview-v1.json /lab/tests/renderer/fixtures/preview-v1.json
-COPY source/tests/pipeline/functional-v1.json source/tests/pipeline/security_trace.py /lab/tests/pipeline/
+COPY source/tests/pipeline/functional-v1.json source/tests/pipeline/security_trace.py source/tests/pipeline/catalog_lookup.py /lab/tests/pipeline/
+COPY source/catalog/core/intents-v1.json /lab/catalog/core/intents-v1.json
+COPY source/catalog/debian-13/v1.json /lab/catalog/debian-13/v1.json
 WORKDIR /lab
 USER 65532:65532
 ENTRYPOINT ["/usr/bin/python3","-B","/lab/tests/renderer/native_run.py","/fixture/bin/renderer-probe"]

@@ -1,0 +1,29 @@
+name: Spike S5 source provenance
+on:
+  push:
+    paths: ['tests/spikes/s5/**', 'data/manifests/license-ledger-s5-v1.json', '.github/workflows/spike-s5.yml']
+  pull_request:
+    paths: ['tests/spikes/s5/**', 'data/manifests/license-ledger-s5-v1.json', '.github/workflows/spike-s5.yml']
+permissions:
+  contents: read
+jobs:
+  sources:
+    runs-on: ubuntu-24.04
+    container: debian:13.5-slim@sha256:a617c1cdde36a7e0194b2f07dff669e1753c03c3205356b94f9f350b0f9a57d1
+    timeout-minutes: 5
+    steps:
+      - run: apt-get -o APT::Update::Error-Mode=any update && apt-get install -y --no-install-recommends python3 git ca-certificates
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - run: |
+          set -eu
+          sha=$(git -c safe.directory="$GITHUB_WORKSPACE" rev-parse HEAD)
+          echo "SHA checkout $sha"
+          test "$sha" = "$GITHUB_SHA"
+          cat /etc/debian_version
+          python3 --version
+          work=$(mktemp -d)
+          trap 'rm -rf "$work"' EXIT
+          (cd "$work" && apt-get download procps iproute2 systemd coreutils findutils)
+          python3 -B tests/spikes/s5/debian_audit.py "$work"

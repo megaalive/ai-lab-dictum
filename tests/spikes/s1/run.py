@@ -233,11 +233,46 @@ def check_trace(raw, shell):
             need(p is not None,"trace-exec-path")
             execs.append(p.group(1))
         elif name in OPENS:
-            need("O_RDONLY" in line and not re.search(
-                r"\bO_(?:WRONLY|RDWR|CREAT|TRUNC|APPEND|TMPFILE)\b",line),"trace-write")
+            # Bash checks for a controlling tty during startup. On the verified
+            # noninteractive container the exact O_RDWR attempt returns ENXIO;
+            # this produces no descriptor or mutation. Do not allow success,
+            # any other path, flags, errno, syscall or profile.
+            absent_tty = (shell == SHELL["bash-posix-clean-v1"][0] and
+                re.fullmatch(r'\s*\d+\s+openat\(AT_FDCWD, "/dev/tty", O_RDWR\|O_NONBLOCK\)\s+= -1 ENXIO \(No such device or address\)',line))
+            readonly = "O_RDONLY" in line and not re.search(
+                r"\bO_(?:WRONLY|RDWR|CREAT|TRUNC|APPEND|TMPFILE)\b",line)
+            need(bool(absent_tty) or readonly,"trace-write")
         else:
             need(name in READ_ONLY or name in PROCESS,"trace-forbidden-"+name)
     need(execs==[shell,DUMPER],"unexpected-exec")
+
+
+def trace_guard_regression():
+    bash = SHELL["bash-posix-clean-v1"][0]
+    dash = SHELL["dash-clean-v1"][0]
+    def traced(shell,line):
+        return (f'10 execve("{shell}", [], []) = 0\n'+line+'\n'+
+                f'10 execve("{DUMPER}", [], []) = 0\n').encode()
+    allowed = '10 openat(AT_FDCWD, "/dev/tty", O_RDWR|O_NONBLOCK) = -1 ENXIO (No such device or address)'
+    check_trace(traced(bash,allowed),bash)
+    variants = [
+        (dash,allowed),
+        (bash,allowed.replace('= -1 ENXIO (No such device or address)','= 3')),
+        (bash,allowed.replace('/dev/tty','/tmp/other')),
+        (bash,allowed.replace('O_RDWR|O_NONBLOCK','O_RDWR|O_CREAT')),
+        (bash,allowed.replace('ENXIO (No such device or address)','EACCES (Permission denied)')),
+        (bash,'10 socket(AF_INET, SOCK_STREAM, IPPROTO_TCP) = 3'),
+        (bash,'10 unlink("/tmp/other") = 0'),
+        (bash,'10 execve("/fixture/bin/other", [], []) = 0'),
+    ]
+    for shell,line in variants:
+        try:
+            check_trace(traced(shell,line),shell)
+        except AssertionError:
+            pass
+        else:
+            raise AssertionError("trace-guard-negative")
+    print(f"S1 trace guard: {len(variants)+1}/{len(variants)+1} synthetic cases",flush=True)
 
 
 def roundtrip(preview, expected, profile, trace, cwd):
@@ -259,6 +294,7 @@ def roundtrip(preview, expected, profile, trace, cwd):
 
 def run_profile(profile):
     preflight()
+    trace_guard_regression()
     shell,dump = SHELL[profile][0],DUMPER
     initial = (sha(shell),sha(dump))
     accepted = rejected = 0

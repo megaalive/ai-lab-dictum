@@ -1,0 +1,568 @@
+[
+  {
+    "id": "SE-deny-valid",
+    "base": "restart",
+    "expect": "ok",
+    "edits": [
+      ["put",["objects","policy","decision"],"deny"],
+      ["put",["objects","policy","reason"],"policy-restriction"],
+      [
+        "put",
+        ["objects","policy","effect"],
+        {"class":"CHANGE","axes":["ipc","persistent-mutation","requires-privilege","spawn"]}
+      ],
+      ["put",["objects","policy","scope"],{"kind":"none"}],
+      ["remove",["objects","plan"]]
+    ]
+  },
+  {
+    "id": "SE-clarify-missing-slot",
+    "base": "listener",
+    "expect": "ok",
+    "edits": [
+      ["put",["objects","nlu","slot_candidates"],[]],
+      ["put",["objects","nlu","intent_candidates",0,"slot_candidate_ids"],[]],
+      ["put",["input"],"siapa yang mendengarkan?"],
+      [
+        "put",
+        ["objects","ir","slots"],
+        [{"name":"protocol","value":{"kind":"protocol","value":"tcp"},"provenance":{"kind":"catalog-default"}}]
+      ],
+      [
+        "put",
+        ["objects","ir","resolution"],
+        {"state":"incomplete","unresolved":[{"slot":"port","problem":"missing"}],"alternatives":[]}
+      ],
+      ["put",["objects","policy","decision"],"clarify"],
+      ["put",["objects","policy","reason"],"missing-slot"],
+      ["put",["objects","policy","effect"],{"class":"UNKNOWN","axes":[]}],
+      ["put",["objects","policy","scope"],{"kind":"none"}],
+      ["remove",["objects","plan"]]
+    ]
+  },
+  {
+    "id": "SE-clarify-slot-ambiguity",
+    "base": "listener",
+    "expect": "ok",
+    "edits": [
+      ["put",["input"],"port 5432 atau 5433"],
+      [
+        "put",
+        ["objects","nlu","slot_candidates"],
+        [
+          {"id":0,"slot":"port","source":{"kind":"input-span","span":{"start":5,"end":9}}},
+          {"id":1,"slot":"port","source":{"kind":"input-span","span":{"start":15,"end":19}}}
+        ]
+      ],
+      ["put",["objects","nlu","intent_candidates",0,"slot_candidate_ids"],[0,1]],
+      ["put",["objects","nlu","abstain_hint"],"ambiguous"],
+      [
+        "put",
+        ["objects","ir","slots"],
+        [{"name":"protocol","value":{"kind":"protocol","value":"tcp"},"provenance":{"kind":"catalog-default"}}]
+      ],
+      [
+        "put",
+        ["objects","ir","resolution"],
+        {"state":"ambiguous","unresolved":[{"slot":"port","problem":"ambiguous"}],"alternatives":[]}
+      ],
+      ["put",["objects","policy","decision"],"clarify"],
+      ["put",["objects","policy","reason"],"ambiguous"],
+      ["put",["objects","policy","effect"],{"class":"UNKNOWN","axes":[]}],
+      ["put",["objects","policy","scope"],{"kind":"none"}],
+      ["remove",["objects","plan"]]
+    ]
+  },
+  {
+    "id": "SE-clarify-intent-ambiguity",
+    "base": "memory",
+    "expect": "ok",
+    "edits": [
+      ["remove",["objects","ir","intent"]],
+      [
+        "put",
+        ["objects","ir","resolution"],
+        {"state":"ambiguous","unresolved":[],"alternatives":["memory.summary","storage.filesystem.usage"]}
+      ],
+      ["put",["objects","policy","decision"],"clarify"],
+      ["put",["objects","policy","reason"],"ambiguous"],
+      ["put",["objects","policy","effect"],{"class":"UNKNOWN","axes":[]}],
+      ["put",["objects","policy","scope"],{"kind":"none"}],
+      ["remove",["objects","plan"]]
+    ]
+  },
+  {
+    "id": "SE-unknown-proposed-intent",
+    "base": "memory",
+    "expect": "ok",
+    "edits": [
+      ["put",["input"],"permintaan di luar domain"],
+      ["put",["objects","nlu","intent_candidates",0,"intent"],"unknown.domain"],
+      ["put",["objects","nlu","abstain_hint"],"out-of-domain"],
+      ["remove",["objects","ir","intent"]],
+      ["put",["objects","ir","resolution"],{"state":"unsupported","unresolved":[],"alternatives":[]}],
+      ["put",["objects","policy","decision"],"unsupported"],
+      ["put",["objects","policy","reason"],"unsupported-intent"],
+      ["put",["objects","policy","effect"],{"class":"UNKNOWN","axes":[]}],
+      ["put",["objects","policy","scope"],{"kind":"none"}],
+      ["remove",["objects","plan"]]
+    ]
+  },
+  {
+    "id": "SE-invalid-resolved-candidate",
+    "base": "memory",
+    "expect": "ok",
+    "edits": [
+      ["put",["objects","ir","resolution"],{"state":"invalid","unresolved":[],"alternatives":[]}],
+      ["put",["objects","policy","decision"],"deny"],
+      ["put",["objects","policy","reason"],"invalid-candidate"],
+      ["put",["objects","policy","effect"],{"class":"UNKNOWN","axes":[]}],
+      ["put",["objects","policy","scope"],{"kind":"none"}],
+      ["remove",["objects","plan"]]
+    ]
+  },
+  {
+    "id": "SE-hint-has-no-authority",
+    "base": "listener",
+    "expect": "ok",
+    "edits": [
+      ["put",["objects","nlu","abstain_hint"],"low-confidence"],
+      ["put",["objects","nlu","intent_candidates",0,"score_bp"],0]
+    ]
+  },
+  {
+    "id": "SE-future-candidate-serialization",
+    "base": "memory",
+    "expect": "ok",
+    "edits": [
+      ["put",["trusted","phase"],"F5"],
+      ["put",["objects","policy","decision"],"allow-execute-eligible"],
+      ["put",["objects","policy","reason"],"execute-eligible"],
+      [
+        "put",
+        ["objects","plan","action"],
+        {
+          "kind": "execution-candidate",
+          "operation": {
+            "kind": "executable",
+            "identity": {
+              "path": "/fixture/bin/memory",
+              "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "version": "fixture-v1"
+            },
+            "argv": [{"kind":"flag","value":"--available"}]
+          },
+          "constraints": {"timeout_ms":1000,"max_output_bytes":4096},
+          "expires_boottime_ms": 31000
+        }
+      ]
+    ]
+  },
+  {
+    "id": "SE-request-mismatch",
+    "base": "listener",
+    "expect": "semantic/request-identity",
+    "edits": [["put",["objects","policy","request_id"],"00000000000000000000000000001e61"]]
+  },
+  {
+    "id": "SE-resolution-mismatch",
+    "base": "listener",
+    "expect": "semantic/resolution-identity",
+    "edits": [["put",["objects","plan","resolution_id"],"00000000000000000000000000001e61"]]
+  },
+  {
+    "id": "SE-context-mismatch",
+    "base": "listener",
+    "expect": "semantic/context-identity",
+    "edits": [["put",["objects","ir","context_id"],"ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"]]
+  },
+  {
+    "id": "SE-catalog-mismatch",
+    "base": "listener",
+    "expect": "semantic/catalog-identity",
+    "edits": [["put",["objects","ir","catalog","version"],2]]
+  },
+  {
+    "id": "SE-policy-mismatch",
+    "base": "listener",
+    "expect": "semantic/policy-identity",
+    "edits": [
+      [
+        "put",
+        ["objects","plan","policy","sha256"],
+        "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      ]
+    ]
+  },
+  {
+    "id": "SE-decision-mismatch",
+    "base": "listener",
+    "expect": "semantic/decision-identity",
+    "edits": [["put",["objects","plan","decision_id"],"00000000000000000000000000001e61"]]
+  },
+  {
+    "id": "SE-action-mismatch",
+    "base": "listener",
+    "expect": "semantic/action-identity",
+    "edits": [["put",["objects","plan","action_id"],"00000000000000000000000000001e61"]]
+  },
+  {
+    "id": "SE-stale-context",
+    "base": "listener",
+    "expect": "semantic/stale-context",
+    "edits": [["put",["trusted","now_boottime_ms"],200000]]
+  },
+  {
+    "id": "SE-unknown-canonical-intent",
+    "base": "listener",
+    "expect": "semantic/unknown-intent",
+    "edits": [["put",["objects","ir","intent"],"fixture.unknown"]]
+  },
+  {
+    "id": "SE-unknown-alternative",
+    "base": "memory",
+    "expect": "semantic/unknown-alternative",
+    "edits": [
+      ["remove",["objects","ir","intent"]],
+      [
+        "put",
+        ["objects","ir","resolution"],
+        {"state":"ambiguous","unresolved":[],"alternatives":["memory.summary","fixture.unknown"]}
+      ]
+    ]
+  },
+  {
+    "id": "SE-missing-mandatory",
+    "base": "listener",
+    "expect": "semantic/mandatory-slot",
+    "edits": [["remove",["objects","ir","slots",0]]]
+  },
+  {
+    "id": "SE-contradictory-duplicate",
+    "base": "listener",
+    "expect": "semantic/contradictory-slots",
+    "edits": [
+      [
+        "put",
+        ["objects","ir","slots",1],
+        {
+          "name": "port",
+          "value": {"kind":"port","value":5433},
+          "provenance": {"kind":"input-span","span":{"start":28,"end":32}}
+        }
+      ]
+    ]
+  },
+  {
+    "id": "SE-pending-versus-slot",
+    "base": "listener",
+    "expect": "semantic/contradictory-slots",
+    "edits": [["put",["objects","ir","resolution","unresolved"],[{"slot":"port","problem":"conflict"}]]]
+  },
+  {
+    "id": "SE-unknown-slot",
+    "base": "listener",
+    "expect": "semantic/unknown-slot",
+    "edits": [["put",["objects","ir","slots",0,"name"],"untrusted_port"]]
+  },
+  {
+    "id": "SE-wrong-slot-type",
+    "base": "listener",
+    "expect": "semantic/slot-type",
+    "edits": [["put",["objects","ir","slots",0,"value"],{"kind":"positive-int","value":1}]]
+  },
+  {
+    "id": "SE-span-after-eof",
+    "base": "listener",
+    "expect": "semantic/span",
+    "edits": [["put",["objects","nlu","slot_candidates",0,"source","span","end"],4096]]
+  },
+  {
+    "id": "SE-span-splits-utf8",
+    "base": "files",
+    "expect": "semantic/span",
+    "edits": [["put",["objects","nlu","slot_candidates",0,"source","span","end"],24]]
+  },
+  {
+    "id": "SE-literal-not-normalized",
+    "base": "files",
+    "expect": "semantic/provenance",
+    "edits": [["put",["objects","ir","slots",0,"value","value"],"-arsip'café"]]
+  },
+  {
+    "id": "SE-literal-byte-bound",
+    "base": "files",
+    "expect": "semantic/literal-bytes",
+    "edits": [
+      [
+        "put",
+        ["objects","ir","slots",0,"value","value"],
+        "ééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééé"
+      ]
+    ]
+  },
+  {
+    "id": "SE-span-provenance-value",
+    "base": "listener",
+    "expect": "semantic/provenance",
+    "edits": [["put",["objects","ir","slots",0,"value","value"],5433]]
+  },
+  {
+    "id": "SE-forged-default",
+    "base": "listener",
+    "expect": "semantic/provenance",
+    "edits": [["put",["objects","ir","slots",1,"value","value"],"udp"]]
+  },
+  {
+    "id": "SE-context-ref-wrong-kind",
+    "base": "logs",
+    "expect": "semantic/candidate-reference",
+    "edits": [["put",["objects","nlu","slot_candidates",1,"source","expected_kind"],"port"]]
+  },
+  {
+    "id": "SE-context-ref-foreign",
+    "base": "logs",
+    "expect": "semantic/candidate-reference",
+    "edits": [["put",["objects","nlu","slot_candidates",1,"source","candidate_id"],"00000000000000000000000000001e61"]]
+  },
+  {
+    "id": "SE-unlinked-candidate",
+    "base": "listener",
+    "expect": "semantic/candidate-reference",
+    "edits": [["put",["objects","nlu","intent_candidates",0,"slot_candidate_ids"],[31]]]
+  },
+  {
+    "id": "SE-time-order",
+    "base": "logs",
+    "expect": "semantic/time-order",
+    "edits": [["put",["objects","ir","slots",1,"value","start_unix_s"],1760000700]]
+  },
+  {
+    "id": "SE-bad-transition",
+    "base": "listener",
+    "expect": "semantic/transition",
+    "edits": [["put",["objects","policy","decision"],"clarify"],["put",["objects","policy","reason"],"ambiguous"]]
+  },
+  {
+    "id": "SE-bad-reason",
+    "base": "listener",
+    "expect": "semantic/transition",
+    "edits": [["put",["objects","policy","reason"],"execute-eligible"]]
+  },
+  {
+    "id": "SE-effect-change",
+    "base": "listener",
+    "expect": "semantic/effect",
+    "edits": [["put",["objects","policy","effect","axes"],["filesystem-write","ipc","spawn"]]]
+  },
+  {
+    "id": "SE-broader-scope",
+    "base": "listener",
+    "expect": "semantic/scope",
+    "edits": [["put",["objects","policy","scope","scope_id"],"00000000000000000000000000001e61"]]
+  },
+  {
+    "id": "SE-plan-effect",
+    "base": "listener",
+    "expect": "semantic/effect",
+    "edits": [["put",["objects","plan","effect","axes"],["ipc"]]]
+  },
+  {
+    "id": "SE-denied-plan",
+    "base": "restart",
+    "expect": "semantic/plan-eligibility",
+    "edits": [
+      ["put",["objects","policy","decision"],"deny"],
+      ["put",["objects","policy","reason"],"policy-restriction"],
+      [
+        "put",
+        ["objects","policy","effect"],
+        {"class":"CHANGE","axes":["ipc","persistent-mutation","requires-privilege","spawn"]}
+      ],
+      ["put",["objects","policy","scope"],{"kind":"none"}]
+    ]
+  },
+  {
+    "id": "SE-plan-recipe-mismatch",
+    "base": "listener",
+    "expect": "semantic/plan-recipe",
+    "edits": [["put",["objects","plan","action","operation","argv",2,"value"],5433]]
+  },
+  {
+    "id": "SE-plan-target-mismatch",
+    "base": "files",
+    "expect": "semantic/target-binding",
+    "edits": [["put",["objects","plan","target_bindings",0,"binding_id"],"00000000000000000000000000001e61"]]
+  },
+  {
+    "id": "SE-f0-eligibility",
+    "base": "memory",
+    "expect": "semantic/execute-eligibility",
+    "edits": [
+      ["put",["objects","policy","decision"],"allow-execute-eligible"],
+      ["put",["objects","policy","reason"],"execute-eligible"],
+      [
+        "put",
+        ["objects","plan","action"],
+        {
+          "kind": "execution-candidate",
+          "operation": {
+            "kind": "executable",
+            "identity": {
+              "path": "/fixture/bin/memory",
+              "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "version": "fixture-v1"
+            },
+            "argv": [{"kind":"flag","value":"--available"}]
+          },
+          "constraints": {"timeout_ms":1000,"max_output_bytes":4096},
+          "expires_boottime_ms": 31000
+        }
+      ]
+    ]
+  },
+  {
+    "id": "SE-f0-plan-disguised",
+    "base": "memory",
+    "expect": "semantic/plan-eligibility",
+    "edits": [
+      [
+        "put",
+        ["objects","plan","action"],
+        {
+          "kind": "execution-candidate",
+          "operation": {
+            "kind": "executable",
+            "identity": {
+              "path": "/fixture/bin/memory",
+              "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "version": "fixture-v1"
+            },
+            "argv": [{"kind":"flag","value":"--available"}]
+          },
+          "constraints": {"timeout_ms":1000,"max_output_bytes":4096},
+          "expires_boottime_ms": 31000
+        }
+      ]
+    ]
+  },
+  {
+    "id": "SE-f5-change-still-proposal-only",
+    "base": "restart",
+    "expect": "semantic/execute-eligibility",
+    "edits": [
+      ["put",["trusted","phase"],"F5"],
+      ["put",["objects","policy","decision"],"allow-execute-eligible"],
+      ["put",["objects","policy","reason"],"execute-eligible"],
+      [
+        "put",
+        ["objects","plan","action"],
+        {
+          "kind": "execution-candidate",
+          "operation": {
+            "kind": "executable",
+            "identity": {
+              "path": "/fixture/bin/service",
+              "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "version": "fixture-v1"
+            },
+            "argv": [
+              {"kind":"flag","value":"--restart"},
+              {"kind":"option-end"},
+              {"kind":"literal","value":"nginx.service"}
+            ]
+          },
+          "constraints": {"timeout_ms":1000,"max_output_bytes":4096},
+          "expires_boottime_ms": 31000
+        }
+      ]
+    ]
+  },
+  {
+    "id": "SE-f5-expired-plan",
+    "base": "memory",
+    "expect": "semantic/plan-expiry",
+    "edits": [
+      ["put",["trusted","phase"],"F5"],
+      ["put",["objects","policy","decision"],"allow-execute-eligible"],
+      ["put",["objects","policy","reason"],"execute-eligible"],
+      [
+        "put",
+        ["objects","plan","action"],
+        {
+          "kind": "execution-candidate",
+          "operation": {
+            "kind": "executable",
+            "identity": {
+              "path": "/fixture/bin/memory",
+              "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "version": "fixture-v1"
+            },
+            "argv": [{"kind":"flag","value":"--available"}]
+          },
+          "constraints": {"timeout_ms":1000,"max_output_bytes":4096},
+          "expires_boottime_ms": 31000
+        }
+      ],
+      ["put",["objects","plan","action","expires_boottime_ms"],1000]
+    ]
+  },
+  {
+    "id": "SE-f5-ttl-too-long",
+    "base": "memory",
+    "expect": "semantic/plan-expiry",
+    "edits": [
+      ["put",["trusted","phase"],"F5"],
+      ["put",["objects","policy","decision"],"allow-execute-eligible"],
+      ["put",["objects","policy","reason"],"execute-eligible"],
+      [
+        "put",
+        ["objects","plan","action"],
+        {
+          "kind": "execution-candidate",
+          "operation": {
+            "kind": "executable",
+            "identity": {
+              "path": "/fixture/bin/memory",
+              "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "version": "fixture-v1"
+            },
+            "argv": [{"kind":"flag","value":"--available"}]
+          },
+          "constraints": {"timeout_ms":1000,"max_output_bytes":4096},
+          "expires_boottime_ms": 31000
+        }
+      ],
+      ["put",["objects","plan","action","expires_boottime_ms"],121001]
+    ]
+  },
+  {
+    "id": "SE-f5-constraints",
+    "base": "memory",
+    "expect": "semantic/plan-constraints",
+    "edits": [
+      ["put",["trusted","phase"],"F5"],
+      ["put",["objects","policy","decision"],"allow-execute-eligible"],
+      ["put",["objects","policy","reason"],"execute-eligible"],
+      [
+        "put",
+        ["objects","plan","action"],
+        {
+          "kind": "execution-candidate",
+          "operation": {
+            "kind": "executable",
+            "identity": {
+              "path": "/fixture/bin/memory",
+              "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "version": "fixture-v1"
+            },
+            "argv": [{"kind":"flag","value":"--available"}]
+          },
+          "constraints": {"timeout_ms":1000,"max_output_bytes":4096},
+          "expires_boottime_ms": 31000
+        }
+      ],
+      ["put",["objects","plan","action","constraints","timeout_ms"],1001]
+    ]
+  }
+]

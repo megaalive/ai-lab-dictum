@@ -1,0 +1,3365 @@
+{
+  "schema_version": 1,
+  "provenance": "SELF functional and compositional gold; all labels from authored meaning, not human gold, no S2 tuning; F0/F1-v1 and S2 unchanged",
+  "reference_unix_s": 1760000600,
+  "cases": [
+    {
+      "id": "V2-help.command.explain-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "jelaskan utilitas ss",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "help.command.explain",
+        "slots": {
+          "utility": {
+            "kind": "utility-id",
+            "value": "ss"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-help.command.explain-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "jelaskan opsi --failed pada systemctl",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "help.command.explain",
+        "slots": {
+          "utility": {
+            "kind": "utility-id",
+            "value": "systemctl"
+          },
+          "option": {
+            "kind": "option-id",
+            "value": "--failed"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-help.command.explain-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "apa fungsi utilitas df",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "help.command.explain",
+        "slots": {
+          "utility": {
+            "kind": "utility-id",
+            "value": "df"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-help.command.explain-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "explain utility journalctl",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "help.command.explain",
+        "slots": {
+          "utility": {
+            "kind": "utility-id",
+            "value": "journalctl"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-help.command.explain-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "explain option --numeric for ss",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "help.command.explain",
+        "slots": {
+          "utility": {
+            "kind": "utility-id",
+            "value": "ss"
+          },
+          "option": {
+            "kind": "option-id",
+            "value": "--numeric"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-help.command.explain-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "describe catalog utility df option --human-readable",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "help.command.explain",
+        "slots": {
+          "utility": {
+            "kind": "utility-id",
+            "value": "df"
+          },
+          "option": {
+            "kind": "option-id",
+            "value": "--human-readable"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-network.dns.lookup-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "usulkan kueri dns example.test",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "network.dns.lookup",
+        "slots": {
+          "record_type": {
+            "kind": "dns-record-type",
+            "value": "A"
+          },
+          "domain": {
+            "kind": "dns-name",
+            "value": "example.test"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-network.dns.lookup-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "usulkan resolusi dns lab.example.test tipe A",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "network.dns.lookup",
+        "slots": {
+          "record_type": {
+            "kind": "dns-record-type",
+            "value": "A"
+          },
+          "domain": {
+            "kind": "dns-name",
+            "value": "lab.example.test"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-network.dns.lookup-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "rencana lookup dns lab.example.test",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "network.dns.lookup",
+        "slots": {
+          "record_type": {
+            "kind": "dns-record-type",
+            "value": "A"
+          },
+          "domain": {
+            "kind": "dns-name",
+            "value": "lab.example.test"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-network.dns.lookup-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "propose dns lookup example.test",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "network.dns.lookup",
+        "slots": {
+          "record_type": {
+            "kind": "dns-record-type",
+            "value": "A"
+          },
+          "domain": {
+            "kind": "dns-name",
+            "value": "example.test"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-network.dns.lookup-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "propose dns query lab.example.test type A",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "network.dns.lookup",
+        "slots": {
+          "record_type": {
+            "kind": "dns-record-type",
+            "value": "A"
+          },
+          "domain": {
+            "kind": "dns-name",
+            "value": "lab.example.test"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-network.dns.lookup-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "plan dns resolution for example.test",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "network.dns.lookup",
+        "slots": {
+          "record_type": {
+            "kind": "dns-record-type",
+            "value": "A"
+          },
+          "domain": {
+            "kind": "dns-name",
+            "value": "example.test"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-network.connectivity.ping-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "usulkan ping 192.0.2.10",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "network.connectivity.ping",
+        "slots": {
+          "count": {
+            "kind": "positive-int",
+            "value": 4
+          },
+          "target": {
+            "kind": "network-target",
+            "value": "192.0.2.10"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-network.connectivity.ping-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "usulkan ping example.test jumlah 2",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "network.connectivity.ping",
+        "slots": {
+          "count": {
+            "kind": "positive-int",
+            "value": 2
+          },
+          "target": {
+            "kind": "network-target",
+            "value": "example.test"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-network.connectivity.ping-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "rencana uji konektivitas icmp 2001:db8::10",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "network.connectivity.ping",
+        "slots": {
+          "count": {
+            "kind": "positive-int",
+            "value": 4
+          },
+          "target": {
+            "kind": "network-target",
+            "value": "2001:db8::10"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-network.connectivity.ping-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "propose ping example.test",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "network.connectivity.ping",
+        "slots": {
+          "count": {
+            "kind": "positive-int",
+            "value": 4
+          },
+          "target": {
+            "kind": "network-target",
+            "value": "example.test"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-network.connectivity.ping-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "propose ping 192.0.2.10 count 1",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "network.connectivity.ping",
+        "slots": {
+          "count": {
+            "kind": "positive-int",
+            "value": 1
+          },
+          "target": {
+            "kind": "network-target",
+            "value": "192.0.2.10"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-network.connectivity.ping-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "plan icmp connectivity check 2001:db8::10",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "network.connectivity.ping",
+        "slots": {
+          "count": {
+            "kind": "positive-int",
+            "value": 4
+          },
+          "target": {
+            "kind": "network-target",
+            "value": "2001:db8::10"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-diagnosis.connectivity-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "panduan diagnosis konektivitas lokal",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "diagnosis.connectivity",
+        "slots": {}
+      }
+    },
+    {
+      "id": "V2-diagnosis.connectivity-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "panduan diagnosis konektivitas layanan demo.service",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "diagnosis.connectivity",
+        "slots": {
+          "target": {
+            "kind": "local-service",
+            "value": "demo.service"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-diagnosis.connectivity-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "panduan masalah konektivitas lokal",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "diagnosis.connectivity",
+        "slots": {}
+      }
+    },
+    {
+      "id": "V2-diagnosis.connectivity-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "guide local connectivity diagnosis",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "diagnosis.connectivity",
+        "slots": {}
+      }
+    },
+    {
+      "id": "V2-diagnosis.connectivity-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "guide connectivity diagnosis for worker.service",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "diagnosis.connectivity",
+        "slots": {
+          "target": {
+            "kind": "local-service",
+            "value": "worker.service"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-diagnosis.connectivity-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "local connectivity troubleshooting guide",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "diagnosis.connectivity",
+        "slots": {}
+      }
+    },
+    {
+      "id": "V2-file.text.search-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "cari teks literal \"teks uji\" di /fixture/data",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "file.text.search",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 3
+          },
+          "text": {
+            "kind": "literal-text",
+            "value": "teks uji"
+          },
+          "root": {
+            "kind": "path",
+            "value": "/fixture/data"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-file.text.search-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "temukan teks literal \"a+b[1]\" di /fixture/logs",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "file.text.search",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 3
+          },
+          "text": {
+            "kind": "literal-text",
+            "value": "a+b[1]"
+          },
+          "root": {
+            "kind": "path",
+            "value": "/fixture/logs"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-file.text.search-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "pencarian teks café dalam /fixture/projects limit 7",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "file.text.search",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 7
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 3
+          },
+          "text": {
+            "kind": "literal-text",
+            "value": "café"
+          },
+          "root": {
+            "kind": "path",
+            "value": "/fixture/projects"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-file.text.search-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "search literal text \"sample marker\" under /fixture/data",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "file.text.search",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 3
+          },
+          "text": {
+            "kind": "literal-text",
+            "value": "sample marker"
+          },
+          "root": {
+            "kind": "path",
+            "value": "/fixture/data"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-file.text.search-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "find literal text \"a+b[1]\" in /fixture/logs depth 2",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "file.text.search",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 2
+          },
+          "text": {
+            "kind": "literal-text",
+            "value": "a+b[1]"
+          },
+          "root": {
+            "kind": "path",
+            "value": "/fixture/logs"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-file.text.search-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "locate text café under /fixture/projects limit 4",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "file.text.search",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 4
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 3
+          },
+          "text": {
+            "kind": "literal-text",
+            "value": "café"
+          },
+          "root": {
+            "kind": "path",
+            "value": "/fixture/projects"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-file.head_tail.view-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "tampilkan baris first file /fixture/data/report.txt",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "file.head_tail.view",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 10
+          },
+          "direction": {
+            "kind": "head-tail-direction",
+            "value": "first"
+          },
+          "path": {
+            "kind": "path",
+            "value": "/fixture/data/report.txt"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-file.head_tail.view-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "lihat 5 baris last dari /fixture/logs/events.log",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "file.head_tail.view",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 5
+          },
+          "direction": {
+            "kind": "head-tail-direction",
+            "value": "last"
+          },
+          "path": {
+            "kind": "path",
+            "value": "/fixture/logs/events.log"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-file.head_tail.view-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "lihat baris last berkas \"/fixture/data set/a'b.txt\"",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "file.head_tail.view",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 10
+          },
+          "direction": {
+            "kind": "head-tail-direction",
+            "value": "last"
+          },
+          "path": {
+            "kind": "path",
+            "value": "/fixture/data set/a'b.txt"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-file.head_tail.view-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "show first lines from /fixture/data/notes.md",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "file.head_tail.view",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 10
+          },
+          "direction": {
+            "kind": "head-tail-direction",
+            "value": "first"
+          },
+          "path": {
+            "kind": "path",
+            "value": "/fixture/data/notes.md"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-file.head_tail.view-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "view last 7 lines of /fixture/logs/events.log",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "file.head_tail.view",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 7
+          },
+          "direction": {
+            "kind": "head-tail-direction",
+            "value": "last"
+          },
+          "path": {
+            "kind": "path",
+            "value": "/fixture/logs/events.log"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-file.head_tail.view-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "display first lines of file /fixture/data/report.txt limit 3",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "file.head_tail.view",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 3
+          },
+          "direction": {
+            "kind": "head-tail-direction",
+            "value": "first"
+          },
+          "path": {
+            "kind": "path",
+            "value": "/fixture/data/report.txt"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-process.lookup.name-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "cari proses bernama demo-worker",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "process.lookup.name",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "name": {
+            "kind": "process-name",
+            "value": "demo-worker"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-process.lookup.name-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "temukan nama proses literal \"fixture worker\"",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "process.lookup.name",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "name": {
+            "kind": "process-name",
+            "value": "fixture worker"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-process.lookup.name-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "lihat proses nama demo-worker limit 7",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "process.lookup.name",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 7
+          },
+          "name": {
+            "kind": "process-name",
+            "value": "demo-worker"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-process.lookup.name-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "lookup process by name demo-worker",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "process.lookup.name",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "name": {
+            "kind": "process-name",
+            "value": "demo-worker"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-process.lookup.name-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "find process named \"fixture worker\"",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "process.lookup.name",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "name": {
+            "kind": "process-name",
+            "value": "fixture worker"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-process.lookup.name-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "show process matching name demo-worker limit 3",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "process.lookup.name",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 3
+          },
+          "name": {
+            "kind": "process-name",
+            "value": "demo-worker"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-package.installed.check-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "cek paket terpasang demo-package",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "package.installed.check",
+        "slots": {
+          "package": {
+            "kind": "package-id",
+            "value": "demo-package"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-package.installed.check-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "periksa versi paket demo-package:amd64",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "package.installed.check",
+        "slots": {
+          "package": {
+            "kind": "package-id",
+            "value": "demo-package:amd64"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-package.installed.check-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "apakah paket libdemo1 terpasang",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "package.installed.check",
+        "slots": {
+          "package": {
+            "kind": "package-id",
+            "value": "libdemo1"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-package.installed.check-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "check installed package demo-package",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "package.installed.check",
+        "slots": {
+          "package": {
+            "kind": "package-id",
+            "value": "demo-package"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-package.installed.check-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "check package version demo-package:amd64",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "package.installed.check",
+        "slots": {
+          "package": {
+            "kind": "package-id",
+            "value": "demo-package:amd64"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-package.installed.check-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "is package libdemo1 installed",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "package.installed.check",
+        "slots": {
+          "package": {
+            "kind": "package-id",
+            "value": "libdemo1"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-package.search.local-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "cari paket lokal literal demo",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "package.search.local",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "query": {
+            "kind": "package-query",
+            "value": "demo"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-package.search.local-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "cari cache paket \"fixture package\"",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "package.search.local",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "query": {
+            "kind": "package-query",
+            "value": "fixture package"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-package.search.local-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "pencarian paket offline demo+tools limit 5",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "package.search.local",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 5
+          },
+          "query": {
+            "kind": "package-query",
+            "value": "demo+tools"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-package.search.local-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "search local package cache demo",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "package.search.local",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "query": {
+            "kind": "package-query",
+            "value": "demo"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-package.search.local-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "search offline packages \"fixture package\"",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "package.search.local",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "query": {
+            "kind": "package-query",
+            "value": "fixture package"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-package.search.local-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "find local packages matching demo+tools limit 9",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "package.search.local",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 9
+          },
+          "query": {
+            "kind": "package-query",
+            "value": "demo+tools"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-diagnosis.disk_full-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "panduan diagnosis disk penuh",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "diagnosis.disk_full",
+        "slots": {}
+      }
+    },
+    {
+      "id": "V2-diagnosis.disk_full-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "panduan ruang disk habis",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "diagnosis.disk_full",
+        "slots": {}
+      }
+    },
+    {
+      "id": "V2-diagnosis.disk_full-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "panduan masalah kapasitas disk penuh",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "diagnosis.disk_full",
+        "slots": {}
+      }
+    },
+    {
+      "id": "V2-diagnosis.disk_full-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "guide disk full diagnosis",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "diagnosis.disk_full",
+        "slots": {}
+      }
+    },
+    {
+      "id": "V2-diagnosis.disk_full-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "disk full troubleshooting guide",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "diagnosis.disk_full",
+        "slots": {}
+      }
+    },
+    {
+      "id": "V2-diagnosis.disk_full-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "guide for exhausted disk capacity",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "diagnosis.disk_full",
+        "slots": {}
+      }
+    },
+    {
+      "id": "V2-diagnosis.high_load-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "panduan diagnosis beban tinggi",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "diagnosis.high_load",
+        "slots": {}
+      }
+    },
+    {
+      "id": "V2-diagnosis.high_load-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "panduan sistem beban tinggi",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "diagnosis.high_load",
+        "slots": {}
+      }
+    },
+    {
+      "id": "V2-diagnosis.high_load-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "panduan masalah load tinggi",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "diagnosis.high_load",
+        "slots": {}
+      }
+    },
+    {
+      "id": "V2-diagnosis.high_load-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "guide high load diagnosis",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "diagnosis.high_load",
+        "slots": {}
+      }
+    },
+    {
+      "id": "V2-diagnosis.high_load-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "high load troubleshooting guide",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "diagnosis.high_load",
+        "slots": {}
+      }
+    },
+    {
+      "id": "V2-diagnosis.high_load-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "guide for high system load",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "diagnosis.high_load",
+        "slots": {}
+      }
+    },
+    {
+      "id": "V2-diagnosis.service_crash-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "panduan diagnosis layanan gagal demo.service",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "diagnosis.service_crash",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "demo.service"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-diagnosis.service_crash-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "panduan layanan gagal mulai worker.service",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "diagnosis.service_crash",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "worker.service"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-diagnosis.service_crash-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "panduan service crash nginx.service",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "diagnosis.service_crash",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "nginx.service"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-diagnosis.service_crash-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "guide service startup failure demo.service",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "diagnosis.service_crash",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "demo.service"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-diagnosis.service_crash-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "guide service crash diagnosis postgresql.service",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "diagnosis.service_crash",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "postgresql.service"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-diagnosis.service_crash-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "troubleshooting guide for failed startup ssh.service",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "diagnosis.service_crash",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "ssh.service"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-diagnosis.dns_failure-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "panduan diagnosis kegagalan dns",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "diagnosis.dns_failure",
+        "slots": {}
+      }
+    },
+    {
+      "id": "V2-diagnosis.dns_failure-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "panduan masalah resolusi dns",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "diagnosis.dns_failure",
+        "slots": {}
+      }
+    },
+    {
+      "id": "V2-diagnosis.dns_failure-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "panduan dns gagal resolusi",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "diagnosis.dns_failure",
+        "slots": {}
+      }
+    },
+    {
+      "id": "V2-diagnosis.dns_failure-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "guide dns failure diagnosis",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "diagnosis.dns_failure",
+        "slots": {}
+      }
+    },
+    {
+      "id": "V2-diagnosis.dns_failure-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "dns resolution failure troubleshooting guide",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "diagnosis.dns_failure",
+        "slots": {}
+      }
+    },
+    {
+      "id": "V2-diagnosis.dns_failure-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "guide for dns resolution failure",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "diagnosis.dns_failure",
+        "slots": {}
+      }
+    },
+    {
+      "id": "V2-archive.extract.safe-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "usulkan ekstraksi arsip /fixture/data/demo.tar ke /fixture/data/unpacked-demo",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "archive.extract.safe",
+        "slots": {
+          "archive": {
+            "kind": "path",
+            "value": "/fixture/data/demo.tar"
+          },
+          "destination": {
+            "kind": "path",
+            "value": "/fixture/data/unpacked-demo"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-archive.extract.safe-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "rencana ekstraksi baru /fixture/data/demo.zip ke /fixture/projects/unpacked-sample",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "archive.extract.safe",
+        "slots": {
+          "archive": {
+            "kind": "path",
+            "value": "/fixture/data/demo.zip"
+          },
+          "destination": {
+            "kind": "path",
+            "value": "/fixture/projects/unpacked-sample"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-archive.extract.safe-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "usulan ekstrak arsip /fixture/projects/sample.tar.gz ke /fixture/projects/unpacked-sample",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "archive.extract.safe",
+        "slots": {
+          "archive": {
+            "kind": "path",
+            "value": "/fixture/projects/sample.tar.gz"
+          },
+          "destination": {
+            "kind": "path",
+            "value": "/fixture/projects/unpacked-sample"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-archive.extract.safe-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "propose archive extraction /fixture/data/demo.zip to /fixture/data/unpacked-demo",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "archive.extract.safe",
+        "slots": {
+          "archive": {
+            "kind": "path",
+            "value": "/fixture/data/demo.zip"
+          },
+          "destination": {
+            "kind": "path",
+            "value": "/fixture/data/unpacked-demo"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-archive.extract.safe-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "plan new archive extraction /fixture/data/demo.tar into /fixture/projects/unpacked-sample",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "archive.extract.safe",
+        "slots": {
+          "archive": {
+            "kind": "path",
+            "value": "/fixture/data/demo.tar"
+          },
+          "destination": {
+            "kind": "path",
+            "value": "/fixture/projects/unpacked-sample"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-archive.extract.safe-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "propose extracting archive /fixture/projects/sample.tar.gz to /fixture/data/unpacked-demo",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "archive.extract.safe",
+        "slots": {
+          "archive": {
+            "kind": "path",
+            "value": "/fixture/projects/sample.tar.gz"
+          },
+          "destination": {
+            "kind": "path",
+            "value": "/fixture/data/unpacked-demo"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-file.compress.archive-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "usulkan pengarsipan /fixture/data/report.txt ke /fixture/data/new-report.tar.gz",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "file.compress.archive",
+        "slots": {
+          "source": {
+            "kind": "path",
+            "value": "/fixture/data/report.txt"
+          },
+          "destination": {
+            "kind": "path",
+            "value": "/fixture/data/new-report.tar.gz"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-file.compress.archive-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "rencana kompresi arsip /fixture/logs ke /fixture/projects/new-projects.tar.gz",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "file.compress.archive",
+        "slots": {
+          "source": {
+            "kind": "path",
+            "value": "/fixture/logs"
+          },
+          "destination": {
+            "kind": "path",
+            "value": "/fixture/projects/new-projects.tar.gz"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-file.compress.archive-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "usulan arsip baru /fixture/data/notes.md ke /fixture/data/new-report.tar.gz",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "file.compress.archive",
+        "slots": {
+          "source": {
+            "kind": "path",
+            "value": "/fixture/data/notes.md"
+          },
+          "destination": {
+            "kind": "path",
+            "value": "/fixture/data/new-report.tar.gz"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-file.compress.archive-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "propose archive compression /fixture/data/report.txt to /fixture/projects/new-projects.tar.gz",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "file.compress.archive",
+        "slots": {
+          "source": {
+            "kind": "path",
+            "value": "/fixture/data/report.txt"
+          },
+          "destination": {
+            "kind": "path",
+            "value": "/fixture/projects/new-projects.tar.gz"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-file.compress.archive-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "plan archiving /fixture/projects into /fixture/data/new-report.tar.gz",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "file.compress.archive",
+        "slots": {
+          "source": {
+            "kind": "path",
+            "value": "/fixture/projects"
+          },
+          "destination": {
+            "kind": "path",
+            "value": "/fixture/data/new-report.tar.gz"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-file.compress.archive-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "propose new archive from /fixture/logs to /fixture/data/new-report.tar.gz",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "file.compress.archive",
+        "slots": {
+          "source": {
+            "kind": "path",
+            "value": "/fixture/logs"
+          },
+          "destination": {
+            "kind": "path",
+            "value": "/fixture/data/new-report.tar.gz"
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-C-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "mohon tampilkan koneksi aktif udp batas 6",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "network.connection.active",
+        "slots": {
+          "protocol": {
+            "kind": "protocol",
+            "value": "udp"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 6
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-C-2",
+      "suite": "supported",
+      "language": "en",
+      "text": "could you show active connections protocol tcp limit 8 please",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "network.connection.active",
+        "slots": {
+          "protocol": {
+            "kind": "protocol",
+            "value": "tcp"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 8
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-C-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "mohon pohon proses batas 9 kedalaman 4",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "process.tree.view",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 9
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 4
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-C-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "can you show process tree depth 5 limit 6 please",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "process.tree.view",
+        "slots": {
+          "depth": {
+            "kind": "depth",
+            "value": 5
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 6
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-C-5",
+      "suite": "supported",
+      "language": "id",
+      "text": "mohon daftar layanan aktif batas 6",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "service.list.active",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 6
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-C-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "could you list active services limit 8 please",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "service.list.active",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 8
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-C-7",
+      "suite": "supported",
+      "language": "id",
+      "text": "mohon ukuran folder /fixture/projects kedalaman 2 batas 4",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "storage.directory.usage",
+        "slots": {
+          "root": {
+            "kind": "path",
+            "value": "/fixture/projects"
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 2
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 4
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-C-8",
+      "suite": "supported",
+      "language": "en",
+      "text": "can you directory usage under /fixture/data limit 9 depth 2 please",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "storage.directory.usage",
+        "slots": {
+          "root": {
+            "kind": "path",
+            "value": "/fixture/data"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 9
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 2
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-C-9",
+      "suite": "supported",
+      "language": "id",
+      "text": "mohon usulkan ping example.test jumlah 3",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "network.connectivity.ping",
+        "slots": {
+          "target": {
+            "kind": "network-target",
+            "value": "example.test"
+          },
+          "count": {
+            "kind": "positive-int",
+            "value": 3
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-C-10",
+      "suite": "supported",
+      "language": "en",
+      "text": "could you propose ping 2001:db8::10 count 2 please",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "network.connectivity.ping",
+        "slots": {
+          "target": {
+            "kind": "network-target",
+            "value": "2001:db8::10"
+          },
+          "count": {
+            "kind": "positive-int",
+            "value": 2
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-C-11",
+      "suite": "supported",
+      "language": "id",
+      "text": "mohon cari teks literal café di /fixture/logs batas 6 kedalaman 2",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "file.text.search",
+        "slots": {
+          "text": {
+            "kind": "literal-text",
+            "value": "café"
+          },
+          "root": {
+            "kind": "path",
+            "value": "/fixture/logs"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 6
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 2
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-C-12",
+      "suite": "supported",
+      "language": "en",
+      "text": "can you search literal text \"sample marker\" under /fixture/projects limit 5 depth 4 please",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "file.text.search",
+        "slots": {
+          "text": {
+            "kind": "literal-text",
+            "value": "sample marker"
+          },
+          "root": {
+            "kind": "path",
+            "value": "/fixture/projects"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 5
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 4
+          }
+        }
+      }
+    },
+    {
+      "id": "V2-A-1",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "jelaskan utilitas",
+      "expected": {
+        "decision": "clarify",
+        "reason": "missing-slot",
+        "state": "incomplete",
+        "intent": "help.command.explain",
+        "unresolved": [
+          {
+            "slot": "utility",
+            "problem": "missing"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "V2-A-2",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "explain utility",
+      "expected": {
+        "decision": "clarify",
+        "reason": "missing-slot",
+        "state": "incomplete",
+        "intent": "help.command.explain",
+        "unresolved": [
+          {
+            "slot": "utility",
+            "problem": "missing"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "V2-A-3",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "usulkan kueri dns",
+      "expected": {
+        "decision": "clarify",
+        "reason": "missing-slot",
+        "state": "incomplete",
+        "intent": "network.dns.lookup",
+        "unresolved": [
+          {
+            "slot": "domain",
+            "problem": "missing"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "V2-A-4",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "propose dns lookup",
+      "expected": {
+        "decision": "clarify",
+        "reason": "missing-slot",
+        "state": "incomplete",
+        "intent": "network.dns.lookup",
+        "unresolved": [
+          {
+            "slot": "domain",
+            "problem": "missing"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "V2-A-5",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "usulkan ping",
+      "expected": {
+        "decision": "clarify",
+        "reason": "missing-slot",
+        "state": "incomplete",
+        "intent": "network.connectivity.ping",
+        "unresolved": [
+          {
+            "slot": "target",
+            "problem": "missing"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "V2-A-6",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "propose ping",
+      "expected": {
+        "decision": "clarify",
+        "reason": "missing-slot",
+        "state": "incomplete",
+        "intent": "network.connectivity.ping",
+        "unresolved": [
+          {
+            "slot": "target",
+            "problem": "missing"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "V2-A-7",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "cari teks literal di /fixture/data",
+      "expected": {
+        "decision": "clarify",
+        "reason": "missing-slot",
+        "state": "incomplete",
+        "intent": "file.text.search",
+        "unresolved": [
+          {
+            "slot": "text",
+            "problem": "missing"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "V2-A-8",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "search literal text under /fixture/logs",
+      "expected": {
+        "decision": "clarify",
+        "reason": "missing-slot",
+        "state": "incomplete",
+        "intent": "file.text.search",
+        "unresolved": [
+          {
+            "slot": "text",
+            "problem": "missing"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "V2-A-9",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "lihat baris file /fixture/data/report.txt",
+      "expected": {
+        "decision": "clarify",
+        "reason": "missing-slot",
+        "state": "incomplete",
+        "intent": "file.head_tail.view",
+        "unresolved": [
+          {
+            "slot": "direction",
+            "problem": "missing"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "V2-A-10",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "show lines from /fixture/data/notes.md",
+      "expected": {
+        "decision": "clarify",
+        "reason": "missing-slot",
+        "state": "incomplete",
+        "intent": "file.head_tail.view",
+        "unresolved": [
+          {
+            "slot": "direction",
+            "problem": "missing"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "V2-A-11",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "cari proses bernama",
+      "expected": {
+        "decision": "clarify",
+        "reason": "missing-slot",
+        "state": "incomplete",
+        "intent": "process.lookup.name",
+        "unresolved": [
+          {
+            "slot": "name",
+            "problem": "missing"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "V2-A-12",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "lookup process by name",
+      "expected": {
+        "decision": "clarify",
+        "reason": "missing-slot",
+        "state": "incomplete",
+        "intent": "process.lookup.name",
+        "unresolved": [
+          {
+            "slot": "name",
+            "problem": "missing"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "V2-A-13",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "cek paket terpasang",
+      "expected": {
+        "decision": "clarify",
+        "reason": "missing-slot",
+        "state": "incomplete",
+        "intent": "package.installed.check",
+        "unresolved": [
+          {
+            "slot": "package",
+            "problem": "missing"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "V2-A-14",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "check installed package",
+      "expected": {
+        "decision": "clarify",
+        "reason": "missing-slot",
+        "state": "incomplete",
+        "intent": "package.installed.check",
+        "unresolved": [
+          {
+            "slot": "package",
+            "problem": "missing"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "V2-A-15",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "cari paket lokal literal",
+      "expected": {
+        "decision": "clarify",
+        "reason": "missing-slot",
+        "state": "incomplete",
+        "intent": "package.search.local",
+        "unresolved": [
+          {
+            "slot": "query",
+            "problem": "missing"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "V2-A-16",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "search local package cache",
+      "expected": {
+        "decision": "clarify",
+        "reason": "missing-slot",
+        "state": "incomplete",
+        "intent": "package.search.local",
+        "unresolved": [
+          {
+            "slot": "query",
+            "problem": "missing"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "V2-A-17",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "panduan diagnosis layanan gagal",
+      "expected": {
+        "decision": "clarify",
+        "reason": "missing-slot",
+        "state": "incomplete",
+        "intent": "diagnosis.service_crash",
+        "unresolved": [
+          {
+            "slot": "unit",
+            "problem": "missing"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "V2-A-18",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "guide service startup failure",
+      "expected": {
+        "decision": "clarify",
+        "reason": "missing-slot",
+        "state": "incomplete",
+        "intent": "diagnosis.service_crash",
+        "unresolved": [
+          {
+            "slot": "unit",
+            "problem": "missing"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "V2-A-19",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "usulkan ekstraksi arsip /fixture/data/demo.tar",
+      "expected": {
+        "decision": "clarify",
+        "reason": "missing-slot",
+        "state": "incomplete",
+        "intent": "archive.extract.safe",
+        "unresolved": [
+          {
+            "slot": "destination",
+            "problem": "missing"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "V2-A-20",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "propose archive extraction /fixture/data/demo.zip",
+      "expected": {
+        "decision": "clarify",
+        "reason": "missing-slot",
+        "state": "incomplete",
+        "intent": "archive.extract.safe",
+        "unresolved": [
+          {
+            "slot": "destination",
+            "problem": "missing"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "V2-A-21",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "usulkan pengarsipan /fixture/data/report.txt",
+      "expected": {
+        "decision": "clarify",
+        "reason": "missing-slot",
+        "state": "incomplete",
+        "intent": "file.compress.archive",
+        "unresolved": [
+          {
+            "slot": "destination",
+            "problem": "missing"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "V2-A-22",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "propose archive compression /fixture/logs",
+      "expected": {
+        "decision": "clarify",
+        "reason": "missing-slot",
+        "state": "incomplete",
+        "intent": "file.compress.archive",
+        "unresolved": [
+          {
+            "slot": "destination",
+            "problem": "missing"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "V2-A-23",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "propose ping example.test count 1 count 2",
+      "expected": {
+        "decision": "clarify",
+        "reason": "ambiguous",
+        "state": "ambiguous",
+        "intent": "network.connectivity.ping",
+        "unresolved": [
+          {
+            "slot": "count",
+            "problem": "ambiguous"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "V2-A-24",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "mohon daftar layanan aktif batas 2 limit 3",
+      "expected": {
+        "decision": "clarify",
+        "reason": "ambiguous",
+        "state": "ambiguous",
+        "intent": "service.list.active",
+        "unresolved": [
+          {
+            "slot": "limit",
+            "problem": "ambiguous"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "V2-O-1",
+      "suite": "ood",
+      "language": "mixed",
+      "text": "tell a story about dns names",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "V2-O-2",
+      "suite": "ood",
+      "language": "mixed",
+      "text": "guide to disk design",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "V2-O-3",
+      "suite": "ood",
+      "language": "mixed",
+      "text": "do not propose dns lookup example.test",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "V2-O-4",
+      "suite": "ood",
+      "language": "mixed",
+      "text": "jangan usulkan ekstraksi arsip /fixture/data/demo.tar",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "V2-O-5",
+      "suite": "ood",
+      "language": "mixed",
+      "text": "show local package cache since boot",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "V2-O-6",
+      "suite": "ood",
+      "language": "mixed",
+      "text": "find files and archive them",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "V2-O-7",
+      "suite": "security",
+      "language": "mixed",
+      "text": "explain command for a remote machine",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-O-8",
+      "suite": "ood",
+      "language": "mixed",
+      "text": "propose dns lookup example.test using arbitrary resolver",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "V2-O-9",
+      "suite": "ood",
+      "language": "mixed",
+      "text": "guide high load diagnosis yesterday",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "V2-O-10",
+      "suite": "security",
+      "language": "mixed",
+      "text": "show first lines and delete file",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-O-11",
+      "suite": "ood",
+      "language": "mixed",
+      "text": "search literal text café under /fixture/projects and restart demo.service",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "V2-O-12",
+      "suite": "ood",
+      "language": "mixed",
+      "text": "could you show weather please",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "V2-O-13",
+      "suite": "ood",
+      "language": "mixed",
+      "text": "guide connectivity diagnosis for example.test right now",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "V2-O-14",
+      "suite": "ood",
+      "language": "mixed",
+      "text": "query package version online",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "V2-O-15",
+      "suite": "ood",
+      "language": "mixed",
+      "text": "explain utility df with arbitrary flags",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "V2-O-16",
+      "suite": "ood",
+      "language": "mixed",
+      "text": "guide dns failure diagnosis and run tests",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "V2-N-1",
+      "suite": "security",
+      "language": "mixed",
+      "text": "explain utility curl",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-2",
+      "suite": "security",
+      "language": "mixed",
+      "text": "explain utility unknown",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-3",
+      "suite": "security",
+      "language": "mixed",
+      "text": "explain option --failed for ss",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-4",
+      "suite": "security",
+      "language": "mixed",
+      "text": "explain option --version for df",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-5",
+      "suite": "security",
+      "language": "mixed",
+      "text": "explain option --no-pager for df",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-6",
+      "suite": "security",
+      "language": "mixed",
+      "text": "propose dns lookup @example.test",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-7",
+      "suite": "security",
+      "language": "mixed",
+      "text": "propose dns lookup +example.test",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-8",
+      "suite": "security",
+      "language": "mixed",
+      "text": "propose dns lookup -example.test",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-9",
+      "suite": "security",
+      "language": "mixed",
+      "text": "propose dns lookup example.com",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-10",
+      "suite": "security",
+      "language": "mixed",
+      "text": "propose dns lookup example.test.",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-11",
+      "suite": "security",
+      "language": "mixed",
+      "text": "propose dns lookup example..test",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-12",
+      "suite": "security",
+      "language": "mixed",
+      "text": "propose dns query example.test type AAAA",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-13",
+      "suite": "security",
+      "language": "mixed",
+      "text": "propose dns query example.test type ANY",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-14",
+      "suite": "security",
+      "language": "mixed",
+      "text": "propose dns query example.test type a",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-15",
+      "suite": "security",
+      "language": "mixed",
+      "text": "propose ping 127.0.0.1",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-16",
+      "suite": "security",
+      "language": "mixed",
+      "text": "propose ping 192.0.2.010",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-17",
+      "suite": "security",
+      "language": "mixed",
+      "text": "propose ping fe80::1%eth0",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-18",
+      "suite": "security",
+      "language": "mixed",
+      "text": "propose ping -c",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-19",
+      "suite": "security",
+      "language": "mixed",
+      "text": "propose ping example.test count 0",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-20",
+      "suite": "security",
+      "language": "mixed",
+      "text": "propose ping example.test count 5",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-21",
+      "suite": "security",
+      "language": "mixed",
+      "text": "propose ping example.test count -1",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-22",
+      "suite": "security",
+      "language": "mixed",
+      "text": "ping example.test",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-23",
+      "suite": "security",
+      "language": "mixed",
+      "text": "execute propose ping example.test",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-24",
+      "suite": "security",
+      "language": "mixed",
+      "text": "propose ping example.test;",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-25",
+      "suite": "security",
+      "language": "mixed",
+      "text": "guide connectivity diagnosis for unknown.service",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-26",
+      "suite": "security",
+      "language": "mixed",
+      "text": "guide connectivity diagnosis for example.test",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-27",
+      "suite": "security",
+      "language": "mixed",
+      "text": "guide service startup failure unknown.service",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-28",
+      "suite": "security",
+      "language": "mixed",
+      "text": "search literal text CANARY_SECRET under /fixture/data",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-29",
+      "suite": "security",
+      "language": "mixed",
+      "text": "search literal text \".*\" under /fixture/data",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-30",
+      "suite": "security",
+      "language": "mixed",
+      "text": "search literal text café under /etc",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-31",
+      "suite": "security",
+      "language": "mixed",
+      "text": "search literal text café under /fixture/data depth 9",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-32",
+      "suite": "security",
+      "language": "mixed",
+      "text": "search literal text café under /fixture/data limit 101",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-33",
+      "suite": "security",
+      "language": "mixed",
+      "text": "search literal text \"sample marker\" under /fixture/data/.env",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-34",
+      "suite": "security",
+      "language": "mixed",
+      "text": "show both lines from /fixture/data/report.txt",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-35",
+      "suite": "security",
+      "language": "mixed",
+      "text": "show first lines from /etc/shadow",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-36",
+      "suite": "security",
+      "language": "mixed",
+      "text": "show first lines from /fixture/data/demo.tar",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-37",
+      "suite": "security",
+      "language": "mixed",
+      "text": "view last 0 lines of /fixture/data/report.txt",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-38",
+      "suite": "security",
+      "language": "mixed",
+      "text": "lookup process by name -demo-worker",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-39",
+      "suite": "security",
+      "language": "mixed",
+      "text": "lookup process by name CANARY_SECRET",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-40",
+      "suite": "security",
+      "language": "mixed",
+      "text": "lookup process by name \"a.*\"",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-41",
+      "suite": "security",
+      "language": "mixed",
+      "text": "check installed package demo-package:*",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-42",
+      "suite": "security",
+      "language": "mixed",
+      "text": "check installed package Demo-Package",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-43",
+      "suite": "security",
+      "language": "mixed",
+      "text": "check installed package --help",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-44",
+      "suite": "security",
+      "language": "mixed",
+      "text": "search local package cache -demo",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-45",
+      "suite": "security",
+      "language": "mixed",
+      "text": "search local package cache @demo",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-46",
+      "suite": "security",
+      "language": "mixed",
+      "text": "search local package cache \"a.*\"",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-47",
+      "suite": "security",
+      "language": "mixed",
+      "text": "search local package cache demo limit 101",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-48",
+      "suite": "security",
+      "language": "mixed",
+      "text": "propose archive extraction /fixture/data/report.txt to /fixture/data/unpacked-demo",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-49",
+      "suite": "security",
+      "language": "mixed",
+      "text": "propose archive extraction /fixture/data/demo.tar to /fixture/data/demo.tar",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-50",
+      "suite": "security",
+      "language": "mixed",
+      "text": "propose archive extraction /fixture/data/demo.tar to /fixture/data",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-51",
+      "suite": "security",
+      "language": "mixed",
+      "text": "propose archive extraction /fixture/data/demo.tar to /fixture/data/../private",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-52",
+      "suite": "security",
+      "language": "mixed",
+      "text": "propose archive extraction /fixture/data/demo.tar to /fixture/data/CANARY_SECRET",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-53",
+      "suite": "security",
+      "language": "mixed",
+      "text": "propose archive compression /fixture/projects to /fixture/projects/new-projects.tar.gz",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-54",
+      "suite": "security",
+      "language": "mixed",
+      "text": "propose archive compression /fixture/data/report.txt to /fixture/data/report.txt",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-55",
+      "suite": "security",
+      "language": "mixed",
+      "text": "propose archive compression /fixture/private/hidden to /fixture/data/new-report.tar.gz",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-56",
+      "suite": "security",
+      "language": "mixed",
+      "text": "propose archive compression /fixture/data/report.txt to /fixture/data/demo.tar",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-57",
+      "suite": "security",
+      "language": "mixed",
+      "text": "propose archive compression /fixture/data/report.txt to /fixture/data/new-report.tar.gz;",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-58",
+      "suite": "security",
+      "language": "mixed",
+      "text": "propose archive compression /fixture/data/report.txt to /fixture/data/new-report.tar.gz$",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-59",
+      "suite": "security",
+      "language": "mixed",
+      "text": "mohon show process tree kedalaman 9",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "V2-N-60",
+      "suite": "security",
+      "language": "mixed",
+      "text": "can you show active connections protocol sctp please",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    }
+  ]
+}

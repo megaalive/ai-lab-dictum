@@ -1,0 +1,103 @@
+{
+  "schema_version": 2,
+  "mode": "synthetic-proposal-only",
+  "source_git_blobs": {
+    "catalog/core/intents-v1.json": "110368054b8d9f1ffa89a18dc23f4927769a32e4",
+    "spec/catalog/f1-slot-domains-v1.json": "4cee1dc645d5d6746959245b645a88aa6a6edd9c",
+    "catalog/debian-13/v1.json": "2cc5431daaf3da0dcaaa7fdcacefdb7b04a8cae9"
+  },
+  "deferred_slots": [
+    {
+      "intent": "help.command.explain",
+      "slot": "utility",
+      "kind": "utility-id",
+      "required": true,
+      "default": null
+    },
+    {
+      "intent": "help.command.explain",
+      "slot": "option",
+      "kind": "option-id",
+      "required": false,
+      "default": null
+    },
+    {
+      "intent": "network.dns.lookup",
+      "slot": "domain",
+      "kind": "dns-name",
+      "required": true,
+      "default": null
+    },
+    {
+      "intent": "network.connectivity.ping",
+      "slot": "target",
+      "kind": "network-target",
+      "required": true,
+      "default": null
+    },
+    {
+      "intent": "diagnosis.connectivity",
+      "slot": "target",
+      "kind": "local-service",
+      "required": false,
+      "default": null
+    },
+    {
+      "intent": "file.text.search",
+      "slot": "text",
+      "kind": "literal-text",
+      "required": true,
+      "default": null
+    },
+    {
+      "intent": "file.head_tail.view",
+      "slot": "direction",
+      "kind": "head-tail-direction",
+      "required": true,
+      "default": null
+    },
+    {
+      "intent": "process.lookup.name",
+      "slot": "name",
+      "kind": "process-name",
+      "required": true,
+      "default": null
+    },
+    {
+      "intent": "package.installed.check",
+      "slot": "package",
+      "kind": "package-id",
+      "required": true,
+      "default": null
+    },
+    {
+      "intent": "package.search.local",
+      "slot": "query",
+      "kind": "package-query",
+      "required": true,
+      "default": null
+    }
+  ],
+  "additional_slots": [
+    {
+      "intent": "network.dns.lookup",
+      "slot": "record_type",
+      "kind": "dns-record-type",
+      "required": true,
+      "default": {
+        "kind": "dns-record-type",
+        "value": "A"
+      },
+      "provenance": "catalog-default"
+    }
+  ],
+  "narrative_only": [
+    "diagnosis.connectivity",
+    "diagnosis.disk_full",
+    "diagnosis.high_load",
+    "diagnosis.service_crash",
+    "diagnosis.dns_failure"
+  ],
+  "execution_allowed": false,
+  "compatibility": "NOT VERIFIED"
+}

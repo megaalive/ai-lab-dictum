@@ -1,0 +1,1365 @@
+{
+  "schema_version": 2,
+  "mode": "F1-V2-SYNTHETIC-NONEXECUTABLE",
+  "source_git_blobs": {
+    "catalog/core/intents-v1.json": "110368054b8d9f1ffa89a18dc23f4927769a32e4",
+    "catalog/debian-13/v1.json": "2cc5431daaf3da0dcaaa7fdcacefdb7b04a8cae9",
+    "tests/spikes/s2/development-v1.json": "3081d95d327c2aa7851efaa673168591c1f7002c",
+    "spec/pipeline/f0-c-fixture-v1.json": "c5b291a6a5b6a1ce7f93ddc2f9acf142d0c23a3b",
+    "spec/catalog/f1-slot-domains-v1.json": "4cee1dc645d5d6746959245b645a88aa6a6edd9c",
+    "spec/pipeline/f1-fixture-v1.json": "b9547025df9bcc7e600248930fc26db61284467f"
+  },
+  "scope": {
+    "roots": [
+      "/fixture/data",
+      "/fixture/logs",
+      "/fixture/projects",
+      "/fixture/team's files",
+      "/fixture/data set"
+    ],
+    "units": [
+      "demo.service",
+      "worker.service",
+      "nginx.service",
+      "postgresql.service",
+      "ssh.service"
+    ],
+    "extensions": [
+      "txt",
+      "log",
+      "json",
+      "csv",
+      "md"
+    ],
+    "filenames": [
+      "report.txt",
+      "-report",
+      "a'b.txt",
+      "events.log",
+      "notes.md"
+    ],
+    "files": [
+      "/fixture/data/report.txt",
+      "/fixture/data/notes.md",
+      "/fixture/logs/events.log",
+      "/fixture/data set/a'b.txt",
+      "/fixture/data/demo.tar",
+      "/fixture/data/demo.zip",
+      "/fixture/projects/sample.tar.gz"
+    ],
+    "archives": [
+      "/fixture/data/demo.tar",
+      "/fixture/data/demo.zip",
+      "/fixture/projects/sample.tar.gz"
+    ],
+    "extract_destinations": [
+      "/fixture/data/unpacked-demo",
+      "/fixture/projects/unpacked-sample"
+    ],
+    "compress_destinations": [
+      "/fixture/data/new-report.tar.gz",
+      "/fixture/projects/new-projects.tar.gz"
+    ],
+    "compress_sources": [
+      "/fixture/data/report.txt",
+      "/fixture/data/notes.md",
+      "/fixture/projects",
+      "/fixture/logs"
+    ]
+  },
+  "recipes": [
+    {
+      "intent": "memory.summary",
+      "handler": "proposal.memory.summary",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "network.listener.lookup",
+      "handler": "proposal.network.listener.lookup",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "service.failed.list",
+      "handler": "proposal.service.failed.list",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "log.service.query",
+      "handler": "proposal.log.service.query",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "storage.filesystem.usage",
+      "handler": "proposal.storage.filesystem.usage",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "storage.directory.usage",
+      "handler": "proposal.storage.directory.usage",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "file.search",
+      "handler": "proposal.file.search",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "service.restart",
+      "handler": "proposal.service.restart",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "help.intent.list",
+      "handler": "proposal.help.intent.list",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "system.os.info",
+      "handler": "proposal.system.os.info",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "system.uptime.summary",
+      "handler": "proposal.system.uptime.summary",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "network.connection.active",
+      "handler": "proposal.network.connection.active",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "network.interface.list",
+      "handler": "proposal.network.interface.list",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "network.route.table",
+      "handler": "proposal.network.route.table",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "network.dns.config",
+      "handler": "proposal.network.dns.config",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "service.status.get",
+      "handler": "proposal.service.status.get",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "service.list.active",
+      "handler": "proposal.service.list.active",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "service.enabled.list",
+      "handler": "proposal.service.enabled.list",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "log.system.errors",
+      "handler": "proposal.log.system.errors",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "log.boot.messages",
+      "handler": "proposal.log.boot.messages",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "storage.inode.usage",
+      "handler": "proposal.storage.inode.usage",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "storage.block.list",
+      "handler": "proposal.storage.block.list",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "storage.mount.list",
+      "handler": "proposal.storage.mount.list",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "file.metadata.stat",
+      "handler": "proposal.file.metadata.stat",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "file.permission.check",
+      "handler": "proposal.file.permission.check",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "archive.contents.list",
+      "handler": "proposal.archive.contents.list",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "process.list.top_cpu",
+      "handler": "proposal.process.list.top_cpu",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "process.list.top_mem",
+      "handler": "proposal.process.list.top_mem",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "process.tree.view",
+      "handler": "proposal.process.tree.view",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "cpu.hardware.info",
+      "handler": "proposal.cpu.hardware.info",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "user.session.who",
+      "handler": "proposal.user.session.who",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "user.identity.info",
+      "handler": "proposal.user.identity.info",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "service.reload",
+      "handler": "proposal.service.reload",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "help.command.explain",
+      "handler": "proposal.help.command.explain",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "network.dns.lookup",
+      "handler": "proposal.network.dns.lookup",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "network.connectivity.ping",
+      "handler": "proposal.network.connectivity.ping",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "diagnosis.connectivity",
+      "mode": "narrative-guidance",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "file.text.search",
+      "handler": "proposal.file.text.search",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "file.head_tail.view",
+      "handler": "proposal.file.head_tail.view",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "process.lookup.name",
+      "handler": "proposal.process.lookup.name",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "package.installed.check",
+      "handler": "proposal.package.installed.check",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "package.search.local",
+      "handler": "proposal.package.search.local",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "diagnosis.disk_full",
+      "mode": "narrative-guidance",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "diagnosis.high_load",
+      "mode": "narrative-guidance",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "diagnosis.service_crash",
+      "mode": "narrative-guidance",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "diagnosis.dns_failure",
+      "mode": "narrative-guidance",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "archive.extract.safe",
+      "handler": "proposal.archive.extract.safe",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "file.compress.archive",
+      "handler": "proposal.file.compress.archive",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    }
+  ],
+  "patterns": {
+    "memory.summary": [
+      "ram tersedia",
+      "berapa ram yang tersedia",
+      "berapa ram tersisa",
+      "perlihatkan memori tersedia",
+      "ringkas ram mesin lokal",
+      "status pemakaian memori sekarang",
+      "memory usage summary",
+      "available memory",
+      "how much ram is available",
+      "what is the available memory",
+      "show memory usage",
+      "show available memory",
+      "ram",
+      "memory"
+    ],
+    "network.listener.lookup": [
+      "siapa yang menggunakan port {port}",
+      "siapa yang memakai port {port}",
+      "cek port {port}",
+      "cek port {port} {protocol}",
+      "port {port} {protocol}",
+      "port {port}",
+      "listener port {port}",
+      "which process uses port {port}",
+      "who is listening on port {port}",
+      "show {protocol} listener on port {port}",
+      "show listener on port {port}",
+      "find {protocol} listener port {port}",
+      "port {port} or {port}",
+      "port {port} atau {port}",
+      "port",
+      "cek port",
+      "which process uses port"
+    ],
+    "service.failed.list": [
+      "layanan yang gagal",
+      "daftar layanan gagal",
+      "tampilkan service gagal",
+      "service gagal sekarang",
+      "layanan gagal saat ini",
+      "failed services",
+      "show failed services",
+      "list failed systemd units",
+      "which services are failed",
+      "list currently failed services",
+      "current failed services"
+    ],
+    "log.service.query": [
+      "log {unit} {minutes} menit terakhir",
+      "log {unit} {minutes} menit",
+      "tampilkan log {unit} {minutes} menit terakhir",
+      "jurnal {unit} {minutes} menit terakhir",
+      "catatan {unit} {minutes} menit terakhir",
+      "logs for {unit} last {minutes} minutes",
+      "show logs for {unit} last {minutes} minutes",
+      "journal for {unit} last {minutes} minutes",
+      "show {unit} logs for last {minutes} minutes",
+      "logs {unit} last {minutes} minutes",
+      "log {unit}",
+      "logs for {unit}",
+      "log layanan",
+      "service logs"
+    ],
+    "storage.filesystem.usage": [
+      "kapasitas disk",
+      "pemakaian filesystem",
+      "tampilkan penggunaan sistem berkas",
+      "ruang disk tersedia",
+      "cek kapasitas partisi",
+      "disk usage",
+      "filesystem usage",
+      "show filesystem capacity",
+      "show available disk space",
+      "how much disk space is available",
+      "local filesystem usage",
+      "disk",
+      "filesystem"
+    ],
+    "storage.directory.usage": [
+      "ukuran folder {root}",
+      "ukuran direktori {root}",
+      "top {limit} direktori di {root}",
+      "urutkan ukuran folder {root}",
+      "folder terbesar di {root}",
+      "largest directories under {root}",
+      "top folders by size under {root}",
+      "top {limit} directories under {root}",
+      "directory usage under {root}",
+      "show directory sizes under {root}",
+      "directory usage",
+      "ukuran folder",
+      "pemakaian direktori {root}"
+    ],
+    "file.search": [
+      "cari berkas ekstensi {extension} di {root}",
+      "cari file ekstensi {extension} di {root}",
+      "temukan file nama {filename} di {root}",
+      "cari file nama {filename} di {root}",
+      "cari file di {root} ekstensi {extension}",
+      "cari file di {root} {minutes} menit terakhir",
+      "find files by extension {extension} under {root}",
+      "find files named {filename} under {root}",
+      "locate files with extension {extension} under {root}",
+      "find files under {root} last {minutes} minutes",
+      "find files under {root}",
+      "cari file di {root}",
+      "find files",
+      "cari file",
+      "temukan file ekstensi {extension} di {root}"
+    ],
+    "service.restart": [
+      "restart {unit}",
+      "restart service {unit}",
+      "mulai ulang {unit}",
+      "mulai ulang layanan {unit}",
+      "usulkan restart {unit}",
+      "propose restart of {unit}",
+      "restart systemd unit {unit}",
+      "propose service restart {unit}",
+      "restart {unit} or {unit}",
+      "restart {unit} atau {unit}",
+      "restart service",
+      "mulai ulang layanan",
+      "restart"
+    ],
+    "help.intent.list": [
+      "daftar intent katalog",
+      "tampilkan intent terdaftar",
+      "lihat daftar operasi katalog",
+      "list catalog intents",
+      "show registered intents",
+      "list supported catalog operations"
+    ],
+    "system.os.info": [
+      "informasi sistem operasi",
+      "versi sistem operasi lokal",
+      "tampilkan informasi distro",
+      "show operating system information",
+      "what is the operating system version",
+      "show distribution release information"
+    ],
+    "system.uptime.summary": [
+      "berapa lama sistem menyala",
+      "ringkas waktu aktif sistem",
+      "tampilkan uptime lokal",
+      "show system uptime",
+      "how long has the system been running",
+      "summarize machine uptime"
+    ],
+    "network.connection.active": [
+      "daftar koneksi aktif",
+      "tampilkan koneksi aktif {protocol}",
+      "lihat koneksi {protocol} aktif",
+      "show active connections",
+      "list active {protocol} connections",
+      "show active {protocol} connections"
+    ],
+    "network.interface.list": [
+      "daftar antarmuka jaringan",
+      "lihat interface jaringan lokal",
+      "tampilkan antarmuka jaringan",
+      "list network interfaces",
+      "show local network interfaces",
+      "show interface addresses"
+    ],
+    "network.route.table": [
+      "tabel rute lokal",
+      "tampilkan tabel routing",
+      "lihat daftar rute jaringan",
+      "show routing table",
+      "list local routes",
+      "show network route table"
+    ],
+    "network.dns.config": [
+      "lihat konfigurasi dns",
+      "tampilkan konfigurasi resolver",
+      "ringkas pengaturan dns lokal",
+      "show dns configuration",
+      "display resolver configuration",
+      "show local dns settings"
+    ],
+    "service.status.get": [
+      "status layanan {unit}",
+      "periksa status service {unit}",
+      "lihat status unit {unit}",
+      "show service status {unit}",
+      "status of service {unit}",
+      "check systemd unit status {unit}",
+      "status layanan",
+      "show service status"
+    ],
+    "service.list.active": [
+      "daftar layanan aktif",
+      "tampilkan service aktif",
+      "lihat unit aktif",
+      "list active services",
+      "show running services",
+      "list active systemd units"
+    ],
+    "service.enabled.list": [
+      "daftar layanan enabled",
+      "tampilkan unit enabled",
+      "lihat service diaktifkan",
+      "list enabled services",
+      "show enabled systemd units",
+      "list enabled service units"
+    ],
+    "log.system.errors": [
+      "log error sistem {minutes} menit terakhir",
+      "tampilkan kesalahan sistem {minutes} menit terakhir",
+      "jurnal error sistem {minutes} menit terakhir",
+      "system error logs last {minutes} minutes",
+      "show system errors last {minutes} minutes",
+      "journal system errors last {minutes} minutes",
+      "log error sistem",
+      "system error logs"
+    ],
+    "log.boot.messages": [
+      "tampilkan pesan boot",
+      "lihat jurnal boot",
+      "daftar pesan boot saat ini",
+      "show boot messages",
+      "list current boot messages",
+      "show boot journal messages"
+    ],
+    "storage.inode.usage": [
+      "pemakaian inode",
+      "tampilkan kapasitas inode",
+      "cek inode tersedia",
+      "show inode usage",
+      "display inode capacity",
+      "show free inodes"
+    ],
+    "storage.block.list": [
+      "daftar perangkat blok",
+      "lihat perangkat penyimpanan blok",
+      "tampilkan disk blok",
+      "list block devices",
+      "show block storage devices",
+      "show block device inventory"
+    ],
+    "storage.mount.list": [
+      "daftar mount lokal",
+      "tampilkan titik mount",
+      "lihat sistem berkas terpasang",
+      "list mounted filesystems",
+      "show local mount points",
+      "display mount inventory"
+    ],
+    "file.metadata.stat": [
+      "metadata file {path}",
+      "tampilkan metadata berkas {path}",
+      "lihat metadata file {path}",
+      "show file metadata {path}",
+      "display metadata of {path}",
+      "inspect file metadata {path}",
+      "metadata file",
+      "show file metadata"
+    ],
+    "file.permission.check": [
+      "cek izin file {path}",
+      "lihat permission berkas {path}",
+      "tampilkan hak akses file {path}",
+      "check file permissions {path}",
+      "show permissions of {path}",
+      "inspect file access mode {path}",
+      "cek izin file",
+      "check file permissions"
+    ],
+    "archive.contents.list": [
+      "daftar isi arsip {path}",
+      "lihat isi arsip {path}",
+      "tampilkan daftar isi arsip {path}",
+      "list archive contents {path}",
+      "show archive entries {path}",
+      "inspect archive contents {path}",
+      "daftar isi arsip",
+      "list archive contents"
+    ],
+    "process.list.top_cpu": [
+      "proses dengan cpu tertinggi",
+      "top {limit} proses cpu",
+      "daftar proses menurut cpu",
+      "top cpu processes",
+      "top {limit} processes by cpu",
+      "list processes by cpu usage"
+    ],
+    "process.list.top_mem": [
+      "proses dengan memori tertinggi",
+      "top {limit} proses memori",
+      "daftar proses menurut ram",
+      "top memory processes",
+      "top {limit} processes by memory",
+      "list processes by memory usage"
+    ],
+    "process.tree.view": [
+      "pohon proses",
+      "tampilkan hierarki proses",
+      "lihat pohon proses",
+      "show process tree",
+      "display process hierarchy",
+      "list process tree"
+    ],
+    "cpu.hardware.info": [
+      "informasi perangkat keras cpu",
+      "tampilkan info prosesor",
+      "lihat spesifikasi cpu",
+      "show cpu hardware information",
+      "display processor specifications",
+      "show processor architecture"
+    ],
+    "user.session.who": [
+      "daftar sesi pengguna lokal",
+      "siapa pengguna yang login",
+      "lihat sesi login aktif",
+      "show local user sessions",
+      "list logged in users",
+      "display login sessions"
+    ],
+    "user.identity.info": [
+      "identitas pengguna numerik",
+      "tampilkan uid dan gid lokal",
+      "lihat identitas uid gid",
+      "show numeric user identity",
+      "display local uid and gid",
+      "show user and group ids"
+    ],
+    "service.reload": [
+      "muat ulang layanan {unit}",
+      "usulkan reload {unit}",
+      "reload layanan {unit}",
+      "reload service {unit}",
+      "propose reload of {unit}",
+      "propose service reload {unit}",
+      "reload",
+      "reload service",
+      "muat ulang layanan",
+      "reload {unit} or {unit}",
+      "reload {unit} atau {unit}"
+    ],
+    "help.command.explain": [
+      "jelaskan utilitas {utility}",
+      "jelaskan opsi {option} pada {utility}",
+      "apa fungsi utilitas {utility}",
+      "explain utility {utility}",
+      "explain option {option} for {utility}",
+      "describe catalog utility {utility} option {option}",
+      "jelaskan utilitas",
+      "explain utility",
+      "explain utility {utility} option {option}"
+    ],
+    "network.dns.lookup": [
+      "usulkan kueri dns {domain}",
+      "usulkan resolusi dns {domain} tipe {record_type}",
+      "rencana lookup dns {domain}",
+      "propose dns lookup {domain}",
+      "propose dns query {domain} type {record_type}",
+      "plan dns resolution for {domain}",
+      "usulkan kueri dns",
+      "propose dns lookup"
+    ],
+    "network.connectivity.ping": [
+      "usulkan ping {target}",
+      "usulkan ping {target} jumlah {count}",
+      "rencana uji konektivitas icmp {target}",
+      "propose ping {target}",
+      "propose ping {target} count {count}",
+      "plan icmp connectivity check {target}",
+      "usulkan ping",
+      "propose ping"
+    ],
+    "diagnosis.connectivity": [
+      "panduan diagnosis konektivitas lokal",
+      "panduan diagnosis konektivitas layanan {target}",
+      "panduan masalah konektivitas lokal",
+      "guide local connectivity diagnosis",
+      "guide connectivity diagnosis for {target}",
+      "local connectivity troubleshooting guide"
+    ],
+    "file.text.search": [
+      "cari teks literal {text} di {root}",
+      "temukan teks literal {text} di {root}",
+      "pencarian teks {text} dalam {root}",
+      "search literal text {text} under {root}",
+      "find literal text {text} in {root}",
+      "locate text {text} under {root}",
+      "cari teks literal di {root}",
+      "search literal text under {root}"
+    ],
+    "file.head_tail.view": [
+      "tampilkan baris {direction} file {path}",
+      "lihat {limit} baris {direction} dari {path}",
+      "lihat baris {direction} berkas {path}",
+      "show {direction} lines from {path}",
+      "view {direction} {limit} lines of {path}",
+      "display {direction} lines of file {path}",
+      "lihat baris file {path}",
+      "show lines from {path}"
+    ],
+    "process.lookup.name": [
+      "cari proses bernama {name}",
+      "temukan nama proses literal {name}",
+      "lihat proses nama {name}",
+      "lookup process by name {name}",
+      "find process named {name}",
+      "show process matching name {name}",
+      "cari proses bernama",
+      "lookup process by name"
+    ],
+    "package.installed.check": [
+      "cek paket terpasang {package}",
+      "periksa versi paket {package}",
+      "apakah paket {package} terpasang",
+      "check installed package {package}",
+      "check package version {package}",
+      "is package {package} installed",
+      "cek paket terpasang",
+      "check installed package"
+    ],
+    "package.search.local": [
+      "cari paket lokal literal {query}",
+      "cari cache paket {query}",
+      "pencarian paket offline {query}",
+      "search local package cache {query}",
+      "search offline packages {query}",
+      "find local packages matching {query}",
+      "cari paket lokal literal",
+      "search local package cache"
+    ],
+    "diagnosis.disk_full": [
+      "panduan diagnosis disk penuh",
+      "panduan ruang disk habis",
+      "panduan masalah kapasitas disk penuh",
+      "guide disk full diagnosis",
+      "disk full troubleshooting guide",
+      "guide for exhausted disk capacity"
+    ],
+    "diagnosis.high_load": [
+      "panduan diagnosis beban tinggi",
+      "panduan sistem beban tinggi",
+      "panduan masalah load tinggi",
+      "guide high load diagnosis",
+      "high load troubleshooting guide",
+      "guide for high system load"
+    ],
+    "diagnosis.service_crash": [
+      "panduan diagnosis layanan gagal {unit}",
+      "panduan layanan gagal mulai {unit}",
+      "panduan service crash {unit}",
+      "guide service startup failure {unit}",
+      "guide service crash diagnosis {unit}",
+      "troubleshooting guide for failed startup {unit}",
+      "panduan diagnosis layanan gagal",
+      "guide service startup failure"
+    ],
+    "diagnosis.dns_failure": [
+      "panduan diagnosis kegagalan dns",
+      "panduan masalah resolusi dns",
+      "panduan dns gagal resolusi",
+      "guide dns failure diagnosis",
+      "dns resolution failure troubleshooting guide",
+      "guide for dns resolution failure"
+    ],
+    "archive.extract.safe": [
+      "usulkan ekstraksi arsip {archive} ke {destination}",
+      "rencana ekstraksi baru {archive} ke {destination}",
+      "usulan ekstrak arsip {archive} ke {destination}",
+      "propose archive extraction {archive} to {destination}",
+      "plan new archive extraction {archive} into {destination}",
+      "propose extracting archive {archive} to {destination}",
+      "usulkan ekstraksi arsip {archive}",
+      "propose archive extraction {archive}"
+    ],
+    "file.compress.archive": [
+      "usulkan pengarsipan {source} ke {destination}",
+      "rencana kompresi arsip {source} ke {destination}",
+      "usulan arsip baru {source} ke {destination}",
+      "propose archive compression {source} to {destination}",
+      "plan archiving {source} into {destination}",
+      "propose new archive from {source} to {destination}",
+      "usulkan pengarsipan {source}",
+      "propose archive compression {source}"
+    ]
+  },
+  "deny_tokens": [
+    "sudo",
+    "su",
+    "execute",
+    "jalankan",
+    "hapus",
+    "delete",
+    "rm",
+    "curl",
+    "wget",
+    "ping",
+    "remote",
+    "ssh",
+    "http",
+    "https",
+    "--force",
+    "--help",
+    "--version",
+    "--",
+    "production",
+    "produksi",
+    "secret",
+    "password",
+    "credential",
+    "token",
+    "shadow",
+    ".env",
+    "canary",
+    "DCT008_CANARY"
+  ],
+  "ambiguity_markers": [
+    "or",
+    "atau"
+  ],
+  "notes": "F1 v2 all canonical intents; synthetic non-executable proposals only. Narrative recipes have no handler or plan. No real data, compatibility, human gold or execution.",
+  "max_window_seconds": {
+    "log.service.query": 86400,
+    "log.system.errors": 86400,
+    "file.search": 86400
+  },
+  "additional_references": [
+    {
+      "id": "f1-ref-help.intent.list-1",
+      "intent": "help.intent.list",
+      "text": "katalog intent operasi terdaftar"
+    },
+    {
+      "id": "f1-ref-help.intent.list-2",
+      "intent": "help.intent.list",
+      "text": "catalog registry intent identifiers"
+    },
+    {
+      "id": "f1-ref-system.os.info-1",
+      "intent": "system.os.info",
+      "text": "sistem operasi distro versi"
+    },
+    {
+      "id": "f1-ref-system.os.info-2",
+      "intent": "system.os.info",
+      "text": "operating system distribution release"
+    },
+    {
+      "id": "f1-ref-system.uptime.summary-1",
+      "intent": "system.uptime.summary",
+      "text": "lama sistem menyala uptime"
+    },
+    {
+      "id": "f1-ref-system.uptime.summary-2",
+      "intent": "system.uptime.summary",
+      "text": "uptime elapsed boot duration"
+    },
+    {
+      "id": "f1-ref-network.connection.active-1",
+      "intent": "network.connection.active",
+      "text": "koneksi aktif soket terhubung"
+    },
+    {
+      "id": "f1-ref-network.connection.active-2",
+      "intent": "network.connection.active",
+      "text": "active established network connections"
+    },
+    {
+      "id": "f1-ref-network.interface.list-1",
+      "intent": "network.interface.list",
+      "text": "antarmuka jaringan interface alamat"
+    },
+    {
+      "id": "f1-ref-network.interface.list-2",
+      "intent": "network.interface.list",
+      "text": "network interfaces addresses"
+    },
+    {
+      "id": "f1-ref-network.route.table-1",
+      "intent": "network.route.table",
+      "text": "tabel rute routing jaringan"
+    },
+    {
+      "id": "f1-ref-network.route.table-2",
+      "intent": "network.route.table",
+      "text": "routing table local routes"
+    },
+    {
+      "id": "f1-ref-network.dns.config-1",
+      "intent": "network.dns.config",
+      "text": "konfigurasi resolver dns pengaturan"
+    },
+    {
+      "id": "f1-ref-network.dns.config-2",
+      "intent": "network.dns.config",
+      "text": "dns resolver configuration settings"
+    },
+    {
+      "id": "f1-ref-service.status.get-1",
+      "intent": "service.status.get",
+      "text": "status layanan unit"
+    },
+    {
+      "id": "f1-ref-service.status.get-2",
+      "intent": "service.status.get",
+      "text": "service unit status"
+    },
+    {
+      "id": "f1-ref-service.list.active-1",
+      "intent": "service.list.active",
+      "text": "daftar layanan aktif berjalan"
+    },
+    {
+      "id": "f1-ref-service.list.active-2",
+      "intent": "service.list.active",
+      "text": "active running systemd services"
+    },
+    {
+      "id": "f1-ref-service.enabled.list-1",
+      "intent": "service.enabled.list",
+      "text": "layanan enabled diaktifkan"
+    },
+    {
+      "id": "f1-ref-service.enabled.list-2",
+      "intent": "service.enabled.list",
+      "text": "enabled service units"
+    },
+    {
+      "id": "f1-ref-log.system.errors-1",
+      "intent": "log.system.errors",
+      "text": "error sistem jurnal kesalahan"
+    },
+    {
+      "id": "f1-ref-log.system.errors-2",
+      "intent": "log.system.errors",
+      "text": "system journal error messages"
+    },
+    {
+      "id": "f1-ref-log.boot.messages-1",
+      "intent": "log.boot.messages",
+      "text": "pesan boot jurnal"
+    },
+    {
+      "id": "f1-ref-log.boot.messages-2",
+      "intent": "log.boot.messages",
+      "text": "boot journal messages"
+    },
+    {
+      "id": "f1-ref-storage.inode.usage-1",
+      "intent": "storage.inode.usage",
+      "text": "inode kapasitas pemakaian"
+    },
+    {
+      "id": "f1-ref-storage.inode.usage-2",
+      "intent": "storage.inode.usage",
+      "text": "inode usage free capacity"
+    },
+    {
+      "id": "f1-ref-storage.block.list-1",
+      "intent": "storage.block.list",
+      "text": "perangkat blok penyimpanan"
+    },
+    {
+      "id": "f1-ref-storage.block.list-2",
+      "intent": "storage.block.list",
+      "text": "block storage devices"
+    },
+    {
+      "id": "f1-ref-storage.mount.list-1",
+      "intent": "storage.mount.list",
+      "text": "mount titik terpasang"
+    },
+    {
+      "id": "f1-ref-storage.mount.list-2",
+      "intent": "storage.mount.list",
+      "text": "mounted filesystem mount points"
+    },
+    {
+      "id": "f1-ref-file.metadata.stat-1",
+      "intent": "file.metadata.stat",
+      "text": "metadata file berkas atribut"
+    },
+    {
+      "id": "f1-ref-file.metadata.stat-2",
+      "intent": "file.metadata.stat",
+      "text": "file metadata attributes"
+    },
+    {
+      "id": "f1-ref-file.permission.check-1",
+      "intent": "file.permission.check",
+      "text": "izin file hak akses permission"
+    },
+    {
+      "id": "f1-ref-file.permission.check-2",
+      "intent": "file.permission.check",
+      "text": "file permissions access mode"
+    },
+    {
+      "id": "f1-ref-archive.contents.list-1",
+      "intent": "archive.contents.list",
+      "text": "arsip daftar isi entri"
+    },
+    {
+      "id": "f1-ref-archive.contents.list-2",
+      "intent": "archive.contents.list",
+      "text": "archive contents entries"
+    },
+    {
+      "id": "f1-ref-process.list.top_cpu-1",
+      "intent": "process.list.top_cpu",
+      "text": "proses cpu tertinggi"
+    },
+    {
+      "id": "f1-ref-process.list.top_cpu-2",
+      "intent": "process.list.top_cpu",
+      "text": "cpu processes utilization"
+    },
+    {
+      "id": "f1-ref-process.list.top_mem-1",
+      "intent": "process.list.top_mem",
+      "text": "proses memori ram tertinggi"
+    },
+    {
+      "id": "f1-ref-process.list.top_mem-2",
+      "intent": "process.list.top_mem",
+      "text": "memory processes utilization"
+    },
+    {
+      "id": "f1-ref-process.tree.view-1",
+      "intent": "process.tree.view",
+      "text": "pohon hierarki proses"
+    },
+    {
+      "id": "f1-ref-process.tree.view-2",
+      "intent": "process.tree.view",
+      "text": "process hierarchy tree"
+    },
+    {
+      "id": "f1-ref-cpu.hardware.info-1",
+      "intent": "cpu.hardware.info",
+      "text": "cpu prosesor perangkat keras"
+    },
+    {
+      "id": "f1-ref-cpu.hardware.info-2",
+      "intent": "cpu.hardware.info",
+      "text": "cpu processor architecture hardware"
+    },
+    {
+      "id": "f1-ref-user.session.who-1",
+      "intent": "user.session.who",
+      "text": "sesi pengguna login"
+    },
+    {
+      "id": "f1-ref-user.session.who-2",
+      "intent": "user.session.who",
+      "text": "login user sessions"
+    },
+    {
+      "id": "f1-ref-user.identity.info-1",
+      "intent": "user.identity.info",
+      "text": "identitas uid gid numerik"
+    },
+    {
+      "id": "f1-ref-user.identity.info-2",
+      "intent": "user.identity.info",
+      "text": "numeric user group identity"
+    },
+    {
+      "id": "f1-ref-service.reload-1",
+      "intent": "service.reload",
+      "text": "muat ulang layanan reload"
+    },
+    {
+      "id": "f1-ref-service.reload-2",
+      "intent": "service.reload",
+      "text": "reload service configuration"
+    },
+    {
+      "id": "f1-v2-ref-help.command.explain-1",
+      "intent": "help.command.explain",
+      "text": "jelaskan fungsi utilitas opsi katalog"
+    },
+    {
+      "id": "f1-v2-ref-help.command.explain-2",
+      "intent": "help.command.explain",
+      "text": "explain catalog utility option meaning"
+    },
+    {
+      "id": "f1-v2-ref-network.dns.lookup-1",
+      "intent": "network.dns.lookup",
+      "text": "usulan kueri resolusi nama dns"
+    },
+    {
+      "id": "f1-v2-ref-network.dns.lookup-2",
+      "intent": "network.dns.lookup",
+      "text": "propose dns query lookup resolution"
+    },
+    {
+      "id": "f1-v2-ref-network.connectivity.ping-1",
+      "intent": "network.connectivity.ping",
+      "text": "usulkan ping uji konektivitas icmp"
+    },
+    {
+      "id": "f1-v2-ref-network.connectivity.ping-2",
+      "intent": "network.connectivity.ping",
+      "text": "propose ping icmp connectivity check"
+    },
+    {
+      "id": "f1-v2-ref-diagnosis.connectivity-1",
+      "intent": "diagnosis.connectivity",
+      "text": "panduan diagnosis masalah konektivitas lokal"
+    },
+    {
+      "id": "f1-v2-ref-diagnosis.connectivity-2",
+      "intent": "diagnosis.connectivity",
+      "text": "guide local connectivity troubleshooting diagnosis"
+    },
+    {
+      "id": "f1-v2-ref-file.text.search-1",
+      "intent": "file.text.search",
+      "text": "cari teks literal isi berkas"
+    },
+    {
+      "id": "f1-v2-ref-file.text.search-2",
+      "intent": "file.text.search",
+      "text": "search find literal text content"
+    },
+    {
+      "id": "f1-v2-ref-file.head_tail.view-1",
+      "intent": "file.head_tail.view",
+      "text": "lihat baris awal akhir file"
+    },
+    {
+      "id": "f1-v2-ref-file.head_tail.view-2",
+      "intent": "file.head_tail.view",
+      "text": "view first last lines file"
+    },
+    {
+      "id": "f1-v2-ref-process.lookup.name-1",
+      "intent": "process.lookup.name",
+      "text": "cari proses nama literal pid"
+    },
+    {
+      "id": "f1-v2-ref-process.lookup.name-2",
+      "intent": "process.lookup.name",
+      "text": "lookup process name literal pid"
+    },
+    {
+      "id": "f1-v2-ref-package.installed.check-1",
+      "intent": "package.installed.check",
+      "text": "cek paket terpasang versi"
+    },
+    {
+      "id": "f1-v2-ref-package.installed.check-2",
+      "intent": "package.installed.check",
+      "text": "installed package check version"
+    },
+    {
+      "id": "f1-v2-ref-package.search.local-1",
+      "intent": "package.search.local",
+      "text": "cari cache paket lokal offline"
+    },
+    {
+      "id": "f1-v2-ref-package.search.local-2",
+      "intent": "package.search.local",
+      "text": "search local offline package cache"
+    },
+    {
+      "id": "f1-v2-ref-diagnosis.disk_full-1",
+      "intent": "diagnosis.disk_full",
+      "text": "panduan diagnosis disk penuh kapasitas"
+    },
+    {
+      "id": "f1-v2-ref-diagnosis.disk_full-2",
+      "intent": "diagnosis.disk_full",
+      "text": "guide disk full capacity troubleshooting"
+    },
+    {
+      "id": "f1-v2-ref-diagnosis.high_load-1",
+      "intent": "diagnosis.high_load",
+      "text": "panduan diagnosis beban tinggi"
+    },
+    {
+      "id": "f1-v2-ref-diagnosis.high_load-2",
+      "intent": "diagnosis.high_load",
+      "text": "guide high system load troubleshooting"
+    },
+    {
+      "id": "f1-v2-ref-diagnosis.service_crash-1",
+      "intent": "diagnosis.service_crash",
+      "text": "panduan diagnosis layanan gagal mulai crash"
+    },
+    {
+      "id": "f1-v2-ref-diagnosis.service_crash-2",
+      "intent": "diagnosis.service_crash",
+      "text": "guide service crash startup failure troubleshooting"
+    },
+    {
+      "id": "f1-v2-ref-diagnosis.dns_failure-1",
+      "intent": "diagnosis.dns_failure",
+      "text": "panduan diagnosis dns gagal resolusi"
+    },
+    {
+      "id": "f1-v2-ref-diagnosis.dns_failure-2",
+      "intent": "diagnosis.dns_failure",
+      "text": "guide dns resolution failure troubleshooting"
+    },
+    {
+      "id": "f1-v2-ref-archive.extract.safe-1",
+      "intent": "archive.extract.safe",
+      "text": "usulkan ekstraksi arsip tujuan baru"
+    },
+    {
+      "id": "f1-v2-ref-archive.extract.safe-2",
+      "intent": "archive.extract.safe",
+      "text": "propose archive extraction new destination"
+    },
+    {
+      "id": "f1-v2-ref-file.compress.archive-1",
+      "intent": "file.compress.archive",
+      "text": "usulan pengarsipan kompresi arsip baru"
+    },
+    {
+      "id": "f1-v2-ref-file.compress.archive-2",
+      "intent": "file.compress.archive",
+      "text": "propose compression archiving new archive"
+    }
+  ],
+  "narratives": {
+    "diagnosis.connectivity": "Periksa konfigurasi dan status layanan lokal secara terpisah; bedakan listener, rute, dan resolver. Setiap pengujian jaringan adalah permintaan NET terpisah; tidak ada probe otomatis.",
+    "diagnosis.disk_full": "Bedakan kapasitas filesystem dan inode; tinjau penggunaan pada root sintetis yang diizinkan dengan batas kedalaman. Jangan hapus atau ubah berkas.",
+    "diagnosis.high_load": "Bedakan beban CPU, memori dan I/O; periksa sampel waktu dan batas visibilitas secara terpisah. Jangan menghentikan proses.",
+    "diagnosis.service_crash": "Tinjau status unit, log berbatas waktu dan listener dalam permintaan terpisah; jangan restart atau mengubah unit.",
+    "diagnosis.dns_failure": "Bedakan konfigurasi resolver, ketersediaan lokal dan kegagalan resolusi. Kueri DNS memerlukan permintaan NET terpisah; tidak ada trafik."
+  },
+  "help_index": {
+    "ss": {
+      "summary": "Metadata koneksi dan listener jaringan; hasil aktual bergantung namespace dan hak.",
+      "options": {
+        "--numeric": "Representasi alamat dan port numerik; dukungan opsi belum diverifikasi."
+      }
+    },
+    "systemctl": {
+      "summary": "Metadata dan pengelolaan unit; tidak ada akses service manager.",
+      "options": {
+        "--failed": "Filter unit dengan keadaan failed saat ini; bukan riwayat boot.",
+        "--no-pager": "Opsi kandidat untuk menonaktifkan pager; belum diverifikasi."
+      }
+    },
+    "journalctl": {
+      "summary": "Metadata journal berbatas waktu; tidak ada pembacaan journal.",
+      "options": {
+        "--no-pager": "Opsi kandidat untuk menonaktifkan pager; belum diverifikasi."
+      }
+    },
+    "df": {
+      "summary": "Metadata kapasitas filesystem; tidak ada pembacaan mount.",
+      "options": {
+        "--human-readable": "Opsi kandidat untuk satuan kapasitas yang mudah dibaca; belum diverifikasi."
+      }
+    }
+  }
+}

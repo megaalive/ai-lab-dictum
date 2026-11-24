@@ -71,6 +71,6 @@ static bool pattern(const struct ir_document *d, size_t i, enum pattern_kind kin
 enum ir_status ir_validate(const struct ir_document *doc, enum ir_stage stage)
 {
     if (doc == NULL || doc->nodes == NULL || doc->used == 0 ||
-        stage < IR_NLU || stage > IR_PLAN) return IR_ARGUMENT;
+        stage < IR_NLU || stage > IR_PLAN_V2) return IR_ARGUMENT;
     return root_valid(doc, stage) ? IR_OK : IR_SCHEMA;
 }

@@ -71,7 +71,7 @@ jobs:
       - name: Audit link artefak
         run: |
           ldd build/ci/dictum
-          ldd build/ci/ir_probe
+          ldd build/ci/tests/ir_probe
           grep -m 1 '^License:' /usr/share/doc/libssl-dev/copyright
 
       - name: Uji CLI dan native IR

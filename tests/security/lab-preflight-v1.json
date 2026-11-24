@@ -1,0 +1,317 @@
+{
+  "schema_version": 1,
+  "record": {
+    "schema_version": 1,
+    "mode": "synthetic-contract-only",
+    "phase": "F0-B",
+    "profile": "debian-13-x86-64",
+    "target": "disposable-fixture-vm",
+    "vcpu": 2,
+    "memory_mib": 2048,
+    "timeout_ms": 5000,
+    "max_output_bytes": 65536,
+    "checks": [
+      {
+        "id": "owner-scope",
+        "state": "VERIFIED",
+        "evidence_sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+      },
+      {
+        "id": "disposable-vm",
+        "state": "VERIFIED",
+        "evidence_sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+      },
+      {
+        "id": "clean-snapshot",
+        "state": "VERIFIED",
+        "evidence_sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+      },
+      {
+        "id": "no-host-share",
+        "state": "VERIFIED",
+        "evidence_sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+      },
+      {
+        "id": "no-clipboard",
+        "state": "VERIFIED",
+        "evidence_sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+      },
+      {
+        "id": "no-credentials",
+        "state": "VERIFIED",
+        "evidence_sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+      },
+      {
+        "id": "no-host-passthrough",
+        "state": "VERIFIED",
+        "evidence_sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+      },
+      {
+        "id": "no-production-bridge",
+        "state": "VERIFIED",
+        "evidence_sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+      },
+      {
+        "id": "egress-disabled",
+        "state": "VERIFIED",
+        "evidence_sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+      },
+      {
+        "id": "no-daemon-proxy",
+        "state": "VERIFIED",
+        "evidence_sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+      },
+      {
+        "id": "explicit-fixture-root",
+        "state": "VERIFIED",
+        "evidence_sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+      },
+      {
+        "id": "synthetic-fixture",
+        "state": "VERIFIED",
+        "evidence_sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+      },
+      {
+        "id": "exact-allowlist",
+        "state": "VERIFIED",
+        "evidence_sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+      },
+      {
+        "id": "identity-visibility",
+        "state": "VERIFIED",
+        "evidence_sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+      },
+      {
+        "id": "descriptor-binding",
+        "state": "VERIFIED",
+        "evidence_sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+      },
+      {
+        "id": "confinement-verified",
+        "state": "VERIFIED",
+        "evidence_sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+      },
+      {
+        "id": "atomic-cgroup",
+        "state": "VERIFIED",
+        "evidence_sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+      },
+      {
+        "id": "resource-limits",
+        "state": "VERIFIED",
+        "evidence_sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+      },
+      {
+        "id": "trace-capability",
+        "state": "VERIFIED",
+        "evidence_sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+      },
+      {
+        "id": "before-after-oracle",
+        "state": "VERIFIED",
+        "evidence_sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+      },
+      {
+        "id": "reset-per-case",
+        "state": "VERIFIED",
+        "evidence_sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+      },
+      {
+        "id": "separate-controller",
+        "state": "VERIFIED",
+        "evidence_sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+      }
+    ]
+  },
+  "expected": "SYNTHETIC-COMPLETE",
+  "mutations": [
+    {
+      "id": "owner-unknown",
+      "path": [
+        "checks",
+        0,
+        "state"
+      ],
+      "value": "UNKNOWN",
+      "expected": "check-state"
+    },
+    {
+      "id": "no-egress-fail",
+      "path": [
+        "checks",
+        8,
+        "state"
+      ],
+      "value": "FAILED",
+      "expected": "check-state"
+    },
+    {
+      "id": "missing-hash",
+      "path": [
+        "checks",
+        8,
+        "evidence_sha256"
+      ],
+      "value": "",
+      "expected": "evidence"
+    },
+    {
+      "id": "target-host",
+      "path": [
+        "target"
+      ],
+      "value": "proxmox-management",
+      "expected": "target"
+    },
+    {
+      "id": "timeout-over",
+      "path": [
+        "timeout_ms"
+      ],
+      "value": 5001,
+      "expected": "limits"
+    },
+    {
+      "id": "output-over",
+      "path": [
+        "max_output_bytes"
+      ],
+      "value": 65537,
+      "expected": "limits"
+    },
+    {
+      "id": "phase",
+      "path": [
+        "phase"
+      ],
+      "value": "F0-A",
+      "expected": "phase"
+    },
+    {
+      "id": "mode",
+      "path": [
+        "mode"
+      ],
+      "value": "actual-authorization",
+      "expected": "mode"
+    },
+    {
+      "id": "duplicate",
+      "path": [
+        "checks",
+        1,
+        "id"
+      ],
+      "value": "owner-scope",
+      "expected": "check-ids"
+    },
+    {
+      "id": "unknown-id",
+      "path": [
+        "checks",
+        1,
+        "id"
+      ],
+      "value": "other",
+      "expected": "check-ids"
+    },
+    {
+      "id": "extra",
+      "path": [
+        "executor_enabled"
+      ],
+      "value": true,
+      "expected": "shape"
+    },
+    {
+      "id": "no-checks",
+      "path": [
+        "checks"
+      ],
+      "value": [],
+      "expected": "check-ids"
+    },
+    {
+      "id": "extra-check-field",
+      "path": [
+        "checks",
+        0,
+        "approval"
+      ],
+      "value": true,
+      "expected": "check-shape"
+    },
+    {
+      "id": "id-not-string",
+      "path": [
+        "checks",
+        0,
+        "id"
+      ],
+      "value": [],
+      "expected": "check-ids"
+    },
+    {
+      "id": "state-not-string",
+      "path": [
+        "checks",
+        0,
+        "state"
+      ],
+      "value": [
+        "VERIFIED"
+      ],
+      "expected": "check-state"
+    },
+    {
+      "id": "digest-not-string",
+      "path": [
+        "checks",
+        0,
+        "evidence_sha256"
+      ],
+      "value": 1,
+      "expected": "evidence"
+    },
+    {
+      "id": "schema-bool",
+      "path": [
+        "schema_version"
+      ],
+      "value": true,
+      "expected": "shape"
+    },
+    {
+      "id": "vcpu-bool",
+      "path": [
+        "vcpu"
+      ],
+      "value": true,
+      "expected": "limits"
+    },
+    {
+      "id": "checks-not-array",
+      "path": [
+        "checks"
+      ],
+      "value": {},
+      "expected": "check-shape"
+    },
+    {
+      "id": "resource-zero",
+      "path": [
+        "timeout_ms"
+      ],
+      "value": 0,
+      "expected": "limits"
+    },
+    {
+      "id": "memory-over",
+      "path": [
+        "memory_mib"
+      ],
+      "value": 4096,
+      "expected": "limits"
+    }
+  ]
+}

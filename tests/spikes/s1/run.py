@@ -315,7 +315,8 @@ def run_profile(profile):
             # Fixed synthetic preflight probe only; never log generated/canary argv.
             if trace.exists():
                 for line in trace.read_text(errors="backslashreplace").splitlines():
-                    if re.search(r"\b(?:open|openat|openat2)\(",line) and not "O_RDONLY" in line:
+                    if ((re.search(r"\b(?:open|openat|openat2)\(",line) and "O_RDONLY" not in line)
+                            or re.search(r"\b(?:socket|socketpair|connect|sendto|sendmsg|recvfrom|recvmsg|bind|listen|accept|accept4|getsockname|getpeername|setsockopt|getsockopt|shutdown)\(",line)):
                         print("S1 preflight diagnostic "+line[:400],flush=True)
             raise Blocked("tracer-or-inert-preflight:"+str(exc)) from exc
         print(f"S1 preflight round-trip verified profile={profile}",flush=True)

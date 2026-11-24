@@ -1,0 +1,15 @@
+# F1 human seed — collection and review packet (not a dataset)
+
+Ref #35 / #28 and corpus protocol v1. **Human gold: 0. Actual split/training/holdout: NOT RUN.** Current F0/F1/S2 authored fixture labels are visible to implementer and must stay regression/development diagnostics; do not import them as human gold, training or blind. Rights ledger remains HOLD. No real data, credentials, hostnames, paths, logs or production information.
+
+## Human contribution and prerequisites
+
+After owner confirms use rights for new original contributions, collect 200–500 independently authored human seed examples across exactly 48 canonical intents. Use synthetic scenarios only. Include Indonesian/English, explicitly label mixed language, several distinct semantic families/intent and ambiguity/OOD/security contrast pairs. Do not provide rule templates or existing gold to an independent author. Review all gold; include every CHANGE/NET example and disagreement. Record reviewer independence accurately (SELF vs EXT), adjudication and permitted uses. Do not fabricate identities or rights.
+
+Keep raw records in a private, access-controlled workspace. One record: opaque case ID; raw UTF-8 bytes and hash; language; exact intent or abstention; explicit typed slot values and byte spans/context refs; expected resolution, policy, effect and non-copyable representation; fixture and oracle version; semantic group, family, semantic fingerprint and parent; source/version/hash/rights; author and reviewer pseudonyms, decision and reason. Human label must be written from utterance meaning, not copied from output. No raw host output or arbitrary commands as truth. Lock each approved record revision and record rejections without secret.
+
+Before augmentation, resolve fuzzy/semantic duplicates, join connected groups, stratify by intent/language without breaking groups, and lock actual development split/manifest with source rights. Actual 70/15/15 counts may deviate; report them. B2 learns only from approved train, dev tuning separate. Existing fixtures never included in actual training. Final blind data handled by separate authorized custodian, no labels/IDs/raw access by implementer, aggregate results after preregistered run. Use an independent human reviewer for external-validation claims. Do not store blind data in Git.
+
+## What the repository can verify now
+
+`python3 -B tools/f1_corpus.py` verifies immutable source blobs and reports 372 functional cases across 33 intents (198 supported, 36 ambiguity, 33 OOD, 105 security), plus prior 32 S2 references / 100 development cases, separate denominators. No text export, no training, no gold claim. `python3 -B tests/research/f1_corpus.py` tests closed toy connected grouping, exact/fuzzy candidates, lineage, deterministic stratified split mechanics, distinct raw/normalized hash, conflicts and denial of actual/human/blind/rights-approved inputs. This is not actual ingestion or a private-corpus validator; no operational split manifest exists. The next actual seed ingestion/split tool needs owner-approved source rights and human reviewed records. No external dataset copied or model trained.

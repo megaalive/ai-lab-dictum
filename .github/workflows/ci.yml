@@ -124,3 +124,8 @@ jobs:
 
       - name: Uji domain kandidat F1 (data-only)
         run: python3 -B tests/catalog/f1_domains.py
+
+      - name: Uji inventory dan grouping corpus mekanis F1
+        run: |
+          python3 -B tools/f1_corpus.py
+          python3 -B tests/research/f1_corpus.py

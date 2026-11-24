@@ -10,9 +10,9 @@
 #define TOKENS 64u
 #define SLOTS 16u
 #define NO_INTENT SIZE_MAX
-enum slot_name { S_PORT, S_PROTOCOL, S_UNIT, S_WINDOW, S_LIMIT, S_ROOT, S_DEPTH, S_EXTENSION, S_FILENAME };
+enum slot_name { S_PORT, S_PROTOCOL, S_UNIT, S_WINDOW, S_LIMIT, S_ROOT, S_DEPTH, S_EXTENSION, S_FILENAME, S_PATH };
 enum slot_kind { K_INTEGER, K_PROTOCOL, K_LITERAL, K_TIME };
-static const char *const slot_names[]={"port","protocol","unit","window","limit","root","depth","extension","filename"};
+static const char *const slot_names[]={"port","protocol","unit","window","limit","root","depth","extension","filename","path"};
 
 struct slot_rule {
     enum slot_name name;
@@ -208,7 +208,7 @@ static bool context(struct request *q,uint64_t sequence,char out[2048])
         if (!word(q,i,"minutes") && !word(q,i,"menit")) continue;
         ++time_hits;
         int64_t mins=0;
-        if (ascii_integer(q,q->tokens.item[i-1],1,1440,&mins) && q->reference>=mins*60) {
+        if (ascii_integer(q,q->tokens.item[i-1],1,FIXTURE_MAX_WINDOW_SECONDS/60,&mins) && q->reference>=mins*60) {
             q->time_token=q->tokens.item[i-1]; q->time_start=q->reference-mins*60; q->time_valid=true;
         }
     }
@@ -409,7 +409,8 @@ static bool value_from(const struct request *q,const struct candidate *c,const s
     *v=(struct value){.rule=r,.token=t};
     if (r->kind==K_INTEGER) return ascii_integer(q,t,r->min,r->max,&v->number);
     if (r->kind==K_TIME) {
-        if (!time_candidate(q,c)) return false;
+        if (!time_candidate(q,c) || q->time_start>=q->reference ||
+            q->reference-q->time_start>FIXTURE_MAX_WINDOW_SECONDS) return false;
         v->context_ref=true; v->number=q->time_start; v->end=q->reference; return true;
     }
     const size_t len=t.end-t.start;
@@ -419,6 +420,7 @@ static bool value_from(const struct request *q,const struct candidate *c,const s
     case S_PROTOCOL: return !t.quoted && (strcmp(v->literal,"tcp")==0 || strcmp(v->literal,"udp")==0 || strcmp(v->literal,"all")==0);
     case S_UNIT: return !t.quoted && listed(v->literal,units,COUNT(units));
     case S_ROOT: return listed(v->literal,roots,COUNT(roots));
+    case S_PATH: return listed(v->literal,files,COUNT(files));
     case S_EXTENSION: return listed(v->literal,extensions,COUNT(extensions));
     case S_FILENAME: return listed(v->literal,filenames,COUNT(filenames));
     case S_PORT: case S_WINDOW: case S_LIMIT: case S_DEPTH: return false;
@@ -458,6 +460,8 @@ static struct resolved_ir resolve(const struct request *q,const struct nlu_propo
         for (size_t j=0;j<n->used;++j) {
             if (n->candidates[j].name!=s->name) continue;
             if (!value_from(q,&n->candidates[j],s,&v)) return invalid;
+            if (s->name==S_PATH && strcmp(rule->id,"archive.contents.list")==0 &&
+                !listed(v.literal,archives,COUNT(archives))) return invalid;
             ++hits;
         }
         if (hits>1) {
@@ -569,13 +573,16 @@ static bool verified_values(const struct request *q,const struct resolved_ir *r)
             if (!value_from(q,&c,v->rule,&actual) || actual.number!=v->number ||
                 actual.end!=v->end || actual.context_ref!=v->context_ref ||
                 strcmp(actual.literal,v->literal)!=0) return false;
+            if (v->rule->name==S_PATH && strcmp(rule->id,"archive.contents.list")==0 &&
+                !listed(actual.literal,archives,COUNT(archives))) return false;
         }
     }
     for (size_t i=0;i<rule->count;++i)
         if (rule->slots[i].required && !has_slot(r,rule->slots[i].name)) return false;
     if (strcmp(rule->id,"network.listener.lookup")==0 && !has_slot(r,S_PORT)) return false;
     if (strcmp(rule->id,"file.search")==0 && !has_slot(r,S_EXTENSION)&&!has_slot(r,S_FILENAME)&&!has_slot(r,S_WINDOW)) return false;
-    return strcmp(rule->effect_class,"READ")==0 || strcmp(rule->effect_class,"CHANGE")==0;
+    return strcmp(rule->effect_class,"INFO")==0 || strcmp(rule->effect_class,"READ")==0 ||
+        strcmp(rule->effect_class,"CHANGE")==0;
 }
 static struct policy_decision policy(const struct request *q,const struct resolved_ir *r)
 {
@@ -631,7 +638,7 @@ static bool serialize_plan(const struct request *q,const struct resolved_ir *r,
     bool comma=false;
     for (size_t i=0;i<r->count;++i) {
         const enum slot_name name=r->slots[i].rule->name;
-        if (name!=S_UNIT && name!=S_ROOT) continue;
+        if (name!=S_UNIT && name!=S_ROOT && name!=S_PATH) continue;
         char id[33];
         if (!id_from(q,slot_names[name],id)) return false;
         if (comma) add(&w,",");
@@ -674,16 +681,25 @@ static bool render(const struct request *q,const struct resolved_ir *r,struct po
     add(&w,"{\"copyability\":\"NON_COPYABLE\",");
     field(&w,"decision",decision_name(p.outcome)); add(&w,","); field(&w,"reason",p.reason);
     add(&w,",\"execution_allowed\":false,\"observed_os_data\":false,");
-    field(&w,"source","F0-C synthetic catalog; actual Debian binding NOT VERIFIED");
+    field(&w,"source","F1 synthetic catalog; actual Debian binding NOT VERIFIED");
     if (r->intent!=NO_INTENT) {
         add(&w,","); field(&w,"intent",rules[r->intent].id);
         add(&w,","); field(&w,"description",rules[r->intent].description_id);
     }
     if (p.outcome==PIPE_PROPOSAL) {
         add(&w,","); field(&w,"effect",rules[r->intent].effect_class);
-        add(&w,","); field(&w,"scope","synthetic fixture; no filesystem or service access");
+        add(&w,","); field(&w,"scope","synthetic fixture; no target, filesystem or service access");
+        add(&w,",\"effect_envelope\":"); add(&w,rules[r->intent].effect_json);
         if (strcmp(rules[r->intent].effect_class,"CHANGE")==0) {
-            add(&w,","); field(&w,"warning","CHANGE; may require privilege; no sudo and no execution");
+            add(&w,","); field(&w,"warning","CHANGE; interruption possible; may require privilege; no sudo and no execution");
+        }
+        if (strcmp(rules[r->intent].id,"help.intent.list")==0) {
+            add(&w,",\"catalogued_ids\":[");
+            for (size_t i=0;i<COUNT(catalog_entries);++i) {
+                if (i!=0) add(&w,",");
+                quote(&w,catalog_entries[i].id);
+            }
+            add(&w,"]");
         }
         add(&w,",\"slots\":{");
         for (size_t i=0;i<r->count;++i) {
@@ -741,14 +757,14 @@ bool pipeline_inspect(char out[PIPE_FRAME])
 {
     if (out==NULL) return false;
     struct writer w=writer(out,PIPE_FRAME);
-    add(&w,"{\"mode\":\"F1 catalog metadata; F0-C synthetic proposal-only pipeline\",\"primary\":\"B0-rules\",\"alternative\":\"B1-guarded-word-retrieval\","
+    add(&w,"{\"mode\":\"F1 synthetic proposal-only pipeline; all real bindings blocked\",\"primary\":\"B0-rules\",\"alternative\":\"B1-guarded-word-retrieval\","
         "\"neural_parameters\":0,\"intent_count\":");
     number(&w,(int64_t)COUNT(rules));
     add(&w,",\"implemented_synthetic_intent_count\":");
     number(&w,(int64_t)COUNT(rules));
     add(&w,",\"catalogued_intent_count\":");
     number(&w,(int64_t)COUNT(catalog_entries));
-    add(&w,",\"verified_binding_count\":0,\"profile\":\"debian-13 NOT VERIFIED\",");
+    add(&w,",\"f0_skeleton_intent_count\":8,\"verified_binding_count\":0,\"profile\":\"debian-13 NOT VERIFIED\",");
     field(&w,"catalog_sha256",FIXTURE_CATALOG_SHA); add(&w,","); field(&w,"profile_sha256",FIXTURE_PROFILE_SHA);
     add(&w,","); field(&w,"policy_sha256",FIXTURE_POLICY_SHA);
     add(&w,",\"execution_allowed\":false,\"latency\":\"not measured by inspect\"}");

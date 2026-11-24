@@ -1,11 +1,11 @@
-"""Compile a pinned synthetic F0-C catalog and grammar, not release trust."""
+"""Compile pinned synthetic F1 catalog/grammar; never release trust."""
 import hashlib
 import json
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-fixture_path = ROOT / "spec/pipeline/f0-c-fixture-v1.json"
+fixture_path = ROOT / "spec/pipeline/f1-fixture-v1.json"
 raw = fixture_path.read_bytes()
 f = json.loads(raw)
 def need(ok, why):
@@ -23,11 +23,29 @@ all_intents = json.loads(catalog)["intents"]
 all_registry = {x["id"]: x for x in all_intents}
 need(len(all_intents) == len(all_registry) == 48, "Canonical registry coverage")
 need([x["ordinal"] for x in all_intents] == list(range(1, 49)), "Canonical ordinals")
-registry = {x["id"]: x for x in all_intents if x["skeleton"]}
+skeleton = {x["id"]: x for x in all_intents if x["skeleton"]}
+predecessor = json.loads(pin("spec/pipeline/f0-c-fixture-v1.json",
+                             f["source_git_blobs"]["spec/pipeline/f0-c-fixture-v1.json"]))
+domains = json.loads(pin("spec/catalog/f1-slot-domains-v1.json",
+                        f["source_git_blobs"]["spec/catalog/f1-slot-domains-v1.json"]))
+need(f["max_window_seconds"] == domains["max_window_seconds"] ==
+     {"log.service.query": 86400, "log.system.errors": 86400, "file.search": 86400},
+     "Window limits pinned")
+need(all(f["patterns"].get(i) == predecessor["patterns"][i] for i in skeleton)
+     and all(f["scope"].get(k)==v for k,v in predecessor["scope"].items())
+     and f["deny_tokens"] == predecessor["deny_tokens"], "F0 contract preserved")
+implemented = set(f["patterns"])
+need(len(implemented)==33 and set(skeleton)<=implemented<=set(all_registry),
+     "F1 typed coverage")
+registry = {i: all_registry[i] for i in implemented}
+need(all(not x["deferred_slots"] and x["operation_surface"]!="narrative-only"
+         and x["id"] not in {"archive.extract.safe","file.compress.archive"}
+         for x in registry.values()), "Deferred, narrative and archive writes not integrated")
+need(set(f["scope"]["archives"])<=set(f["scope"]["files"]), "Synthetic archive scope")
 p = json.loads(profile)
 bindings = {x["intent"]: x for x in p["bindings"]}
 ids = list(f["patterns"])
-need(len(ids) == len(registry) == 8 and set(ids) == set(registry), "Skeleton coverage")
+need(len(skeleton)==8 and len(ids)==len(registry)==33 and set(ids)==set(registry), "Typed coverage")
 need(p["trust_status"] == "NOT VERIFIED", "Profile must remain unverified")
 need(len(p["bindings"]) == len(bindings) == 48 and set(bindings) == set(all_registry),
      "Complete profile registry bijection")
@@ -37,13 +55,13 @@ need(all(bindings[i]["capability_status"] == "BLOCKED" and
      "No opened capability")
 need(all(not x["execute_eligible"] and not x["source"]["external_content_imported"]
          for x in all_intents), "Metadata must not imply execute authority or external import")
-need(f["mode"] == "F0-C-SYNTHETIC-NONEXECUTABLE", "Fixture trust only")
+need(f["mode"] == "F1-SYNTHETIC-NONEXECUTABLE", "Fixture trust only")
 recipes = {x["intent"]: x for x in f["recipes"]}
-need(len(f["recipes"]) == len(recipes) == 8 and set(recipes) == set(ids), "Recipe coverage")
+need(len(f["recipes"]) == len(recipes) == 33 and set(recipes) == set(ids), "Recipe coverage")
 def c(s):
     need(isinstance(s,str) and s.isascii() and "\0" not in s, "ASCII catalog strings only")
     return '"' + "".join("\\%03o" % ord(ch) for ch in s) + '"'
-slots = ["port","protocol","unit","window","limit","root","depth","extension","filename"]
+slots = ["port","protocol","unit","window","limit","root","depth","extension","filename","path"]
 kinds = {"port":"K_INTEGER","protocol":"K_PROTOCOL","unit-name":"K_LITERAL",
          "time-window":"K_TIME","positive-int":"K_INTEGER","path":"K_LITERAL",
          "depth":"K_INTEGER","extension":"K_LITERAL","filename":"K_LITERAL"}
@@ -52,11 +70,12 @@ lines = ["/* Generated from pinned source, not executable authority. */",
          "#define FIXTURE_CATALOG_SHA " + c(hashlib.sha256(catalog).hexdigest()),
          "#define FIXTURE_PROFILE_SHA " + c(hashlib.sha256(profile).hexdigest()),
          "#define FIXTURE_POLICY_SHA " + c(hashlib.sha256(raw).hexdigest()),
+         "#define FIXTURE_MAX_WINDOW_SECONDS INT64_C(86400)",
          "static const struct intent_rule rules[] = {"]
 for i in ids:
     reg = registry[i]
     recipe = recipes[i]
-    need(reg["proposal_eligible"] and reg["effect"]["class"] in {"READ","CHANGE"}, "effect")
+    need(reg["proposal_eligible"] and reg["effect"]["class"] in {"INFO","READ","CHANGE"}, "effect")
     need(recipe == {"intent":i,"handler":"proposal."+i,"mode":"structured-proposal",
                     "copyable":False,"execution_allowed":False}, "nonexecutable recipe only")
     effect = json.dumps(reg["effect"],separators=(",",":"),sort_keys=True)
@@ -94,10 +113,16 @@ for name, items in list(f["scope"].items()) + [("deny_tokens",f["deny_tokens"])]
 lines.append("static const struct reference references[] = {")
 refs = json.loads(s2)["reference"]
 need(len(refs) == 32 and len({x["id"] for x in refs}) == 32, "S2 refs")
+extra = f["additional_references"]
+need(len(extra)==50 and len({x["id"] for x in refs+extra})==82 and
+     {x["intent"] for x in extra}==implemented-set(skeleton) and
+     all(sum(x["intent"]==i for x in extra)==2 for i in implemented-set(skeleton)),
+     "Authored reference coverage")
+refs = refs + extra
 for x in refs:
     lines.append(f"    {{{ids.index(x['intent'])}u,{c(x['text'])}}},")
 lines.append("};")
-# Static metadata is deliberately separate from the eight runtime rules.
+# Static metadata remains separate from the 33 synthetic runtime rules.
 # Do not feed this table to NLU, resolver, plan compiler or renderer.
 lines.append("static const struct catalog_entry catalog_entries[] = {")
 for x in all_intents:

@@ -8,6 +8,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 CATALOG = ROOT / "catalog/core/intents-v1.json"
 PROFILE = ROOT / "catalog/debian-13/v1.json"
+IMPLEMENTED = frozenset(["memory.summary","network.listener.lookup","service.failed.list","log.service.query","storage.filesystem.usage","storage.directory.usage","file.search","service.restart","help.intent.list","system.os.info","system.uptime.summary","network.connection.active","network.interface.list","network.route.table","network.dns.config","service.status.get","service.list.active","service.enabled.list","log.system.errors","log.boot.messages","storage.inode.usage","storage.block.list","storage.mount.list","file.metadata.stat","file.permission.check","archive.contents.list","process.list.top_cpu","process.list.top_mem","process.tree.view","cpu.hardware.info","user.session.who","user.identity.info","service.reload"])
 
 
 def rows():
@@ -31,7 +32,7 @@ def check(value, row, binding):
                 "en": row["description"]["en"], "ordinal": row["ordinal"],
                 "effect": row["effect"]["class"], "catalogued": True,
                 "catalog_proposal_eligible": row["proposal_eligible"],
-                "pipeline_status": "SYNTHETIC_PROPOSAL" if row["skeleton"] else "NOT_IMPLEMENTED",
+                "pipeline_status": "SYNTHETIC_PROPOSAL" if row["id"] in IMPLEMENTED else "NOT_IMPLEMENTED",
                 "typed_slot_count": len(row["slots"]), "deferred_slot_count": len(row["deferred_slots"]),
                 "capability_status": binding["capability_status"],
                 "compatibility": binding["compatibility"], "version_status": binding["version_status"],
@@ -41,7 +42,8 @@ def check(value, row, binding):
 
 
 def check_inspect(v):
-    assert v["intent_count"] == v["implemented_synthetic_intent_count"] == 8
+    assert v["intent_count"] == v["implemented_synthetic_intent_count"] == len(IMPLEMENTED) == 33
+    assert v["f0_skeleton_intent_count"] == 8
     assert v["catalogued_intent_count"] == 48 and v["verified_binding_count"] == 0
     assert v["catalog_sha256"] == hashlib.sha256(CATALOG.read_bytes()).hexdigest()
     assert v["profile_sha256"] == hashlib.sha256(PROFILE.read_bytes()).hexdigest()
@@ -70,7 +72,7 @@ def main():
         assert p.stderr == b"dictum: unsupported intent.\n", i
         count += 1
     # An exact registry ID is not an instruction nor a capability. In particular,
-    # metadata lookup must not activate the 40 new IDs as runtime grammar.
+    # metadata lookup must not interpret canonical IDs as runtime grammar.
     for row, _ in rows():
         if row["skeleton"]:
             continue
@@ -79,7 +81,7 @@ def main():
         v = json.loads(p.stdout)
         assert v["decision"] == "unsupported" and not v["execution_allowed"] and not v["observed_os_data"]
         count += 1
-    print("F1_CATALOG_LOOKUP",count,"checks; 48 metadata rows; 8 synthetic; 40 not implemented; 0 verified bindings")
+    print("F1_CATALOG_LOOKUP",count,"checks; 48 metadata rows; 33 synthetic; 15 not implemented; 0 verified bindings")
 
 
 if __name__ == "__main__":

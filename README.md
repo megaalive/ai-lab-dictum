@@ -3,7 +3,7 @@
 **From words to operations.**
 
 Dictum adalah riset AI Lab tentang penerjemahan instruksi bahasa manusia ke
-usulan operasi sistem operasi secara lokal. F0-C mengembangkan pipeline native C17 untuk delapan intent dan
+usulan operasi sistem operasi secara lokal. F1 mengembangkan pipeline native C17 untuk 33 intent sintetis dan
 usulan terstruktur non-copyable. Semua binding Debian masih NOT VERIFIED;
 mode ini hanya memakai katalog dan scope sintetis, bukan data host.
 
@@ -59,7 +59,7 @@ sumber, typed slots yang diizinkan pada fixture, dan batasan. Exit 0 proposal,
 Tidak ada hasil OS palsu, command copyable, akses filesystem target, spawn
 atau jaringan. Scope hanya literal synthetic allowlist; bukan klaim target ada.
 `search` adalah lookup ID persis untuk seluruh 48 intent, metadata saja.
-`pipeline_status` membedakan 8 SYNTHETIC_PROPOSAL dari 40 NOT_IMPLEMENTED;
+`pipeline_status` membedakan 33 SYNTHETIC_PROPOSAL dari 15 NOT_IMPLEMENTED;
 semua binding aktual tetap BLOCKED/NOT VERIFIED, tidak ada output OS.
 `inspect` memisahkan jumlah katalog, pipeline sintetis, dan binding terverifikasi, serta melaporkan identitas versi/hash
 dan tidak mengklaim pengukuran latency. B0 primary; B1 guarded retrieval

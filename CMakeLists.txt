@@ -36,6 +36,7 @@ set(pipeline_generated "${CMAKE_CURRENT_BINARY_DIR}/pipeline_generated.inc")
 add_custom_command(OUTPUT "${pipeline_generated}"
     COMMAND "${Python3_EXECUTABLE}" -B "${CMAKE_CURRENT_SOURCE_DIR}/tools/generate_pipeline.py" "${pipeline_generated}"
     DEPENDS tools/generate_pipeline.py spec/pipeline/f0-c-fixture-v1.json
+        spec/pipeline/f1-fixture-v1.json spec/catalog/f1-slot-domains-v1.json
         catalog/core/intents-v1.json catalog/debian-13/v1.json tests/spikes/s2/development-v1.json
     VERBATIM)
 set(renderer_unicode "${CMAKE_CURRENT_BINARY_DIR}/renderer_unicode.inc")

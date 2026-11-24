@@ -115,3 +115,7 @@ set_tests_properties(pipeline.s2_regression PROPERTIES TIMEOUT 120)
 add_test(NAME catalog.native_lookup COMMAND "${Python3_EXECUTABLE}" -B
     "${CMAKE_CURRENT_SOURCE_DIR}/pipeline/catalog_lookup.py" "$<TARGET_FILE:dictum>")
 set_tests_properties(catalog.native_lookup PROPERTIES TIMEOUT 90)
+
+add_test(NAME pipeline.f1_functional COMMAND "${Python3_EXECUTABLE}" -B
+    "${CMAKE_CURRENT_SOURCE_DIR}/pipeline/f1_functional.py" "$<TARGET_FILE:pipeline_probe>" "$<TARGET_FILE:dictum>")
+set_tests_properties(pipeline.f1_functional PROPERTIES TIMEOUT 240)

@@ -22,11 +22,13 @@ from wire import decode_frame, read_source
 probe, cli = sys.argv[1:3]
 manifest_raw = (HERE / "functional-v1.json").read_bytes()
 manifest = json.loads(manifest_raw)
-fixture_raw = (ROOT / "spec/pipeline/f0-c-fixture-v1.json").read_bytes()
+fixture_raw = (ROOT / "spec/pipeline/f1-fixture-v1.json").read_bytes()
 fixture = json.loads(fixture_raw)
 registry_raw = (ROOT / "catalog/core/intents-v1.json").read_bytes()
 profile_raw = (ROOT / "catalog/debian-13/v1.json").read_bytes()
-registry = {x["id"]: x for x in json.loads(registry_raw)["intents"] if x["skeleton"]}
+all_registry = {x["id"]: x for x in json.loads(registry_raw)["intents"]}
+skeleton = {i:x for i,x in all_registry.items() if x["skeleton"]}
+registry = {i:all_registry[i] for i in fixture["patterns"]}
 catalog = {i: {"intent": i, "effect": x["effect"], "proposal_eligible": x["proposal_eligible"],
                "execute_eligible": False, "slots": {s["name"]: s for s in x["slots"]}}
            for i, x in registry.items()}
@@ -112,19 +114,24 @@ def check_invariants(result, raw, stdout):
             spec = catalog[intent]["slots"][name]
             if spec["minimum"] is not None:
                 assert spec["minimum"] <= v["value"] <= spec["maximum"]
-            if name in {"root","unit","extension","filename"}:
-                key = {"root":"roots","unit":"units","extension":"extensions","filename":"filenames"}[name]
+            if name in {"root","unit","extension","filename","path"}:
+                key = {"root":"roots","unit":"units","extension":"extensions","filename":"filenames","path":"files"}[name]
                 assert v["value"] in fixture["scope"][key]
         if intent == "network.listener.lookup":
             assert "port" in values and "protocol" in values
         if intent == "file.search":
             assert "root" in values and {"filename","extension","window"} & values.keys()
-        if intent == "service.restart":
+        assert view["effect_envelope"] == registry[intent]["effect"]
+        if intent == "archive.contents.list":
+            assert values["path"]["value"] in fixture["scope"]["archives"]
+        if intent == "help.intent.list":
+            assert view["catalogued_ids"] == list(all_registry)
+        if registry[intent]["effect"]["class"] == "CHANGE":
             assert "CHANGE" in view["warning"] and "no sudo" in view["warning"]
         plan = stages["plan"]
         operation = {"kind":"native","handler":recipes[intent]["handler"],
                      "input_slots":[s["name"] for s in registry[intent]["slots"] if s["name"] in values]}
-        bindings = [{"slot":n,"binding_id":opaque(cid,n)} for n in operation["input_slots"] if n in {"root","unit"}]
+        bindings = [{"slot":n,"binding_id":opaque(cid,n)} for n in operation["input_slots"] if n in {"root","unit","path"}]
         assert plan["action"] == {"kind":"structured-proposal","operation":operation}
         assert plan["target_bindings"] == bindings
         unsigned = {k:v for k,v in plan.items() if k!="digest"}
@@ -187,7 +194,7 @@ def raw_joint_correct(row,result):
     return actual==expected["slots"]
 
 
-def run(model):
+def run(model, report_name="PIPELINE_METRICS"):
     stats=Counter()
     timing=[]
     confusions=Counter()
@@ -239,7 +246,7 @@ def run(model):
     all_a=sum(stats[x,"accepted"] for x in ("supported","ambiguity","ood","security"))
     all_c=sum(stats[x,"correct"] for x in ("supported","ambiguity","ood","security"))
     ordered=sorted(timing)
-    print("PIPELINE_METRICS",model,json.dumps({
+    print(report_name,model,json.dumps({
         "suite_counts":{x:{k:stats[x,k] for k in ("total","accepted","correct")} for x in ("supported","ambiguity","ood","security")},
         "raw_intent_accuracy":stats["supported","raw_intent_correct"]/n,
         "raw_JIA":stats["supported","raw_joint_correct"]/n,
@@ -291,7 +298,7 @@ def main():
     assert len(ids)==len(cases) and len({data(r) for r in cases})==len(cases)
     counts=Counter(r["suite"] for r in cases)
     assert counts["supported"]>=40 and counts["ambiguity"]+counts["ood"]>=20 and counts["security"]>=40
-    for i in registry:
+    for i in skeleton:
         items=[r for r in cases if r["suite"]=="supported" and r["expected"]["intent"]==i]
         assert len(items)>=5 and {r["language"] for r in items}=={"id","en"}
     assert set(raw_gold)=={r["id"] for r in cases if r["suite"]=="supported"}

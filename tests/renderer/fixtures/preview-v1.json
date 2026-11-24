@@ -1,0 +1,2745 @@
+{
+  "schema_version": 1,
+  "expected_count": 85,
+  "cases": [
+    {
+      "id": "simple-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "abc"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "COPYABLE",
+        "preview": "'/fixture/bin/argv-dumper' '--' 'abc'"
+      }
+    },
+    {
+      "id": "simple-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "abc"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "COPYABLE",
+        "preview": "'/fixture/bin/argv-dumper' '--' 'abc'"
+      }
+    },
+    {
+      "id": "apostrophe-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "O'Brien"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "COPYABLE",
+        "preview": "'/fixture/bin/argv-dumper' '--' 'O'\\''Brien'"
+      }
+    },
+    {
+      "id": "apostrophe-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "O'Brien"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "COPYABLE",
+        "preview": "'/fixture/bin/argv-dumper' '--' 'O'\\''Brien'"
+      }
+    },
+    {
+      "id": "empty-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": ""
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "COPYABLE",
+        "preview": "'/fixture/bin/argv-dumper' '--' ''"
+      }
+    },
+    {
+      "id": "empty-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": ""
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "COPYABLE",
+        "preview": "'/fixture/bin/argv-dumper' '--' ''"
+      }
+    },
+    {
+      "id": "multiple-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "a b"
+            },
+            {
+              "kind": "literal",
+              "value": "-file"
+            },
+            {
+              "kind": "literal",
+              "value": "café"
+            },
+            {
+              "kind": "literal",
+              "value": "café"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "COPYABLE",
+        "preview": "'/fixture/bin/argv-dumper' '--' 'a b' '-file' 'café' 'café'"
+      }
+    },
+    {
+      "id": "multiple-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "a b"
+            },
+            {
+              "kind": "literal",
+              "value": "-file"
+            },
+            {
+              "kind": "literal",
+              "value": "café"
+            },
+            {
+              "kind": "literal",
+              "value": "café"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "COPYABLE",
+        "preview": "'/fixture/bin/argv-dumper' '--' 'a b' '-file' 'café' 'café'"
+      }
+    },
+    {
+      "id": "literal-operators-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "$(printf x);`echo y`|<&>*?\\"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "COPYABLE",
+        "preview": "'/fixture/bin/argv-dumper' '--' '$(printf x);`echo y`|<&>*?\\'"
+      }
+    },
+    {
+      "id": "literal-operators-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "$(printf x);`echo y`|<&>*?\\"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "COPYABLE",
+        "preview": "'/fixture/bin/argv-dumper' '--' '$(printf x);`echo y`|<&>*?\\'"
+      }
+    },
+    {
+      "id": "doublequote-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "a\"b"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "COPYABLE",
+        "preview": "'/fixture/bin/argv-dumper' '--' 'a\"b'"
+      }
+    },
+    {
+      "id": "doublequote-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "a\"b"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "COPYABLE",
+        "preview": "'/fixture/bin/argv-dumper' '--' 'a\"b'"
+      }
+    },
+    {
+      "id": "no-terminator-ok-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-no-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "literal",
+              "value": "local name"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "COPYABLE",
+        "preview": "'/fixture/bin/argv-dumper' 'local name'"
+      }
+    },
+    {
+      "id": "no-terminator-ok-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-no-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "literal",
+              "value": "local name"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "COPYABLE",
+        "preview": "'/fixture/bin/argv-dumper' 'local name'"
+      }
+    },
+    {
+      "id": "limit-ok-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-limit",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "flag",
+              "value": "--limit"
+            },
+            {
+              "kind": "integer",
+              "value": 4
+            },
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "-literal"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "COPYABLE",
+        "preview": "'/fixture/bin/argv-dumper' '--limit' '4' '--' '-literal'"
+      }
+    },
+    {
+      "id": "limit-ok-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-limit",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "flag",
+              "value": "--limit"
+            },
+            {
+              "kind": "integer",
+              "value": 4
+            },
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "-literal"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "COPYABLE",
+        "preview": "'/fixture/bin/argv-dumper' '--limit' '4' '--' '-literal'"
+      }
+    },
+    {
+      "id": "nul-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "CANARY_SECRET\u0000"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unsafe-character"
+      }
+    },
+    {
+      "id": "nul-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "CANARY_SECRET\u0000"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unsafe-character"
+      }
+    },
+    {
+      "id": "lf-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "CANARY_SECRET\n"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unsafe-character"
+      }
+    },
+    {
+      "id": "lf-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "CANARY_SECRET\n"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unsafe-character"
+      }
+    },
+    {
+      "id": "cr-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "CANARY_SECRET\r"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unsafe-character"
+      }
+    },
+    {
+      "id": "cr-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "CANARY_SECRET\r"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unsafe-character"
+      }
+    },
+    {
+      "id": "tab-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "CANARY_SECRET\t"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unsafe-character"
+      }
+    },
+    {
+      "id": "tab-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "CANARY_SECRET\t"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unsafe-character"
+      }
+    },
+    {
+      "id": "esc-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "CANARY_SECRET\u001b"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unsafe-character"
+      }
+    },
+    {
+      "id": "esc-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "CANARY_SECRET\u001b"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unsafe-character"
+      }
+    },
+    {
+      "id": "del-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "CANARY_SECRET"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unsafe-character"
+      }
+    },
+    {
+      "id": "del-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "CANARY_SECRET"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unsafe-character"
+      }
+    },
+    {
+      "id": "c1-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "CANARY_SECRET"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unsafe-character"
+      }
+    },
+    {
+      "id": "c1-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "CANARY_SECRET"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unsafe-character"
+      }
+    },
+    {
+      "id": "bidi-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "CANARY_SECRET‮"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unsafe-character"
+      }
+    },
+    {
+      "id": "bidi-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "CANARY_SECRET‮"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unsafe-character"
+      }
+    },
+    {
+      "id": "isolate-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "CANARY_SECRET⁦"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unsafe-character"
+      }
+    },
+    {
+      "id": "isolate-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "CANARY_SECRET⁦"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unsafe-character"
+      }
+    },
+    {
+      "id": "zero-width-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "CANARY_SECRET​"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unsafe-character"
+      }
+    },
+    {
+      "id": "zero-width-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "CANARY_SECRET​"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unsafe-character"
+      }
+    },
+    {
+      "id": "line-separator-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "CANARY_SECRET "
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unsafe-character"
+      }
+    },
+    {
+      "id": "line-separator-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "CANARY_SECRET "
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unsafe-character"
+      }
+    },
+    {
+      "id": "paragraph-separator-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "CANARY_SECRET "
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unsafe-character"
+      }
+    },
+    {
+      "id": "paragraph-separator-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "CANARY_SECRET "
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unsafe-character"
+      }
+    },
+    {
+      "id": "variation-selector-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "CANARY_SECRET️"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unsafe-character"
+      }
+    },
+    {
+      "id": "variation-selector-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "CANARY_SECRET️"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unsafe-character"
+      }
+    },
+    {
+      "id": "joiner-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "CANARY_SECRET͏"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unsafe-character"
+      }
+    },
+    {
+      "id": "joiner-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "CANARY_SECRET͏"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unsafe-character"
+      }
+    },
+    {
+      "id": "noncharacter-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "﷐"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "noncharacter"
+      }
+    },
+    {
+      "id": "noncharacter-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "﷐"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "noncharacter"
+      }
+    },
+    {
+      "id": "surrogate-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "\ud800"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "utf8"
+      }
+    },
+    {
+      "id": "surrogate-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "\ud800"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "utf8"
+      }
+    },
+    {
+      "id": "too-long-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "ééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééé"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "token-size"
+      }
+    },
+    {
+      "id": "too-long-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "ééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééé"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "token-size"
+      }
+    },
+    {
+      "id": "stdin-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "-"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "stdin-operand"
+      }
+    },
+    {
+      "id": "stdin-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "-"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "stdin-operand"
+      }
+    },
+    {
+      "id": "no-end-leading-dash-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-no-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "literal",
+              "value": "-literal"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "operand-binding"
+      }
+    },
+    {
+      "id": "no-end-leading-dash-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-no-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "literal",
+              "value": "-literal"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "operand-binding"
+      }
+    },
+    {
+      "id": "unknown-flag-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-limit",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "flag",
+              "value": "--unknown"
+            },
+            {
+              "kind": "integer",
+              "value": 4
+            },
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "ok"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "operand-binding"
+      }
+    },
+    {
+      "id": "unknown-flag-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-limit",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "flag",
+              "value": "--unknown"
+            },
+            {
+              "kind": "integer",
+              "value": 4
+            },
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "ok"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "operand-binding"
+      }
+    },
+    {
+      "id": "limit-over-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-limit",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "flag",
+              "value": "--limit"
+            },
+            {
+              "kind": "integer",
+              "value": 5
+            },
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "ok"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "limit"
+      }
+    },
+    {
+      "id": "limit-over-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-limit",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "flag",
+              "value": "--limit"
+            },
+            {
+              "kind": "integer",
+              "value": 5
+            },
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "ok"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "limit"
+      }
+    },
+    {
+      "id": "boolean-integer-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-limit",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "flag",
+              "value": "--limit"
+            },
+            {
+              "kind": "integer",
+              "value": true
+            },
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "ok"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "integer"
+      }
+    },
+    {
+      "id": "boolean-integer-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-limit",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "flag",
+              "value": "--limit"
+            },
+            {
+              "kind": "integer",
+              "value": true
+            },
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "ok"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "integer"
+      }
+    },
+    {
+      "id": "missing-terminator-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "literal",
+              "value": "ok"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "operand-binding"
+      }
+    },
+    {
+      "id": "missing-terminator-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "literal",
+              "value": "ok"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "operand-binding"
+      }
+    },
+    {
+      "id": "unverified-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "blocked",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "CANARY_SECRET"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unverified-binding"
+      }
+    },
+    {
+      "id": "unverified-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "blocked",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "CANARY_SECRET"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unverified-binding"
+      }
+    },
+    {
+      "id": "native-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "structured-proposal",
+        "operation": {
+          "kind": "native"
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "non-executable-action"
+      }
+    },
+    {
+      "id": "native-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "structured-proposal",
+        "operation": {
+          "kind": "native"
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "non-executable-action"
+      }
+    },
+    {
+      "id": "exec-candidate-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "execution-candidate",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": []
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "non-executable-action"
+      }
+    },
+    {
+      "id": "exec-candidate-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "execution-candidate",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": []
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "non-executable-action"
+      }
+    },
+    {
+      "id": "unknown-shell-zsh",
+      "shell": "zsh",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "ok"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unsupported-shell"
+      }
+    },
+    {
+      "id": "unknown-shell-fish",
+      "shell": "fish",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "ok"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unsupported-shell"
+      }
+    },
+    {
+      "id": "unknown-shell-powershell",
+      "shell": "powershell",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "ok"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unsupported-shell"
+      }
+    },
+    {
+      "id": "unknown-shell-unknown",
+      "shell": "unknown",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "ok"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unsupported-shell"
+      }
+    },
+    {
+      "id": "unknown-recipe-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "untrusted",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "ok"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unknown-recipe"
+      }
+    },
+    {
+      "id": "unknown-recipe-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "untrusted",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "ok"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unknown-recipe"
+      }
+    },
+    {
+      "id": "too-many-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "argv-count"
+      }
+    },
+    {
+      "id": "too-many-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            },
+            {
+              "kind": "literal",
+              "value": "a"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "argv-count"
+      }
+    },
+    {
+      "id": "preview-over-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''"
+            },
+            {
+              "kind": "literal",
+              "value": "''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''"
+            },
+            {
+              "kind": "literal",
+              "value": "''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''"
+            },
+            {
+              "kind": "literal",
+              "value": "''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''"
+            },
+            {
+              "kind": "literal",
+              "value": "''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''"
+            },
+            {
+              "kind": "literal",
+              "value": "''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''"
+            },
+            {
+              "kind": "literal",
+              "value": "''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''"
+            },
+            {
+              "kind": "literal",
+              "value": "''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''"
+            },
+            {
+              "kind": "literal",
+              "value": "''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''"
+            },
+            {
+              "kind": "literal",
+              "value": "''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "preview-size"
+      }
+    },
+    {
+      "id": "preview-over-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''"
+            },
+            {
+              "kind": "literal",
+              "value": "''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''"
+            },
+            {
+              "kind": "literal",
+              "value": "''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''"
+            },
+            {
+              "kind": "literal",
+              "value": "''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''"
+            },
+            {
+              "kind": "literal",
+              "value": "''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''"
+            },
+            {
+              "kind": "literal",
+              "value": "''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''"
+            },
+            {
+              "kind": "literal",
+              "value": "''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''"
+            },
+            {
+              "kind": "literal",
+              "value": "''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''"
+            },
+            {
+              "kind": "literal",
+              "value": "''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''"
+            },
+            {
+              "kind": "literal",
+              "value": "''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "preview-size"
+      }
+    },
+    {
+      "id": "wrong-identity-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "relative",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": []
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "identity"
+      }
+    },
+    {
+      "id": "wrong-identity-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "relative",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": []
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "identity"
+      }
+    }
+  ],
+  "invalid_utf8_hex": [
+    "c080",
+    "eda080",
+    "f4908080",
+    "e282",
+    "ff"
+  ]
+}

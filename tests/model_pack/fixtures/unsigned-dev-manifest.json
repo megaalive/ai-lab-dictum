@@ -1,0 +1,10 @@
+{
+  "role": "synthetic-test-only",
+  "signature": null,
+  "pack": {
+    "sha256": "0afe2e2bfb71cfdaf77dee5eaaed5eca2eb02f6a7bad795e9a69c15130b5e458",
+    "length": 600
+  },
+  "catalog_sha256": "993b27d6547cc7c135413066c669e1f94ca54ff0b93cd00f6cd64cb418a8eeee",
+  "tokenizer_sha256": "62013d368c238d978af06f3b52f1e747d5c3af9f34a9d163dfc33b1366083abb"
+}

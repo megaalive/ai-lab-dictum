@@ -1,0 +1,298 @@
+{
+  "schema_version": 1,
+  "pack_hex": "4443544d010000002000000005000000580200000000000020000000000000000100000001000000c00000000000000080000000000000000800000000000000020000000100000040010000000000001e000000000000000800000000000000030000000100000060010000000000008000000000000000080000000000000004000000010000000002000000000000440000000000000040000000000000000500000001000000480200000000000010000000000000000800000000000000b66876bb5646415688e116c569cf5a9e6d7298f9536a6da695f4e8e2ab864020993b27d6547cc7c135413066c669e1f94ca54ff0b93cd00f6cd64cb418a8eeeeffffff7f010000000300000004000000010000000200000001000000040000000200000008000000000000000000000000000000000000000000000000000000030000000100000001006101006202006162000000000100000002000000000001000000010002010200000002000000000000000000000000000000000000001000000000000000ffffffff00000000000000000000000000000000000000000200000002000201020000000200000000000000000000004000000000000000040000000000000000000000010000000000000000000000020000000000000000000000000000000000000000000000000000000000000000000000000000000000803f000000c00000003f0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001ff02fe000000000000003f000000000000803e00000000",
+  "expected": {
+    "length": 600,
+    "sha256": "0afe2e2bfb71cfdaf77dee5eaaed5eca2eb02f6a7bad795e9a69c15130b5e458",
+    "weights_sha256": "b66876bb5646415688e116c569cf5a9e6d7298f9536a6da695f4e8e2ab864020",
+    "catalog_sha256": "993b27d6547cc7c135413066c669e1f94ca54ff0b93cd00f6cd64cb418a8eeee",
+    "tokenizer_sha256": "62013d368c238d978af06f3b52f1e747d5c3af9f34a9d163dfc33b1366083abb",
+    "tensor_ids": [
+      1,
+      2
+    ],
+    "params": 8
+  },
+  "mutations": [
+    {
+      "id": "magic",
+      "offset": 0,
+      "hex": "00",
+      "expected": "magic",
+      "rehash_weights": false
+    },
+    {
+      "id": "major",
+      "offset": 4,
+      "hex": "0200",
+      "expected": "version",
+      "rehash_weights": false
+    },
+    {
+      "id": "minor",
+      "offset": 6,
+      "hex": "0100",
+      "expected": "version",
+      "rehash_weights": false
+    },
+    {
+      "id": "header",
+      "offset": 8,
+      "hex": "40000000",
+      "expected": "header",
+      "rehash_weights": false
+    },
+    {
+      "id": "count",
+      "offset": 12,
+      "hex": "ffffffff",
+      "expected": "section-count",
+      "rehash_weights": false
+    },
+    {
+      "id": "file-length",
+      "offset": 16,
+      "hex": "ffffffffffffffff",
+      "expected": "file-length",
+      "rehash_weights": false
+    },
+    {
+      "id": "table",
+      "offset": 24,
+      "hex": "ffffffffffffffff",
+      "expected": "header",
+      "rehash_weights": false
+    },
+    {
+      "id": "unknown-section",
+      "offset": 32,
+      "hex": "63000000",
+      "expected": "section-type",
+      "rehash_weights": false
+    },
+    {
+      "id": "flags",
+      "offset": 36,
+      "hex": "03000000",
+      "expected": "section-flags",
+      "rehash_weights": false
+    },
+    {
+      "id": "offset-overflow",
+      "offset": 40,
+      "hex": "ffffffffffffffff",
+      "expected": "section-bounds",
+      "rehash_weights": false
+    },
+    {
+      "id": "overlap",
+      "offset": 72,
+      "hex": "c000000000000000",
+      "expected": "section-overlap",
+      "rehash_weights": false
+    },
+    {
+      "id": "duplicate-section",
+      "offset": 64,
+      "hex": "01000000",
+      "expected": "section-order",
+      "rehash_weights": false
+    },
+    {
+      "id": "bad-alignment",
+      "offset": 56,
+      "hex": "04000000",
+      "expected": "section-align",
+      "rehash_weights": false
+    },
+    {
+      "id": "reserved",
+      "offset": 60,
+      "hex": "01000000",
+      "expected": "section-flags",
+      "rehash_weights": false
+    },
+    {
+      "id": "gap",
+      "offset": 350,
+      "hex": "ff",
+      "expected": "section-padding",
+      "rehash_weights": false
+    },
+    {
+      "id": "wrong-weights",
+      "offset": 512,
+      "hex": "ff",
+      "expected": "weights-hash",
+      "rehash_weights": false
+    },
+    {
+      "id": "unknown-arch",
+      "offset": 256,
+      "hex": "01000000",
+      "expected": "architecture",
+      "rehash_weights": false
+    },
+    {
+      "id": "bad-vocab",
+      "offset": 264,
+      "hex": "00000000",
+      "expected": "metadata-bounds",
+      "rehash_weights": false
+    },
+    {
+      "id": "bad-heads",
+      "offset": 280,
+      "hex": "03000000",
+      "expected": "metadata-bounds",
+      "rehash_weights": false
+    },
+    {
+      "id": "param-over",
+      "offset": 292,
+      "hex": "ffffffffffffffff",
+      "expected": "metadata-bounds",
+      "rehash_weights": false
+    },
+    {
+      "id": "catalog-mismatch",
+      "offset": 224,
+      "hex": "00",
+      "expected": "catalog-hash",
+      "rehash_weights": false
+    },
+    {
+      "id": "meta-reserved",
+      "offset": 304,
+      "hex": "01",
+      "expected": "metadata-flags",
+      "rehash_weights": false
+    },
+    {
+      "id": "token-count",
+      "offset": 320,
+      "hex": "04000000",
+      "expected": "token-count",
+      "rehash_weights": false
+    },
+    {
+      "id": "token-dup",
+      "offset": 333,
+      "hex": "61",
+      "expected": "token-duplicate",
+      "rehash_weights": false
+    },
+    {
+      "id": "token-length",
+      "offset": 328,
+      "hex": "ffff",
+      "expected": "token-length",
+      "rehash_weights": false
+    },
+    {
+      "id": "merge-cycle",
+      "offset": 346,
+      "hex": "00000000",
+      "expected": "merge-order",
+      "rehash_weights": false
+    },
+    {
+      "id": "tensor-dup",
+      "offset": 416,
+      "hex": "01000000",
+      "expected": "tensor-id",
+      "rehash_weights": false
+    },
+    {
+      "id": "dtype",
+      "offset": 356,
+      "hex": "0300",
+      "expected": "dtype",
+      "rehash_weights": false
+    },
+    {
+      "id": "rank",
+      "offset": 358,
+      "hex": "05",
+      "expected": "tensor-shape",
+      "rehash_weights": false
+    },
+    {
+      "id": "dim",
+      "offset": 360,
+      "hex": "ffffffff",
+      "expected": "tensor-shape",
+      "rehash_weights": false
+    },
+    {
+      "id": "unused-dim",
+      "offset": 368,
+      "hex": "01000000",
+      "expected": "tensor-shape",
+      "rehash_weights": false
+    },
+    {
+      "id": "tensor-overlap",
+      "offset": 440,
+      "hex": "0000000000000000",
+      "expected": "tensor-overlap",
+      "rehash_weights": false
+    },
+    {
+      "id": "tensor-len",
+      "offset": 384,
+      "hex": "1100000000000000",
+      "expected": "tensor-length",
+      "rehash_weights": false
+    },
+    {
+      "id": "quant-axis",
+      "offset": 456,
+      "hex": "01000000",
+      "expected": "quant-layout",
+      "rehash_weights": false
+    },
+    {
+      "id": "quant-count",
+      "offset": 472,
+      "hex": "03000000",
+      "expected": "quant-layout",
+      "rehash_weights": false
+    },
+    {
+      "id": "scale-nan",
+      "offset": 584,
+      "hex": "0000c07f",
+      "expected": "quant-value",
+      "rehash_weights": false
+    },
+    {
+      "id": "scale-zero",
+      "offset": 584,
+      "hex": "00000000",
+      "expected": "quant-value",
+      "rehash_weights": false
+    },
+    {
+      "id": "zero-point",
+      "offset": 588,
+      "hex": "01000000",
+      "expected": "quant-value",
+      "rehash_weights": false
+    },
+    {
+      "id": "float-inf",
+      "offset": 512,
+      "hex": "0000807f",
+      "expected": "float-value",
+      "rehash_weights": true
+    },
+    {
+      "id": "tensor-padding",
+      "offset": 528,
+      "hex": "ff",
+      "expected": "tensor-padding",
+      "rehash_weights": true
+    }
+  ]
+}

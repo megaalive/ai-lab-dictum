@@ -73,3 +73,7 @@ if(dictum_sanitizers)
         target_compile_options(pipeline_probe PRIVATE -fno-sanitize-recover=undefined)
     endif()
 endif()
+
+add_test(NAME pipeline.functional COMMAND "${Python3_EXECUTABLE}" -B
+    "${CMAKE_CURRENT_SOURCE_DIR}/pipeline/run.py" "$<TARGET_FILE:pipeline_probe>" "$<TARGET_FILE:dictum>")
+set_tests_properties(pipeline.functional PROPERTIES TIMEOUT 180)

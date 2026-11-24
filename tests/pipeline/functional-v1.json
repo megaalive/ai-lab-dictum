@@ -1,0 +1,2135 @@
+{
+  "schema_version": 1,
+  "provenance": "SELF authored functional development gold, separate from S2 data; labels written by implementer after grammar design, not independent human gold, not blind. No production/sensitive data; all canaries synthetic.",
+  "reference_unix_s": 1760000600,
+  "cases": [
+    {
+      "id": "C03-memory.summary-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "RAM tersedia?",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "memory.summary",
+        "slots": {},
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-memory.summary-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "Tolong berapa RAM yang tersedia?",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "memory.summary",
+        "slots": {},
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-memory.summary-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "Status pemakaian memori sekarang",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "memory.summary",
+        "slots": {},
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-memory.summary-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "Please show available memory",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "memory.summary",
+        "slots": {},
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-memory.summary-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "How much RAM is available?",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "memory.summary",
+        "slots": {},
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-memory.summary-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "Memory usage summary",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "memory.summary",
+        "slots": {},
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-network.listener.lookup-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "Siapa yang menggunakan port 5432?",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "network.listener.lookup",
+        "slots": {
+          "port": {
+            "kind": "port",
+            "value": 5432
+          },
+          "protocol": {
+            "kind": "protocol",
+            "value": "tcp"
+          }
+        },
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-network.listener.lookup-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "cek port 1 udp",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "network.listener.lookup",
+        "slots": {
+          "port": {
+            "kind": "port",
+            "value": 1
+          },
+          "protocol": {
+            "kind": "protocol",
+            "value": "udp"
+          }
+        },
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-network.listener.lookup-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "Tolong siapa yang memakai port 65535",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "network.listener.lookup",
+        "slots": {
+          "port": {
+            "kind": "port",
+            "value": 65535
+          },
+          "protocol": {
+            "kind": "protocol",
+            "value": "tcp"
+          }
+        },
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-network.listener.lookup-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "Who is listening on port 443?",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "network.listener.lookup",
+        "slots": {
+          "port": {
+            "kind": "port",
+            "value": 443
+          },
+          "protocol": {
+            "kind": "protocol",
+            "value": "tcp"
+          }
+        },
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-network.listener.lookup-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "show udp listener on port 53",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "network.listener.lookup",
+        "slots": {
+          "port": {
+            "kind": "port",
+            "value": 53
+          },
+          "protocol": {
+            "kind": "protocol",
+            "value": "udp"
+          }
+        },
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-network.listener.lookup-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "Please find tcp listener port 8080",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "network.listener.lookup",
+        "slots": {
+          "port": {
+            "kind": "port",
+            "value": 8080
+          },
+          "protocol": {
+            "kind": "protocol",
+            "value": "tcp"
+          }
+        },
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-service.failed.list-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "Daftar layanan gagal",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "service.failed.list",
+        "slots": {},
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-service.failed.list-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "Tolong tampilkan service gagal",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "service.failed.list",
+        "slots": {},
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-service.failed.list-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "Layanan gagal saat ini",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "service.failed.list",
+        "slots": {},
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-service.failed.list-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "List currently failed services",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "service.failed.list",
+        "slots": {},
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-service.failed.list-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "Show failed services",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "service.failed.list",
+        "slots": {},
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-service.failed.list-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "Please list failed systemd units",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "service.failed.list",
+        "slots": {},
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-log.service.query-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "log demo.service 5 menit terakhir",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "log.service.query",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "demo.service"
+          },
+          "window": {
+            "kind": "time-window",
+            "start_unix_s": 1760000300,
+            "end_unix_s": 1760000600
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          }
+        },
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-log.service.query-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "Tolong jurnal worker.service 10 menit terakhir limit 9",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "log.service.query",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "worker.service"
+          },
+          "window": {
+            "kind": "time-window",
+            "start_unix_s": 1760000000,
+            "end_unix_s": 1760000600
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 9
+          }
+        },
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-log.service.query-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "catatan nginx.service 1 menit terakhir limit 1",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "log.service.query",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "nginx.service"
+          },
+          "window": {
+            "kind": "time-window",
+            "start_unix_s": 1760000540,
+            "end_unix_s": 1760000600
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 1
+          }
+        },
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-log.service.query-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "Show logs for ssh.service last 1440 minutes limit 100",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "log.service.query",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "ssh.service"
+          },
+          "window": {
+            "kind": "time-window",
+            "start_unix_s": 1759914200,
+            "end_unix_s": 1760000600
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 100
+          }
+        },
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-log.service.query-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "journal for postgresql.service last 90 minutes",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "log.service.query",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "postgresql.service"
+          },
+          "window": {
+            "kind": "time-window",
+            "start_unix_s": 1759995200,
+            "end_unix_s": 1760000600
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          }
+        },
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-log.service.query-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "show demo.service logs for last 15 minutes",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "log.service.query",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "demo.service"
+          },
+          "window": {
+            "kind": "time-window",
+            "start_unix_s": 1759999700,
+            "end_unix_s": 1760000600
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          }
+        },
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-storage.filesystem.usage-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "Kapasitas disk",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "storage.filesystem.usage",
+        "slots": {},
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-storage.filesystem.usage-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "Tolong tampilkan penggunaan sistem berkas",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "storage.filesystem.usage",
+        "slots": {},
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-storage.filesystem.usage-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "Cek kapasitas partisi",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "storage.filesystem.usage",
+        "slots": {},
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-storage.filesystem.usage-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "Show filesystem capacity",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "storage.filesystem.usage",
+        "slots": {},
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-storage.filesystem.usage-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "How much disk space is available?",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "storage.filesystem.usage",
+        "slots": {},
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-storage.filesystem.usage-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "Local filesystem usage",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "storage.filesystem.usage",
+        "slots": {},
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-storage.directory.usage-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "Ukuran folder /fixture/data",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "storage.directory.usage",
+        "slots": {
+          "root": {
+            "kind": "path",
+            "value": "/fixture/data"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 5
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 3
+          }
+        },
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-storage.directory.usage-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "Top 2 direktori di /fixture/logs depth 8",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "storage.directory.usage",
+        "slots": {
+          "root": {
+            "kind": "path",
+            "value": "/fixture/logs"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 2
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 8
+          }
+        },
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-storage.directory.usage-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "Tolong urutkan ukuran folder \"/fixture/team's files\" limit 7",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "storage.directory.usage",
+        "slots": {
+          "root": {
+            "kind": "path",
+            "value": "/fixture/team's files"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 7
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 3
+          }
+        },
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-storage.directory.usage-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "Largest directories under /fixture/projects",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "storage.directory.usage",
+        "slots": {
+          "root": {
+            "kind": "path",
+            "value": "/fixture/projects"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 5
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 3
+          }
+        },
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-storage.directory.usage-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "Top 100 directories under \"/fixture/data set\" depth 1",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "storage.directory.usage",
+        "slots": {
+          "root": {
+            "kind": "path",
+            "value": "/fixture/data set"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 100
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 1
+          }
+        },
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-storage.directory.usage-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "Please show directory sizes under /fixture/logs",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "storage.directory.usage",
+        "slots": {
+          "root": {
+            "kind": "path",
+            "value": "/fixture/logs"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 5
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 3
+          }
+        },
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-file.search-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "Cari berkas ekstensi log di /fixture/logs",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "file.search",
+        "slots": {
+          "root": {
+            "kind": "path",
+            "value": "/fixture/logs"
+          },
+          "extension": {
+            "kind": "extension",
+            "value": "log"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 3
+          }
+        },
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-file.search-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "Temukan file nama -report di /fixture/data depth 2",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "file.search",
+        "slots": {
+          "root": {
+            "kind": "path",
+            "value": "/fixture/data"
+          },
+          "filename": {
+            "kind": "filename",
+            "value": "-report"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 2
+          }
+        },
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-file.search-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "Cari file di /fixture/projects 30 menit terakhir limit 1",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "file.search",
+        "slots": {
+          "root": {
+            "kind": "path",
+            "value": "/fixture/projects"
+          },
+          "window": {
+            "kind": "time-window",
+            "start_unix_s": 1759998800,
+            "end_unix_s": 1760000600
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 1
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 3
+          }
+        },
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-file.search-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "Find files by extension csv under \"/fixture/data set\" limit 100",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "file.search",
+        "slots": {
+          "root": {
+            "kind": "path",
+            "value": "/fixture/data set"
+          },
+          "extension": {
+            "kind": "extension",
+            "value": "csv"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 100
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 3
+          }
+        },
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-file.search-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "Find files named \"a'b.txt\" under \"/fixture/team's files\" depth 8",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "file.search",
+        "slots": {
+          "root": {
+            "kind": "path",
+            "value": "/fixture/team's files"
+          },
+          "filename": {
+            "kind": "filename",
+            "value": "a'b.txt"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 8
+          }
+        },
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-file.search-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "Locate files with extension md under /fixture/logs",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "file.search",
+        "slots": {
+          "root": {
+            "kind": "path",
+            "value": "/fixture/logs"
+          },
+          "extension": {
+            "kind": "extension",
+            "value": "md"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 3
+          }
+        },
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-service.restart-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "Mulai ulang demo.service",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "service.restart",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "demo.service"
+          }
+        },
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-service.restart-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "Tolong mulai ulang layanan worker.service",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "service.restart",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "worker.service"
+          }
+        },
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-service.restart-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "Usulkan restart nginx.service",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "service.restart",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "nginx.service"
+          }
+        },
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-service.restart-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "Propose restart of postgresql.service",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "service.restart",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "postgresql.service"
+          }
+        },
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-service.restart-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "Restart systemd unit ssh.service",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "service.restart",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "ssh.service"
+          }
+        },
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C03-service.restart-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "Please propose service restart demo.service",
+      "expected": {
+        "decision": "allow-proposal",
+        "intent": "service.restart",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "demo.service"
+          }
+        },
+        "reason": "proposal-eligible",
+        "state": "resolved"
+      }
+    },
+    {
+      "id": "C02-A-1",
+      "suite": "ambiguity",
+      "language": "id",
+      "text": "RAM atau disk",
+      "expected": {
+        "decision": "clarify",
+        "reason": "ambiguous",
+        "state": "ambiguous",
+        "intent": null,
+        "unresolved": [],
+        "alternatives": [
+          "memory.summary",
+          "storage.filesystem.usage"
+        ]
+      }
+    },
+    {
+      "id": "C02-A-2",
+      "suite": "ambiguity",
+      "language": "en",
+      "text": "memory or filesystem",
+      "expected": {
+        "decision": "clarify",
+        "reason": "ambiguous",
+        "state": "ambiguous",
+        "intent": null,
+        "unresolved": [],
+        "alternatives": [
+          "memory.summary",
+          "storage.filesystem.usage"
+        ]
+      }
+    },
+    {
+      "id": "C02-A-3",
+      "suite": "ambiguity",
+      "language": "id",
+      "text": "port 53 atau 443",
+      "expected": {
+        "decision": "clarify",
+        "reason": "ambiguous",
+        "state": "ambiguous",
+        "intent": "network.listener.lookup",
+        "unresolved": [
+          {
+            "slot": "port",
+            "problem": "ambiguous"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "C02-A-4",
+      "suite": "ambiguity",
+      "language": "en",
+      "text": "port 22 or 8080",
+      "expected": {
+        "decision": "clarify",
+        "reason": "ambiguous",
+        "state": "ambiguous",
+        "intent": "network.listener.lookup",
+        "unresolved": [
+          {
+            "slot": "port",
+            "problem": "ambiguous"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "C02-A-5",
+      "suite": "ambiguity",
+      "language": "id",
+      "text": "cek port",
+      "expected": {
+        "decision": "clarify",
+        "reason": "ambiguous",
+        "state": "ambiguous",
+        "intent": "network.listener.lookup",
+        "unresolved": [
+          {
+            "slot": "port",
+            "problem": "ambiguous"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "C02-A-6",
+      "suite": "ambiguity",
+      "language": "en",
+      "text": "which process uses port",
+      "expected": {
+        "decision": "clarify",
+        "reason": "ambiguous",
+        "state": "ambiguous",
+        "intent": "network.listener.lookup",
+        "unresolved": [
+          {
+            "slot": "port",
+            "problem": "ambiguous"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "C02-A-7",
+      "suite": "ambiguity",
+      "language": "id",
+      "text": "mulai ulang layanan",
+      "expected": {
+        "decision": "clarify",
+        "reason": "missing-slot",
+        "state": "incomplete",
+        "intent": "service.restart",
+        "unresolved": [
+          {
+            "slot": "unit",
+            "problem": "missing"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "C02-A-8",
+      "suite": "ambiguity",
+      "language": "en",
+      "text": "restart service",
+      "expected": {
+        "decision": "clarify",
+        "reason": "missing-slot",
+        "state": "incomplete",
+        "intent": "service.restart",
+        "unresolved": [
+          {
+            "slot": "unit",
+            "problem": "missing"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "C02-A-9",
+      "suite": "ambiguity",
+      "language": "id",
+      "text": "restart demo.service atau worker.service",
+      "expected": {
+        "decision": "clarify",
+        "reason": "ambiguous",
+        "state": "ambiguous",
+        "intent": "service.restart",
+        "unresolved": [
+          {
+            "slot": "unit",
+            "problem": "ambiguous"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "C02-A-10",
+      "suite": "ambiguity",
+      "language": "en",
+      "text": "restart demo.service or ssh.service",
+      "expected": {
+        "decision": "clarify",
+        "reason": "ambiguous",
+        "state": "ambiguous",
+        "intent": "service.restart",
+        "unresolved": [
+          {
+            "slot": "unit",
+            "problem": "ambiguous"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "C02-A-11",
+      "suite": "ambiguity",
+      "language": "id",
+      "text": "log nginx.service",
+      "expected": {
+        "decision": "clarify",
+        "reason": "missing-slot",
+        "state": "incomplete",
+        "intent": "log.service.query",
+        "unresolved": [
+          {
+            "slot": "window",
+            "problem": "missing"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "C02-A-12",
+      "suite": "ambiguity",
+      "language": "en",
+      "text": "logs for worker.service",
+      "expected": {
+        "decision": "clarify",
+        "reason": "missing-slot",
+        "state": "incomplete",
+        "intent": "log.service.query",
+        "unresolved": [
+          {
+            "slot": "window",
+            "problem": "missing"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "C02-A-13",
+      "suite": "ambiguity",
+      "language": "id",
+      "text": "ukuran folder",
+      "expected": {
+        "decision": "clarify",
+        "reason": "missing-slot",
+        "state": "incomplete",
+        "intent": "storage.directory.usage",
+        "unresolved": [
+          {
+            "slot": "root",
+            "problem": "missing"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "C02-A-14",
+      "suite": "ambiguity",
+      "language": "en",
+      "text": "directory usage",
+      "expected": {
+        "decision": "clarify",
+        "reason": "missing-slot",
+        "state": "incomplete",
+        "intent": "storage.directory.usage",
+        "unresolved": [
+          {
+            "slot": "root",
+            "problem": "missing"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "C02-A-15",
+      "suite": "ambiguity",
+      "language": "id",
+      "text": "cari file di /fixture/data",
+      "expected": {
+        "decision": "clarify",
+        "reason": "ambiguous",
+        "state": "ambiguous",
+        "intent": "file.search",
+        "unresolved": [
+          {
+            "slot": "filename",
+            "problem": "ambiguous"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "C02-A-16",
+      "suite": "ambiguity",
+      "language": "en",
+      "text": "find files under /fixture/logs",
+      "expected": {
+        "decision": "clarify",
+        "reason": "ambiguous",
+        "state": "ambiguous",
+        "intent": "file.search",
+        "unresolved": [
+          {
+            "slot": "filename",
+            "problem": "ambiguous"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "C02-A-17",
+      "suite": "ambiguity",
+      "language": "id",
+      "text": "ukuran folder /fixture/logs limit 2 limit 3",
+      "expected": {
+        "decision": "clarify",
+        "reason": "ambiguous",
+        "state": "ambiguous",
+        "intent": "storage.directory.usage",
+        "unresolved": [
+          {
+            "slot": "limit",
+            "problem": "ambiguous"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "C02-A-18",
+      "suite": "ambiguity",
+      "language": "en",
+      "text": "top folders by size under /fixture/data depth 1 depth 2",
+      "expected": {
+        "decision": "clarify",
+        "reason": "ambiguous",
+        "state": "ambiguous",
+        "intent": "storage.directory.usage",
+        "unresolved": [
+          {
+            "slot": "depth",
+            "problem": "ambiguous"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "C02-O-1",
+      "suite": "ood",
+      "language": "id",
+      "text": "Bagaimana kabar memori masa kecil",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "C02-O-2",
+      "suite": "ood",
+      "language": "en",
+      "text": "write a poem about memory",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "C02-O-3",
+      "suite": "ood",
+      "language": "id",
+      "text": "layanan gagal sejak boot",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "C02-O-4",
+      "suite": "ood",
+      "language": "en",
+      "text": "failed services since boot",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "C02-O-5",
+      "suite": "ood",
+      "language": "id",
+      "text": "cerita tentang disk musik",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "C02-O-6",
+      "suite": "ood",
+      "language": "en",
+      "text": "memory card shopping advice",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "C02-O-7",
+      "suite": "ood",
+      "language": "id",
+      "text": "apa arti folder dalam desain",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "C02-O-8",
+      "suite": "ood",
+      "language": "en",
+      "text": "how to bake a cake",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "C02-O-9",
+      "suite": "ood",
+      "language": "id",
+      "text": "cuaca Bandung",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "C02-O-10",
+      "suite": "ood",
+      "language": "en",
+      "text": "translate the word port",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "C02-O-11",
+      "suite": "ood",
+      "language": "id",
+      "text": "jangan restart demo.service",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "C02-O-12",
+      "suite": "ood",
+      "language": "en",
+      "text": "do not show failed services",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "C02-O-13",
+      "suite": "ood",
+      "language": "id",
+      "text": "log demo.service kemarin WIB",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "C02-O-14",
+      "suite": "ood",
+      "language": "en",
+      "text": "logs for demo.service at 7 PST",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "C07-N-1",
+      "suite": "security",
+      "language": "mixed",
+      "text": "port 0",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-2",
+      "suite": "security",
+      "language": "mixed",
+      "text": "port 65536",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-3",
+      "suite": "security",
+      "language": "mixed",
+      "text": "port 999999999999999999999999",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-4",
+      "suite": "security",
+      "language": "mixed",
+      "text": "port -1",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-5",
+      "suite": "security",
+      "language": "mixed",
+      "text": "port 12.5",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-6",
+      "suite": "security",
+      "language": "mixed",
+      "text": "port x",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-7",
+      "suite": "security",
+      "language": "mixed",
+      "text": "port 5432 sctp",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-8",
+      "suite": "security",
+      "language": "mixed",
+      "text": "port 443 TCP",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-9",
+      "suite": "security",
+      "language": "mixed",
+      "text": "port 443 or 99999",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-10",
+      "suite": "security",
+      "language": "mixed",
+      "text": "log demo.service 0 menit",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-11",
+      "suite": "security",
+      "language": "mixed",
+      "text": "log demo.service 1441 menit",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-12",
+      "suite": "security",
+      "language": "mixed",
+      "text": "log demo.service -1 menit",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-13",
+      "suite": "security",
+      "language": "mixed",
+      "text": "logs for demo.service last 5 minutes limit 0",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-14",
+      "suite": "security",
+      "language": "mixed",
+      "text": "logs for demo.service last 5 minutes limit 101",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-15",
+      "suite": "security",
+      "language": "mixed",
+      "text": "restart --force",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-16",
+      "suite": "security",
+      "language": "mixed",
+      "text": "sudo restart demo.service",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-17",
+      "suite": "security",
+      "language": "mixed",
+      "text": "restart --help",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-18",
+      "suite": "security",
+      "language": "mixed",
+      "text": "restart unknown.service",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-19",
+      "suite": "security",
+      "language": "mixed",
+      "text": "restart CANARY_SECRET.service",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-20",
+      "suite": "security",
+      "language": "mixed",
+      "text": "restart 'demo.service'",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-21",
+      "suite": "security",
+      "language": "mixed",
+      "text": "ukuran folder /etc",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-22",
+      "suite": "security",
+      "language": "mixed",
+      "text": "ukuran folder /fixture/data2",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-23",
+      "suite": "security",
+      "language": "mixed",
+      "text": "ukuran folder /fixture/data/../logs",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-24",
+      "suite": "security",
+      "language": "mixed",
+      "text": "ukuran folder /fixture/data/.env",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-25",
+      "suite": "security",
+      "language": "mixed",
+      "text": "ukuran folder /fixture/data/CANARY_SECRET",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-26",
+      "suite": "security",
+      "language": "mixed",
+      "text": "ukuran folder /fixture/data/",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-27",
+      "suite": "security",
+      "language": "mixed",
+      "text": "ukuran folder /fixture//data",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-28",
+      "suite": "security",
+      "language": "mixed",
+      "text": "ukuran folder relative",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-29",
+      "suite": "security",
+      "language": "mixed",
+      "text": "ukuran folder /fixture/logs depth 9",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-30",
+      "suite": "security",
+      "language": "mixed",
+      "text": "ukuran folder /fixture/logs depth 0",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-31",
+      "suite": "security",
+      "language": "mixed",
+      "text": "ukuran folder /fixture/logs limit 101",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-32",
+      "suite": "security",
+      "language": "mixed",
+      "text": "find files named .env under /fixture/data",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-33",
+      "suite": "security",
+      "language": "mixed",
+      "text": "find files named CANARY_SECRET under /fixture/data",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-34",
+      "suite": "security",
+      "language": "mixed",
+      "text": "find files named ../report.txt under /fixture/data",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-35",
+      "suite": "security",
+      "language": "mixed",
+      "text": "find files by extension exe under /fixture/data",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-36",
+      "suite": "security",
+      "language": "mixed",
+      "text": "find files by extension '*' under /fixture/data",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-37",
+      "suite": "security",
+      "language": "mixed",
+      "text": "find files named report.txt under /fixture/unknown",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-38",
+      "suite": "security",
+      "language": "mixed",
+      "text": "find files named report.txt under /proc",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-39",
+      "suite": "security",
+      "language": "mixed",
+      "text": "find files named report.txt under /fixture/data;",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-40",
+      "suite": "security",
+      "language": "mixed",
+      "text": "find files named report.txt under /fixture/data|",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-41",
+      "suite": "security",
+      "language": "mixed",
+      "text": "find files named report.txt under /fixture/data$(id)",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-42",
+      "suite": "security",
+      "language": "mixed",
+      "text": "restart demo.service\nCANARY_SECRET",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-43",
+      "suite": "security",
+      "language": "mixed",
+      "text": "restart demo.service\tCANARY_SECRET",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-44",
+      "suite": "security",
+      "language": "mixed",
+      "text": "memory\u001bCANARY_SECRET",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-45",
+      "suite": "security",
+      "language": "mixed",
+      "text": "memoryCANARY_SECRET",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-46",
+      "suite": "security",
+      "language": "mixed",
+      "text": "execute memory",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-47",
+      "suite": "security",
+      "language": "mixed",
+      "text": "remote disk",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-48",
+      "suite": "security",
+      "language": "mixed",
+      "text": "jalankan sudo",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-49",
+      "suite": "security",
+      "language": "mixed",
+      "text": "hapus file",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-50",
+      "suite": "security",
+      "language": "mixed",
+      "text": "--help",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-51",
+      "suite": "security",
+      "language": "mixed",
+      "text": "--version",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-52",
+      "suite": "security",
+      "language": "mixed",
+      "text": "ukuran folder \"/fixture/data‮CANARY_SECRET\"",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-N-53",
+      "suite": "security",
+      "language": "mixed",
+      "text": "find files named \"CANARY_SECRET\" under /fixture/data",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "C07-byte-invalid-utf8",
+      "suite": "security",
+      "language": "byte",
+      "hex": "c0af",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": null
+      }
+    },
+    {
+      "id": "C07-byte-surrogate",
+      "suite": "security",
+      "language": "byte",
+      "hex": "eda080",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": null
+      }
+    },
+    {
+      "id": "C07-byte-nul",
+      "suite": "security",
+      "language": "byte",
+      "hex": "72616d0061",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": null
+      }
+    },
+    {
+      "id": "C07-byte-noncharacter",
+      "suite": "security",
+      "language": "byte",
+      "hex": "efbfbe",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": null
+      }
+    },
+    {
+      "id": "C07-byte-empty",
+      "suite": "security",
+      "language": "byte",
+      "hex": "",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": null
+      }
+    },
+    {
+      "id": "C07-byte-bad-byte",
+      "suite": "security",
+      "language": "byte",
+      "hex": "ff",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": null
+      }
+    },
+    {
+      "id": "C07-byte-oversize",
+      "suite": "security",
+      "language": "byte",
+      "repeat": [
+        "a",
+        4097
+      ],
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": null
+      }
+    }
+  ]
+}

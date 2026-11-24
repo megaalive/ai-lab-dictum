@@ -234,7 +234,9 @@ def run(model, report_name="PIPELINE_METRICS"):
                 print("GOLD_MISS",model,row["id"],"expected",row["expected"]["decision"],
                       "actual",actual)
             if row["suite"]=="security":
-                assert not accepted, "security-proposal"
+                assert not accepted and correct, "security-outcome"
+            if row["suite"] in {"ambiguity","ood"}:
+                assert correct, "deterministic-negative-outcome"
         except (AssertionError,ValueError,KeyError) as exc:
             # Never print raw bytes, paths, projected data or exception payload.
             print("INVARIANT_FAIL",model,row["id"],type(exc).__name__)

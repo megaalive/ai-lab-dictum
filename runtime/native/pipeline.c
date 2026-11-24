@@ -341,12 +341,11 @@ static size_t retrieve(const struct request *q,const struct nlu_proposal *n)
     }
     return tie ? NO_INTENT : best;
 }
-static struct nlu_proposal propose(const struct request *q,enum pipeline_model model)
+static struct nlu_proposal propose(const struct request *q)
 {
     struct nlu_proposal n={0};
     if (q->invalid) return n;
     if (match(q,0,q->tokens.count,&n)) {
-        if (model==PIPE_B1 && retrieve(q,&n)!=n.intents[0]) return (struct nlu_proposal){0};
         return n;
     }
     /* Only recognize explicit alternatives when both sides are supported
@@ -730,9 +729,17 @@ bool pipeline_run(const unsigned char *input,size_t size,int64_t reference_unix_
     }
     struct request q={.data=input,.size=size,.reference=reference_unix_s};
     if (!context(&q,request_sequence,out->context)) return false;
-    const struct nlu_proposal n=propose(&q,model);
+    struct nlu_proposal n=propose(&q);
+    struct resolved_ir r=resolve(&q,&n);
+    /* Ranking is an abstention guard for fully resolved proposals only.
+     * A failed retrieval may not erase deterministic invalid/missing/conflict
+     * diagnoses. This preflight is pure typed validation, not permission. */
+    if (model==PIPE_B1 && r.state==RES_RESOLVED &&
+        retrieve(&q,&n)!=n.intents[0]) {
+        n=(struct nlu_proposal){0};
+        r=resolve(&q,&n);
+    }
     if (!serialize_nlu(&q,&n,out->nlu)) return false;
-    const struct resolved_ir r=resolve(&q,&n);
     if (!serialize_ir(&q,&r,out->ir)) return false;
     const struct policy_decision p=policy(&q,&r);
     if (!serialize_policy(&q,&r,p,out->policy)) return false;

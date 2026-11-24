@@ -119,3 +119,7 @@ set_tests_properties(catalog.native_lookup PROPERTIES TIMEOUT 90)
 add_test(NAME pipeline.f1_functional COMMAND "${Python3_EXECUTABLE}" -B
     "${CMAKE_CURRENT_SOURCE_DIR}/pipeline/f1_functional.py" "$<TARGET_FILE:pipeline_probe>" "$<TARGET_FILE:dictum>")
 set_tests_properties(pipeline.f1_functional PROPERTIES TIMEOUT 240)
+
+add_test(NAME pipeline.f1_benchmark COMMAND "${Python3_EXECUTABLE}" -B
+    "${CMAKE_CURRENT_SOURCE_DIR}/pipeline/bench.py" "$<TARGET_FILE:pipeline_bench>" f1-functional-v1.json)
+set_tests_properties(pipeline.f1_benchmark PROPERTIES TIMEOUT 120)

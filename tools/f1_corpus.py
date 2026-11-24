@@ -132,6 +132,8 @@ def partition_mechanical(records):
         parent=row["parent"]
         if parent is not None:
             need(parent in by_id and by_id[parent]["semantic_group"]==row["semantic_group"],"parent-group")
+    for i,row in by_id.items():
+        parent=row["parent"]
         seen={i}
         while parent is not None:
             need(parent not in seen,"parent-cycle")

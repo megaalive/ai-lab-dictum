@@ -34,7 +34,10 @@ def load():
          contract["candidate_value_version"] == 2 and contract["schema_version"] == 1 and
          contract["execution_allowed"] is False and contract["copyable"] is False and
          contract["compatibility"] == "NOT VERIFIED", "authority")
-    for path, digest in contract["source_git_blobs"].items():
+    pins={"catalog/core/intents-v1.json":"110368054b8d9f1ffa89a18dc23f4927769a32e4",
+          "catalog/debian-13/v1.json":"2cc5431daaf3da0dcaaa7fdcacefdb7b04a8cae9"}
+    need(contract["source_git_blobs"]==pins,"source-pin")
+    for path, digest in pins.items():
         data = (ROOT / path).read_bytes()
         actual = hashlib.sha1(f"blob {len(data)}\0".encode() + data).hexdigest()
         need(actual == digest, "source-pin")

@@ -123,3 +123,31 @@ set_tests_properties(pipeline.f1_functional PROPERTIES TIMEOUT 240)
 add_test(NAME pipeline.f1_benchmark COMMAND "${Python3_EXECUTABLE}" -B
     "${CMAKE_CURRENT_SOURCE_DIR}/pipeline/bench.py" "$<TARGET_FILE:pipeline_bench>" f1-functional-v1.json)
 set_tests_properties(pipeline.f1_benchmark PROPERTIES TIMEOUT 120)
+
+# Development-only candidate-v2 fixture validator; not linked into product.
+set(f1_candidate_generated "${CMAKE_CURRENT_BINARY_DIR}/f1_candidate_generated.inc")
+add_custom_command(OUTPUT "${f1_candidate_generated}"
+    COMMAND "${Python3_EXECUTABLE}" -B "${PROJECT_SOURCE_DIR}/tools/generate_f1_candidates.py" "${f1_candidate_generated}"
+    DEPENDS "${PROJECT_SOURCE_DIR}/tools/generate_f1_candidates.py"
+        "${PROJECT_SOURCE_DIR}/tools/f1_slot_domains.py"
+        "${PROJECT_SOURCE_DIR}/spec/catalog/f1-slot-domains-v1.json"
+        "${PROJECT_SOURCE_DIR}/spec/catalog/f1-slot-candidate-v2.schema.json"
+        "${PROJECT_SOURCE_DIR}/catalog/core/intents-v1.json"
+        "${PROJECT_SOURCE_DIR}/catalog/debian-13/v1.json"
+    VERBATIM)
+add_executable(f1_candidate_probe ir/f1_candidate_probe.c
+    "${PROJECT_SOURCE_DIR}/runtime/native/f1_candidate.c" "${f1_candidate_generated}")
+target_include_directories(f1_candidate_probe PRIVATE "${CMAKE_CURRENT_BINARY_DIR}")
+target_link_libraries(f1_candidate_probe PRIVATE dictum_ir)
+set_target_properties(f1_candidate_probe PROPERTIES C_STANDARD 17 C_STANDARD_REQUIRED YES C_EXTENSIONS NO)
+target_compile_options(f1_candidate_probe PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wformat=2
+    -Wstrict-prototypes -Wmissing-prototypes -Wundef -Wvla)
+if(dictum_sanitizers)
+    target_compile_options(f1_candidate_probe PRIVATE "${dictum_sanitizer_flag}" -fno-omit-frame-pointer)
+    if(DICTUM_ENABLE_UBSAN)
+        target_compile_options(f1_candidate_probe PRIVATE -fno-sanitize-recover=undefined)
+    endif()
+endif()
+add_test(NAME ir.f1_candidate_diff COMMAND "${Python3_EXECUTABLE}" -B
+    "${CMAKE_CURRENT_SOURCE_DIR}/ir/f1_candidate_diff.py" "$<TARGET_FILE:f1_candidate_probe>" "$<TARGET_FILE:ir_probe>")
+set_tests_properties(ir.f1_candidate_diff PROPERTIES TIMEOUT 120)

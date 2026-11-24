@@ -57,6 +57,7 @@ neg=[
     changed(0,human_reviewed=True),changed(0,role="BLIND"),changed(0,text="private input"),
     changed(0,text="toy secret\n"),changed(0,parent="toy-a"),changed(0,parent="toy-absent"),
     changed(0,parent="toy-c"),changed(0,parent="toy-b"),
+    changed(1,parent="toy-absent"),
     changed(3,semantic_key="toy-contradiction"),changed(0,language="xx"),
     changed(0,semantic_key="not-toy"),changed(0,id="toy-b"),
     changed(0,split="train"),changed(0,text="toy "+"a"*300),changed(0,text="toy é"),

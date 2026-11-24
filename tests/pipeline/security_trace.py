@@ -14,7 +14,7 @@ spec=importlib.util.spec_from_file_location("s1_harness",ROOT/"tests/spikes/s1/r
 s1=importlib.util.module_from_spec(spec)
 spec.loader.exec_module(s1)
 CLI=str(Path(sys.argv[1]).resolve())
-CASES=json.loads((HERE/"functional-v1.json").read_text())["cases"] + json.loads((HERE/"f1-functional-v1.json").read_text())["cases"]
+CASES=json.loads((HERE/"functional-v1.json").read_text())["cases"] + json.loads((HERE/"f1-functional-v1.json").read_text())["cases"] + json.loads((HERE/"f1-v2-functional.json").read_text())["cases"]
 CANARIES=(b"CANARY_SECRET",b"DCT008_CANARY",b"CANARY_SECRET_CONTENT_FIXTURE_V1",b"CANARY_SECRET_CONTENT_FIXTURE_V2")
 
 # The trace must contain exactly one initial execve of the product and no

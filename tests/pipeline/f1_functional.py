@@ -20,7 +20,7 @@ assert not {oracle.data(r) for r in cases} & {oracle.data(r) for r in oracle.cas
 assert manifest["reference_unix_s"] == oracle.reference
 counts=Counter(r["suite"] for r in cases)
 assert counts == {"supported":150,"ambiguity":18,"ood":19,"security":45}
-extra = set(oracle.registry)-set(oracle.skeleton)
+extra = set(oracle.prior["patterns"])-set(oracle.skeleton)
 assert len(extra)==25
 for i in extra:
     rows=[r for r in cases if r["suite"]=="supported" and r["expected"]["intent"]==i]

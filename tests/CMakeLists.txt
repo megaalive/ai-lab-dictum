@@ -151,3 +151,10 @@ endif()
 add_test(NAME ir.f1_candidate_diff COMMAND "${Python3_EXECUTABLE}" -B
     "${CMAKE_CURRENT_SOURCE_DIR}/ir/f1_candidate_diff.py" "$<TARGET_FILE:f1_candidate_probe>" "$<TARGET_FILE:ir_probe>")
 set_tests_properties(ir.f1_candidate_diff PROPERTIES TIMEOUT 120)
+
+add_test(NAME pipeline.f1_v2_functional COMMAND "${Python3_EXECUTABLE}" -B
+    "${CMAKE_CURRENT_SOURCE_DIR}/pipeline/f1_v2_functional.py" "$<TARGET_FILE:pipeline_probe>" "$<TARGET_FILE:dictum>")
+set_tests_properties(pipeline.f1_v2_functional PROPERTIES TIMEOUT 240)
+add_test(NAME pipeline.f1_v2_benchmark COMMAND "${Python3_EXECUTABLE}" -B
+    "${CMAKE_CURRENT_SOURCE_DIR}/pipeline/bench.py" "$<TARGET_FILE:pipeline_bench>" f1-v2-functional.json)
+set_tests_properties(pipeline.f1_v2_benchmark PROPERTIES TIMEOUT 120)

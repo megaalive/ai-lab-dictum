@@ -12,11 +12,11 @@ from pathlib import Path
 
 HERE=Path(__file__).resolve().parent
 name=sys.argv[2] if len(sys.argv)==3 else "functional-v1.json"
-assert name in {"functional-v1.json","f1-functional-v1.json"}
+assert name in {"functional-v1.json","f1-functional-v1.json","f1-v2-functional.json"}
 raw=(HERE/name).read_bytes()
 manifest=json.loads(raw)
 cases=manifest["cases"]
-n={"functional-v1.json":140,"f1-functional-v1.json":232}[name]
+n={"functional-v1.json":140,"f1-functional-v1.json":232,"f1-v2-functional.json":202}[name]
 assert len(cases)==n and len({r["id"] for r in cases})==n
 assert manifest["reference_unix_s"]==1760000600
 
@@ -57,7 +57,7 @@ for model in ("B0","B1"):
     def latency(values):
         v=sorted(values)
         return {"n":len(v),"p50_us":statistics.median(v),"p95_us":v[math.ceil(.95*len(v))-1]}
-    print("WARM_PIPELINE" if n==140 else "F1_WARM_PIPELINE",model,json.dumps({"all":latency(times),"supported":latency(supported),
+    print("WARM_PIPELINE" if n==140 else "F1_WARM_PIPELINE" if n==232 else "V2_WARM_PIPELINE",model,json.dumps({"all":latency(times),"supported":latency(supported),
         "peak_rss_kib":rss,"warmup":n,"repeats":10,"clock":"CLOCK_MONOTONIC",
         "scope":"in-process input through rendered view; excludes subprocess launch and harness I/O",
         "rss_scope":"entire benchmark process including libcrypto, buffers, loader"},sort_keys=True))

@@ -1,0 +1,47 @@
+name: Spike S1 inert renderer
+on:
+  push:
+    paths: ['tests/spikes/s1/**', 'tests/renderer/**', '.github/workflows/spike-s1.yml']
+  pull_request:
+    paths: ['tests/spikes/s1/**', 'tests/renderer/**', '.github/workflows/spike-s1.yml']
+permissions:
+  contents: read
+jobs:
+  inert:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        profile: [bash-posix-clean-v1, dash-clean-v1]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Build fixture image (no repo credentials or host mounts in runtime)
+        run: |
+          set -eu
+          echo "SHA checkout $(git rev-parse HEAD)"
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          ctx=$(mktemp -d)
+          mkdir -p "$ctx/tests/spikes/s1" "$ctx/tests/renderer/fixtures"
+          cp tests/spikes/s1/Dockerfile tests/spikes/s1/argv-dumper.c "$ctx/"
+          cp tests/spikes/s1/run.py "$ctx/tests/spikes/s1/"
+          cp tests/renderer/run.py "$ctx/tests/renderer/"
+          cp tests/renderer/fixtures/preview-v1.json "$ctx/tests/renderer/fixtures/"
+          docker build -t dictum-s1:fixture "$ctx"
+          rm -rf "$ctx"
+          docker image inspect dictum-s1:fixture --format '{{.Id}}'
+      - name: Verify inert container and run fixture
+        env:
+          PROFILE: ${{ matrix.profile }}
+        run: |
+          set -eu
+          id=$(docker create --network none --read-only --cap-drop ALL \
+            --security-opt no-new-privileges=true --pids-limit 32 --memory 256m \
+            --cpus 2 --user 65532:65532 --tmpfs /tmp:rw,noexec,nosuid,nodev,size=64m \
+            dictum-s1:fixture "$PROFILE")
+          trap 'docker rm -f "$id" >/dev/null 2>&1 || true' EXIT
+          docker inspect "$id" | python3 -c 'import json,sys; x=json.load(sys.stdin)[0]; h=x["HostConfig"]; assert h["NetworkMode"]=="none" and h["ReadonlyRootfs"] and h["CapDrop"]==["ALL"] and "no-new-privileges=true" in h["SecurityOpt"] and h["PidsLimit"]==32 and h["Memory"]==268435456 and h["NanoCpus"]==2000000000 and not h["Privileged"] and not h["Binds"] and all(m["Type"]=="tmpfs" and m["Destination"]=="/tmp" for m in x["Mounts"]) and x["Config"]["User"]=="65532:65532"; print("S1 inert preflight: network none, no bind mounts, read-only, no capabilities, bounded container")'
+          docker start -a "$id"
+          test "$(docker inspect "$id" --format '{{.State.ExitCode}}')" = 0

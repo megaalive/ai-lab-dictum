@@ -120,18 +120,50 @@ DEFERRED_SIGNATURES = {
 DIAGNOSIS = {12, 41, 42, 43, 44}
 NATIVE = {3, 4, 22, 25, 26, 27, 28, 29, 31, 32, 33, 34, 40}
 PRIVILEGE_POSSIBLE = {11, 17, 18, 19, 45, 46}
-REQUIRED_EFFECTS = {
-    5: {"filesystem-read", "ipc", "secret-exposure", "spawn"},
-    9: {"filesystem-read", "ipc", "secret-exposure"},
-    10: {"filesystem-read", "ipc", "network", "spawn"},
-    11: {"filesystem-read", "ipc", "network", "requires-privilege", "spawn"},
-    17: {"filesystem-read", "ipc", "requires-privilege", "secret-exposure", "spawn"},
-    18: {"filesystem-read", "ipc", "requires-privilege", "secret-exposure", "spawn"},
-    19: {"filesystem-read", "ipc", "requires-privilege", "secret-exposure", "spawn"},
-    22: {"filesystem-read", "resource-usage", "secret-exposure"},
-    25: {"filesystem-read", "resource-usage", "secret-exposure"},
-    30: {"filesystem-read", "resource-usage", "secret-exposure", "spawn"},
+# Ekspektasi efek A3 yang dipin dari kontrak 48 intent yang ditinjau.
+# Setiap axis mempunyai membership eksplisit; tidak dihitung dari registry runtime.
+# Perubahan konservatif juga memerlukan review dan pembaruan kontrak secara eksplisit.
+EXPECTED_AXIS_MEMBERS = {
+    "filesystem-read": {3, 4, 5, 9, 10, 11, *range(13, 40), 45, 46, 47, 48},
+    "filesystem-write": {47, 48},
+    "ipc": {*range(5, 12), *range(13, 20), 45, 46},
+    "network": {10, 11},
+    "persistent-mutation": {45, 46, 47, 48},
+    "requires-privilege": {11, 17, 18, 19, 45, 46},
+    "resource-usage": {6, 10, 11, 14, 15, 16, 17, 18, 19, 22, 25, 26,
+                       29, 30, 31, 32, 33, 34, 38, 45, 46, 47, 48},
+    "secret-exposure": {*range(5, 12), *range(13, 35), 36, 37, 38, 39, 47, 48},
+    "spawn": {*range(5, 9), 10, 11, *range(13, 22), 23, 24, 30,
+              35, 36, 37, 38, 39, 45, 46, 47, 48},
 }
+EXPECTED_IPC = {
+    "netlink-sock-diag": {5, 6}, "netlink-route": {7, 8},
+    "resolver-ipc": {9, 10, 11}, "systemd-dbus": {13, 14, 15, 16, 45, 46},
+    "journal-ipc": {17, 18, 19},
+}
+EXPECTED_SOCKET_DOMAINS = {
+    "AF_NETLINK": {5, 6, 7, 8},
+    "AF_UNIX": {9, 10, 11, 13, 14, 15, 16, 17, 18, 19, 45, 46},
+    "AF_INET": {10, 11}, "AF_INET6": {10, 11},
+}
+DEFERRED_DOMAINS = {
+    1: {"utility": "exact catalog utility identifier",
+        "option": "exact catalog option identifier"},
+    10: {"domain": "validated DNS name; no arbitrary resolver or option"},
+    11: {"target": "validated hostname or IP; no arbitrary flags"},
+    12: {"target": "local service identifier; clarify nonlocal target"},
+    26: {"text": "bounded literal UTF-8 text; not a regular expression"},
+    29: {"direction": "enum first or last; no default when ambiguous"},
+    33: {"name": "literal comm name; no arbitrary regex"},
+    37: {"package": "exact Debian package identifier including optional architecture"},
+    38: {"query": "bounded literal package search text; no regex or remote update"},
+}
+REVIEWED_TEXT = "tests/catalog/fixtures/reviewed-contract-v1.json"
+
+
+def expected_members(groups, n):
+    return {value for value, ordinals in groups.items() if n in ordinals}
+
 
 class Reject(ValueError):
     pass
@@ -221,7 +253,15 @@ def lint(data, ids, skeleton):
     require([f["intent"] for f in fixtures] == ids, "fixture-join")
     require(len({b["capability_id"] for b in bindings}) == 48, "capability-id")
     require(len({f["id"] for f in fixtures}) == 48, "fixture-id")
-    for n, (i, b, f) in enumerate(zip(intents, bindings, fixtures), start=1):
+    reviewed = read_json(REVIEWED_TEXT)
+    require(set(reviewed) == {"schema_version", "reviewed_snapshot", "revision", "records"}
+            and reviewed["schema_version"] == 1
+            and reviewed["reviewed_snapshot"] ==
+                "149593bf16ea1385f5138d69944d38f00f55b913"
+            and reviewed["revision"] == "A3-recheck-G01-G08"
+            and [x["intent"] for x in reviewed["records"]] == ids, "reviewed-contract")
+    for n, (i, b, f, locked) in enumerate(
+            zip(intents, bindings, fixtures, reviewed["records"]), start=1):
         effect, scope = i["effect"], i["scope"]
         cls = "INFO" if n <= 4 else "CHANGE" if n >= 45 else "READ"
         require(effect["class"] == cls, "effect-class")
@@ -298,7 +338,7 @@ def lint(data, ids, skeleton):
         require(command_ref == (surface == "command-candidate"), "source-surface")
         require(("spawn" in axes) == (surface == "command-candidate"), "spawn-surface")
         require(privilege == (n in PRIVILEGE_POSSIBLE), "privilege-envelope")
-        require(REQUIRED_EFFECTS.get(n, set()) <= set(axes), "effect-envelope")
+        require(set(axes) == expected_members(EXPECTED_AXIS_MEMBERS, n), "effect-envelope")
         if surface == "native-candidate":
             require(not b["socket_domains"] and not b["ipc_candidates"] and
                     "ipc" not in axes, "native-ipc")
@@ -326,6 +366,32 @@ def lint(data, ids, skeleton):
         if n == 11:
             require(slots[0]["name"] == "count" and slots[0]["maximum"] <= 4,
                     "ping-count")
+        require(set(b["ipc_candidates"]) == expected_members(EXPECTED_IPC, n),
+                "intent-ipc")
+        require(set(b["socket_domains"]) == expected_members(EXPECTED_SOCKET_DOMAINS, n),
+                "intent-socket-domains")
+        require({s["name"]: s["domain"] for s in deferred} ==
+                DEFERRED_DOMAINS.get(n, {}), "deferred-domain")
+        # Frozen reviewed text and slot values, not generated on lint or matrix refresh.
+        # Drift requires explicit review. This is not a natural-language safety oracle.
+        require(set(locked) == {"intent", "description", "source_candidate",
+                "backend_candidate", "namespace_visibility", "minimum_access",
+                "host_equivalence_method", "slots", "positive", "negative"},
+                "reviewed-contract")
+        require(i["description"] == locked["description"], "reviewed-description")
+        require(b["data_source_candidate"] == locked["source_candidate"],
+                "reviewed-source")
+        require(b["backend_candidate"] == locked["backend_candidate"],
+                "reviewed-backend")
+        require(b["namespace_visibility"] == locked["namespace_visibility"],
+                "reviewed-namespace")
+        require(b["rights"]["minimum_access"] == locked["minimum_access"],
+                "reviewed-rights")
+        require(b["host_equivalence"]["method"] == locked["host_equivalence_method"],
+                "reviewed-method")
+        require(slots == locked["slots"], "reviewed-slots")
+        require(f["positive"] == locked["positive"] and
+                f["negative"] == locked["negative"], "reviewed-fixture")
     require(Counter(i["effect"]["class"] for i in intents) ==
             {"INFO": 4, "READ": 40, "CHANGE": 4}, "class-count")
 
@@ -477,6 +543,32 @@ def main():
         ("file-root-optional", "slot-signature", ["registry", "intents", 21, "slots", 0, "required"], False),
         ("deferred-domain-rename", "deferred-signature", ["registry", "intents", 9, "deferred_slots", 0, "name"], "other"),
         ("ping-count-widen", "ping-count", ["registry", "intents", 10, "slots", 0, "maximum"], 100),
+        ("recheck-view-secret", "effect-envelope", ["registry", "intents", 28, "effect", "axes"], ["filesystem-read", "resource-usage"]),
+        ("recheck-stat-read", "effect-envelope", ["registry", "intents", 26, "effect", "axes"], ["secret-exposure"]),
+        ("recheck-text-resource", "effect-envelope", ["registry", "intents", 25, "effect", "axes"], ["filesystem-read", "secret-exposure"]),
+        ("recheck-cpu-secret", "effect-envelope", ["registry", "intents", 30, "effect", "axes"], ["filesystem-read", "resource-usage"]),
+        ("recheck-session-secret", "effect-envelope", ["registry", "intents", 38, "effect", "axes"], ["filesystem-read", "spawn"]),
+        ("recheck-package-read", "effect-envelope", ["registry", "intents", 36, "effect", "axes"], ["secret-exposure", "spawn"]),
+        ("recheck-compress-write", "effect-envelope", ["registry", "intents", 47, "effect", "axes"], ["filesystem-read", "persistent-mutation", "resource-usage", "secret-exposure", "spawn"]),
+        ("recheck-extract-write", "effect-envelope", ["registry", "intents", 46, "effect", "axes"], ["filesystem-read", "persistent-mutation", "resource-usage", "secret-exposure", "spawn"]),
+        ("recheck-extract-secret", "effect-envelope", ["registry", "intents", 46, "effect", "axes"], ["filesystem-read", "filesystem-write", "persistent-mutation", "resource-usage", "spawn"]),
+        ("recheck-info-read", "effect-envelope", ["registry", "intents", 2, "effect", "axes"], []),
+        ("recheck-effect-add", "effect-envelope", ["registry", "intents", 5, "effect", "axes"], ["filesystem-read", "ipc", "resource-usage", "secret-exposure", "spawn"]),
+        ("recheck-service-ipc", "intent-ipc", ["profile", "bindings", 13, "ipc_candidates"], ["journal-ipc"]),
+        ("recheck-service-domain", "intent-socket-domains", ["profile", "bindings", 12, "socket_domains"], []),
+        ("recheck-text-regex", "deferred-domain", ["registry", "intents", 25, "deferred_slots", 0, "domain"], "regular expression"),
+        ("recheck-package-regex", "deferred-domain", ["registry", "intents", 37, "deferred_slots", 0, "domain"], "any regex and flags"),
+        ("recheck-dns-options", "deferred-domain", ["registry", "intents", 9, "deferred_slots", 0, "domain"], "arbitrary resolver and options"),
+        ("recheck-ping-options", "deferred-domain", ["registry", "intents", 10, "deferred_slots", 0, "domain"], "hostname and flags"),
+        ("recheck-process-regex", "deferred-domain", ["registry", "intents", 32, "deferred_slots", 0, "domain"], "arbitrary regex"),
+        ("recheck-rights-drift", "reviewed-rights", ["profile", "bindings", 4, "rights", "minimum_access"], "additional privilege requested"),
+        ("recheck-method-drift", "reviewed-method", ["profile", "bindings", 9, "host_equivalence", "method"], "unbounded external query"),
+        ("recheck-literal-oracle-drop", "reviewed-method", ["profile", "bindings", 37, "host_equivalence", "method"], "Compare cache matches only."),
+        ("recheck-scenario-drift", "reviewed-fixture", ["fixtures", "fixtures", 28, "positive", "scenario"], "unreviewed shell recipe"),
+        ("recheck-description-drift", "reviewed-description", ["registry", "intents", 12, "description", "en"], "Restart a service"),
+        ("recheck-backend-drift", "reviewed-backend", ["profile", "bindings", 19, "backend_candidate"], "diagnostic-guide"),
+        ("recheck-namespace-drift", "reviewed-namespace", ["profile", "bindings", 30, "namespace_visibility"], "none"),
+        ("recheck-ping-default-drift", "reviewed-slots", ["registry", "intents", 10, "slots", 0, "default"], {"kind": "positive-int", "value": 1}),
     ]
     for name, expected, path, replacement in mutations:
         candidate = deepcopy(data)
@@ -494,6 +586,65 @@ def main():
     i["requires_privilege"] = "NOT VERIFIED"
     candidate["profile"]["bindings"][16]["rights"]["privilege_may_be_required"] = False
     run("CAT-NEG-journal-coherent-privilege-drop", "privilege-envelope", lambda: validate(candidate))
+    # G-01: coherent multi-document downgrades; rendering a new matrix from the
+    # candidate does not make its effect envelope valid.
+    for ordinal in (13, 14, 15, 16, 45, 46):
+        candidate = deepcopy(data)
+        i = candidate["registry"]["intents"][ordinal-1]
+        b = candidate["profile"]["bindings"][ordinal-1]
+        i["effect"]["axes"].remove("ipc")
+        b["ipc_candidates"] = []
+        b["socket_domains"] = []
+        rendered = render_matrix(candidate)
+        require(i["id"] in rendered, "coherent-matrix")
+        run(f"CAT-NEG-recheck-coherent-ipc-{ordinal}", "effect-envelope",
+            lambda: validate(candidate))
+    candidate = deepcopy(data)
+    a, b = candidate["fixtures"]["fixtures"][4:6]
+    a["positive"], b["positive"] = b["positive"], a["positive"]
+    run("CAT-NEG-recheck-fixture-swap", "reviewed-fixture", lambda: validate(candidate))
+    candidate = deepcopy(data)
+    candidate["registry"]["intents"][19]["source"]["external_reference_candidate"] = "other(1)"
+    candidate["profile"]["bindings"][19]["data_source_candidate"] = "other(1)"
+    run("CAT-NEG-recheck-coherent-source-drift", "reviewed-source",
+        lambda: validate(candidate))
+    # For every declared axis, independently verify removal is rejected.
+    # Use semantic lint here; representative probes above pass through schema too.
+    # Not a proof against coordinated edits to the reviewed expectations themselves.
+    def reject_all_axis_removals():
+        tested = 0
+        for ordinal, intent in enumerate(data["registry"]["intents"], 1):
+            for axis in intent["effect"]["axes"]:
+                c = deepcopy(data)
+                c["registry"]["intents"][ordinal-1]["effect"]["axes"].remove(axis)
+                try:
+                    lint(c, ids, skeleton)
+                except Reject:
+                    tested += 1
+                else:
+                    raise Reject(f"axis-removal-{ordinal}-{axis}")
+        require(tested == sum(len(v) for v in EXPECTED_AXIS_MEMBERS.values()),
+                "axis-removal-count")
+        print(f"Axis-removal probes: {tested} rejected")
+    run("CAT-NEG-recheck-all-axis-removals", "ok", reject_all_axis_removals)
+    # Every deferred domain must be pinned, including non-network ones.
+    def reject_all_domain_changes():
+        tested = 0
+        for ordinal, intent in enumerate(data["registry"]["intents"], 1):
+            for index, _ in enumerate(intent["deferred_slots"]):
+                c = deepcopy(data)
+                c["registry"]["intents"][ordinal-1]["deferred_slots"][index]["domain"] = "unreviewed domain"
+                try:
+                    lint(c, ids, skeleton)
+                except Reject as exc:
+                    require(str(exc) == "deferred-domain", "domain-reject-code")
+                    tested += 1
+                else:
+                    raise Reject(f"domain-change-{ordinal}-{index}")
+        require(tested == sum(len(v) for v in DEFERRED_DOMAINS.values()),
+                "domain-change-count")
+        print(f"Deferred-domain probes: {tested} rejected")
+    run("CAT-NEG-recheck-all-deferred-domains", "ok", reject_all_domain_changes)
     print(f"Registry: {len(ids)} canonical, 4 INFO / 40 READ / 4 CHANGE, {len(skeleton)} skeleton")
     print(f"Profile: 48 BLOCKED; fixture contract: 48 positive/negative pairs, execution NOT RUN")
     print(f"Registry offline: {len(retrievals)} percobaan retrieval")

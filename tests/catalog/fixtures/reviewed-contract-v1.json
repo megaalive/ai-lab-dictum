@@ -1,0 +1,1482 @@
+{
+  "schema_version": 1,
+  "reviewed_snapshot": "149593bf16ea1385f5138d69944d38f00f55b913",
+  "revision": "A3-recheck-G01-G08",
+  "records": [
+    {
+      "intent": "help.command.explain",
+      "description": {
+        "id": "Jelaskan utilitas dan opsi yang terdaftar",
+        "en": "Explain a catalogued utility and option"
+      },
+      "source_candidate": "catalog build index",
+      "backend_candidate": "indexed-documentation",
+      "namespace_visibility": "catalog",
+      "minimum_access": "verified bounded catalog index",
+      "host_equivalence_method": "Compare exact indexed entry with pinned build source; no man or help spawn.",
+      "slots": [],
+      "positive": {
+        "scenario": "Jelaskan opsi utilitas yang dikenal",
+        "expected": "indexed explanation only"
+      },
+      "negative": {
+        "scenario": "unknown option",
+        "expected": "unsupported"
+      }
+    },
+    {
+      "intent": "help.intent.list",
+      "description": {
+        "id": "Daftar kemampuan Dictum",
+        "en": "List Dictum capabilities"
+      },
+      "source_candidate": "catalog build index",
+      "backend_candidate": "indexed-documentation",
+      "namespace_visibility": "catalog",
+      "minimum_access": "verified bounded catalog index",
+      "host_equivalence_method": "Compare projected list against exact registry and profile; no spawn.",
+      "slots": [],
+      "positive": {
+        "scenario": "Daftar kemampuan Dictum",
+        "expected": "48 canonical IDs with status"
+      },
+      "negative": {
+        "scenario": "unknown profile",
+        "expected": "unsupported"
+      }
+    },
+    {
+      "intent": "system.os.info",
+      "description": {
+        "id": "Informasi OS, kernel dan arsitektur",
+        "en": "Show OS, kernel and architecture"
+      },
+      "source_candidate": "os-release(5), uname(2)",
+      "backend_candidate": "native-metadata",
+      "namespace_visibility": "host-identity",
+      "minimum_access": "read allowlisted OS metadata; no arbitrary files",
+      "host_equivalence_method": "Compare fixture OS metadata and uname fields for same host identity.",
+      "slots": [],
+      "positive": {
+        "scenario": "Informasi OS lokal",
+        "expected": "local metadata only"
+      },
+      "negative": {
+        "scenario": "remote host",
+        "expected": "unsupported"
+      }
+    },
+    {
+      "intent": "system.uptime.summary",
+      "description": {
+        "id": "Uptime dan rata-rata beban",
+        "en": "Show uptime and load averages"
+      },
+      "source_candidate": "proc_uptime(5), proc_loadavg(5)",
+      "backend_candidate": "native-metadata",
+      "namespace_visibility": "pid-time",
+      "minimum_access": "read allowlisted uptime and load fields",
+      "host_equivalence_method": "Compare same time/PID namespace and sampled uptime/load with bounded tolerance.",
+      "slots": [],
+      "positive": {
+        "scenario": "Uptime lokal",
+        "expected": "uptime and load, not invented"
+      },
+      "negative": {
+        "scenario": "unknown namespace",
+        "expected": "unsupported"
+      }
+    },
+    {
+      "intent": "network.listener.lookup",
+      "description": {
+        "id": "Cari socket yang mendengarkan berdasarkan port atau protokol",
+        "en": "Find listening sockets by port or protocol"
+      },
+      "source_candidate": "ss(8), proc_pid_fd(5)",
+      "backend_candidate": "executable-candidate",
+      "namespace_visibility": "network-pid",
+      "minimum_access": "netlink socket diagnostics and allowlisted proc PID attribution; existing permissions only; report visibility limited/unknown",
+      "host_equivalence_method": "Compare known lab listeners and PID visibility in intended network/PID namespaces; no active probe.",
+      "slots": [
+        {
+          "name": "port",
+          "kind": "port",
+          "required": false,
+          "default": null,
+          "minimum": 1,
+          "maximum": 65535
+        },
+        {
+          "name": "protocol",
+          "kind": "protocol",
+          "required": true,
+          "default": {
+            "kind": "protocol",
+            "value": "tcp"
+          },
+          "minimum": null,
+          "maximum": null
+        }
+      ],
+      "positive": {
+        "scenario": "Cari listener 5432 TCP",
+        "expected": "local TCP listening lookup"
+      },
+      "negative": {
+        "scenario": "port 65536",
+        "expected": "deny"
+      }
+    },
+    {
+      "intent": "network.connection.active",
+      "description": {
+        "id": "Daftar koneksi jaringan aktif",
+        "en": "List active network connections"
+      },
+      "source_candidate": "ss(8)",
+      "backend_candidate": "executable-candidate",
+      "namespace_visibility": "network-pid",
+      "minimum_access": "socket diagnostic visibility without added rights",
+      "host_equivalence_method": "Compare seeded local socket states; normalize changing ephemeral state; no DNS.",
+      "slots": [
+        {
+          "name": "protocol",
+          "kind": "protocol",
+          "required": true,
+          "default": {
+            "kind": "protocol",
+            "value": "all"
+          },
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "limit",
+          "kind": "positive-int",
+          "required": true,
+          "default": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "minimum": 1,
+          "maximum": 100
+        }
+      ],
+      "positive": {
+        "scenario": "Koneksi lokal aktif",
+        "expected": "bounded socket state listing"
+      },
+      "negative": {
+        "scenario": "active remote probe requested",
+        "expected": "unsupported"
+      }
+    },
+    {
+      "intent": "network.interface.list",
+      "description": {
+        "id": "Antarmuka, alamat dan status link",
+        "en": "List interfaces, addresses and link states"
+      },
+      "source_candidate": "ip-link(8), ip-address(8)",
+      "backend_candidate": "executable-candidate",
+      "namespace_visibility": "network",
+      "minimum_access": "read interface metadata in intended namespace",
+      "host_equivalence_method": "Compare lab links and addresses with host snapshot; namespace mismatch is failure.",
+      "slots": [],
+      "positive": {
+        "scenario": "Daftar interface lokal",
+        "expected": "local link/address proposal"
+      },
+      "negative": {
+        "scenario": "remote host",
+        "expected": "unsupported"
+      }
+    },
+    {
+      "intent": "network.route.table",
+      "description": {
+        "id": "Tabel routing IP dan gateway lokal",
+        "en": "Show local IP routes and default gateway"
+      },
+      "source_candidate": "ip-route(8)",
+      "backend_candidate": "executable-candidate",
+      "namespace_visibility": "network",
+      "minimum_access": "read route metadata in intended namespace",
+      "host_equivalence_method": "Compare pinned lab routes and default gateway in intended namespace.",
+      "slots": [],
+      "positive": {
+        "scenario": "Tabel routing lokal",
+        "expected": "local routing proposal"
+      },
+      "negative": {
+        "scenario": "ubah gateway",
+        "expected": "unsupported"
+      }
+    },
+    {
+      "intent": "network.dns.config",
+      "description": {
+        "id": "Konfigurasi resolver DNS aktif",
+        "en": "Show active DNS resolver configuration"
+      },
+      "source_candidate": "resolv.conf(5), resolved.conf(5), org.freedesktop.resolve1(5)",
+      "backend_candidate": "structured-candidate",
+      "namespace_visibility": "mount-network",
+      "minimum_access": "allowlisted resolv.conf and effective resolver metadata; resolve1 D-Bus interface candidate; no DNS request or proxy egress",
+      "host_equivalence_method": "Compare controlled resolver configuration and effective mode; no queries or daemon proxy egress.",
+      "slots": [],
+      "positive": {
+        "scenario": "Konfigurasi DNS lokal",
+        "expected": "config only, not DNS lookup"
+      },
+      "negative": {
+        "scenario": "read arbitrary config file",
+        "expected": "deny"
+      }
+    },
+    {
+      "intent": "network.dns.lookup",
+      "description": {
+        "id": "Usulkan kueri DNS",
+        "en": "Propose a DNS query"
+      },
+      "source_candidate": "dig(1), resolv.conf(5)",
+      "backend_candidate": "structured-candidate",
+      "namespace_visibility": "network",
+      "minimum_access": "resolver access not verified; network prohibited in product",
+      "host_equivalence_method": "MVP proposal oracle only; compare exact DNS name, explicit initial A record type and NET effect; reject leading dash, at-sign or plus option-like operands, arbitrary resolver and non-A request; never run.",
+      "slots": [],
+      "positive": {
+        "scenario": "Cari DNS example.invalid",
+        "expected": "network warning and proposal only"
+      },
+      "negative": {
+        "scenario": "automatic DNS execution",
+        "expected": "deny"
+      }
+    },
+    {
+      "intent": "network.connectivity.ping",
+      "description": {
+        "id": "Usulkan ping maksimal empat paket",
+        "en": "Propose ping with at most four packets"
+      },
+      "source_candidate": "ping(8), resolv.conf(5)",
+      "backend_candidate": "structured-candidate",
+      "namespace_visibility": "network",
+      "minimum_access": "ICMP socket/capability may be required; no elevation",
+      "host_equivalence_method": "MVP proposal oracle only; compare validated hostname or IP, count <=4 and NET effect; reject leading dash, at-sign or plus option-like operands and arbitrary flags; no traffic.",
+      "slots": [
+        {
+          "name": "count",
+          "kind": "positive-int",
+          "required": true,
+          "default": {
+            "kind": "positive-int",
+            "value": 4
+          },
+          "minimum": 1,
+          "maximum": 4
+        }
+      ],
+      "positive": {
+        "scenario": "Ping example.invalid empat kali",
+        "expected": "bounded NET proposal only"
+      },
+      "negative": {
+        "scenario": "ping 5 paket",
+        "expected": "deny"
+      }
+    },
+    {
+      "intent": "diagnosis.connectivity",
+      "description": {
+        "id": "Panduan diagnosis konektivitas lokal",
+        "en": "Guide local connectivity diagnosis"
+      },
+      "source_candidate": "baseline v3 diagnostic guide",
+      "backend_candidate": "diagnostic-guide",
+      "namespace_visibility": "none",
+      "minimum_access": "narrative guidance only; no OS access or invocation; no child operation IR",
+      "host_equivalence_method": "Proposal oracle: bounded non-copyable narrative only; no argv, handler, child operation IR or host observation. ordered bounded local checks; no automatic probe or agent loop.",
+      "slots": [],
+      "positive": {
+        "scenario": "Mengapa layanan lokal tidak terhubung",
+        "expected": "bounded non-copyable narrative; no child operation IR"
+      },
+      "negative": {
+        "scenario": "run all checks automatically",
+        "expected": "deny"
+      }
+    },
+    {
+      "intent": "service.status.get",
+      "description": {
+        "id": "Status, PID utama dan memori satu layanan",
+        "en": "Show status, main PID and memory of one service"
+      },
+      "source_candidate": "systemctl(1)",
+      "backend_candidate": "structured-candidate",
+      "namespace_visibility": "service-manager-pid",
+      "minimum_access": "existing systemd read visibility; no new rights",
+      "host_equivalence_method": "MVP proposal oracle: exact unit and current status, no D-Bus access.",
+      "slots": [
+        {
+          "name": "unit",
+          "kind": "unit-name",
+          "required": true,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        }
+      ],
+      "positive": {
+        "scenario": "Status nginx.service",
+        "expected": "current unit status proposal"
+      },
+      "negative": {
+        "scenario": "unit begins with dash",
+        "expected": "deny"
+      }
+    },
+    {
+      "intent": "service.list.active",
+      "description": {
+        "id": "Daftar layanan aktif sekarang",
+        "en": "List currently active services"
+      },
+      "source_candidate": "systemctl(1)",
+      "backend_candidate": "structured-candidate",
+      "namespace_visibility": "service-manager",
+      "minimum_access": "existing systemd read visibility; no new rights",
+      "host_equivalence_method": "MVP proposal oracle: current active state, not enabled or historical.",
+      "slots": [
+        {
+          "name": "limit",
+          "kind": "positive-int",
+          "required": true,
+          "default": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "minimum": 1,
+          "maximum": 100
+        }
+      ],
+      "positive": {
+        "scenario": "Layanan aktif saat ini",
+        "expected": "bounded current active list"
+      },
+      "negative": {
+        "scenario": "request service changes",
+        "expected": "unsupported"
+      }
+    },
+    {
+      "intent": "service.failed.list",
+      "description": {
+        "id": "Daftar layanan berstatus gagal sekarang",
+        "en": "List currently failed services"
+      },
+      "source_candidate": "systemctl(1)",
+      "backend_candidate": "structured-candidate",
+      "namespace_visibility": "service-manager",
+      "minimum_access": "existing systemd read visibility; no new rights",
+      "host_equivalence_method": "MVP proposal oracle: currently failed vs since-boot history; no D-Bus access.",
+      "slots": [],
+      "positive": {
+        "scenario": "Layanan mana sedang gagal",
+        "expected": "current failed state"
+      },
+      "negative": {
+        "scenario": "gagal sejak boot without distinction",
+        "expected": "clarify"
+      }
+    },
+    {
+      "intent": "service.enabled.list",
+      "description": {
+        "id": "Daftar layanan yang diaktifkan saat boot",
+        "en": "List services enabled for boot"
+      },
+      "source_candidate": "systemctl(1)",
+      "backend_candidate": "structured-candidate",
+      "namespace_visibility": "service-manager-mount",
+      "minimum_access": "existing unit metadata visibility; no new rights",
+      "host_equivalence_method": "MVP proposal oracle: enabled state distinct from active.",
+      "slots": [
+        {
+          "name": "limit",
+          "kind": "positive-int",
+          "required": true,
+          "default": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "minimum": 1,
+          "maximum": 100
+        }
+      ],
+      "positive": {
+        "scenario": "Layanan enabled saat boot",
+        "expected": "enabled unit proposal"
+      },
+      "negative": {
+        "scenario": "request enable service",
+        "expected": "unsupported"
+      }
+    },
+    {
+      "intent": "log.service.query",
+      "description": {
+        "id": "Log jurnal satu unit dalam rentang waktu dan batas baris",
+        "en": "Query one unit journal within time and line bounds"
+      },
+      "source_candidate": "journalctl(1)",
+      "backend_candidate": "structured-candidate",
+      "namespace_visibility": "journal-mount-time",
+      "minimum_access": "existing journal ACL only; system journal visibility may require root or existing adm/systemd-journal membership; never request elevation",
+      "host_equivalence_method": "MVP proposal oracle: unit, half-open pinned time range and limit; no raw journal read.",
+      "slots": [
+        {
+          "name": "unit",
+          "kind": "unit-name",
+          "required": true,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "window",
+          "kind": "time-window",
+          "required": true,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "limit",
+          "kind": "positive-int",
+          "required": true,
+          "default": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "minimum": 1,
+          "maximum": 100
+        }
+      ],
+      "positive": {
+        "scenario": "Log nginx.service 10 menit terakhir",
+        "expected": "pinned interval and bounded redacted projection"
+      },
+      "negative": {
+        "scenario": "unknown timezone",
+        "expected": "clarify"
+      }
+    },
+    {
+      "intent": "log.system.errors",
+      "description": {
+        "id": "Log sistem prioritas err hingga emerg",
+        "en": "Show system journal errors through emergency priority"
+      },
+      "source_candidate": "journalctl(1)",
+      "backend_candidate": "structured-candidate",
+      "namespace_visibility": "journal-mount-time",
+      "minimum_access": "existing journal ACL only; system journal visibility may require root or existing adm/systemd-journal membership; never request elevation",
+      "host_equivalence_method": "MVP proposal oracle: err..emerg and pinned time window, never raw read.",
+      "slots": [
+        {
+          "name": "window",
+          "kind": "time-window",
+          "required": true,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "limit",
+          "kind": "positive-int",
+          "required": true,
+          "default": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "minimum": 1,
+          "maximum": 100
+        }
+      ],
+      "positive": {
+        "scenario": "Error sistem satu jam terakhir",
+        "expected": "bounded severity/time proposal"
+      },
+      "negative": {
+        "scenario": "unbounded log dump",
+        "expected": "deny"
+      }
+    },
+    {
+      "intent": "log.boot.messages",
+      "description": {
+        "id": "Pesan kernel atau boot terakhir yang dapat diakses",
+        "en": "Show accessible kernel or latest boot messages"
+      },
+      "source_candidate": "dmesg(1), journalctl(1)",
+      "backend_candidate": "structured-candidate",
+      "namespace_visibility": "journal-mount-time",
+      "minimum_access": "existing journal ACL or kernel read rights only; no privilege/group change; limited visibility if unavailable",
+      "host_equivalence_method": "MVP proposal oracle: current boot scope and visible messages, not privilege bypass.",
+      "slots": [
+        {
+          "name": "limit",
+          "kind": "positive-int",
+          "required": true,
+          "default": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "minimum": 1,
+          "maximum": 100
+        }
+      ],
+      "positive": {
+        "scenario": "Pesan boot terakhir",
+        "expected": "bounded accessible boot proposal"
+      },
+      "negative": {
+        "scenario": "bypass kernel restriction",
+        "expected": "deny"
+      }
+    },
+    {
+      "intent": "storage.filesystem.usage",
+      "description": {
+        "id": "Kapasitas dan penggunaan sistem berkas lokal",
+        "en": "Show local filesystem capacity and usage"
+      },
+      "source_candidate": "df(1)",
+      "backend_candidate": "executable-candidate",
+      "namespace_visibility": "mount",
+      "minimum_access": "metadata of explicitly allowed local mounts; no remote mount probing",
+      "host_equivalence_method": "Compare fixed local mount fixture capacities; exclude unapproved remote/sensitive mounts.",
+      "slots": [],
+      "positive": {
+        "scenario": "Kapasitas disk lokal",
+        "expected": "local filesystem usage proposal"
+      },
+      "negative": {
+        "scenario": "remote filesystem target",
+        "expected": "unsupported"
+      }
+    },
+    {
+      "intent": "storage.inode.usage",
+      "description": {
+        "id": "Penggunaan inode per sistem berkas",
+        "en": "Show inode usage per filesystem"
+      },
+      "source_candidate": "df(1)",
+      "backend_candidate": "executable-candidate",
+      "namespace_visibility": "mount",
+      "minimum_access": "metadata of allowed local mounts; no remote mount probing",
+      "host_equivalence_method": "Compare inode counts on seeded allowed local filesystem.",
+      "slots": [],
+      "positive": {
+        "scenario": "Pemakaian inode",
+        "expected": "inode usage, not byte capacity"
+      },
+      "negative": {
+        "scenario": "remote mount",
+        "expected": "unsupported"
+      }
+    },
+    {
+      "intent": "storage.directory.usage",
+      "description": {
+        "id": "Urutkan subdirektori terbesar dalam root terotorisasi",
+        "en": "Rank largest subdirectories under an authorized root"
+      },
+      "source_candidate": "openat2(2), getdents64(2), statx(2)",
+      "backend_candidate": "structured-candidate",
+      "namespace_visibility": "mount",
+      "minimum_access": "explicit root descriptor, traversal and readable entries; no automatic cwd authority",
+      "host_equivalence_method": "Native descriptor-based fixture tree, allocated blocks, hardlink policy and depth; compare to independent lab oracle, not a du invocation by product.",
+      "slots": [
+        {
+          "name": "root",
+          "kind": "path",
+          "required": true,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "limit",
+          "kind": "positive-int",
+          "required": true,
+          "default": {
+            "kind": "positive-int",
+            "value": 5
+          },
+          "minimum": 1,
+          "maximum": 100
+        },
+        {
+          "name": "depth",
+          "kind": "depth",
+          "required": true,
+          "default": {
+            "kind": "depth",
+            "value": 3
+          },
+          "minimum": 1,
+          "maximum": 8
+        }
+      ],
+      "positive": {
+        "scenario": "Lima direktori terbesar di root fixture",
+        "expected": "structured top-N with limit/depth"
+      },
+      "negative": {
+        "scenario": "implicit recursive cwd permission",
+        "expected": "deny"
+      }
+    },
+    {
+      "intent": "storage.block.list",
+      "description": {
+        "id": "Daftar perangkat blok, partisi dan mount",
+        "en": "List block devices, partitions and mount points"
+      },
+      "source_candidate": "lsblk(8)",
+      "backend_candidate": "executable-candidate",
+      "namespace_visibility": "mount-device",
+      "minimum_access": "allowlisted sysfs and mount metadata, no device reads",
+      "host_equivalence_method": "Compare lab block topology and allowed fields; no raw device/serial disclosure.",
+      "slots": [],
+      "positive": {
+        "scenario": "Daftar partisi",
+        "expected": "block metadata proposal"
+      },
+      "negative": {
+        "scenario": "read raw block device",
+        "expected": "deny"
+      }
+    },
+    {
+      "intent": "storage.mount.list",
+      "description": {
+        "id": "Daftar mount dan opsi yang boleh ditampilkan",
+        "en": "List mounts and allowed mount options"
+      },
+      "source_candidate": "findmnt(8), proc_pid_mountinfo(5)",
+      "backend_candidate": "executable-candidate",
+      "namespace_visibility": "mount",
+      "minimum_access": "allowlisted mount metadata; filter sensitive mount options",
+      "host_equivalence_method": "Compare lab mount namespace and projected options; omit credentials.",
+      "slots": [],
+      "positive": {
+        "scenario": "Daftar mount",
+        "expected": "allowlisted mount fields"
+      },
+      "negative": {
+        "scenario": "raw mount options with credentials",
+        "expected": "deny"
+      }
+    },
+    {
+      "intent": "file.search",
+      "description": {
+        "id": "Cari file berdasarkan nama, ekstensi atau waktu dalam root terotorisasi",
+        "en": "Find files by name, extension or time under an authorized root"
+      },
+      "source_candidate": "openat2(2), getdents64(2), statx(2)",
+      "backend_candidate": "structured-candidate",
+      "namespace_visibility": "mount",
+      "minimum_access": "explicit root descriptor; bounded traversal, no link or mount escape",
+      "host_equivalence_method": "Native descriptor-based traversal with literal names, Unicode, dash, half-open mtime bounds, sensitive canary and no mount escape; compare with fixed lab tree.",
+      "slots": [
+        {
+          "name": "root",
+          "kind": "path",
+          "required": true,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "extension",
+          "kind": "extension",
+          "required": false,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "filename",
+          "kind": "filename",
+          "required": false,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "window",
+          "kind": "time-window",
+          "required": false,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "limit",
+          "kind": "positive-int",
+          "required": true,
+          "default": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "minimum": 1,
+          "maximum": 100
+        },
+        {
+          "name": "depth",
+          "kind": "depth",
+          "required": true,
+          "default": {
+            "kind": "depth",
+            "value": 3
+          },
+          "minimum": 1,
+          "maximum": 8
+        }
+      ],
+      "positive": {
+        "scenario": "Cari PDF di root fixture",
+        "expected": "literal search with bounded results"
+      },
+      "negative": {
+        "scenario": "unknown root or secret class",
+        "expected": "deny"
+      }
+    },
+    {
+      "intent": "file.text.search",
+      "description": {
+        "id": "Cari teks literal dalam berkas teks terbatas",
+        "en": "Search literal text within bounded text files"
+      },
+      "source_candidate": "openat2(2), getdents64(2), read(2), statx(2)",
+      "backend_candidate": "structured-candidate",
+      "namespace_visibility": "mount",
+      "minimum_access": "explicit root and allowlisted text files; no unrestricted recursion",
+      "host_equivalence_method": "Compare seeded text including canary, binary/oversized files and literal pattern.",
+      "slots": [
+        {
+          "name": "root",
+          "kind": "path",
+          "required": true,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "limit",
+          "kind": "positive-int",
+          "required": true,
+          "default": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "minimum": 1,
+          "maximum": 100
+        },
+        {
+          "name": "depth",
+          "kind": "depth",
+          "required": true,
+          "default": {
+            "kind": "depth",
+            "value": 3
+          },
+          "minimum": 1,
+          "maximum": 8
+        }
+      ],
+      "positive": {
+        "scenario": "Cari kata literal di root fixture",
+        "expected": "bounded redacted matches"
+      },
+      "negative": {
+        "scenario": "search credentials",
+        "expected": "deny"
+      }
+    },
+    {
+      "intent": "file.metadata.stat",
+      "description": {
+        "id": "Metadata ukuran, izin, pemilik dan waktu file",
+        "en": "Show file size, permissions, owner and timestamps"
+      },
+      "source_candidate": "openat2(2), statx(2), fstat(2)",
+      "backend_candidate": "structured-candidate",
+      "namespace_visibility": "mount-user",
+      "minimum_access": "explicit file handle, no follow outside allowed root",
+      "host_equivalence_method": "Compare pinned fixture inode metadata; deny symlink race/outside scope.",
+      "slots": [
+        {
+          "name": "path",
+          "kind": "path",
+          "required": true,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        }
+      ],
+      "positive": {
+        "scenario": "Metadata file fixture",
+        "expected": "structured metadata"
+      },
+      "negative": {
+        "scenario": "path outside root",
+        "expected": "deny"
+      }
+    },
+    {
+      "intent": "file.permission.check",
+      "description": {
+        "id": "Periksa akses baca, tulis dan eksekusi target",
+        "en": "Check read, write and execute access to a target"
+      },
+      "source_candidate": "access(2), faccessat2(2)",
+      "backend_candidate": "structured-candidate",
+      "namespace_visibility": "mount-user",
+      "minimum_access": "explicit target, current identity and ACL semantics; no actual write",
+      "host_equivalence_method": "Compare lab ACL and effective identity without opening write or executing file.",
+      "slots": [
+        {
+          "name": "path",
+          "kind": "path",
+          "required": true,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        }
+      ],
+      "positive": {
+        "scenario": "Izin akses file fixture",
+        "expected": "access metadata, not a write"
+      },
+      "negative": {
+        "scenario": "check another user's access by escalation",
+        "expected": "deny"
+      }
+    },
+    {
+      "intent": "file.head_tail.view",
+      "description": {
+        "id": "Tampilkan N baris awal atau akhir file teks non-sensitif",
+        "en": "Show first or last N lines of a non-sensitive text file"
+      },
+      "source_candidate": "openat2(2), read(2), lseek(2)",
+      "backend_candidate": "structured-candidate",
+      "namespace_visibility": "mount",
+      "minimum_access": "explicit allowlisted text file; cap bytes and redact",
+      "host_equivalence_method": "Compare fixed text with byte cap, last-line handling and canary; no raw secret.",
+      "slots": [
+        {
+          "name": "path",
+          "kind": "path",
+          "required": true,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "limit",
+          "kind": "positive-int",
+          "required": true,
+          "default": {
+            "kind": "positive-int",
+            "value": 10
+          },
+          "minimum": 1,
+          "maximum": 100
+        }
+      ],
+      "positive": {
+        "scenario": "Sepuluh baris awal file fixture",
+        "expected": "bounded redacted projection"
+      },
+      "negative": {
+        "scenario": "view .env",
+        "expected": "deny"
+      }
+    },
+    {
+      "intent": "archive.contents.list",
+      "description": {
+        "id": "Daftar isi arsip tanpa ekstraksi",
+        "en": "List archive entries without extraction"
+      },
+      "source_candidate": "tar(1), unzip(1)",
+      "backend_candidate": "structured-candidate",
+      "namespace_visibility": "mount",
+      "minimum_access": "explicit allowed archive; bounded decompression, no extraction",
+      "host_equivalence_method": "Candidate archive listing command, never extraction; compare member metadata with independent fixture; malformed/link/traversal names remain data; spawn only hypothetical future effect.",
+      "slots": [
+        {
+          "name": "path",
+          "kind": "path",
+          "required": true,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "limit",
+          "kind": "positive-int",
+          "required": true,
+          "default": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "minimum": 1,
+          "maximum": 100
+        }
+      ],
+      "positive": {
+        "scenario": "Isi arsip fixture",
+        "expected": "listing only"
+      },
+      "negative": {
+        "scenario": "extract during listing",
+        "expected": "deny"
+      }
+    },
+    {
+      "intent": "process.list.top_cpu",
+      "description": {
+        "id": "Daftar proses dengan CPU tertinggi",
+        "en": "List processes with highest CPU use"
+      },
+      "source_candidate": "proc_pid_stat(5), proc_stat(5)",
+      "backend_candidate": "structured-candidate",
+      "namespace_visibility": "pid-user",
+      "minimum_access": "existing proc visibility, bounded sampling; no full cmdline",
+      "host_equivalence_method": "Compare fixed process fixture and CPU sampling definition/window; tie-break PID.",
+      "slots": [
+        {
+          "name": "limit",
+          "kind": "positive-int",
+          "required": true,
+          "default": {
+            "kind": "positive-int",
+            "value": 10
+          },
+          "minimum": 1,
+          "maximum": 100
+        }
+      ],
+      "positive": {
+        "scenario": "Top 10 CPU",
+        "expected": "bounded process projection"
+      },
+      "negative": {
+        "scenario": "read full command lines",
+        "expected": "deny"
+      }
+    },
+    {
+      "intent": "process.list.top_mem",
+      "description": {
+        "id": "Daftar proses dengan RSS tertinggi",
+        "en": "List processes with highest RSS"
+      },
+      "source_candidate": "proc_pid_status(5)",
+      "backend_candidate": "structured-candidate",
+      "namespace_visibility": "pid-user",
+      "minimum_access": "existing proc visibility; no full cmdline",
+      "host_equivalence_method": "Compare seeded process RSS snapshot and deterministic tie-break.",
+      "slots": [
+        {
+          "name": "limit",
+          "kind": "positive-int",
+          "required": true,
+          "default": {
+            "kind": "positive-int",
+            "value": 10
+          },
+          "minimum": 1,
+          "maximum": 100
+        }
+      ],
+      "positive": {
+        "scenario": "Top 10 RSS",
+        "expected": "bounded RSS ranking"
+      },
+      "negative": {
+        "scenario": "read process environment",
+        "expected": "deny"
+      }
+    },
+    {
+      "intent": "process.lookup.name",
+      "description": {
+        "id": "Cari PID dan detail aman berdasarkan nama proses",
+        "en": "Find PID and allowed process details by name"
+      },
+      "source_candidate": "proc_pid_comm(5), proc_pid_status(5)",
+      "backend_candidate": "structured-candidate",
+      "namespace_visibility": "pid-user",
+      "minimum_access": "existing proc visibility; no cmdline or environ",
+      "host_equivalence_method": "Compare seeded exact comm names, duplicate names and hidepid.",
+      "slots": [
+        {
+          "name": "limit",
+          "kind": "positive-int",
+          "required": true,
+          "default": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "minimum": 1,
+          "maximum": 100
+        }
+      ],
+      "positive": {
+        "scenario": "Cari proses bernama fixture",
+        "expected": "literal name matching"
+      },
+      "negative": {
+        "scenario": "read process memory",
+        "expected": "deny"
+      }
+    },
+    {
+      "intent": "process.tree.view",
+      "description": {
+        "id": "Hierarki induk dan anak proses",
+        "en": "Show parent-child process hierarchy"
+      },
+      "source_candidate": "proc_pid_stat(5), proc_pid_comm(5)",
+      "backend_candidate": "structured-candidate",
+      "namespace_visibility": "pid-user",
+      "minimum_access": "existing proc visibility; no full cmdline",
+      "host_equivalence_method": "Compare seeded parent-child hierarchy, disappeared parents and depth cap.",
+      "slots": [
+        {
+          "name": "limit",
+          "kind": "positive-int",
+          "required": true,
+          "default": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "minimum": 1,
+          "maximum": 100
+        },
+        {
+          "name": "depth",
+          "kind": "depth",
+          "required": true,
+          "default": {
+            "kind": "depth",
+            "value": 3
+          },
+          "minimum": 1,
+          "maximum": 8
+        }
+      ],
+      "positive": {
+        "scenario": "Pohon proses lokal",
+        "expected": "bounded hierarchy"
+      },
+      "negative": {
+        "scenario": "unbounded process graph",
+        "expected": "deny"
+      }
+    },
+    {
+      "intent": "memory.summary",
+      "description": {
+        "id": "Ringkasan RAM tersedia, cache dan swap",
+        "en": "Summarize available RAM, cache and swap"
+      },
+      "source_candidate": "free(1), proc_meminfo(5)",
+      "backend_candidate": "executable-candidate",
+      "namespace_visibility": "memory-cgroup",
+      "minimum_access": "read allowlisted memory metadata; no memory contents",
+      "host_equivalence_method": "Compare known MemAvailable, cache and swap fixture; distinguish host from cgroup.",
+      "slots": [],
+      "positive": {
+        "scenario": "RAM yang masih tersedia",
+        "expected": "available not merely free"
+      },
+      "negative": {
+        "scenario": "read process memory",
+        "expected": "deny"
+      }
+    },
+    {
+      "intent": "cpu.hardware.info",
+      "description": {
+        "id": "Arsitektur, core, thread dan frekuensi CPU",
+        "en": "Show CPU architecture, cores, threads and frequency"
+      },
+      "source_candidate": "lscpu(1)",
+      "backend_candidate": "executable-candidate",
+      "namespace_visibility": "cpu-cgroup",
+      "minimum_access": "allowlisted CPU metadata; no arbitrary sysfs read",
+      "host_equivalence_method": "Compare fixed topology and frequency visibility; do not infer host topology from guest.",
+      "slots": [],
+      "positive": {
+        "scenario": "Spesifikasi CPU",
+        "expected": "local CPU metadata"
+      },
+      "negative": {
+        "scenario": "host topology outside guest",
+        "expected": "unsupported"
+      }
+    },
+    {
+      "intent": "package.installed.check",
+      "description": {
+        "id": "Periksa paket terpasang dan versinya",
+        "en": "Check installed package and version"
+      },
+      "source_candidate": "dpkg-query(1)",
+      "backend_candidate": "executable-candidate",
+      "namespace_visibility": "mount",
+      "minimum_access": "read local package database only",
+      "host_equivalence_method": "Compare pinned dpkg database installed/not installed/version.",
+      "slots": [],
+      "positive": {
+        "scenario": "Apakah paket fixture terpasang",
+        "expected": "local installed status"
+      },
+      "negative": {
+        "scenario": "install package",
+        "expected": "unsupported"
+      }
+    },
+    {
+      "intent": "package.search.local",
+      "description": {
+        "id": "Cari paket dalam cache repositori lokal",
+        "en": "Search packages in the local repository cache"
+      },
+      "source_candidate": "apt-cache(8)",
+      "backend_candidate": "executable-candidate",
+      "namespace_visibility": "mount",
+      "minimum_access": "read local cache; no update/download",
+      "host_equivalence_method": "Compare literal query against pinned offline cache and stale/missing-cache outcome. Test regex metacharacters, backslash and leading dash, option-like operands and rejected flags; verify exact literal-match semantics against independent fixture oracle. If candidate grammar cannot guarantee literal behavior, BLOCKED/non-copyable; no cache update or download.",
+      "slots": [
+        {
+          "name": "limit",
+          "kind": "positive-int",
+          "required": true,
+          "default": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "minimum": 1,
+          "maximum": 100
+        }
+      ],
+      "positive": {
+        "scenario": "Cari paket dalam cache",
+        "expected": "local cache search"
+      },
+      "negative": {
+        "scenario": "apt update or download",
+        "expected": "deny"
+      }
+    },
+    {
+      "intent": "user.session.who",
+      "description": {
+        "id": "Daftar sesi login yang terlihat",
+        "en": "List visible logged-in sessions"
+      },
+      "source_candidate": "who(1), utmp(5)",
+      "backend_candidate": "executable-candidate",
+      "namespace_visibility": "session-mount",
+      "minimum_access": "read permitted current utmp records only; no reverse lookup or NSS expansion; history deferred",
+      "host_equivalence_method": "Compare synthetic utmp snapshot and redaction of remote origin; history separate.",
+      "slots": [
+        {
+          "name": "limit",
+          "kind": "positive-int",
+          "required": true,
+          "default": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "minimum": 1,
+          "maximum": 100
+        }
+      ],
+      "positive": {
+        "scenario": "Siapa sedang login",
+        "expected": "current session projection"
+      },
+      "negative": {
+        "scenario": "unbounded login history",
+        "expected": "unsupported"
+      }
+    },
+    {
+      "intent": "user.identity.info",
+      "description": {
+        "id": "UID, GID dan grup identitas saat ini",
+        "en": "Show current UID, GID and group membership"
+      },
+      "source_candidate": "getuid(2), getgid(2), getgroups(2)",
+      "backend_candidate": "native-metadata",
+      "namespace_visibility": "user",
+      "minimum_access": "numeric real/effective identity semantics to be verified; getuid/getgid/getgroups only; no name or NSS lookup",
+      "host_equivalence_method": "Compare current numeric IDs under intended user namespace; no remote NSS.",
+      "slots": [],
+      "positive": {
+        "scenario": "Identitas pengguna saat ini",
+        "expected": "numeric UID/GID/group IDs only; no NSS name lookup"
+      },
+      "negative": {
+        "scenario": "request NSS name or remote identity lookup",
+        "expected": "unsupported"
+      }
+    },
+    {
+      "intent": "diagnosis.disk_full",
+      "description": {
+        "id": "Panduan diagnosis disk penuh",
+        "en": "Guide disk-full diagnosis"
+      },
+      "source_candidate": "baseline v3 diagnostic guide",
+      "backend_candidate": "diagnostic-guide",
+      "namespace_visibility": "none",
+      "minimum_access": "narrative guidance only; no OS access or invocation; no child operation IR",
+      "host_equivalence_method": "Proposal oracle: bounded non-copyable narrative only; no argv, handler, child operation IR or host observation. capacity, inode and bounded explicit-root checks; no automatic deletion.",
+      "slots": [],
+      "positive": {
+        "scenario": "Disk penuh",
+        "expected": "bounded non-copyable narrative; no child operation IR"
+      },
+      "negative": {
+        "scenario": "hapus otomatis",
+        "expected": "deny"
+      }
+    },
+    {
+      "intent": "diagnosis.high_load",
+      "description": {
+        "id": "Panduan diagnosis beban tinggi",
+        "en": "Guide high-load diagnosis"
+      },
+      "source_candidate": "baseline v3 diagnostic guide",
+      "backend_candidate": "diagnostic-guide",
+      "namespace_visibility": "none",
+      "minimum_access": "narrative guidance only; no OS access or invocation; no child operation IR",
+      "host_equivalence_method": "Proposal oracle: bounded non-copyable narrative only; no argv, handler, child operation IR or host observation. CPU/load, memory and I/O distinctions; no process kill.",
+      "slots": [],
+      "positive": {
+        "scenario": "Load tinggi",
+        "expected": "bounded non-copyable narrative; no child operation IR"
+      },
+      "negative": {
+        "scenario": "kill process automatically",
+        "expected": "deny"
+      }
+    },
+    {
+      "intent": "diagnosis.service_crash",
+      "description": {
+        "id": "Panduan diagnosis layanan gagal mulai",
+        "en": "Guide diagnosis of a service startup failure"
+      },
+      "source_candidate": "baseline v3 diagnostic guide",
+      "backend_candidate": "diagnostic-guide",
+      "namespace_visibility": "none",
+      "minimum_access": "narrative guidance only; no OS access or invocation; no child operation IR",
+      "host_equivalence_method": "Proposal oracle: bounded non-copyable narrative only; no argv, handler, child operation IR or host observation. status, bounded logs and listener checks; no restart.",
+      "slots": [
+        {
+          "name": "unit",
+          "kind": "unit-name",
+          "required": true,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        }
+      ],
+      "positive": {
+        "scenario": "Layanan fixture gagal mulai",
+        "expected": "bounded non-copyable narrative; no child operation IR"
+      },
+      "negative": {
+        "scenario": "restart automatically",
+        "expected": "deny"
+      }
+    },
+    {
+      "intent": "diagnosis.dns_failure",
+      "description": {
+        "id": "Panduan diagnosis kegagalan DNS",
+        "en": "Guide DNS resolution failure diagnosis"
+      },
+      "source_candidate": "baseline v3 diagnostic guide",
+      "backend_candidate": "diagnostic-guide",
+      "namespace_visibility": "none",
+      "minimum_access": "narrative guidance only; no OS access or invocation; no child operation IR",
+      "host_equivalence_method": "Proposal oracle: bounded non-copyable narrative only; no argv, handler, child operation IR or host observation. config vs resolution; NET subproposal explicitly marked, no query.",
+      "slots": [],
+      "positive": {
+        "scenario": "DNS gagal",
+        "expected": "bounded non-copyable narrative; no child operation IR"
+      },
+      "negative": {
+        "scenario": "automatic DNS traffic",
+        "expected": "deny"
+      }
+    },
+    {
+      "intent": "service.restart",
+      "description": {
+        "id": "Usulkan restart satu layanan",
+        "en": "Propose restarting one service"
+      },
+      "source_candidate": "systemctl(1)",
+      "backend_candidate": "structured-candidate",
+      "namespace_visibility": "service-manager",
+      "minimum_access": "may require administrative authorization; no sudo or group change",
+      "host_equivalence_method": "Proposal oracle only: exact unit, restart intent and warning; hard deny execute.",
+      "slots": [
+        {
+          "name": "unit",
+          "kind": "unit-name",
+          "required": true,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        }
+      ],
+      "positive": {
+        "scenario": "Restart nginx.service",
+        "expected": "manual proposal and warning"
+      },
+      "negative": {
+        "scenario": "execute restart",
+        "expected": "deny"
+      }
+    },
+    {
+      "intent": "service.reload",
+      "description": {
+        "id": "Usulkan reload konfigurasi satu layanan",
+        "en": "Propose reloading one service configuration"
+      },
+      "source_candidate": "systemctl(1)",
+      "backend_candidate": "structured-candidate",
+      "namespace_visibility": "service-manager",
+      "minimum_access": "may require administrative authorization; no sudo or group change",
+      "host_equivalence_method": "Proposal oracle only: reload distinct from restart, not guaranteed disruption-free.",
+      "slots": [
+        {
+          "name": "unit",
+          "kind": "unit-name",
+          "required": true,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        }
+      ],
+      "positive": {
+        "scenario": "Reload nginx.service",
+        "expected": "manual proposal and warning"
+      },
+      "negative": {
+        "scenario": "execute reload",
+        "expected": "deny"
+      }
+    },
+    {
+      "intent": "archive.extract.safe",
+      "description": {
+        "id": "Usulkan ekstraksi ke subdirektori baru dengan pemeriksaan isi",
+        "en": "Propose extraction into a new subdirectory with archive checks"
+      },
+      "source_candidate": "tar(1), unzip(1)",
+      "backend_candidate": "structured-candidate",
+      "namespace_visibility": "mount",
+      "minimum_access": "explicit archive and new destination under authorized root; reject existing/unsafe target",
+      "host_equivalence_method": "Proposal oracle only: inspect traversal/link entries and new destination; no extraction or safety guarantee.",
+      "slots": [
+        {
+          "name": "archive",
+          "kind": "path",
+          "required": true,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "destination",
+          "kind": "path",
+          "required": true,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        }
+      ],
+      "positive": {
+        "scenario": "Usulkan ekstraksi arsip fixture",
+        "expected": "structured proposal with warnings; safe aspirational and NOT VERIFIED"
+      },
+      "negative": {
+        "scenario": "destination exists or traversal",
+        "expected": "deny"
+      }
+    },
+    {
+      "intent": "file.compress.archive",
+      "description": {
+        "id": "Usulkan pengarsipan file atau direktori ke tar.gz",
+        "en": "Propose archiving a file or directory to tar.gz"
+      },
+      "source_candidate": "tar(1)",
+      "backend_candidate": "structured-candidate",
+      "namespace_visibility": "mount",
+      "minimum_access": "explicit source and new destination; no overwrite, no sensitive traversal",
+      "host_equivalence_method": "Proposal oracle only: explicit source/new archive, bounds and sensitive exclusion; no writes.",
+      "slots": [
+        {
+          "name": "source",
+          "kind": "path",
+          "required": true,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "destination",
+          "kind": "path",
+          "required": true,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        }
+      ],
+      "positive": {
+        "scenario": "Arsipkan root fixture ke tar.gz baru",
+        "expected": "structured proposal and warning"
+      },
+      "negative": {
+        "scenario": "overwrite archive or secret source",
+        "expected": "deny"
+      }
+    }
+  ]
+}

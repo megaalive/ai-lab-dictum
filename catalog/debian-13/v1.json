@@ -295,7 +295,7 @@
       "namespace_visibility": "network",
       "data_source_candidate": "dig(1), resolv.conf(5)",
       "host_equivalence": {
-        "method": "MVP proposal oracle only; compare query target and NET effect, never run.",
+        "method": "MVP proposal oracle only; compare exact DNS name, explicit initial A record type and NET effect; reject leading dash, at-sign or plus option-like operands, arbitrary resolver and non-A request; never run.",
         "result": "NOT RUN"
       },
       "fixture_id": "CAT-10",
@@ -328,7 +328,7 @@
       "namespace_visibility": "network",
       "data_source_candidate": "ping(8), resolv.conf(5)",
       "host_equivalence": {
-        "method": "MVP proposal oracle only; count <=4 and NET effect, no traffic.",
+        "method": "MVP proposal oracle only; compare validated hostname or IP, count <=4 and NET effect; reject leading dash, at-sign or plus option-like operands and arbitrary flags; no traffic.",
         "result": "NOT RUN"
       },
       "fixture_id": "CAT-11",
@@ -1085,7 +1085,7 @@
       "namespace_visibility": "mount",
       "data_source_candidate": "apt-cache(8)",
       "host_equivalence": {
-        "method": "Compare pinned offline cache matches and stale/missing-cache outcome.",
+        "method": "Compare literal query against pinned offline cache and stale/missing-cache outcome. Test regex metacharacters, backslash and leading dash, option-like operands and rejected flags; verify exact literal-match semantics against independent fixture oracle. If candidate grammar cannot guarantee literal behavior, BLOCKED/non-copyable; no cache update or download.",
         "result": "NOT RUN"
       },
       "fixture_id": "CAT-38",

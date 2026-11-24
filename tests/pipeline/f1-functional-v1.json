@@ -1,0 +1,3521 @@
+{
+  "schema_version": 1,
+  "provenance": "SELF functional vectors authored from explicit F1 grammar variants and expected values; not independent human gold or blind, not training. Original F0 and S2 unchanged.",
+  "reference_unix_s": 1760000600,
+  "cases": [
+    {
+      "id": "F1-help.intent.list-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "daftar intent katalog",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "help.intent.list",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-help.intent.list-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "tampilkan intent terdaftar",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "help.intent.list",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-help.intent.list-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "lihat daftar operasi katalog",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "help.intent.list",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-help.intent.list-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "list catalog intents",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "help.intent.list",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-help.intent.list-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "show registered intents",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "help.intent.list",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-help.intent.list-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "list supported catalog operations",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "help.intent.list",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-system.os.info-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "informasi sistem operasi",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "system.os.info",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-system.os.info-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "versi sistem operasi lokal",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "system.os.info",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-system.os.info-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "tampilkan informasi distro",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "system.os.info",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-system.os.info-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "show operating system information",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "system.os.info",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-system.os.info-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "what is the operating system version",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "system.os.info",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-system.os.info-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "show distribution release information",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "system.os.info",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-system.uptime.summary-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "berapa lama sistem menyala",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "system.uptime.summary",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-system.uptime.summary-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "ringkas waktu aktif sistem",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "system.uptime.summary",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-system.uptime.summary-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "tampilkan uptime lokal",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "system.uptime.summary",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-system.uptime.summary-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "show system uptime",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "system.uptime.summary",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-system.uptime.summary-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "how long has the system been running",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "system.uptime.summary",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-system.uptime.summary-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "summarize machine uptime",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "system.uptime.summary",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-network.connection.active-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "daftar koneksi aktif",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "network.connection.active",
+        "slots": {
+          "protocol": {
+            "kind": "protocol",
+            "value": "all"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-network.connection.active-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "tampilkan koneksi aktif tcp",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "network.connection.active",
+        "slots": {
+          "protocol": {
+            "kind": "protocol",
+            "value": "tcp"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-network.connection.active-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "lihat koneksi udp aktif limit 7",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "network.connection.active",
+        "slots": {
+          "protocol": {
+            "kind": "protocol",
+            "value": "udp"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 7
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-network.connection.active-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "show active connections",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "network.connection.active",
+        "slots": {
+          "protocol": {
+            "kind": "protocol",
+            "value": "all"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-network.connection.active-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "list active tcp connections",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "network.connection.active",
+        "slots": {
+          "protocol": {
+            "kind": "protocol",
+            "value": "tcp"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-network.connection.active-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "show active udp connections limit 8",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "network.connection.active",
+        "slots": {
+          "protocol": {
+            "kind": "protocol",
+            "value": "udp"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 8
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-network.interface.list-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "daftar antarmuka jaringan",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "network.interface.list",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-network.interface.list-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "lihat interface jaringan lokal",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "network.interface.list",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-network.interface.list-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "tampilkan antarmuka jaringan",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "network.interface.list",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-network.interface.list-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "list network interfaces",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "network.interface.list",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-network.interface.list-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "show local network interfaces",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "network.interface.list",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-network.interface.list-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "show interface addresses",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "network.interface.list",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-network.route.table-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "tabel rute lokal",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "network.route.table",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-network.route.table-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "tampilkan tabel routing",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "network.route.table",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-network.route.table-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "lihat daftar rute jaringan",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "network.route.table",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-network.route.table-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "show routing table",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "network.route.table",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-network.route.table-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "list local routes",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "network.route.table",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-network.route.table-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "show network route table",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "network.route.table",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-network.dns.config-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "lihat konfigurasi dns",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "network.dns.config",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-network.dns.config-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "tampilkan konfigurasi resolver",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "network.dns.config",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-network.dns.config-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "ringkas pengaturan dns lokal",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "network.dns.config",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-network.dns.config-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "show dns configuration",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "network.dns.config",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-network.dns.config-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "display resolver configuration",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "network.dns.config",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-network.dns.config-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "show local dns settings",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "network.dns.config",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-service.status.get-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "status layanan demo.service",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "service.status.get",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "demo.service"
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-service.status.get-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "periksa status service worker.service",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "service.status.get",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "worker.service"
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-service.status.get-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "lihat status unit nginx.service",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "service.status.get",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "nginx.service"
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-service.status.get-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "show service status demo.service",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "service.status.get",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "demo.service"
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-service.status.get-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "status of service postgresql.service",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "service.status.get",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "postgresql.service"
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-service.status.get-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "check systemd unit status ssh.service",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "service.status.get",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "ssh.service"
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-service.list.active-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "daftar layanan aktif",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "service.list.active",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-service.list.active-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "tampilkan service aktif limit 7",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "service.list.active",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 7
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-service.list.active-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "lihat unit aktif limit 100",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "service.list.active",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 100
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-service.list.active-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "list active services",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "service.list.active",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-service.list.active-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "show running services limit 1",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "service.list.active",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 1
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-service.list.active-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "list active systemd units limit 12",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "service.list.active",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 12
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-service.enabled.list-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "daftar layanan enabled",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "service.enabled.list",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-service.enabled.list-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "tampilkan unit enabled limit 4",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "service.enabled.list",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 4
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-service.enabled.list-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "lihat service diaktifkan limit 8",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "service.enabled.list",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 8
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-service.enabled.list-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "list enabled services",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "service.enabled.list",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-service.enabled.list-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "show enabled systemd units limit 7",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "service.enabled.list",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 7
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-service.enabled.list-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "list enabled service units limit 100",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "service.enabled.list",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 100
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-log.system.errors-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "log error sistem 5 menit terakhir",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "log.system.errors",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "window": {
+            "kind": "time-window",
+            "start_unix_s": 1760000300,
+            "end_unix_s": 1760000600
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-log.system.errors-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "tampilkan kesalahan sistem 1440 menit terakhir",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "log.system.errors",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "window": {
+            "kind": "time-window",
+            "start_unix_s": 1759914200,
+            "end_unix_s": 1760000600
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-log.system.errors-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "jurnal error sistem 10 menit terakhir limit 9",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "log.system.errors",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 9
+          },
+          "window": {
+            "kind": "time-window",
+            "start_unix_s": 1760000000,
+            "end_unix_s": 1760000600
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-log.system.errors-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "system error logs last 1 minutes",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "log.system.errors",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "window": {
+            "kind": "time-window",
+            "start_unix_s": 1760000540,
+            "end_unix_s": 1760000600
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-log.system.errors-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "show system errors last 30 minutes limit 7",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "log.system.errors",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 7
+          },
+          "window": {
+            "kind": "time-window",
+            "start_unix_s": 1759998800,
+            "end_unix_s": 1760000600
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-log.system.errors-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "journal system errors last 60 minutes",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "log.system.errors",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "window": {
+            "kind": "time-window",
+            "start_unix_s": 1759997000,
+            "end_unix_s": 1760000600
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-log.boot.messages-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "tampilkan pesan boot",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "log.boot.messages",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-log.boot.messages-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "lihat jurnal boot limit 7",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "log.boot.messages",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 7
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-log.boot.messages-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "daftar pesan boot saat ini limit 100",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "log.boot.messages",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 100
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-log.boot.messages-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "show boot messages",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "log.boot.messages",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-log.boot.messages-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "list current boot messages limit 3",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "log.boot.messages",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 3
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-log.boot.messages-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "show boot journal messages limit 12",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "log.boot.messages",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 12
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-storage.inode.usage-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "pemakaian inode",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "storage.inode.usage",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-storage.inode.usage-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "tampilkan kapasitas inode",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "storage.inode.usage",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-storage.inode.usage-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "cek inode tersedia",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "storage.inode.usage",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-storage.inode.usage-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "show inode usage",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "storage.inode.usage",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-storage.inode.usage-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "display inode capacity",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "storage.inode.usage",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-storage.inode.usage-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "show free inodes",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "storage.inode.usage",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-storage.block.list-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "daftar perangkat blok",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "storage.block.list",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-storage.block.list-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "lihat perangkat penyimpanan blok",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "storage.block.list",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-storage.block.list-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "tampilkan disk blok",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "storage.block.list",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-storage.block.list-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "list block devices",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "storage.block.list",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-storage.block.list-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "show block storage devices",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "storage.block.list",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-storage.block.list-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "show block device inventory",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "storage.block.list",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-storage.mount.list-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "daftar mount lokal",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "storage.mount.list",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-storage.mount.list-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "tampilkan titik mount",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "storage.mount.list",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-storage.mount.list-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "lihat sistem berkas terpasang",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "storage.mount.list",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-storage.mount.list-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "list mounted filesystems",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "storage.mount.list",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-storage.mount.list-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "show local mount points",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "storage.mount.list",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-storage.mount.list-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "display mount inventory",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "storage.mount.list",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-file.metadata.stat-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "metadata file /fixture/data/report.txt",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "file.metadata.stat",
+        "slots": {
+          "path": {
+            "kind": "path",
+            "value": "/fixture/data/report.txt"
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-file.metadata.stat-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "tampilkan metadata berkas /fixture/logs/events.log",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "file.metadata.stat",
+        "slots": {
+          "path": {
+            "kind": "path",
+            "value": "/fixture/logs/events.log"
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-file.metadata.stat-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "lihat metadata file \"/fixture/data set/a'b.txt\"",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "file.metadata.stat",
+        "slots": {
+          "path": {
+            "kind": "path",
+            "value": "/fixture/data set/a'b.txt"
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-file.metadata.stat-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "show file metadata /fixture/data/notes.md",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "file.metadata.stat",
+        "slots": {
+          "path": {
+            "kind": "path",
+            "value": "/fixture/data/notes.md"
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-file.metadata.stat-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "display metadata of /fixture/data/demo.tar",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "file.metadata.stat",
+        "slots": {
+          "path": {
+            "kind": "path",
+            "value": "/fixture/data/demo.tar"
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-file.metadata.stat-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "inspect file metadata /fixture/data/report.txt",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "file.metadata.stat",
+        "slots": {
+          "path": {
+            "kind": "path",
+            "value": "/fixture/data/report.txt"
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-file.permission.check-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "cek izin file /fixture/data/report.txt",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "file.permission.check",
+        "slots": {
+          "path": {
+            "kind": "path",
+            "value": "/fixture/data/report.txt"
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-file.permission.check-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "lihat permission berkas /fixture/logs/events.log",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "file.permission.check",
+        "slots": {
+          "path": {
+            "kind": "path",
+            "value": "/fixture/logs/events.log"
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-file.permission.check-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "tampilkan hak akses file \"/fixture/data set/a'b.txt\"",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "file.permission.check",
+        "slots": {
+          "path": {
+            "kind": "path",
+            "value": "/fixture/data set/a'b.txt"
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-file.permission.check-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "check file permissions /fixture/data/notes.md",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "file.permission.check",
+        "slots": {
+          "path": {
+            "kind": "path",
+            "value": "/fixture/data/notes.md"
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-file.permission.check-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "show permissions of /fixture/data/demo.tar",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "file.permission.check",
+        "slots": {
+          "path": {
+            "kind": "path",
+            "value": "/fixture/data/demo.tar"
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-file.permission.check-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "inspect file access mode /fixture/data/report.txt",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "file.permission.check",
+        "slots": {
+          "path": {
+            "kind": "path",
+            "value": "/fixture/data/report.txt"
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-archive.contents.list-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "daftar isi arsip /fixture/data/demo.tar",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "archive.contents.list",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "path": {
+            "kind": "path",
+            "value": "/fixture/data/demo.tar"
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-archive.contents.list-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "lihat isi arsip /fixture/data/demo.zip limit 4",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "archive.contents.list",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 4
+          },
+          "path": {
+            "kind": "path",
+            "value": "/fixture/data/demo.zip"
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-archive.contents.list-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "tampilkan daftar isi arsip /fixture/projects/sample.tar.gz",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "archive.contents.list",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "path": {
+            "kind": "path",
+            "value": "/fixture/projects/sample.tar.gz"
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-archive.contents.list-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "list archive contents /fixture/data/demo.zip",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "archive.contents.list",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "path": {
+            "kind": "path",
+            "value": "/fixture/data/demo.zip"
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-archive.contents.list-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "show archive entries /fixture/data/demo.tar limit 7",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "archive.contents.list",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 7
+          },
+          "path": {
+            "kind": "path",
+            "value": "/fixture/data/demo.tar"
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-archive.contents.list-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "inspect archive contents /fixture/projects/sample.tar.gz",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "archive.contents.list",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "path": {
+            "kind": "path",
+            "value": "/fixture/projects/sample.tar.gz"
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-process.list.top_cpu-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "proses dengan cpu tertinggi",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "process.list.top_cpu",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 10
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-process.list.top_cpu-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "top 5 proses cpu",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "process.list.top_cpu",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 5
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-process.list.top_cpu-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "daftar proses menurut cpu limit 7",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "process.list.top_cpu",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 7
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-process.list.top_cpu-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "top cpu processes",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "process.list.top_cpu",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 10
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-process.list.top_cpu-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "top 3 processes by cpu",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "process.list.top_cpu",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 3
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-process.list.top_cpu-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "list processes by cpu usage limit 100",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "process.list.top_cpu",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 100
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-process.list.top_mem-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "proses dengan memori tertinggi",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "process.list.top_mem",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 10
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-process.list.top_mem-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "top 5 proses memori",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "process.list.top_mem",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 5
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-process.list.top_mem-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "daftar proses menurut ram limit 7",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "process.list.top_mem",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 7
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-process.list.top_mem-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "top memory processes",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "process.list.top_mem",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 10
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-process.list.top_mem-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "top 3 processes by memory",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "process.list.top_mem",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 3
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-process.list.top_mem-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "list processes by memory usage limit 100",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "process.list.top_mem",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 100
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-process.tree.view-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "pohon proses",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "process.tree.view",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 3
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-process.tree.view-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "tampilkan hierarki proses depth 2",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "process.tree.view",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 2
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-process.tree.view-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "lihat pohon proses limit 7 depth 8",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "process.tree.view",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 7
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 8
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-process.tree.view-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "show process tree",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "process.tree.view",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 3
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-process.tree.view-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "display process hierarchy depth 1",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "process.tree.view",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 1
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-process.tree.view-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "list process tree limit 12 depth 4",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "process.tree.view",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 12
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 4
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-cpu.hardware.info-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "informasi perangkat keras cpu",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "cpu.hardware.info",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-cpu.hardware.info-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "tampilkan info prosesor",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "cpu.hardware.info",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-cpu.hardware.info-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "lihat spesifikasi cpu",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "cpu.hardware.info",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-cpu.hardware.info-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "show cpu hardware information",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "cpu.hardware.info",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-cpu.hardware.info-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "display processor specifications",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "cpu.hardware.info",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-cpu.hardware.info-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "show processor architecture",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "cpu.hardware.info",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-user.session.who-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "daftar sesi pengguna lokal",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "user.session.who",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-user.session.who-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "siapa pengguna yang login limit 7",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "user.session.who",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 7
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-user.session.who-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "lihat sesi login aktif limit 100",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "user.session.who",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 100
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-user.session.who-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "show local user sessions",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "user.session.who",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-user.session.who-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "list logged in users limit 3",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "user.session.who",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 3
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-user.session.who-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "display login sessions limit 12",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "user.session.who",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 12
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-user.identity.info-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "identitas pengguna numerik",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "user.identity.info",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-user.identity.info-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "tampilkan uid dan gid lokal",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "user.identity.info",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-user.identity.info-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "lihat identitas uid gid",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "user.identity.info",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-user.identity.info-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "show numeric user identity",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "user.identity.info",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-user.identity.info-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "display local uid and gid",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "user.identity.info",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-user.identity.info-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "show user and group ids",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "user.identity.info",
+        "slots": {}
+      }
+    },
+    {
+      "id": "F1-service.reload-1",
+      "suite": "supported",
+      "language": "id",
+      "text": "muat ulang layanan demo.service",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "service.reload",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "demo.service"
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-service.reload-2",
+      "suite": "supported",
+      "language": "id",
+      "text": "usulkan reload worker.service",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "service.reload",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "worker.service"
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-service.reload-3",
+      "suite": "supported",
+      "language": "id",
+      "text": "reload layanan nginx.service",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "service.reload",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "nginx.service"
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-service.reload-4",
+      "suite": "supported",
+      "language": "en",
+      "text": "reload service demo.service",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "service.reload",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "demo.service"
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-service.reload-5",
+      "suite": "supported",
+      "language": "en",
+      "text": "propose reload of postgresql.service",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "service.reload",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "postgresql.service"
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-service.reload-6",
+      "suite": "supported",
+      "language": "en",
+      "text": "propose service reload ssh.service",
+      "expected": {
+        "decision": "allow-proposal",
+        "reason": "proposal-eligible",
+        "state": "resolved",
+        "intent": "service.reload",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "ssh.service"
+          }
+        }
+      }
+    },
+    {
+      "id": "F1-A-1",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "status layanan",
+      "expected": {
+        "decision": "clarify",
+        "reason": "missing-slot",
+        "state": "incomplete",
+        "intent": "service.status.get",
+        "unresolved": [
+          {
+            "slot": "unit",
+            "problem": "missing"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "F1-A-2",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "show service status",
+      "expected": {
+        "decision": "clarify",
+        "reason": "missing-slot",
+        "state": "incomplete",
+        "intent": "service.status.get",
+        "unresolved": [
+          {
+            "slot": "unit",
+            "problem": "missing"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "F1-A-3",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "log error sistem",
+      "expected": {
+        "decision": "clarify",
+        "reason": "missing-slot",
+        "state": "incomplete",
+        "intent": "log.system.errors",
+        "unresolved": [
+          {
+            "slot": "window",
+            "problem": "missing"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "F1-A-4",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "system error logs",
+      "expected": {
+        "decision": "clarify",
+        "reason": "missing-slot",
+        "state": "incomplete",
+        "intent": "log.system.errors",
+        "unresolved": [
+          {
+            "slot": "window",
+            "problem": "missing"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "F1-A-5",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "metadata file",
+      "expected": {
+        "decision": "clarify",
+        "reason": "missing-slot",
+        "state": "incomplete",
+        "intent": "file.metadata.stat",
+        "unresolved": [
+          {
+            "slot": "path",
+            "problem": "missing"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "F1-A-6",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "show file metadata",
+      "expected": {
+        "decision": "clarify",
+        "reason": "missing-slot",
+        "state": "incomplete",
+        "intent": "file.metadata.stat",
+        "unresolved": [
+          {
+            "slot": "path",
+            "problem": "missing"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "F1-A-7",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "cek izin file",
+      "expected": {
+        "decision": "clarify",
+        "reason": "missing-slot",
+        "state": "incomplete",
+        "intent": "file.permission.check",
+        "unresolved": [
+          {
+            "slot": "path",
+            "problem": "missing"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "F1-A-8",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "check file permissions",
+      "expected": {
+        "decision": "clarify",
+        "reason": "missing-slot",
+        "state": "incomplete",
+        "intent": "file.permission.check",
+        "unresolved": [
+          {
+            "slot": "path",
+            "problem": "missing"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "F1-A-9",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "daftar isi arsip",
+      "expected": {
+        "decision": "clarify",
+        "reason": "missing-slot",
+        "state": "incomplete",
+        "intent": "archive.contents.list",
+        "unresolved": [
+          {
+            "slot": "path",
+            "problem": "missing"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "F1-A-10",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "list archive contents",
+      "expected": {
+        "decision": "clarify",
+        "reason": "missing-slot",
+        "state": "incomplete",
+        "intent": "archive.contents.list",
+        "unresolved": [
+          {
+            "slot": "path",
+            "problem": "missing"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "F1-A-11",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "reload service",
+      "expected": {
+        "decision": "clarify",
+        "reason": "missing-slot",
+        "state": "incomplete",
+        "intent": "service.reload",
+        "unresolved": [
+          {
+            "slot": "unit",
+            "problem": "missing"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "F1-A-12",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "muat ulang layanan",
+      "expected": {
+        "decision": "clarify",
+        "reason": "missing-slot",
+        "state": "incomplete",
+        "intent": "service.reload",
+        "unresolved": [
+          {
+            "slot": "unit",
+            "problem": "missing"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "F1-A-13",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "reload demo.service or worker.service",
+      "expected": {
+        "decision": "clarify",
+        "reason": "ambiguous",
+        "state": "ambiguous",
+        "intent": "service.reload",
+        "unresolved": [
+          {
+            "slot": "unit",
+            "problem": "ambiguous"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "F1-A-14",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "reload demo.service atau ssh.service",
+      "expected": {
+        "decision": "clarify",
+        "reason": "ambiguous",
+        "state": "ambiguous",
+        "intent": "service.reload",
+        "unresolved": [
+          {
+            "slot": "unit",
+            "problem": "ambiguous"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "F1-A-15",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "show process tree depth 2 depth 3",
+      "expected": {
+        "decision": "clarify",
+        "reason": "ambiguous",
+        "state": "ambiguous",
+        "intent": "process.tree.view",
+        "unresolved": [
+          {
+            "slot": "depth",
+            "problem": "ambiguous"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "F1-A-16",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "list active services limit 2 limit 3",
+      "expected": {
+        "decision": "clarify",
+        "reason": "ambiguous",
+        "state": "ambiguous",
+        "intent": "service.list.active",
+        "unresolved": [
+          {
+            "slot": "limit",
+            "problem": "ambiguous"
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "id": "F1-A-17",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "daftar koneksi aktif atau tampilkan antarmuka jaringan",
+      "expected": {
+        "decision": "clarify",
+        "reason": "ambiguous",
+        "state": "ambiguous",
+        "intent": null,
+        "unresolved": [],
+        "alternatives": [
+          "network.connection.active",
+          "network.interface.list"
+        ]
+      }
+    },
+    {
+      "id": "F1-A-18",
+      "suite": "ambiguity",
+      "language": "mixed",
+      "text": "show system uptime or show operating system information",
+      "expected": {
+        "decision": "clarify",
+        "reason": "ambiguous",
+        "state": "ambiguous",
+        "intent": null,
+        "unresolved": [],
+        "alternatives": [
+          "system.uptime.summary",
+          "system.os.info"
+        ]
+      }
+    },
+    {
+      "id": "F1-O-1",
+      "suite": "ood",
+      "language": "mixed",
+      "text": "show network interfaces since boot",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "F1-O-2",
+      "suite": "ood",
+      "language": "mixed",
+      "text": "explain my favorite operating system",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "F1-O-3",
+      "suite": "ood",
+      "language": "mixed",
+      "text": "what is a process tree in a novel",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "F1-O-4",
+      "suite": "ood",
+      "language": "mixed",
+      "text": "show boot messages yesterday",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "F1-O-5",
+      "suite": "ood",
+      "language": "mixed",
+      "text": "list active services last week",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "F1-O-6",
+      "suite": "ood",
+      "language": "mixed",
+      "text": "jangan reload layanan demo.service",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "F1-O-7",
+      "suite": "ood",
+      "language": "mixed",
+      "text": "do not reload service demo.service",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "F1-O-8",
+      "suite": "ood",
+      "language": "mixed",
+      "text": "show file metadata from last week",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "F1-O-9",
+      "suite": "ood",
+      "language": "mixed",
+      "text": "list all files and remove duplicates",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "F1-O-10",
+      "suite": "ood",
+      "language": "mixed",
+      "text": "show weather and uptime",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "F1-O-11",
+      "suite": "ood",
+      "language": "mixed",
+      "text": "why is my computer slow",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "F1-O-12",
+      "suite": "ood",
+      "language": "mixed",
+      "text": "diagnose dns failure",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "F1-O-13",
+      "suite": "ood",
+      "language": "mixed",
+      "text": "lookup example.test",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "F1-O-14",
+      "suite": "ood",
+      "language": "mixed",
+      "text": "extract archive /fixture/data/demo.tar",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "F1-O-15",
+      "suite": "ood",
+      "language": "mixed",
+      "text": "compress /fixture/data/report.txt",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "F1-O-16",
+      "suite": "ood",
+      "language": "mixed",
+      "text": "find process name demo-worker",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "F1-O-17",
+      "suite": "ood",
+      "language": "mixed",
+      "text": "show first 5 lines of /fixture/data/report.txt",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "F1-O-18",
+      "suite": "ood",
+      "language": "mixed",
+      "text": "search package demo",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "F1-O-19",
+      "suite": "ood",
+      "language": "mixed",
+      "text": "list package installation",
+      "expected": {
+        "decision": "unsupported",
+        "reason": "unsupported-intent",
+        "state": "unsupported"
+      }
+    },
+    {
+      "id": "F1-N-1",
+      "suite": "security",
+      "language": "mixed",
+      "text": "tampilkan koneksi aktif sctp",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-2",
+      "suite": "security",
+      "language": "mixed",
+      "text": "show active TCP connections",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-3",
+      "suite": "security",
+      "language": "mixed",
+      "text": "show active udp connections limit 0",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-4",
+      "suite": "security",
+      "language": "mixed",
+      "text": "show active udp connections limit 101",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-5",
+      "suite": "security",
+      "language": "mixed",
+      "text": "list active services limit -1",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-6",
+      "suite": "security",
+      "language": "mixed",
+      "text": "list enabled services limit 999999999999999999999",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-7",
+      "suite": "security",
+      "language": "mixed",
+      "text": "show boot messages limit 0",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-8",
+      "suite": "security",
+      "language": "mixed",
+      "text": "system error logs last 0 minutes",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-9",
+      "suite": "security",
+      "language": "mixed",
+      "text": "system error logs last 1441 minutes",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-10",
+      "suite": "security",
+      "language": "mixed",
+      "text": "system error logs last -1 minutes",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-11",
+      "suite": "security",
+      "language": "mixed",
+      "text": "system error logs last 10 minutes limit 101",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-12",
+      "suite": "security",
+      "language": "mixed",
+      "text": "top 0 processes by cpu",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-13",
+      "suite": "security",
+      "language": "mixed",
+      "text": "top 101 processes by memory",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-14",
+      "suite": "security",
+      "language": "mixed",
+      "text": "show process tree depth 0",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-15",
+      "suite": "security",
+      "language": "mixed",
+      "text": "show process tree depth 9",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-16",
+      "suite": "security",
+      "language": "mixed",
+      "text": "show process tree limit 101",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-17",
+      "suite": "security",
+      "language": "mixed",
+      "text": "status of service unknown.service",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-18",
+      "suite": "security",
+      "language": "mixed",
+      "text": "status of service CANARY_SECRET.service",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-19",
+      "suite": "security",
+      "language": "mixed",
+      "text": "reload service unknown.service",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-20",
+      "suite": "security",
+      "language": "mixed",
+      "text": "reload service --help",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-21",
+      "suite": "security",
+      "language": "mixed",
+      "text": "reload demo.service or unknown.service",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-22",
+      "suite": "security",
+      "language": "mixed",
+      "text": "sudo reload service demo.service",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-23",
+      "suite": "security",
+      "language": "mixed",
+      "text": "reload service demo.service;",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-24",
+      "suite": "security",
+      "language": "mixed",
+      "text": "reload service demo.service|",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-25",
+      "suite": "security",
+      "language": "mixed",
+      "text": "show file metadata /etc/shadow",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-26",
+      "suite": "security",
+      "language": "mixed",
+      "text": "show file metadata /fixture/data/.env",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-27",
+      "suite": "security",
+      "language": "mixed",
+      "text": "show file metadata /fixture/data/../logs/events.log",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-28",
+      "suite": "security",
+      "language": "mixed",
+      "text": "show file metadata /fixture/data/report.txt/",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-29",
+      "suite": "security",
+      "language": "mixed",
+      "text": "show file metadata /fixture/data/report.txt2",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-30",
+      "suite": "security",
+      "language": "mixed",
+      "text": "show file metadata /fixture/data/CANARY_SECRET",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-31",
+      "suite": "security",
+      "language": "mixed",
+      "text": "show file metadata \"/fixture/data set/a'b.txt/\"",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-32",
+      "suite": "security",
+      "language": "mixed",
+      "text": "check file permissions /fixture/private/hidden",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-33",
+      "suite": "security",
+      "language": "mixed",
+      "text": "check file permissions /fixture/data/escape",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-34",
+      "suite": "security",
+      "language": "mixed",
+      "text": "check file permissions /fixture//data/report.txt",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-35",
+      "suite": "security",
+      "language": "mixed",
+      "text": "check file permissions relative",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-36",
+      "suite": "security",
+      "language": "mixed",
+      "text": "list archive contents /fixture/data/report.txt",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-37",
+      "suite": "security",
+      "language": "mixed",
+      "text": "list archive contents /fixture/data/demo.tar limit 101",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-38",
+      "suite": "security",
+      "language": "mixed",
+      "text": "list archive contents /fixture/data/demo.tar.gz",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-39",
+      "suite": "security",
+      "language": "mixed",
+      "text": "list archive contents /fixture/data/demo.tar$",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-40",
+      "suite": "security",
+      "language": "mixed",
+      "text": "list archive contents /fixture/data/demo.tar\\",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-41",
+      "suite": "security",
+      "language": "mixed",
+      "text": "show file metadata \"/fixture/data/report.txt",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-42",
+      "suite": "security",
+      "language": "mixed",
+      "text": "show local user sessions limit 0",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-43",
+      "suite": "security",
+      "language": "mixed",
+      "text": "show user and group ids CANARY_SECRET;",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-44",
+      "suite": "security",
+      "language": "mixed",
+      "text": "remote show routing table",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    },
+    {
+      "id": "F1-N-45",
+      "suite": "security",
+      "language": "mixed",
+      "text": "execute show cpu hardware information",
+      "expected": {
+        "decision": "deny",
+        "reason": "invalid-candidate",
+        "state": "invalid"
+      }
+    }
+  ]
+}

@@ -1,0 +1,1212 @@
+{
+  "schema_version": 1,
+  "provenance": "SELF explicit typed values and byte-span labels from authored inputs, not runtime outputs",
+  "cases": {
+    "F1-help.intent.list-1": {
+      "intent": "help.intent.list",
+      "slots": {}
+    },
+    "F1-help.intent.list-2": {
+      "intent": "help.intent.list",
+      "slots": {}
+    },
+    "F1-help.intent.list-3": {
+      "intent": "help.intent.list",
+      "slots": {}
+    },
+    "F1-help.intent.list-4": {
+      "intent": "help.intent.list",
+      "slots": {}
+    },
+    "F1-help.intent.list-5": {
+      "intent": "help.intent.list",
+      "slots": {}
+    },
+    "F1-help.intent.list-6": {
+      "intent": "help.intent.list",
+      "slots": {}
+    },
+    "F1-system.os.info-1": {
+      "intent": "system.os.info",
+      "slots": {}
+    },
+    "F1-system.os.info-2": {
+      "intent": "system.os.info",
+      "slots": {}
+    },
+    "F1-system.os.info-3": {
+      "intent": "system.os.info",
+      "slots": {}
+    },
+    "F1-system.os.info-4": {
+      "intent": "system.os.info",
+      "slots": {}
+    },
+    "F1-system.os.info-5": {
+      "intent": "system.os.info",
+      "slots": {}
+    },
+    "F1-system.os.info-6": {
+      "intent": "system.os.info",
+      "slots": {}
+    },
+    "F1-system.uptime.summary-1": {
+      "intent": "system.uptime.summary",
+      "slots": {}
+    },
+    "F1-system.uptime.summary-2": {
+      "intent": "system.uptime.summary",
+      "slots": {}
+    },
+    "F1-system.uptime.summary-3": {
+      "intent": "system.uptime.summary",
+      "slots": {}
+    },
+    "F1-system.uptime.summary-4": {
+      "intent": "system.uptime.summary",
+      "slots": {}
+    },
+    "F1-system.uptime.summary-5": {
+      "intent": "system.uptime.summary",
+      "slots": {}
+    },
+    "F1-system.uptime.summary-6": {
+      "intent": "system.uptime.summary",
+      "slots": {}
+    },
+    "F1-network.connection.active-1": {
+      "intent": "network.connection.active",
+      "slots": {}
+    },
+    "F1-network.connection.active-2": {
+      "intent": "network.connection.active",
+      "slots": {
+        "protocol": {
+          "kind": "input-span",
+          "span": {
+            "start": 24,
+            "end": 27
+          }
+        }
+      }
+    },
+    "F1-network.connection.active-3": {
+      "intent": "network.connection.active",
+      "slots": {
+        "protocol": {
+          "kind": "input-span",
+          "span": {
+            "start": 14,
+            "end": 17
+          }
+        },
+        "limit": {
+          "kind": "input-span",
+          "span": {
+            "start": 30,
+            "end": 31
+          }
+        }
+      }
+    },
+    "F1-network.connection.active-4": {
+      "intent": "network.connection.active",
+      "slots": {}
+    },
+    "F1-network.connection.active-5": {
+      "intent": "network.connection.active",
+      "slots": {
+        "protocol": {
+          "kind": "input-span",
+          "span": {
+            "start": 12,
+            "end": 15
+          }
+        }
+      }
+    },
+    "F1-network.connection.active-6": {
+      "intent": "network.connection.active",
+      "slots": {
+        "protocol": {
+          "kind": "input-span",
+          "span": {
+            "start": 12,
+            "end": 15
+          }
+        },
+        "limit": {
+          "kind": "input-span",
+          "span": {
+            "start": 34,
+            "end": 35
+          }
+        }
+      }
+    },
+    "F1-network.interface.list-1": {
+      "intent": "network.interface.list",
+      "slots": {}
+    },
+    "F1-network.interface.list-2": {
+      "intent": "network.interface.list",
+      "slots": {}
+    },
+    "F1-network.interface.list-3": {
+      "intent": "network.interface.list",
+      "slots": {}
+    },
+    "F1-network.interface.list-4": {
+      "intent": "network.interface.list",
+      "slots": {}
+    },
+    "F1-network.interface.list-5": {
+      "intent": "network.interface.list",
+      "slots": {}
+    },
+    "F1-network.interface.list-6": {
+      "intent": "network.interface.list",
+      "slots": {}
+    },
+    "F1-network.route.table-1": {
+      "intent": "network.route.table",
+      "slots": {}
+    },
+    "F1-network.route.table-2": {
+      "intent": "network.route.table",
+      "slots": {}
+    },
+    "F1-network.route.table-3": {
+      "intent": "network.route.table",
+      "slots": {}
+    },
+    "F1-network.route.table-4": {
+      "intent": "network.route.table",
+      "slots": {}
+    },
+    "F1-network.route.table-5": {
+      "intent": "network.route.table",
+      "slots": {}
+    },
+    "F1-network.route.table-6": {
+      "intent": "network.route.table",
+      "slots": {}
+    },
+    "F1-network.dns.config-1": {
+      "intent": "network.dns.config",
+      "slots": {}
+    },
+    "F1-network.dns.config-2": {
+      "intent": "network.dns.config",
+      "slots": {}
+    },
+    "F1-network.dns.config-3": {
+      "intent": "network.dns.config",
+      "slots": {}
+    },
+    "F1-network.dns.config-4": {
+      "intent": "network.dns.config",
+      "slots": {}
+    },
+    "F1-network.dns.config-5": {
+      "intent": "network.dns.config",
+      "slots": {}
+    },
+    "F1-network.dns.config-6": {
+      "intent": "network.dns.config",
+      "slots": {}
+    },
+    "F1-service.status.get-1": {
+      "intent": "service.status.get",
+      "slots": {
+        "unit": {
+          "kind": "input-span",
+          "span": {
+            "start": 15,
+            "end": 27
+          }
+        }
+      }
+    },
+    "F1-service.status.get-2": {
+      "intent": "service.status.get",
+      "slots": {
+        "unit": {
+          "kind": "input-span",
+          "span": {
+            "start": 23,
+            "end": 37
+          }
+        }
+      }
+    },
+    "F1-service.status.get-3": {
+      "intent": "service.status.get",
+      "slots": {
+        "unit": {
+          "kind": "input-span",
+          "span": {
+            "start": 18,
+            "end": 31
+          }
+        }
+      }
+    },
+    "F1-service.status.get-4": {
+      "intent": "service.status.get",
+      "slots": {
+        "unit": {
+          "kind": "input-span",
+          "span": {
+            "start": 20,
+            "end": 32
+          }
+        }
+      }
+    },
+    "F1-service.status.get-5": {
+      "intent": "service.status.get",
+      "slots": {
+        "unit": {
+          "kind": "input-span",
+          "span": {
+            "start": 18,
+            "end": 36
+          }
+        }
+      }
+    },
+    "F1-service.status.get-6": {
+      "intent": "service.status.get",
+      "slots": {
+        "unit": {
+          "kind": "input-span",
+          "span": {
+            "start": 26,
+            "end": 37
+          }
+        }
+      }
+    },
+    "F1-service.list.active-1": {
+      "intent": "service.list.active",
+      "slots": {}
+    },
+    "F1-service.list.active-2": {
+      "intent": "service.list.active",
+      "slots": {
+        "limit": {
+          "kind": "input-span",
+          "span": {
+            "start": 30,
+            "end": 31
+          }
+        }
+      }
+    },
+    "F1-service.list.active-3": {
+      "intent": "service.list.active",
+      "slots": {
+        "limit": {
+          "kind": "input-span",
+          "span": {
+            "start": 23,
+            "end": 26
+          }
+        }
+      }
+    },
+    "F1-service.list.active-4": {
+      "intent": "service.list.active",
+      "slots": {}
+    },
+    "F1-service.list.active-5": {
+      "intent": "service.list.active",
+      "slots": {
+        "limit": {
+          "kind": "input-span",
+          "span": {
+            "start": 28,
+            "end": 29
+          }
+        }
+      }
+    },
+    "F1-service.list.active-6": {
+      "intent": "service.list.active",
+      "slots": {
+        "limit": {
+          "kind": "input-span",
+          "span": {
+            "start": 32,
+            "end": 34
+          }
+        }
+      }
+    },
+    "F1-service.enabled.list-1": {
+      "intent": "service.enabled.list",
+      "slots": {}
+    },
+    "F1-service.enabled.list-2": {
+      "intent": "service.enabled.list",
+      "slots": {
+        "limit": {
+          "kind": "input-span",
+          "span": {
+            "start": 29,
+            "end": 30
+          }
+        }
+      }
+    },
+    "F1-service.enabled.list-3": {
+      "intent": "service.enabled.list",
+      "slots": {
+        "limit": {
+          "kind": "input-span",
+          "span": {
+            "start": 31,
+            "end": 32
+          }
+        }
+      }
+    },
+    "F1-service.enabled.list-4": {
+      "intent": "service.enabled.list",
+      "slots": {}
+    },
+    "F1-service.enabled.list-5": {
+      "intent": "service.enabled.list",
+      "slots": {
+        "limit": {
+          "kind": "input-span",
+          "span": {
+            "start": 33,
+            "end": 34
+          }
+        }
+      }
+    },
+    "F1-service.enabled.list-6": {
+      "intent": "service.enabled.list",
+      "slots": {
+        "limit": {
+          "kind": "input-span",
+          "span": {
+            "start": 33,
+            "end": 36
+          }
+        }
+      }
+    },
+    "F1-log.system.errors-1": {
+      "intent": "log.system.errors",
+      "slots": {
+        "window": {
+          "kind": "context-ref",
+          "value": {
+            "kind": "time-window",
+            "start_unix_s": 1760000300,
+            "end_unix_s": 1760000600
+          }
+        }
+      }
+    },
+    "F1-log.system.errors-2": {
+      "intent": "log.system.errors",
+      "slots": {
+        "window": {
+          "kind": "context-ref",
+          "value": {
+            "kind": "time-window",
+            "start_unix_s": 1759914200,
+            "end_unix_s": 1760000600
+          }
+        }
+      }
+    },
+    "F1-log.system.errors-3": {
+      "intent": "log.system.errors",
+      "slots": {
+        "window": {
+          "kind": "context-ref",
+          "value": {
+            "kind": "time-window",
+            "start_unix_s": 1760000000,
+            "end_unix_s": 1760000600
+          }
+        },
+        "limit": {
+          "kind": "input-span",
+          "span": {
+            "start": 44,
+            "end": 45
+          }
+        }
+      }
+    },
+    "F1-log.system.errors-4": {
+      "intent": "log.system.errors",
+      "slots": {
+        "window": {
+          "kind": "context-ref",
+          "value": {
+            "kind": "time-window",
+            "start_unix_s": 1760000540,
+            "end_unix_s": 1760000600
+          }
+        }
+      }
+    },
+    "F1-log.system.errors-5": {
+      "intent": "log.system.errors",
+      "slots": {
+        "window": {
+          "kind": "context-ref",
+          "value": {
+            "kind": "time-window",
+            "start_unix_s": 1759998800,
+            "end_unix_s": 1760000600
+          }
+        },
+        "limit": {
+          "kind": "input-span",
+          "span": {
+            "start": 41,
+            "end": 42
+          }
+        }
+      }
+    },
+    "F1-log.system.errors-6": {
+      "intent": "log.system.errors",
+      "slots": {
+        "window": {
+          "kind": "context-ref",
+          "value": {
+            "kind": "time-window",
+            "start_unix_s": 1759997000,
+            "end_unix_s": 1760000600
+          }
+        }
+      }
+    },
+    "F1-log.boot.messages-1": {
+      "intent": "log.boot.messages",
+      "slots": {}
+    },
+    "F1-log.boot.messages-2": {
+      "intent": "log.boot.messages",
+      "slots": {
+        "limit": {
+          "kind": "input-span",
+          "span": {
+            "start": 24,
+            "end": 25
+          }
+        }
+      }
+    },
+    "F1-log.boot.messages-3": {
+      "intent": "log.boot.messages",
+      "slots": {
+        "limit": {
+          "kind": "input-span",
+          "span": {
+            "start": 33,
+            "end": 36
+          }
+        }
+      }
+    },
+    "F1-log.boot.messages-4": {
+      "intent": "log.boot.messages",
+      "slots": {}
+    },
+    "F1-log.boot.messages-5": {
+      "intent": "log.boot.messages",
+      "slots": {
+        "limit": {
+          "kind": "input-span",
+          "span": {
+            "start": 33,
+            "end": 34
+          }
+        }
+      }
+    },
+    "F1-log.boot.messages-6": {
+      "intent": "log.boot.messages",
+      "slots": {
+        "limit": {
+          "kind": "input-span",
+          "span": {
+            "start": 33,
+            "end": 35
+          }
+        }
+      }
+    },
+    "F1-storage.inode.usage-1": {
+      "intent": "storage.inode.usage",
+      "slots": {}
+    },
+    "F1-storage.inode.usage-2": {
+      "intent": "storage.inode.usage",
+      "slots": {}
+    },
+    "F1-storage.inode.usage-3": {
+      "intent": "storage.inode.usage",
+      "slots": {}
+    },
+    "F1-storage.inode.usage-4": {
+      "intent": "storage.inode.usage",
+      "slots": {}
+    },
+    "F1-storage.inode.usage-5": {
+      "intent": "storage.inode.usage",
+      "slots": {}
+    },
+    "F1-storage.inode.usage-6": {
+      "intent": "storage.inode.usage",
+      "slots": {}
+    },
+    "F1-storage.block.list-1": {
+      "intent": "storage.block.list",
+      "slots": {}
+    },
+    "F1-storage.block.list-2": {
+      "intent": "storage.block.list",
+      "slots": {}
+    },
+    "F1-storage.block.list-3": {
+      "intent": "storage.block.list",
+      "slots": {}
+    },
+    "F1-storage.block.list-4": {
+      "intent": "storage.block.list",
+      "slots": {}
+    },
+    "F1-storage.block.list-5": {
+      "intent": "storage.block.list",
+      "slots": {}
+    },
+    "F1-storage.block.list-6": {
+      "intent": "storage.block.list",
+      "slots": {}
+    },
+    "F1-storage.mount.list-1": {
+      "intent": "storage.mount.list",
+      "slots": {}
+    },
+    "F1-storage.mount.list-2": {
+      "intent": "storage.mount.list",
+      "slots": {}
+    },
+    "F1-storage.mount.list-3": {
+      "intent": "storage.mount.list",
+      "slots": {}
+    },
+    "F1-storage.mount.list-4": {
+      "intent": "storage.mount.list",
+      "slots": {}
+    },
+    "F1-storage.mount.list-5": {
+      "intent": "storage.mount.list",
+      "slots": {}
+    },
+    "F1-storage.mount.list-6": {
+      "intent": "storage.mount.list",
+      "slots": {}
+    },
+    "F1-file.metadata.stat-1": {
+      "intent": "file.metadata.stat",
+      "slots": {
+        "path": {
+          "kind": "input-span",
+          "span": {
+            "start": 14,
+            "end": 38
+          }
+        }
+      }
+    },
+    "F1-file.metadata.stat-2": {
+      "intent": "file.metadata.stat",
+      "slots": {
+        "path": {
+          "kind": "input-span",
+          "span": {
+            "start": 26,
+            "end": 50
+          }
+        }
+      }
+    },
+    "F1-file.metadata.stat-3": {
+      "intent": "file.metadata.stat",
+      "slots": {
+        "path": {
+          "kind": "input-span",
+          "span": {
+            "start": 21,
+            "end": 46
+          }
+        }
+      }
+    },
+    "F1-file.metadata.stat-4": {
+      "intent": "file.metadata.stat",
+      "slots": {
+        "path": {
+          "kind": "input-span",
+          "span": {
+            "start": 19,
+            "end": 41
+          }
+        }
+      }
+    },
+    "F1-file.metadata.stat-5": {
+      "intent": "file.metadata.stat",
+      "slots": {
+        "path": {
+          "kind": "input-span",
+          "span": {
+            "start": 20,
+            "end": 42
+          }
+        }
+      }
+    },
+    "F1-file.metadata.stat-6": {
+      "intent": "file.metadata.stat",
+      "slots": {
+        "path": {
+          "kind": "input-span",
+          "span": {
+            "start": 22,
+            "end": 46
+          }
+        }
+      }
+    },
+    "F1-file.permission.check-1": {
+      "intent": "file.permission.check",
+      "slots": {
+        "path": {
+          "kind": "input-span",
+          "span": {
+            "start": 14,
+            "end": 38
+          }
+        }
+      }
+    },
+    "F1-file.permission.check-2": {
+      "intent": "file.permission.check",
+      "slots": {
+        "path": {
+          "kind": "input-span",
+          "span": {
+            "start": 24,
+            "end": 48
+          }
+        }
+      }
+    },
+    "F1-file.permission.check-3": {
+      "intent": "file.permission.check",
+      "slots": {
+        "path": {
+          "kind": "input-span",
+          "span": {
+            "start": 26,
+            "end": 51
+          }
+        }
+      }
+    },
+    "F1-file.permission.check-4": {
+      "intent": "file.permission.check",
+      "slots": {
+        "path": {
+          "kind": "input-span",
+          "span": {
+            "start": 23,
+            "end": 45
+          }
+        }
+      }
+    },
+    "F1-file.permission.check-5": {
+      "intent": "file.permission.check",
+      "slots": {
+        "path": {
+          "kind": "input-span",
+          "span": {
+            "start": 20,
+            "end": 42
+          }
+        }
+      }
+    },
+    "F1-file.permission.check-6": {
+      "intent": "file.permission.check",
+      "slots": {
+        "path": {
+          "kind": "input-span",
+          "span": {
+            "start": 25,
+            "end": 49
+          }
+        }
+      }
+    },
+    "F1-archive.contents.list-1": {
+      "intent": "archive.contents.list",
+      "slots": {
+        "path": {
+          "kind": "input-span",
+          "span": {
+            "start": 17,
+            "end": 39
+          }
+        }
+      }
+    },
+    "F1-archive.contents.list-2": {
+      "intent": "archive.contents.list",
+      "slots": {
+        "path": {
+          "kind": "input-span",
+          "span": {
+            "start": 16,
+            "end": 38
+          }
+        },
+        "limit": {
+          "kind": "input-span",
+          "span": {
+            "start": 45,
+            "end": 46
+          }
+        }
+      }
+    },
+    "F1-archive.contents.list-3": {
+      "intent": "archive.contents.list",
+      "slots": {
+        "path": {
+          "kind": "input-span",
+          "span": {
+            "start": 27,
+            "end": 58
+          }
+        }
+      }
+    },
+    "F1-archive.contents.list-4": {
+      "intent": "archive.contents.list",
+      "slots": {
+        "path": {
+          "kind": "input-span",
+          "span": {
+            "start": 22,
+            "end": 44
+          }
+        }
+      }
+    },
+    "F1-archive.contents.list-5": {
+      "intent": "archive.contents.list",
+      "slots": {
+        "path": {
+          "kind": "input-span",
+          "span": {
+            "start": 21,
+            "end": 43
+          }
+        },
+        "limit": {
+          "kind": "input-span",
+          "span": {
+            "start": 50,
+            "end": 51
+          }
+        }
+      }
+    },
+    "F1-archive.contents.list-6": {
+      "intent": "archive.contents.list",
+      "slots": {
+        "path": {
+          "kind": "input-span",
+          "span": {
+            "start": 25,
+            "end": 56
+          }
+        }
+      }
+    },
+    "F1-process.list.top_cpu-1": {
+      "intent": "process.list.top_cpu",
+      "slots": {}
+    },
+    "F1-process.list.top_cpu-2": {
+      "intent": "process.list.top_cpu",
+      "slots": {
+        "limit": {
+          "kind": "input-span",
+          "span": {
+            "start": 4,
+            "end": 5
+          }
+        }
+      }
+    },
+    "F1-process.list.top_cpu-3": {
+      "intent": "process.list.top_cpu",
+      "slots": {
+        "limit": {
+          "kind": "input-span",
+          "span": {
+            "start": 32,
+            "end": 33
+          }
+        }
+      }
+    },
+    "F1-process.list.top_cpu-4": {
+      "intent": "process.list.top_cpu",
+      "slots": {}
+    },
+    "F1-process.list.top_cpu-5": {
+      "intent": "process.list.top_cpu",
+      "slots": {
+        "limit": {
+          "kind": "input-span",
+          "span": {
+            "start": 4,
+            "end": 5
+          }
+        }
+      }
+    },
+    "F1-process.list.top_cpu-6": {
+      "intent": "process.list.top_cpu",
+      "slots": {
+        "limit": {
+          "kind": "input-span",
+          "span": {
+            "start": 34,
+            "end": 37
+          }
+        }
+      }
+    },
+    "F1-process.list.top_mem-1": {
+      "intent": "process.list.top_mem",
+      "slots": {}
+    },
+    "F1-process.list.top_mem-2": {
+      "intent": "process.list.top_mem",
+      "slots": {
+        "limit": {
+          "kind": "input-span",
+          "span": {
+            "start": 4,
+            "end": 5
+          }
+        }
+      }
+    },
+    "F1-process.list.top_mem-3": {
+      "intent": "process.list.top_mem",
+      "slots": {
+        "limit": {
+          "kind": "input-span",
+          "span": {
+            "start": 32,
+            "end": 33
+          }
+        }
+      }
+    },
+    "F1-process.list.top_mem-4": {
+      "intent": "process.list.top_mem",
+      "slots": {}
+    },
+    "F1-process.list.top_mem-5": {
+      "intent": "process.list.top_mem",
+      "slots": {
+        "limit": {
+          "kind": "input-span",
+          "span": {
+            "start": 4,
+            "end": 5
+          }
+        }
+      }
+    },
+    "F1-process.list.top_mem-6": {
+      "intent": "process.list.top_mem",
+      "slots": {
+        "limit": {
+          "kind": "input-span",
+          "span": {
+            "start": 37,
+            "end": 40
+          }
+        }
+      }
+    },
+    "F1-process.tree.view-1": {
+      "intent": "process.tree.view",
+      "slots": {}
+    },
+    "F1-process.tree.view-2": {
+      "intent": "process.tree.view",
+      "slots": {
+        "depth": {
+          "kind": "input-span",
+          "span": {
+            "start": 32,
+            "end": 33
+          }
+        }
+      }
+    },
+    "F1-process.tree.view-3": {
+      "intent": "process.tree.view",
+      "slots": {
+        "limit": {
+          "kind": "input-span",
+          "span": {
+            "start": 25,
+            "end": 26
+          }
+        },
+        "depth": {
+          "kind": "input-span",
+          "span": {
+            "start": 33,
+            "end": 34
+          }
+        }
+      }
+    },
+    "F1-process.tree.view-4": {
+      "intent": "process.tree.view",
+      "slots": {}
+    },
+    "F1-process.tree.view-5": {
+      "intent": "process.tree.view",
+      "slots": {
+        "depth": {
+          "kind": "input-span",
+          "span": {
+            "start": 32,
+            "end": 33
+          }
+        }
+      }
+    },
+    "F1-process.tree.view-6": {
+      "intent": "process.tree.view",
+      "slots": {
+        "limit": {
+          "kind": "input-span",
+          "span": {
+            "start": 24,
+            "end": 26
+          }
+        },
+        "depth": {
+          "kind": "input-span",
+          "span": {
+            "start": 33,
+            "end": 34
+          }
+        }
+      }
+    },
+    "F1-cpu.hardware.info-1": {
+      "intent": "cpu.hardware.info",
+      "slots": {}
+    },
+    "F1-cpu.hardware.info-2": {
+      "intent": "cpu.hardware.info",
+      "slots": {}
+    },
+    "F1-cpu.hardware.info-3": {
+      "intent": "cpu.hardware.info",
+      "slots": {}
+    },
+    "F1-cpu.hardware.info-4": {
+      "intent": "cpu.hardware.info",
+      "slots": {}
+    },
+    "F1-cpu.hardware.info-5": {
+      "intent": "cpu.hardware.info",
+      "slots": {}
+    },
+    "F1-cpu.hardware.info-6": {
+      "intent": "cpu.hardware.info",
+      "slots": {}
+    },
+    "F1-user.session.who-1": {
+      "intent": "user.session.who",
+      "slots": {}
+    },
+    "F1-user.session.who-2": {
+      "intent": "user.session.who",
+      "slots": {
+        "limit": {
+          "kind": "input-span",
+          "span": {
+            "start": 32,
+            "end": 33
+          }
+        }
+      }
+    },
+    "F1-user.session.who-3": {
+      "intent": "user.session.who",
+      "slots": {
+        "limit": {
+          "kind": "input-span",
+          "span": {
+            "start": 29,
+            "end": 32
+          }
+        }
+      }
+    },
+    "F1-user.session.who-4": {
+      "intent": "user.session.who",
+      "slots": {}
+    },
+    "F1-user.session.who-5": {
+      "intent": "user.session.who",
+      "slots": {
+        "limit": {
+          "kind": "input-span",
+          "span": {
+            "start": 27,
+            "end": 28
+          }
+        }
+      }
+    },
+    "F1-user.session.who-6": {
+      "intent": "user.session.who",
+      "slots": {
+        "limit": {
+          "kind": "input-span",
+          "span": {
+            "start": 29,
+            "end": 31
+          }
+        }
+      }
+    },
+    "F1-user.identity.info-1": {
+      "intent": "user.identity.info",
+      "slots": {}
+    },
+    "F1-user.identity.info-2": {
+      "intent": "user.identity.info",
+      "slots": {}
+    },
+    "F1-user.identity.info-3": {
+      "intent": "user.identity.info",
+      "slots": {}
+    },
+    "F1-user.identity.info-4": {
+      "intent": "user.identity.info",
+      "slots": {}
+    },
+    "F1-user.identity.info-5": {
+      "intent": "user.identity.info",
+      "slots": {}
+    },
+    "F1-user.identity.info-6": {
+      "intent": "user.identity.info",
+      "slots": {}
+    },
+    "F1-service.reload-1": {
+      "intent": "service.reload",
+      "slots": {
+        "unit": {
+          "kind": "input-span",
+          "span": {
+            "start": 19,
+            "end": 31
+          }
+        }
+      }
+    },
+    "F1-service.reload-2": {
+      "intent": "service.reload",
+      "slots": {
+        "unit": {
+          "kind": "input-span",
+          "span": {
+            "start": 15,
+            "end": 29
+          }
+        }
+      }
+    },
+    "F1-service.reload-3": {
+      "intent": "service.reload",
+      "slots": {
+        "unit": {
+          "kind": "input-span",
+          "span": {
+            "start": 15,
+            "end": 28
+          }
+        }
+      }
+    },
+    "F1-service.reload-4": {
+      "intent": "service.reload",
+      "slots": {
+        "unit": {
+          "kind": "input-span",
+          "span": {
+            "start": 15,
+            "end": 27
+          }
+        }
+      }
+    },
+    "F1-service.reload-5": {
+      "intent": "service.reload",
+      "slots": {
+        "unit": {
+          "kind": "input-span",
+          "span": {
+            "start": 18,
+            "end": 36
+          }
+        }
+      }
+    },
+    "F1-service.reload-6": {
+      "intent": "service.reload",
+      "slots": {
+        "unit": {
+          "kind": "input-span",
+          "span": {
+            "start": 23,
+            "end": 34
+          }
+        }
+      }
+    }
+  }
+}

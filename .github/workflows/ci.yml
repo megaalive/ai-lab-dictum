@@ -1,0 +1,71 @@
+name: CI native
+
+on: [push, pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  build-test:
+    name: ${{ matrix.compiler }} / ${{ matrix.config.type }}
+    runs-on: ubuntu-24.04
+    # Manifest linux/amd64 resmi untuk Debian 13.5 slim.
+    container: debian:13.5-slim@sha256:a617c1cdde36a7e0194b2f07dff669e1753c03c3205356b94f9f350b0f9a57d1
+    timeout-minutes: 15
+    defaults:
+      run:
+        shell: bash
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler: [gcc, clang]
+        config:
+          - type: Release
+            sanitizers: "OFF"
+          - type: Debug
+            sanitizers: "ON"
+    env:
+      CC: ${{ matrix.compiler }}
+      BUILD_TYPE: ${{ matrix.config.type }}
+      SANITIZERS: ${{ matrix.config.sanitizers }}
+
+    steps:
+      - name: Pasang toolchain Debian
+        run: |
+          apt-get -o APT::Update::Error-Mode=any update
+          packages=(ca-certificates git cmake make libc6-dev "$CC")
+          if [[ "$CC" == clang && "$SANITIZERS" == ON ]]; then
+            packages+=(libclang-rt-dev)
+          fi
+          apt-get install -y --no-install-recommends "${packages[@]}"
+
+      - name: Ambil sumber
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Verifikasi lingkungan dan konfigurasi
+        run: |
+          . /etc/os-release
+          test "$ID" = debian
+          test "$VERSION_ID" = 13
+          test "$(uname -m)" = x86_64
+          cat /etc/os-release /etc/debian_version
+          uname -smr
+          # Checkout memakai HOME sementara, sedangkan workspace milik runner host.
+          checked_sha=$(git -c safe.directory="$GITHUB_WORKSPACE" rev-parse HEAD)
+          printf 'SHA checkout %s\n' "$checked_sha"
+          test "$checked_sha" = "$GITHUB_SHA"
+          "$CC" --version
+          cmake --version
+          cmake -S . -B build/ci \
+            -DCMAKE_BUILD_TYPE="$BUILD_TYPE" \
+            -DCMAKE_COMPILE_WARNING_AS_ERROR=ON \
+            -DDICTUM_ENABLE_ASAN="$SANITIZERS" \
+            -DDICTUM_ENABLE_UBSAN="$SANITIZERS"
+
+      - name: Kompilasi
+        run: cmake --build build/ci --parallel 2 --verbose
+
+      - name: Uji CLI
+        run: ctest --test-dir build/ci --output-on-failure --no-tests=error

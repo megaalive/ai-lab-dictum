@@ -1,9 +1,9 @@
 name: Spike S1 inert renderer
 on:
   push:
-    paths: ['tests/spikes/s1/**', 'tests/renderer/**', '.github/workflows/spike-s1.yml']
+    paths: ['tests/spikes/s1/**', 'tests/renderer/run.py', 'tests/renderer/fixtures/**', '.github/workflows/spike-s1.yml']
   pull_request:
-    paths: ['tests/spikes/s1/**', 'tests/renderer/**', '.github/workflows/spike-s1.yml']
+    paths: ['tests/spikes/s1/**', 'tests/renderer/run.py', 'tests/renderer/fixtures/**', '.github/workflows/spike-s1.yml']
 permissions:
   contents: read
 jobs:

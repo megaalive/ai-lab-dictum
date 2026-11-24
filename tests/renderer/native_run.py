@@ -49,7 +49,7 @@ def main():
         cwd.mkdir()
         trace=Path(temp)/"trace"
         for c in gold["cases"]:
-            if profile and c["shell"] in s1.SHELL and c["shell"]!=profile:
+            if profile and isinstance(c["shell"],str) and c["shell"] in s1.SHELL and c["shell"]!=profile:
                 continue
             actual=invoke(payload(c))
             assert actual==c["expected"], (c["id"],actual["kind"],actual.get("reason"))

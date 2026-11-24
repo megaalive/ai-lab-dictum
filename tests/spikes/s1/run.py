@@ -1,5 +1,7 @@
 """S1 inert lab. Only the fixture dumper may be invoked by the clean shells."""
 import hashlib
+import ctypes
+import errno
 import json
 import os
 import random
@@ -49,6 +51,49 @@ def sha(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
+# Additional child filter: deny all socket operations and io_uring entry points.
+# Applies before strace exec and is inherited by both shell and dumper.
+# Single-threaded harness, no network descriptors passed to Popen.
+FILTER_LIB = None
+FILTER_CTX = None
+NETWORK_SYSCALLS = (
+    "socket","socketpair","connect","bind","listen","accept","accept4",
+    "shutdown","getsockname","getpeername","getsockopt","setsockopt",
+    "sendto","recvfrom","sendmsg","recvmsg","sendmmsg","recvmmsg",
+    "io_uring_setup","io_uring_enter","io_uring_register",
+)
+
+
+def init_network_filter():
+    global FILTER_LIB,FILTER_CTX
+    try:
+        lib=ctypes.CDLL("libseccomp.so.2",use_errno=True)
+        lib.seccomp_init.argtypes=[ctypes.c_uint32]
+        lib.seccomp_init.restype=ctypes.c_void_p
+        lib.seccomp_syscall_resolve_name.argtypes=[ctypes.c_char_p]
+        lib.seccomp_syscall_resolve_name.restype=ctypes.c_int
+        lib.seccomp_rule_add.argtypes=[ctypes.c_void_p,ctypes.c_uint32,ctypes.c_int,ctypes.c_uint]
+        lib.seccomp_rule_add.restype=ctypes.c_int
+        lib.seccomp_load.argtypes=[ctypes.c_void_p]
+        lib.seccomp_load.restype=ctypes.c_int
+        ctx=lib.seccomp_init(0x7fff0000)  # SCMP_ACT_ALLOW; additional deny filter
+        if not ctx:
+            raise Blocked("seccomp-init")
+        for name in NETWORK_SYSCALLS:
+            nr=lib.seccomp_syscall_resolve_name(name.encode("ascii"))
+            if nr<0 or lib.seccomp_rule_add(ctx,0x00050000|errno.EPERM,nr,0)!=0:
+                raise Blocked("seccomp-rule:"+name)
+        FILTER_LIB,FILTER_CTX=lib,ctx
+    except OSError as exc:
+        raise Blocked("seccomp-library") from exc
+
+
+def load_network_filter():
+    # Called in child before exec. Fail without running anything on filter error.
+    if FILTER_LIB is None or FILTER_CTX is None or FILTER_LIB.seccomp_load(FILTER_CTX)!=0:
+        os._exit(125)
+
+
 def preflight():
     status = Path("/proc/self/status").read_text()
     if (os.getuid() == 0 or not re.search(r"^CapEff:\s+0+$",status,re.M)
@@ -63,7 +108,8 @@ def preflight():
     # Keep trace logs bounded even if a fixture unexpectedly misbehaves.
     resource.setrlimit(resource.RLIMIT_FSIZE, (CAP, CAP))
     resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
-    print("preflight: nonroot, caps=0, no-new-privileges, lo-only, root read-only")
+    init_network_filter()
+    print("preflight: nonroot, caps=0, no-new-privileges, lo-only, root read-only, child network deny filter prepared")
 
 
 def case(cid, shell, args, recipe="fixture-end", gate="verified-fixture"):
@@ -179,7 +225,8 @@ def bounded_process(argv,cwd,env):
     # Only called after exact argv lexing and trusted fixture selection.
     proc = subprocess.Popen(argv, cwd=cwd, env=env, stdin=subprocess.DEVNULL,
                             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                            start_new_session=True)
+                            start_new_session=True, close_fds=True,
+                            preexec_fn=load_network_filter)
     buffers = [bytearray(),bytearray()]
     deadline = time.monotonic()+DEADLINE
     try:
@@ -242,6 +289,13 @@ def check_trace(raw, shell):
             readonly = "O_RDONLY" in line and not re.search(
                 r"\bO_(?:WRONLY|RDWR|CREAT|TRUNC|APPEND|TMPFILE)\b",line)
             need(bool(absent_tty) or readonly,"trace-write")
+        elif name == "socket":
+            # glibc NSS probes nscd at Bash startup. The child seccomp filter
+            # denies creation of the AF_UNIX descriptor, before any connection.
+            # Never permit a successfully created socket or any connect.
+            denied_nscd_probe = (shell == SHELL["bash-posix-clean-v1"][0] and
+                re.fullmatch(r'\s*\d+\s+socket\(AF_UNIX, SOCK_STREAM\|SOCK_CLOEXEC\|SOCK_NONBLOCK, 0\)\s+= -1 EPERM \(Operation not permitted\)',line))
+            need(bool(denied_nscd_probe),"trace-forbidden-socket")
         else:
             need(name in READ_ONLY or name in PROCESS,"trace-forbidden-"+name)
     need(execs==[shell,DUMPER],"unexpected-exec")
@@ -255,7 +309,13 @@ def trace_guard_regression():
                 f'10 execve("{DUMPER}", [], []) = 0\n').encode()
     allowed = '10 openat(AT_FDCWD, "/dev/tty", O_RDWR|O_NONBLOCK) = -1 ENXIO (No such device or address)'
     check_trace(traced(bash,allowed),bash)
+    denied = '10 socket(AF_UNIX, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = -1 EPERM (Operation not permitted)'
+    check_trace(traced(bash,denied),bash)
     variants = [
+        (dash,denied),
+        (bash,denied.replace("= -1 EPERM (Operation not permitted)","= 3")),
+        (bash,denied.replace("AF_UNIX","AF_INET")),
+        (bash,'10 connect(3, {sa_family=AF_UNIX, sun_path="/var/run/nscd/socket"}, 110) = -1 ENOENT (No such file or directory)'),
         (dash,allowed),
         (bash,allowed.replace('= -1 ENXIO (No such device or address)','= 3')),
         (bash,allowed.replace('/dev/tty','/tmp/other')),
@@ -272,7 +332,7 @@ def trace_guard_regression():
             pass
         else:
             raise AssertionError("trace-guard-negative")
-    print(f"S1 trace guard: {len(variants)+1}/{len(variants)+1} synthetic cases",flush=True)
+    print(f"S1 trace guard: {len(variants)+2}/{len(variants)+2} synthetic cases",flush=True)
 
 
 def roundtrip(preview, expected, profile, trace, cwd):

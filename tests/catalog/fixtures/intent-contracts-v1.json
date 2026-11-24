@@ -171,7 +171,7 @@
       "intent": "diagnosis.connectivity",
       "positive": {
         "scenario": "Mengapa layanan lokal tidak terhubung",
-        "expected": "structured guide only"
+        "expected": "bounded non-copyable narrative; no child operation IR"
       },
       "negative": {
         "scenario": "run all checks automatically",
@@ -591,10 +591,10 @@
       "intent": "user.identity.info",
       "positive": {
         "scenario": "Identitas pengguna saat ini",
-        "expected": "current identity only"
+        "expected": "numeric UID/GID/group IDs only; no NSS name lookup"
       },
       "negative": {
-        "scenario": "identity of another host",
+        "scenario": "request NSS name or remote identity lookup",
         "expected": "unsupported"
       },
       "result": "NOT RUN",
@@ -606,7 +606,7 @@
       "intent": "diagnosis.disk_full",
       "positive": {
         "scenario": "Disk penuh",
-        "expected": "structured guidance"
+        "expected": "bounded non-copyable narrative; no child operation IR"
       },
       "negative": {
         "scenario": "hapus otomatis",
@@ -621,7 +621,7 @@
       "intent": "diagnosis.high_load",
       "positive": {
         "scenario": "Load tinggi",
-        "expected": "structured guidance"
+        "expected": "bounded non-copyable narrative; no child operation IR"
       },
       "negative": {
         "scenario": "kill process automatically",
@@ -636,7 +636,7 @@
       "intent": "diagnosis.service_crash",
       "positive": {
         "scenario": "Layanan fixture gagal mulai",
-        "expected": "structured guidance"
+        "expected": "bounded non-copyable narrative; no child operation IR"
       },
       "negative": {
         "scenario": "restart automatically",
@@ -651,7 +651,7 @@
       "intent": "diagnosis.dns_failure",
       "positive": {
         "scenario": "DNS gagal",
-        "expected": "structured guidance"
+        "expected": "bounded non-copyable narrative; no child operation IR"
       },
       "negative": {
         "scenario": "automatic DNS traffic",
@@ -696,7 +696,7 @@
       "intent": "archive.extract.safe",
       "positive": {
         "scenario": "Usulkan ekstraksi arsip fixture",
-        "expected": "structured proposal with warnings"
+        "expected": "structured proposal with warnings; safe aspirational and NOT VERIFIED"
       },
       "negative": {
         "scenario": "destination exists or traversal",

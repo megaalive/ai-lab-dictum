@@ -405,6 +405,7 @@
               "gateway",
               "gid",
               "group_ids",
+              "guidance_text",
               "identity",
               "installed",
               "intent_id",
@@ -452,7 +453,6 @@
               "size_bytes",
               "source_id",
               "state",
-              "steps",
               "summary_redacted",
               "swap_total_bytes",
               "swap_used_bytes",
@@ -496,6 +496,15 @@
             "POSSIBLE",
             "NOT VERIFIED"
           ]
+        },
+        "operation_surface": {
+          "enum": [
+            "indexed-docs",
+            "narrative-only",
+            "native-ipc-candidate",
+            "native-candidate",
+            "command-candidate"
+          ]
         }
       },
       "required": [
@@ -515,7 +524,8 @@
         "redaction_profile",
         "source",
         "fixture_id",
-        "requires_privilege"
+        "requires_privilege",
+        "operation_surface"
       ],
       "additionalProperties": false
     },
@@ -669,6 +679,15 @@
         },
         "fixture_id": {
           "$ref": "#/$defs/fixture_id"
+        },
+        "operation_surface": {
+          "enum": [
+            "indexed-docs",
+            "narrative-only",
+            "native-ipc-candidate",
+            "native-candidate",
+            "command-candidate"
+          ]
         }
       },
       "required": [
@@ -686,7 +705,8 @@
         "namespace_visibility",
         "data_source_candidate",
         "host_equivalence",
-        "fixture_id"
+        "fixture_id",
+        "operation_surface"
       ],
       "additionalProperties": false
     },

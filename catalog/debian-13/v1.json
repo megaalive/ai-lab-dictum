@@ -29,7 +29,8 @@
         "method": "Compare exact indexed entry with pinned build source; no man or help spawn.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-01"
+      "fixture_id": "CAT-01",
+      "operation_surface": "indexed-docs"
     },
     {
       "intent": "help.intent.list",
@@ -55,7 +56,8 @@
         "method": "Compare projected list against exact registry and profile; no spawn.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-02"
+      "fixture_id": "CAT-02",
+      "operation_surface": "indexed-docs"
     },
     {
       "intent": "system.os.info",
@@ -81,7 +83,8 @@
         "method": "Compare fixture OS metadata and uname fields for same host identity.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-03"
+      "fixture_id": "CAT-03",
+      "operation_surface": "native-candidate"
     },
     {
       "intent": "system.uptime.summary",
@@ -107,7 +110,8 @@
         "method": "Compare same time/PID namespace and sampled uptime/load with bounded tolerance.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-04"
+      "fixture_id": "CAT-04",
+      "operation_surface": "native-candidate"
     },
     {
       "intent": "network.listener.lookup",
@@ -120,7 +124,7 @@
       "capability_status": "BLOCKED",
       "rights": {
         "status": "NOT VERIFIED",
-        "minimum_access": "socket diagnostic visibility; PID may be unavailable",
+        "minimum_access": "netlink socket diagnostics and allowlisted proc PID attribution; existing permissions only; report visibility limited/unknown",
         "required_groups": [],
         "request_additional_groups": false,
         "privilege_may_be_required": false
@@ -132,12 +136,13 @@
         "netlink-sock-diag"
       ],
       "namespace_visibility": "network-pid",
-      "data_source_candidate": "ss(8)",
+      "data_source_candidate": "ss(8), proc_pid_fd(5)",
       "host_equivalence": {
         "method": "Compare known lab listeners and PID visibility in intended network/PID namespaces; no active probe.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-05"
+      "fixture_id": "CAT-05",
+      "operation_surface": "command-candidate"
     },
     {
       "intent": "network.connection.active",
@@ -167,7 +172,8 @@
         "method": "Compare seeded local socket states; normalize changing ephemeral state; no DNS.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-06"
+      "fixture_id": "CAT-06",
+      "operation_surface": "command-candidate"
     },
     {
       "intent": "network.interface.list",
@@ -197,7 +203,8 @@
         "method": "Compare lab links and addresses with host snapshot; namespace mismatch is failure.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-07"
+      "fixture_id": "CAT-07",
+      "operation_surface": "command-candidate"
     },
     {
       "intent": "network.route.table",
@@ -227,7 +234,8 @@
         "method": "Compare pinned lab routes and default gateway in intended namespace.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-08"
+      "fixture_id": "CAT-08",
+      "operation_surface": "command-candidate"
     },
     {
       "intent": "network.dns.config",
@@ -240,7 +248,7 @@
       "capability_status": "BLOCKED",
       "rights": {
         "status": "NOT VERIFIED",
-        "minimum_access": "read allowlisted resolver metadata; daemon source unresolved",
+        "minimum_access": "allowlisted resolv.conf and effective resolver metadata; resolve1 D-Bus interface candidate; no DNS request or proxy egress",
         "required_groups": [],
         "request_additional_groups": false,
         "privilege_may_be_required": false
@@ -252,12 +260,13 @@
         "resolver-ipc"
       ],
       "namespace_visibility": "mount-network",
-      "data_source_candidate": "resolv.conf(5), resolved.conf(5)",
+      "data_source_candidate": "resolv.conf(5), resolved.conf(5), org.freedesktop.resolve1(5)",
       "host_equivalence": {
         "method": "Compare controlled resolver configuration and effective mode; no queries or daemon proxy egress.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-09"
+      "fixture_id": "CAT-09",
+      "operation_surface": "native-ipc-candidate"
     },
     {
       "intent": "network.dns.lookup",
@@ -289,7 +298,8 @@
         "method": "MVP proposal oracle only; compare query target and NET effect, never run.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-10"
+      "fixture_id": "CAT-10",
+      "operation_surface": "command-candidate"
     },
     {
       "intent": "network.connectivity.ping",
@@ -309,16 +319,20 @@
       },
       "socket_domains": [
         "AF_INET",
-        "AF_INET6"
+        "AF_INET6",
+        "AF_UNIX"
       ],
-      "ipc_candidates": [],
+      "ipc_candidates": [
+        "resolver-ipc"
+      ],
       "namespace_visibility": "network",
-      "data_source_candidate": "ping(8)",
+      "data_source_candidate": "ping(8), resolv.conf(5)",
       "host_equivalence": {
         "method": "MVP proposal oracle only; count <=4 and NET effect, no traffic.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-11"
+      "fixture_id": "CAT-11",
+      "operation_surface": "command-candidate"
     },
     {
       "intent": "diagnosis.connectivity",
@@ -331,7 +345,7 @@
       "capability_status": "BLOCKED",
       "rights": {
         "status": "NOT VERIFIED",
-        "minimum_access": "no access; guide only",
+        "minimum_access": "narrative guidance only; no OS access or invocation; no child operation IR",
         "required_groups": [],
         "request_additional_groups": false,
         "privilege_may_be_required": false
@@ -341,10 +355,11 @@
       "namespace_visibility": "none",
       "data_source_candidate": "baseline v3 diagnostic guide",
       "host_equivalence": {
-        "method": "Proposal oracle: ordered bounded local checks; no automatic probe or agent loop.",
+        "method": "Proposal oracle: bounded non-copyable narrative only; no argv, handler, child operation IR or host observation. ordered bounded local checks; no automatic probe or agent loop.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-12"
+      "fixture_id": "CAT-12",
+      "operation_surface": "narrative-only"
     },
     {
       "intent": "service.status.get",
@@ -374,7 +389,8 @@
         "method": "MVP proposal oracle: exact unit and current status, no D-Bus access.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-13"
+      "fixture_id": "CAT-13",
+      "operation_surface": "command-candidate"
     },
     {
       "intent": "service.list.active",
@@ -404,7 +420,8 @@
         "method": "MVP proposal oracle: current active state, not enabled or historical.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-14"
+      "fixture_id": "CAT-14",
+      "operation_surface": "command-candidate"
     },
     {
       "intent": "service.failed.list",
@@ -434,7 +451,8 @@
         "method": "MVP proposal oracle: currently failed vs since-boot history; no D-Bus access.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-15"
+      "fixture_id": "CAT-15",
+      "operation_surface": "command-candidate"
     },
     {
       "intent": "service.enabled.list",
@@ -464,7 +482,8 @@
         "method": "MVP proposal oracle: enabled state distinct from active.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-16"
+      "fixture_id": "CAT-16",
+      "operation_surface": "command-candidate"
     },
     {
       "intent": "log.service.query",
@@ -477,10 +496,10 @@
       "capability_status": "BLOCKED",
       "rights": {
         "status": "NOT VERIFIED",
-        "minimum_access": "only existing journal permissions; do not request adm or systemd-journal",
+        "minimum_access": "existing journal ACL only; system journal visibility may require root or existing adm/systemd-journal membership; never request elevation",
         "required_groups": [],
         "request_additional_groups": false,
-        "privilege_may_be_required": false
+        "privilege_may_be_required": true
       },
       "socket_domains": [
         "AF_UNIX"
@@ -494,7 +513,8 @@
         "method": "MVP proposal oracle: unit, half-open pinned time range and limit; no raw journal read.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-17"
+      "fixture_id": "CAT-17",
+      "operation_surface": "command-candidate"
     },
     {
       "intent": "log.system.errors",
@@ -507,10 +527,10 @@
       "capability_status": "BLOCKED",
       "rights": {
         "status": "NOT VERIFIED",
-        "minimum_access": "only existing journal permissions; no new groups",
+        "minimum_access": "existing journal ACL only; system journal visibility may require root or existing adm/systemd-journal membership; never request elevation",
         "required_groups": [],
         "request_additional_groups": false,
-        "privilege_may_be_required": false
+        "privilege_may_be_required": true
       },
       "socket_domains": [
         "AF_UNIX"
@@ -524,7 +544,8 @@
         "method": "MVP proposal oracle: err..emerg and pinned time window, never raw read.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-18"
+      "fixture_id": "CAT-18",
+      "operation_surface": "command-candidate"
     },
     {
       "intent": "log.boot.messages",
@@ -537,7 +558,7 @@
       "capability_status": "BLOCKED",
       "rights": {
         "status": "NOT VERIFIED",
-        "minimum_access": "kernel restriction or journal ACL may block; no added rights",
+        "minimum_access": "existing journal ACL or kernel read rights only; no privilege/group change; limited visibility if unavailable",
         "required_groups": [],
         "request_additional_groups": false,
         "privilege_may_be_required": true
@@ -554,7 +575,8 @@
         "method": "MVP proposal oracle: current boot scope and visible messages, not privilege bypass.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-19"
+      "fixture_id": "CAT-19",
+      "operation_surface": "command-candidate"
     },
     {
       "intent": "storage.filesystem.usage",
@@ -580,7 +602,8 @@
         "method": "Compare fixed local mount fixture capacities; exclude unapproved remote/sensitive mounts.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-20"
+      "fixture_id": "CAT-20",
+      "operation_surface": "command-candidate"
     },
     {
       "intent": "storage.inode.usage",
@@ -606,7 +629,8 @@
         "method": "Compare inode counts on seeded allowed local filesystem.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-21"
+      "fixture_id": "CAT-21",
+      "operation_surface": "command-candidate"
     },
     {
       "intent": "storage.directory.usage",
@@ -627,12 +651,13 @@
       "socket_domains": [],
       "ipc_candidates": [],
       "namespace_visibility": "mount",
-      "data_source_candidate": "du(1)",
+      "data_source_candidate": "openat2(2), getdents64(2), statx(2)",
       "host_equivalence": {
-        "method": "Compare seeded tree including hardlinks and bounded depth; deterministic sort and partial errors.",
+        "method": "Native descriptor-based fixture tree, allocated blocks, hardlink policy and depth; compare to independent lab oracle, not a du invocation by product.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-22"
+      "fixture_id": "CAT-22",
+      "operation_surface": "native-candidate"
     },
     {
       "intent": "storage.block.list",
@@ -658,7 +683,8 @@
         "method": "Compare lab block topology and allowed fields; no raw device/serial disclosure.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-23"
+      "fixture_id": "CAT-23",
+      "operation_surface": "command-candidate"
     },
     {
       "intent": "storage.mount.list",
@@ -684,7 +710,8 @@
         "method": "Compare lab mount namespace and projected options; omit credentials.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-24"
+      "fixture_id": "CAT-24",
+      "operation_surface": "command-candidate"
     },
     {
       "intent": "file.search",
@@ -705,12 +732,13 @@
       "socket_domains": [],
       "ipc_candidates": [],
       "namespace_visibility": "mount",
-      "data_source_candidate": "find(1)",
+      "data_source_candidate": "openat2(2), getdents64(2), statx(2)",
       "host_equivalence": {
-        "method": "Compare fixed tree with literal quotes, Unicode, dash, mtime boundary and sensitive canary.",
+        "method": "Native descriptor-based traversal with literal names, Unicode, dash, half-open mtime bounds, sensitive canary and no mount escape; compare with fixed lab tree.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-25"
+      "fixture_id": "CAT-25",
+      "operation_surface": "native-candidate"
     },
     {
       "intent": "file.text.search",
@@ -731,12 +759,13 @@
       "socket_domains": [],
       "ipc_candidates": [],
       "namespace_visibility": "mount",
-      "data_source_candidate": "grep(1)",
+      "data_source_candidate": "openat2(2), getdents64(2), read(2), statx(2)",
       "host_equivalence": {
         "method": "Compare seeded text including canary, binary/oversized files and literal pattern.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-26"
+      "fixture_id": "CAT-26",
+      "operation_surface": "native-candidate"
     },
     {
       "intent": "file.metadata.stat",
@@ -757,12 +786,13 @@
       "socket_domains": [],
       "ipc_candidates": [],
       "namespace_visibility": "mount-user",
-      "data_source_candidate": "stat(1), stat(2)",
+      "data_source_candidate": "openat2(2), statx(2), fstat(2)",
       "host_equivalence": {
         "method": "Compare pinned fixture inode metadata; deny symlink race/outside scope.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-27"
+      "fixture_id": "CAT-27",
+      "operation_surface": "native-candidate"
     },
     {
       "intent": "file.permission.check",
@@ -788,7 +818,8 @@
         "method": "Compare lab ACL and effective identity without opening write or executing file.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-28"
+      "fixture_id": "CAT-28",
+      "operation_surface": "native-candidate"
     },
     {
       "intent": "file.head_tail.view",
@@ -809,12 +840,13 @@
       "socket_domains": [],
       "ipc_candidates": [],
       "namespace_visibility": "mount",
-      "data_source_candidate": "head(1), tail(1)",
+      "data_source_candidate": "openat2(2), read(2), lseek(2)",
       "host_equivalence": {
         "method": "Compare fixed text with byte cap, last-line handling and canary; no raw secret.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-29"
+      "fixture_id": "CAT-29",
+      "operation_surface": "native-candidate"
     },
     {
       "intent": "archive.contents.list",
@@ -837,10 +869,11 @@
       "namespace_visibility": "mount",
       "data_source_candidate": "tar(1), unzip(1)",
       "host_equivalence": {
-        "method": "Compare synthetic archive member metadata; malformed, link and traversal names remain data.",
+        "method": "Candidate archive listing command, never extraction; compare member metadata with independent fixture; malformed/link/traversal names remain data; spawn only hypothetical future effect.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-30"
+      "fixture_id": "CAT-30",
+      "operation_surface": "command-candidate"
     },
     {
       "intent": "process.list.top_cpu",
@@ -861,12 +894,13 @@
       "socket_domains": [],
       "ipc_candidates": [],
       "namespace_visibility": "pid-user",
-      "data_source_candidate": "ps(1), proc_pid_stat(5)",
+      "data_source_candidate": "proc_pid_stat(5), proc_stat(5)",
       "host_equivalence": {
         "method": "Compare fixed process fixture and CPU sampling definition/window; tie-break PID.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-31"
+      "fixture_id": "CAT-31",
+      "operation_surface": "native-candidate"
     },
     {
       "intent": "process.list.top_mem",
@@ -887,12 +921,13 @@
       "socket_domains": [],
       "ipc_candidates": [],
       "namespace_visibility": "pid-user",
-      "data_source_candidate": "ps(1), proc_pid_status(5)",
+      "data_source_candidate": "proc_pid_status(5)",
       "host_equivalence": {
         "method": "Compare seeded process RSS snapshot and deterministic tie-break.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-32"
+      "fixture_id": "CAT-32",
+      "operation_surface": "native-candidate"
     },
     {
       "intent": "process.lookup.name",
@@ -913,12 +948,13 @@
       "socket_domains": [],
       "ipc_candidates": [],
       "namespace_visibility": "pid-user",
-      "data_source_candidate": "ps(1), proc_pid_comm(5)",
+      "data_source_candidate": "proc_pid_comm(5), proc_pid_status(5)",
       "host_equivalence": {
         "method": "Compare seeded exact comm names, duplicate names and hidepid.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-33"
+      "fixture_id": "CAT-33",
+      "operation_surface": "native-candidate"
     },
     {
       "intent": "process.tree.view",
@@ -939,12 +975,13 @@
       "socket_domains": [],
       "ipc_candidates": [],
       "namespace_visibility": "pid-user",
-      "data_source_candidate": "pstree(1), proc_pid_stat(5)",
+      "data_source_candidate": "proc_pid_stat(5), proc_pid_comm(5)",
       "host_equivalence": {
         "method": "Compare seeded parent-child hierarchy, disappeared parents and depth cap.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-34"
+      "fixture_id": "CAT-34",
+      "operation_surface": "native-candidate"
     },
     {
       "intent": "memory.summary",
@@ -970,7 +1007,8 @@
         "method": "Compare known MemAvailable, cache and swap fixture; distinguish host from cgroup.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-35"
+      "fixture_id": "CAT-35",
+      "operation_surface": "command-candidate"
     },
     {
       "intent": "cpu.hardware.info",
@@ -996,7 +1034,8 @@
         "method": "Compare fixed topology and frequency visibility; do not infer host topology from guest.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-36"
+      "fixture_id": "CAT-36",
+      "operation_surface": "command-candidate"
     },
     {
       "intent": "package.installed.check",
@@ -1022,7 +1061,8 @@
         "method": "Compare pinned dpkg database installed/not installed/version.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-37"
+      "fixture_id": "CAT-37",
+      "operation_surface": "command-candidate"
     },
     {
       "intent": "package.search.local",
@@ -1048,7 +1088,8 @@
         "method": "Compare pinned offline cache matches and stale/missing-cache outcome.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-38"
+      "fixture_id": "CAT-38",
+      "operation_surface": "command-candidate"
     },
     {
       "intent": "user.session.who",
@@ -1061,7 +1102,7 @@
       "capability_status": "BLOCKED",
       "rights": {
         "status": "NOT VERIFIED",
-        "minimum_access": "read permitted current session records; no unrestricted history",
+        "minimum_access": "read permitted current utmp records only; no reverse lookup or NSS expansion; history deferred",
         "required_groups": [],
         "request_additional_groups": false,
         "privilege_may_be_required": false
@@ -1074,7 +1115,8 @@
         "method": "Compare synthetic utmp snapshot and redaction of remote origin; history separate.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-39"
+      "fixture_id": "CAT-39",
+      "operation_surface": "command-candidate"
     },
     {
       "intent": "user.identity.info",
@@ -1087,7 +1129,7 @@
       "capability_status": "BLOCKED",
       "rights": {
         "status": "NOT VERIFIED",
-        "minimum_access": "current numeric identity only; no NSS lookup or IPC",
+        "minimum_access": "numeric real/effective identity semantics to be verified; getuid/getgid/getgroups only; no name or NSS lookup",
         "required_groups": [],
         "request_additional_groups": false,
         "privilege_may_be_required": false
@@ -1100,7 +1142,8 @@
         "method": "Compare current numeric IDs under intended user namespace; no remote NSS.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-40"
+      "fixture_id": "CAT-40",
+      "operation_surface": "native-candidate"
     },
     {
       "intent": "diagnosis.disk_full",
@@ -1113,7 +1156,7 @@
       "capability_status": "BLOCKED",
       "rights": {
         "status": "NOT VERIFIED",
-        "minimum_access": "no access; guide only",
+        "minimum_access": "narrative guidance only; no OS access or invocation; no child operation IR",
         "required_groups": [],
         "request_additional_groups": false,
         "privilege_may_be_required": false
@@ -1123,10 +1166,11 @@
       "namespace_visibility": "none",
       "data_source_candidate": "baseline v3 diagnostic guide",
       "host_equivalence": {
-        "method": "Proposal oracle: capacity, inode and bounded explicit-root checks; no automatic deletion.",
+        "method": "Proposal oracle: bounded non-copyable narrative only; no argv, handler, child operation IR or host observation. capacity, inode and bounded explicit-root checks; no automatic deletion.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-41"
+      "fixture_id": "CAT-41",
+      "operation_surface": "narrative-only"
     },
     {
       "intent": "diagnosis.high_load",
@@ -1139,7 +1183,7 @@
       "capability_status": "BLOCKED",
       "rights": {
         "status": "NOT VERIFIED",
-        "minimum_access": "no access; guide only",
+        "minimum_access": "narrative guidance only; no OS access or invocation; no child operation IR",
         "required_groups": [],
         "request_additional_groups": false,
         "privilege_may_be_required": false
@@ -1149,10 +1193,11 @@
       "namespace_visibility": "none",
       "data_source_candidate": "baseline v3 diagnostic guide",
       "host_equivalence": {
-        "method": "Proposal oracle: CPU/load, memory and I/O distinctions; no process kill.",
+        "method": "Proposal oracle: bounded non-copyable narrative only; no argv, handler, child operation IR or host observation. CPU/load, memory and I/O distinctions; no process kill.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-42"
+      "fixture_id": "CAT-42",
+      "operation_surface": "narrative-only"
     },
     {
       "intent": "diagnosis.service_crash",
@@ -1165,7 +1210,7 @@
       "capability_status": "BLOCKED",
       "rights": {
         "status": "NOT VERIFIED",
-        "minimum_access": "no access; guide only",
+        "minimum_access": "narrative guidance only; no OS access or invocation; no child operation IR",
         "required_groups": [],
         "request_additional_groups": false,
         "privilege_may_be_required": false
@@ -1175,10 +1220,11 @@
       "namespace_visibility": "none",
       "data_source_candidate": "baseline v3 diagnostic guide",
       "host_equivalence": {
-        "method": "Proposal oracle: status, bounded logs and listener checks; no restart.",
+        "method": "Proposal oracle: bounded non-copyable narrative only; no argv, handler, child operation IR or host observation. status, bounded logs and listener checks; no restart.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-43"
+      "fixture_id": "CAT-43",
+      "operation_surface": "narrative-only"
     },
     {
       "intent": "diagnosis.dns_failure",
@@ -1191,7 +1237,7 @@
       "capability_status": "BLOCKED",
       "rights": {
         "status": "NOT VERIFIED",
-        "minimum_access": "no access; guide only",
+        "minimum_access": "narrative guidance only; no OS access or invocation; no child operation IR",
         "required_groups": [],
         "request_additional_groups": false,
         "privilege_may_be_required": false
@@ -1201,10 +1247,11 @@
       "namespace_visibility": "none",
       "data_source_candidate": "baseline v3 diagnostic guide",
       "host_equivalence": {
-        "method": "Proposal oracle: config vs resolution; NET subproposal explicitly marked, no query.",
+        "method": "Proposal oracle: bounded non-copyable narrative only; no argv, handler, child operation IR or host observation. config vs resolution; NET subproposal explicitly marked, no query.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-44"
+      "fixture_id": "CAT-44",
+      "operation_surface": "narrative-only"
     },
     {
       "intent": "service.restart",
@@ -1234,7 +1281,8 @@
         "method": "Proposal oracle only: exact unit, restart intent and warning; hard deny execute.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-45"
+      "fixture_id": "CAT-45",
+      "operation_surface": "command-candidate"
     },
     {
       "intent": "service.reload",
@@ -1264,7 +1312,8 @@
         "method": "Proposal oracle only: reload distinct from restart, not guaranteed disruption-free.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-46"
+      "fixture_id": "CAT-46",
+      "operation_surface": "command-candidate"
     },
     {
       "intent": "archive.extract.safe",
@@ -1290,7 +1339,8 @@
         "method": "Proposal oracle only: inspect traversal/link entries and new destination; no extraction or safety guarantee.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-47"
+      "fixture_id": "CAT-47",
+      "operation_surface": "command-candidate"
     },
     {
       "intent": "file.compress.archive",
@@ -1316,7 +1366,8 @@
         "method": "Proposal oracle only: explicit source/new archive, bounds and sensitive exclusion; no writes.",
         "result": "NOT RUN"
       },
-      "fixture_id": "CAT-48"
+      "fixture_id": "CAT-48",
+      "operation_surface": "command-candidate"
     }
   ]
 }

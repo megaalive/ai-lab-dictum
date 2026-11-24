@@ -79,7 +79,8 @@
         "external_content_imported": false
       },
       "fixture_id": "CAT-01",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "indexed-docs"
     },
     {
       "ordinal": 2,
@@ -144,7 +145,8 @@
         "external_content_imported": false
       },
       "fixture_id": "CAT-02",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "indexed-docs"
     },
     {
       "ordinal": 3,
@@ -212,7 +214,8 @@
         "external_content_imported": false
       },
       "fixture_id": "CAT-03",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "native-candidate"
     },
     {
       "ordinal": 4,
@@ -280,7 +283,8 @@
         "external_content_imported": false
       },
       "fixture_id": "CAT-04",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "native-candidate"
     },
     {
       "ordinal": 5,
@@ -324,6 +328,7 @@
       "effect": {
         "class": "READ",
         "axes": [
+          "filesystem-read",
           "ipc",
           "secret-exposure",
           "spawn"
@@ -372,14 +377,15 @@
         "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
         "baseline_ordinal": 5,
         "authorship": "original-contract-summary",
-        "external_reference_candidate": "ss(8)",
+        "external_reference_candidate": "ss(8), proc_pid_fd(5)",
         "external_version": null,
         "external_hash": null,
         "license_status": "NOT VERIFIED",
         "external_content_imported": false
       },
       "fixture_id": "CAT-05",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
     },
     {
       "ordinal": 6,
@@ -474,7 +480,8 @@
         "external_content_imported": false
       },
       "fixture_id": "CAT-06",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
     },
     {
       "ordinal": 7,
@@ -544,7 +551,8 @@
         "external_content_imported": false
       },
       "fixture_id": "CAT-07",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
     },
     {
       "ordinal": 8,
@@ -615,7 +623,8 @@
         "external_content_imported": false
       },
       "fixture_id": "CAT-08",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
     },
     {
       "ordinal": 9,
@@ -678,14 +687,15 @@
         "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
         "baseline_ordinal": 9,
         "authorship": "original-contract-summary",
-        "external_reference_candidate": "resolv.conf(5), resolved.conf(5)",
+        "external_reference_candidate": "resolv.conf(5), resolved.conf(5), org.freedesktop.resolve1(5)",
         "external_version": null,
         "external_hash": null,
         "license_status": "NOT VERIFIED",
         "external_content_imported": false
       },
       "fixture_id": "CAT-09",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "native-ipc-candidate"
     },
     {
       "ordinal": 10,
@@ -708,6 +718,7 @@
       "effect": {
         "class": "READ",
         "axes": [
+          "filesystem-read",
           "ipc",
           "network",
           "resource-usage",
@@ -763,7 +774,8 @@
         "external_content_imported": false
       },
       "fixture_id": "CAT-10",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
     },
     {
       "ordinal": 11,
@@ -798,9 +810,12 @@
       "effect": {
         "class": "READ",
         "axes": [
+          "filesystem-read",
+          "ipc",
           "network",
           "requires-privilege",
           "resource-usage",
+          "secret-exposure",
           "spawn"
         ]
       },
@@ -845,14 +860,15 @@
         "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
         "baseline_ordinal": 11,
         "authorship": "original-contract-summary",
-        "external_reference_candidate": "ping(8)",
+        "external_reference_candidate": "ping(8), resolv.conf(5)",
         "external_version": null,
         "external_hash": null,
         "license_status": "NOT VERIFIED",
         "external_content_imported": false
       },
       "fixture_id": "CAT-11",
-      "requires_privilege": "POSSIBLE"
+      "requires_privilege": "POSSIBLE",
+      "operation_surface": "command-candidate"
     },
     {
       "ordinal": 12,
@@ -874,9 +890,7 @@
       "slot_constraints": [],
       "effect": {
         "class": "READ",
-        "axes": [
-          "resource-usage"
-        ]
+        "axes": []
       },
       "proposal_eligible": true,
       "execute_eligible": false,
@@ -910,7 +924,7 @@
         "path_boundary": "descriptor-and-identity-required-before-access"
       },
       "output_projection": [
-        "steps",
+        "guidance_text",
         "limitations",
         "warnings"
       ],
@@ -926,7 +940,8 @@
         "external_content_imported": false
       },
       "fixture_id": "CAT-12",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "narrative-only"
     },
     {
       "ordinal": 13,
@@ -951,6 +966,7 @@
       "effect": {
         "class": "READ",
         "axes": [
+          "filesystem-read",
           "ipc",
           "secret-exposure",
           "spawn"
@@ -1005,7 +1021,8 @@
         "external_content_imported": false
       },
       "fixture_id": "CAT-13",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
     },
     {
       "ordinal": 14,
@@ -1033,6 +1050,7 @@
       "effect": {
         "class": "READ",
         "axes": [
+          "filesystem-read",
           "ipc",
           "resource-usage",
           "secret-exposure",
@@ -1087,7 +1105,8 @@
         "external_content_imported": false
       },
       "fixture_id": "CAT-14",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
     },
     {
       "ordinal": 15,
@@ -1103,6 +1122,7 @@
       "effect": {
         "class": "READ",
         "axes": [
+          "filesystem-read",
           "ipc",
           "resource-usage",
           "secret-exposure",
@@ -1157,7 +1177,8 @@
         "external_content_imported": false
       },
       "fixture_id": "CAT-15",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
     },
     {
       "ordinal": 16,
@@ -1185,6 +1206,7 @@
       "effect": {
         "class": "READ",
         "axes": [
+          "filesystem-read",
           "ipc",
           "resource-usage",
           "secret-exposure",
@@ -1239,7 +1261,8 @@
         "external_content_imported": false
       },
       "fixture_id": "CAT-16",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
     },
     {
       "ordinal": 17,
@@ -1285,6 +1308,7 @@
         "axes": [
           "filesystem-read",
           "ipc",
+          "requires-privilege",
           "resource-usage",
           "secret-exposure",
           "spawn"
@@ -1340,7 +1364,8 @@
         "external_content_imported": false
       },
       "fixture_id": "CAT-17",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "POSSIBLE",
+      "operation_surface": "command-candidate"
     },
     {
       "ordinal": 18,
@@ -1378,6 +1403,7 @@
         "axes": [
           "filesystem-read",
           "ipc",
+          "requires-privilege",
           "resource-usage",
           "secret-exposure",
           "spawn"
@@ -1432,7 +1458,8 @@
         "external_content_imported": false
       },
       "fixture_id": "CAT-18",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "POSSIBLE",
+      "operation_surface": "command-candidate"
     },
     {
       "ordinal": 19,
@@ -1518,7 +1545,8 @@
         "external_content_imported": false
       },
       "fixture_id": "CAT-19",
-      "requires_privilege": "POSSIBLE"
+      "requires_privilege": "POSSIBLE",
+      "operation_surface": "command-candidate"
     },
     {
       "ordinal": 20,
@@ -1590,7 +1618,8 @@
         "external_content_imported": false
       },
       "fixture_id": "CAT-20",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
     },
     {
       "ordinal": 21,
@@ -1661,7 +1690,8 @@
         "external_content_imported": false
       },
       "fixture_id": "CAT-21",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
     },
     {
       "ordinal": 22,
@@ -1755,14 +1785,15 @@
         "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
         "baseline_ordinal": 22,
         "authorship": "original-contract-summary",
-        "external_reference_candidate": "du(1)",
+        "external_reference_candidate": "openat2(2), getdents64(2), statx(2)",
         "external_version": null,
         "external_hash": null,
         "license_status": "NOT VERIFIED",
         "external_content_imported": false
       },
       "fixture_id": "CAT-22",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "native-candidate"
     },
     {
       "ordinal": 23,
@@ -1833,7 +1864,8 @@
         "external_content_imported": false
       },
       "fixture_id": "CAT-23",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
     },
     {
       "ordinal": 24,
@@ -1903,7 +1935,8 @@
         "external_content_imported": false
       },
       "fixture_id": "CAT-24",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
     },
     {
       "ordinal": 25,
@@ -2029,14 +2062,15 @@
         "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
         "baseline_ordinal": 25,
         "authorship": "original-contract-summary",
-        "external_reference_candidate": "find(1)",
+        "external_reference_candidate": "openat2(2), getdents64(2), statx(2)",
         "external_version": null,
         "external_hash": null,
         "license_status": "NOT VERIFIED",
         "external_content_imported": false
       },
       "fixture_id": "CAT-25",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "native-candidate"
     },
     {
       "ordinal": 26,
@@ -2137,14 +2171,15 @@
         "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
         "baseline_ordinal": 26,
         "authorship": "original-contract-summary",
-        "external_reference_candidate": "grep(1)",
+        "external_reference_candidate": "openat2(2), getdents64(2), read(2), statx(2)",
         "external_version": null,
         "external_hash": null,
         "license_status": "NOT VERIFIED",
         "external_content_imported": false
       },
       "fixture_id": "CAT-26",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "native-candidate"
     },
     {
       "ordinal": 27,
@@ -2217,14 +2252,15 @@
         "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
         "baseline_ordinal": 27,
         "authorship": "original-contract-summary",
-        "external_reference_candidate": "stat(1), stat(2)",
+        "external_reference_candidate": "openat2(2), statx(2), fstat(2)",
         "external_version": null,
         "external_hash": null,
         "license_status": "NOT VERIFIED",
         "external_content_imported": false
       },
       "fixture_id": "CAT-27",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "native-candidate"
     },
     {
       "ordinal": 28,
@@ -2303,7 +2339,8 @@
         "external_content_imported": false
       },
       "fixture_id": "CAT-28",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "native-candidate"
     },
     {
       "ordinal": 29,
@@ -2393,14 +2430,15 @@
         "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
         "baseline_ordinal": 29,
         "authorship": "original-contract-summary",
-        "external_reference_candidate": "head(1), tail(1)",
+        "external_reference_candidate": "openat2(2), read(2), lseek(2)",
         "external_version": null,
         "external_hash": null,
         "license_status": "NOT VERIFIED",
         "external_content_imported": false
       },
       "fixture_id": "CAT-29",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "native-candidate"
     },
     {
       "ordinal": 30,
@@ -2438,7 +2476,8 @@
         "axes": [
           "filesystem-read",
           "resource-usage",
-          "secret-exposure"
+          "secret-exposure",
+          "spawn"
         ]
       },
       "proposal_eligible": true,
@@ -2490,7 +2529,8 @@
         "external_content_imported": false
       },
       "fixture_id": "CAT-30",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
     },
     {
       "ordinal": 31,
@@ -2565,14 +2605,15 @@
         "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
         "baseline_ordinal": 31,
         "authorship": "original-contract-summary",
-        "external_reference_candidate": "ps(1), proc_pid_stat(5)",
+        "external_reference_candidate": "proc_pid_stat(5), proc_stat(5)",
         "external_version": null,
         "external_hash": null,
         "license_status": "NOT VERIFIED",
         "external_content_imported": false
       },
       "fixture_id": "CAT-31",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "native-candidate"
     },
     {
       "ordinal": 32,
@@ -2647,14 +2688,15 @@
         "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
         "baseline_ordinal": 32,
         "authorship": "original-contract-summary",
-        "external_reference_candidate": "ps(1), proc_pid_status(5)",
+        "external_reference_candidate": "proc_pid_status(5)",
         "external_version": null,
         "external_hash": null,
         "license_status": "NOT VERIFIED",
         "external_content_imported": false
       },
       "fixture_id": "CAT-32",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "native-candidate"
     },
     {
       "ordinal": 33,
@@ -2737,14 +2779,15 @@
         "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
         "baseline_ordinal": 33,
         "authorship": "original-contract-summary",
-        "external_reference_candidate": "ps(1), proc_pid_comm(5)",
+        "external_reference_candidate": "proc_pid_comm(5), proc_pid_status(5)",
         "external_version": null,
         "external_hash": null,
         "license_status": "NOT VERIFIED",
         "external_content_imported": false
       },
       "fixture_id": "CAT-33",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "native-candidate"
     },
     {
       "ordinal": 34,
@@ -2831,14 +2874,15 @@
         "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
         "baseline_ordinal": 34,
         "authorship": "original-contract-summary",
-        "external_reference_candidate": "pstree(1), proc_pid_stat(5)",
+        "external_reference_candidate": "proc_pid_stat(5), proc_pid_comm(5)",
         "external_version": null,
         "external_hash": null,
         "license_status": "NOT VERIFIED",
         "external_content_imported": false
       },
       "fixture_id": "CAT-34",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "native-candidate"
     },
     {
       "ordinal": 35,
@@ -2908,7 +2952,8 @@
         "external_content_imported": false
       },
       "fixture_id": "CAT-35",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
     },
     {
       "ordinal": 36,
@@ -2978,7 +3023,8 @@
         "external_content_imported": false
       },
       "fixture_id": "CAT-36",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
     },
     {
       "ordinal": 37,
@@ -3055,7 +3101,8 @@
         "external_content_imported": false
       },
       "fixture_id": "CAT-37",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
     },
     {
       "ordinal": 38,
@@ -3145,7 +3192,8 @@
         "external_content_imported": false
       },
       "fixture_id": "CAT-38",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
     },
     {
       "ordinal": 39,
@@ -3227,7 +3275,8 @@
         "external_content_imported": false
       },
       "fixture_id": "CAT-39",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
     },
     {
       "ordinal": 40,
@@ -3292,7 +3341,8 @@
         "external_content_imported": false
       },
       "fixture_id": "CAT-40",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "native-candidate"
     },
     {
       "ordinal": 41,
@@ -3307,9 +3357,7 @@
       "slot_constraints": [],
       "effect": {
         "class": "READ",
-        "axes": [
-          "resource-usage"
-        ]
+        "axes": []
       },
       "proposal_eligible": true,
       "execute_eligible": false,
@@ -3343,7 +3391,7 @@
         "path_boundary": "descriptor-and-identity-required-before-access"
       },
       "output_projection": [
-        "steps",
+        "guidance_text",
         "limitations",
         "warnings"
       ],
@@ -3359,7 +3407,8 @@
         "external_content_imported": false
       },
       "fixture_id": "CAT-41",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "narrative-only"
     },
     {
       "ordinal": 42,
@@ -3374,9 +3423,7 @@
       "slot_constraints": [],
       "effect": {
         "class": "READ",
-        "axes": [
-          "resource-usage"
-        ]
+        "axes": []
       },
       "proposal_eligible": true,
       "execute_eligible": false,
@@ -3410,7 +3457,7 @@
         "path_boundary": "descriptor-and-identity-required-before-access"
       },
       "output_projection": [
-        "steps",
+        "guidance_text",
         "limitations",
         "warnings"
       ],
@@ -3426,7 +3473,8 @@
         "external_content_imported": false
       },
       "fixture_id": "CAT-42",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "narrative-only"
     },
     {
       "ordinal": 43,
@@ -3450,9 +3498,7 @@
       "slot_constraints": [],
       "effect": {
         "class": "READ",
-        "axes": [
-          "resource-usage"
-        ]
+        "axes": []
       },
       "proposal_eligible": true,
       "execute_eligible": false,
@@ -3486,7 +3532,7 @@
         "path_boundary": "descriptor-and-identity-required-before-access"
       },
       "output_projection": [
-        "steps",
+        "guidance_text",
         "limitations",
         "warnings"
       ],
@@ -3502,7 +3548,8 @@
         "external_content_imported": false
       },
       "fixture_id": "CAT-43",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "narrative-only"
     },
     {
       "ordinal": 44,
@@ -3517,9 +3564,7 @@
       "slot_constraints": [],
       "effect": {
         "class": "READ",
-        "axes": [
-          "resource-usage"
-        ]
+        "axes": []
       },
       "proposal_eligible": true,
       "execute_eligible": false,
@@ -3553,7 +3598,7 @@
         "path_boundary": "descriptor-and-identity-required-before-access"
       },
       "output_projection": [
-        "steps",
+        "guidance_text",
         "limitations",
         "warnings"
       ],
@@ -3569,7 +3614,8 @@
         "external_content_imported": false
       },
       "fixture_id": "CAT-44",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "narrative-only"
     },
     {
       "ordinal": 45,
@@ -3594,6 +3640,7 @@
       "effect": {
         "class": "CHANGE",
         "axes": [
+          "filesystem-read",
           "ipc",
           "persistent-mutation",
           "requires-privilege",
@@ -3649,7 +3696,8 @@
         "external_content_imported": false
       },
       "fixture_id": "CAT-45",
-      "requires_privilege": "POSSIBLE"
+      "requires_privilege": "POSSIBLE",
+      "operation_surface": "command-candidate"
     },
     {
       "ordinal": 46,
@@ -3674,6 +3722,7 @@
       "effect": {
         "class": "CHANGE",
         "axes": [
+          "filesystem-read",
           "ipc",
           "persistent-mutation",
           "requires-privilege",
@@ -3729,7 +3778,8 @@
         "external_content_imported": false
       },
       "fixture_id": "CAT-46",
-      "requires_privilege": "POSSIBLE"
+      "requires_privilege": "POSSIBLE",
+      "operation_surface": "command-candidate"
     },
     {
       "ordinal": 47,
@@ -3821,7 +3871,8 @@
         "external_content_imported": false
       },
       "fixture_id": "CAT-47",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
     },
     {
       "ordinal": 48,
@@ -3912,7 +3963,8 @@
         "external_content_imported": false
       },
       "fixture_id": "CAT-48",
-      "requires_privilege": "NOT VERIFIED"
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
     }
   ]
 }

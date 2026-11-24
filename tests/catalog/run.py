@@ -61,6 +61,78 @@ EXPECTED_CONSTRAINTS = {
 }
 
 
+# Ekspektasi SELF terpisah: output tidak boleh mengambil field intent lain.
+PROJECTIONS = [
+    "utility option explanation source_id", "intent_id description proposal_status",
+    "distribution version kernel architecture", "uptime_seconds load_1 load_5 load_15",
+    "protocol local_port state pid_if_visible visibility",
+    "protocol state local_port remote_port visibility",
+    "interface address link_state visibility", "destination gateway interface metric visibility",
+    "resolver_mode nameserver search_domain_if_allowed visibility",
+    "query_name query_type network_warning", "target count network_warning",
+    "guidance_text limitations warnings",
+    "unit state main_pid_if_visible memory_if_visible", "unit active_state visibility",
+    "unit failed_state visibility", "unit enabled_state visibility",
+    "unit timestamp priority message_redacted visibility",
+    "timestamp priority message_redacted visibility", "boot_id timestamp priority message_redacted visibility",
+    "mount_id total_bytes used_bytes available_bytes percent visibility",
+    "mount_id total_inodes used_inodes free_inodes percent",
+    "relative_path allocated_bytes rank partial",
+    "device_id size_bytes type mount_id visibility",
+    "mount_id filesystem_type read_only approved_options",
+    "relative_path match_reason partial", "relative_path line_number match_redacted partial",
+    "relative_path size_bytes mode uid gid timestamp",
+    "file_read_access file_write_access file_execute_access identity visibility",
+    "relative_path line_number text_redacted partial",
+    "entry_name_redacted entry_type size_bytes partial",
+    "pid comm cpu_percent visibility", "pid comm rss_bytes visibility",
+    "pid comm state rss_bytes visibility", "pid ppid comm visibility partial",
+    "total_bytes available_bytes cache_bytes swap_total_bytes swap_used_bytes",
+    "architecture cores threads frequency_if_visible",
+    "package installed version architecture", "package version summary_redacted cache_status",
+    "user tty login_time visibility", "uid gid group_ids",
+    "guidance_text limitations warnings", "guidance_text limitations warnings",
+    "guidance_text limitations warnings", "guidance_text limitations warnings",
+    "unit change_warning privilege_warning", "unit change_warning privilege_warning",
+    "archive_id destination_id traversal_warning symlink_warning change_warning",
+    "source_id destination_id change_warning scope_warning",
+]
+# '?' berarti opsional. Nilai kosong berarti tidak ada slot IR.
+SLOT_SIGNATURES = {
+    5: "port?:port protocol:protocol", 6: "protocol:protocol limit:positive-int",
+    11: "count:positive-int", 13: "unit:unit-name", 14: "limit:positive-int",
+    16: "limit:positive-int", 17: "unit:unit-name window:time-window limit:positive-int",
+    18: "window:time-window limit:positive-int", 19: "limit:positive-int",
+    22: "root:path limit:positive-int depth:depth",
+    25: "root:path extension?:extension filename?:filename window?:time-window limit:positive-int depth:depth",
+    26: "root:path limit:positive-int depth:depth", 27: "path:path", 28: "path:path",
+    29: "path:path limit:positive-int", 30: "path:path limit:positive-int",
+    31: "limit:positive-int", 32: "limit:positive-int", 33: "limit:positive-int",
+    34: "limit:positive-int depth:depth", 38: "limit:positive-int",
+    39: "limit:positive-int", 43: "unit:unit-name", 45: "unit:unit-name",
+    46: "unit:unit-name", 47: "archive:path destination:path",
+    48: "source:path destination:path",
+}
+DEFERRED_SIGNATURES = {
+    1: "utility option?", 10: "domain", 11: "target", 12: "target?",
+    26: "text", 29: "direction", 33: "name", 37: "package", 38: "query",
+}
+DIAGNOSIS = {12, 41, 42, 43, 44}
+NATIVE = {3, 4, 22, 25, 26, 27, 28, 29, 31, 32, 33, 34, 40}
+PRIVILEGE_POSSIBLE = {11, 17, 18, 19, 45, 46}
+REQUIRED_EFFECTS = {
+    5: {"filesystem-read", "ipc", "secret-exposure", "spawn"},
+    9: {"filesystem-read", "ipc", "secret-exposure"},
+    10: {"filesystem-read", "ipc", "network", "spawn"},
+    11: {"filesystem-read", "ipc", "network", "requires-privilege", "spawn"},
+    17: {"filesystem-read", "ipc", "requires-privilege", "secret-exposure", "spawn"},
+    18: {"filesystem-read", "ipc", "requires-privilege", "secret-exposure", "spawn"},
+    19: {"filesystem-read", "ipc", "requires-privilege", "secret-exposure", "spawn"},
+    22: {"filesystem-read", "resource-usage", "secret-exposure"},
+    25: {"filesystem-read", "resource-usage", "secret-exposure"},
+    30: {"filesystem-read", "resource-usage", "secret-exposure", "spawn"},
+}
+
 class Reject(ValueError):
     pass
 
@@ -162,10 +234,12 @@ def lint(data, ids, skeleton):
             require(set(axes) <= {"filesystem-read"}, "info-effect")
             require(b["backend_candidate"] in {"native-metadata", "indexed-documentation"},
                     "info-backend")
-        if n in {12, 41, 42, 43, 44}:
+        if n in DIAGNOSIS:
             require(b["backend_candidate"] == "diagnostic-guide" and
                     not b["socket_domains"] and not b["ipc_candidates"],
                     "diagnosis-backend")
+            require(not axes and i["output_projection"] ==
+                    ["guidance_text", "limitations", "warnings"], "diagnosis-narrative")
         expected = ("PERMANENT-PROPOSAL-ONLY" if n in PERMANENT
                     else "NO-EXECUTOR-NEEDED" if cls == "INFO"
                     else "F5-CANDIDATE-BLOCKED")
@@ -215,6 +289,43 @@ def lint(data, ids, skeleton):
                 require(hi <= scope["limits"]["max_depth"], "scope-depth")
             if s["name"] == "limit":
                 require(hi <= scope["limits"]["max_entries"], "scope-limit")
+        # Surface dan efek tidak boleh saling menyamarkan.
+        surface = ("indexed-docs" if n <= 2 else "narrative-only" if n in DIAGNOSIS
+                   else "native-ipc-candidate" if n == 9 else "native-candidate"
+                   if n in NATIVE else "command-candidate")
+        require(i["operation_surface"] == b["operation_surface"] == surface, "surface")
+        command_ref = re.search(r"\((1|8)\)", b["data_source_candidate"]) is not None
+        require(command_ref == (surface == "command-candidate"), "source-surface")
+        require(("spawn" in axes) == (surface == "command-candidate"), "spawn-surface")
+        require(privilege == (n in PRIVILEGE_POSSIBLE), "privilege-envelope")
+        require(REQUIRED_EFFECTS.get(n, set()) <= set(axes), "effect-envelope")
+        if surface == "native-candidate":
+            require(not b["socket_domains"] and not b["ipc_candidates"] and
+                    "ipc" not in axes, "native-ipc")
+        if n == 9:
+            require("org.freedesktop.resolve1(5)" in b["data_source_candidate"] and
+                    b["ipc_candidates"] == ["resolver-ipc"] and
+                    b["socket_domains"] == ["AF_UNIX"], "resolver-source")
+        if n in {5, 6, 7, 8}:
+            require(b["socket_domains"] == ["AF_NETLINK"], "netlink-domain")
+        if n in {10, 11}:
+            require(set(b["socket_domains"]) == {"AF_INET", "AF_INET6", "AF_UNIX"} and
+                    b["ipc_candidates"] == ["resolver-ipc"], "resolver-source")
+        if n in {17, 18, 19}:
+            require(b["ipc_candidates"] == ["journal-ipc"] and
+                    b["socket_domains"] == ["AF_UNIX"], "journal-source")
+        if n == 40:
+            require(not axes and i["output_projection"] == ["uid", "gid", "group_ids"],
+                    "numeric-identity")
+        require(i["output_projection"] == PROJECTIONS[n-1].split(), "intent-projection")
+        signature = {s["name"] + ("" if s["required"] else "?") + ":" + s["kind"]
+                     for s in slots}
+        require(signature == set(SLOT_SIGNATURES.get(n, "").split()), "slot-signature")
+        require({s["name"] + ("" if s["required"] else "?") for s in deferred} ==
+                set(DEFERRED_SIGNATURES.get(n, "").split()), "deferred-signature")
+        if n == 11:
+            require(slots[0]["name"] == "count" and slots[0]["maximum"] <= 4,
+                    "ping-count")
     require(Counter(i["effect"]["class"] for i in intents) ==
             {"INFO": 4, "READ": 40, "CHANGE": 4}, "class-count")
 
@@ -245,8 +356,8 @@ def render_matrix(data):
         "# Matriks efek dan capability DCT-003", "",
         "Ditampilkan dari registry dan profil Debian 13; semua capability BLOCKED, compatibility NOT VERIFIED, execute_eligible=false, host-equivalence NOT RUN. Efek adalah proyeksi operasi, bukan izin atau aktivitas yang dijalankan. P = permanen proposal-only; C = kandidat F5 masih BLOCKED; I = INFO tanpa executor.",
         "",
-        "| # | Intent | Kelas / efek | Status masa depan | Capability | Sumber kandidat |",
-        "|---:|---|---|---|---|---|",
+        "| # | Intent | Kelas / efek | Status masa depan | Surface | Capability | Sumber kandidat |",
+        "|---:|---|---|---|---|---|---|",
     ]
     tick = chr(96)
     statuses = {"PERMANENT-PROPOSAL-ONLY": "P", "F5-CANDIDATE-BLOCKED": "C",
@@ -257,7 +368,7 @@ def render_matrix(data):
         lines.append(
             f"| {i['ordinal']} | {tick}{i['id']}{tick}{marker} | "
             f"{i['effect']['class']} / {axes} | {statuses[i['future_execution']]} | "
-            f"{tick}{b['capability_id']}{tick} | {b['data_source_candidate']} |"
+            f"{b['operation_surface']} | {tick}{b['capability_id']}{tick} | {b['data_source_candidate']} |"
         )
     lines += ["", "† Walking skeleton F0-C. Rincian rights, namespace, socket/IPC, scope, output, fixture dan oracle terdapat pada pasangan record JSON. Tidak ada resep executable yang siap dipakai.", ""]
     return "\n".join(lines)
@@ -351,12 +462,38 @@ def main():
         ("fixture-duplicate", "fixture-id", ["fixtures", "fixtures", 0, "id"], "CAT-02"),
         ("fixture-execute", "schema", ["fixtures", "fixtures", 0, "execution_allowed"], True),
         ("fixture-fake-pass", "schema", ["fixtures", "fixtures", 0, "result"], "PASS"),
+        ("diagnosis-effect", "diagnosis-narrative", ["registry", "intents", 11, "effect", "axes"], ["resource-usage"]),
+        ("diagnosis-argv-field", "diagnosis-narrative", ["registry", "intents", 11, "output_projection"], ["target", "warnings"]),
+        ("diagnosis-surface", "surface", ["profile", "bindings", 40, "operation_surface"], "command-candidate"),
+        ("command-no-spawn", "spawn-surface", ["registry", "intents", 29, "effect", "axes"], ["filesystem-read", "resource-usage", "secret-exposure"]),
+        ("native-spawn", "spawn-surface", ["registry", "intents", 21, "effect", "axes"], ["filesystem-read", "resource-usage", "secret-exposure", "spawn"]),
+        ("journal-privilege", "privilege", ["registry", "intents", 16, "effect", "axes"], ["filesystem-read", "ipc", "resource-usage", "secret-exposure", "spawn"]),
+        ("journal-ipc", "journal-source", ["profile", "bindings", 17, "ipc_candidates"], []),
+        ("dns-filesystem", "effect-envelope", ["registry", "intents", 9, "effect", "axes"], ["ipc", "network", "resource-usage", "secret-exposure", "spawn"]),
+        ("listener-proc", "effect-envelope", ["registry", "intents", 4, "effect", "axes"], ["ipc", "secret-exposure", "spawn"]),
+        ("identity-nss", "numeric-identity", ["registry", "intents", 39, "output_projection"], ["uid", "gid", "user"]),
+        ("cross-intent-output", "intent-projection", ["registry", "intents", 30, "output_projection"], ["pid", "comm", "message_redacted"]),
+        ("file-root-missing", "slot-signature", ["registry", "intents", 21, "slots"], data["registry"]["intents"][21]["slots"][1:]),
+        ("file-root-optional", "slot-signature", ["registry", "intents", 21, "slots", 0, "required"], False),
+        ("deferred-domain-rename", "deferred-signature", ["registry", "intents", 9, "deferred_slots", 0, "name"], "other"),
+        ("ping-count-widen", "ping-count", ["registry", "intents", 10, "slots", 0, "maximum"], 100),
     ]
     for name, expected, path, replacement in mutations:
         candidate = deepcopy(data)
         set_value(candidate, path, replacement)
         run("CAT-NEG-" + name, expected, lambda: validate(candidate))
 
+    # Mutasi koheren: kedua sisi join berubah; tidak boleh lolos hanya karena cocok.
+    candidate = deepcopy(data)
+    candidate["registry"]["intents"][21]["source"]["external_reference_candidate"] = "du(1)"
+    candidate["profile"]["bindings"][21]["data_source_candidate"] = "du(1)"
+    run("CAT-NEG-native-command-source", "source-surface", lambda: validate(candidate))
+    candidate = deepcopy(data)
+    i = candidate["registry"]["intents"][16]
+    i["effect"]["axes"].remove("requires-privilege")
+    i["requires_privilege"] = "NOT VERIFIED"
+    candidate["profile"]["bindings"][16]["rights"]["privilege_may_be_required"] = False
+    run("CAT-NEG-journal-coherent-privilege-drop", "privilege-envelope", lambda: validate(candidate))
     print(f"Registry: {len(ids)} canonical, 4 INFO / 40 READ / 4 CHANGE, {len(skeleton)} skeleton")
     print(f"Profile: 48 BLOCKED; fixture contract: 48 positive/negative pairs, execution NOT RUN")
     print(f"Registry offline: {len(retrievals)} percobaan retrieval")

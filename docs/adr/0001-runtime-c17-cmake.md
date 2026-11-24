@@ -81,3 +81,16 @@ yang telah diminimalkan untuk uji regresi. Invarian dasarnya adalah kegagalan
 terkendali, penggunaan resource yang dibatasi, dan hasil deterministik untuk
 input yang sama. DCT-008 hanya memiliki validasi bentuk argumen CLI dan
 menguji keluaran serta exit code melalui CTest.
+
+## Addendum F0-C — digest melalui libcrypto
+
+Untuk C-04 dan snapshot konteks, gunakan OpenSSL libcrypto >= 3.0
+(`EVP_Digest`, SHA-256), bukan implementasi kriptografi sendiri. Debian
+13 menyediakan paket `libssl-dev` dan `libssl3t64`; versi aktual dan
+tautan binary dicatat pada CI. OpenSSL 3.x upstream berlisensi Apache-2.0;
+metadata copyright paket Debian mencakup komponen tambahan dan harus
+dipertahankan bila redistribusi. Ini keputusan dependensi riset, bukan
+audit distribusi atau approval signature. JCS subset plan memakai key ASCII
+tertutup, integer exact dan UTF-8 scalar; hash mengikat byte, bukan
+otoritas. Tidak ada API TLS, HTTP, signing, key loading atau jaringan pada
+kode produk. Audit syscall produk setelah integrasi tetap C-06.

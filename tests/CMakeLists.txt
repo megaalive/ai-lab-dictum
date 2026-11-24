@@ -26,9 +26,88 @@ dictum_cli_test(version_extra invalid --version run)
 dictum_cli_test(ask_missing invalid ask)
 dictum_cli_test(ask_empty invalid ask "")
 dictum_cli_test(ask_extra invalid ask siapa yang)
-dictum_cli_test(ask_question unsupported ask "${question}")
-dictum_cli_test(ask_literal_option unsupported ask --help)
-dictum_cli_test(ask_canary unsupported ask "DCT008_CANARY %s; literal")
 dictum_cli_test(run_question denied run "${question}")
 dictum_cli_test(run_missing denied run)
 dictum_cli_test(run_extra denied run --version DCT008_CANARY)
+
+add_executable(ir_probe ir/native_probe.c)
+target_link_libraries(ir_probe PRIVATE dictum_ir)
+set_target_properties(ir_probe PROPERTIES C_STANDARD 17 C_STANDARD_REQUIRED YES C_EXTENSIONS NO)
+target_compile_options(ir_probe PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wformat=2
+    -Wstrict-prototypes -Wmissing-prototypes -Wundef -Wvla)
+if(dictum_sanitizers)
+    target_compile_options(ir_probe PRIVATE "${dictum_sanitizer_flag}" -fno-omit-frame-pointer)
+    if(DICTUM_ENABLE_UBSAN)
+        target_compile_options(ir_probe PRIVATE -fno-sanitize-recover=undefined)
+    endif()
+endif()
+add_test(NAME ir.differential COMMAND "${Python3_EXECUTABLE}" -B
+    "${CMAKE_CURRENT_SOURCE_DIR}/ir/differential.py" "$<TARGET_FILE:ir_probe>")
+set_tests_properties(ir.differential PROPERTIES TIMEOUT 180)
+
+add_executable(ir_span ir/span.c)
+target_link_libraries(ir_span PRIVATE dictum_ir)
+set_target_properties(ir_span PROPERTIES C_STANDARD 17 C_STANDARD_REQUIRED YES C_EXTENSIONS NO)
+target_compile_options(ir_span PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wformat=2
+    -Wstrict-prototypes -Wmissing-prototypes -Wundef -Wvla)
+if(dictum_sanitizers)
+    target_compile_options(ir_span PRIVATE "${dictum_sanitizer_flag}" -fno-omit-frame-pointer)
+    if(DICTUM_ENABLE_UBSAN)
+        target_compile_options(ir_span PRIVATE -fno-sanitize-recover=undefined)
+    endif()
+endif()
+add_test(NAME ir.span COMMAND ir_span)
+
+add_test(NAME ir.digest COMMAND "${Python3_EXECUTABLE}" -B
+    "${CMAKE_CURRENT_SOURCE_DIR}/ir/digest.py" "$<TARGET_FILE:ir_probe>")
+set_tests_properties(ir.digest PROPERTIES TIMEOUT 60)
+
+add_executable(pipeline_probe ir/pipeline_probe.c)
+target_link_libraries(pipeline_probe PRIVATE dictum_pipeline)
+set_target_properties(pipeline_probe PROPERTIES C_STANDARD 17 C_STANDARD_REQUIRED YES C_EXTENSIONS NO)
+target_compile_options(pipeline_probe PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wformat=2
+    -Wstrict-prototypes -Wmissing-prototypes -Wundef -Wvla)
+if(dictum_sanitizers)
+    target_compile_options(pipeline_probe PRIVATE "${dictum_sanitizer_flag}" -fno-omit-frame-pointer)
+    if(DICTUM_ENABLE_UBSAN)
+        target_compile_options(pipeline_probe PRIVATE -fno-sanitize-recover=undefined)
+    endif()
+endif()
+
+add_test(NAME pipeline.functional COMMAND "${Python3_EXECUTABLE}" -B
+    "${CMAKE_CURRENT_SOURCE_DIR}/pipeline/run.py" "$<TARGET_FILE:pipeline_probe>" "$<TARGET_FILE:dictum>")
+set_tests_properties(pipeline.functional PROPERTIES TIMEOUT 180)
+
+add_executable(renderer_probe renderer/native_fixture.c)
+target_link_libraries(renderer_probe PRIVATE dictum_pipeline)
+set_target_properties(renderer_probe PROPERTIES C_STANDARD 17 C_STANDARD_REQUIRED YES C_EXTENSIONS NO)
+target_compile_options(renderer_probe PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wformat=2
+    -Wstrict-prototypes -Wmissing-prototypes -Wundef -Wvla)
+if(dictum_sanitizers)
+    target_compile_options(renderer_probe PRIVATE "${dictum_sanitizer_flag}" -fno-omit-frame-pointer)
+    if(DICTUM_ENABLE_UBSAN)
+        target_compile_options(renderer_probe PRIVATE -fno-sanitize-recover=undefined)
+    endif()
+endif()
+add_test(NAME renderer.native COMMAND "${Python3_EXECUTABLE}" -B
+    "${CMAKE_CURRENT_SOURCE_DIR}/renderer/native_run.py" "$<TARGET_FILE:renderer_probe>")
+set_tests_properties(renderer.native PROPERTIES TIMEOUT 90)
+
+add_executable(pipeline_bench pipeline/bench.c)
+target_link_libraries(pipeline_bench PRIVATE dictum_pipeline)
+set_target_properties(pipeline_bench PROPERTIES C_STANDARD 17 C_STANDARD_REQUIRED YES C_EXTENSIONS NO)
+target_compile_options(pipeline_bench PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wformat=2
+    -Wstrict-prototypes -Wmissing-prototypes -Wundef -Wvla)
+if(dictum_sanitizers)
+    target_compile_options(pipeline_bench PRIVATE "${dictum_sanitizer_flag}" -fno-omit-frame-pointer)
+    if(DICTUM_ENABLE_UBSAN)
+        target_compile_options(pipeline_bench PRIVATE -fno-sanitize-recover=undefined)
+    endif()
+endif()
+add_test(NAME pipeline.benchmark COMMAND "${Python3_EXECUTABLE}" -B
+    "${CMAKE_CURRENT_SOURCE_DIR}/pipeline/bench.py" "$<TARGET_FILE:pipeline_bench>")
+set_tests_properties(pipeline.benchmark PROPERTIES TIMEOUT 120)
+
+add_test(NAME pipeline.s2_regression COMMAND "${Python3_EXECUTABLE}" -B
+    "${CMAKE_CURRENT_SOURCE_DIR}/pipeline/s2_regression.py" "$<TARGET_FILE:pipeline_probe>" "$<TARGET_FILE:dictum>")
+set_tests_properties(pipeline.s2_regression PROPERTIES TIMEOUT 120)

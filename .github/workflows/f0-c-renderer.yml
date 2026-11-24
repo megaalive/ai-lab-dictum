@@ -1,0 +1,59 @@
+name: F0-C native renderer inert
+on:
+  push:
+    paths: ['runtime/native/**','tests/renderer/**','tests/pipeline/**','tests/spikes/s1/**','tools/**','CMakeLists.txt','tests/CMakeLists.txt','.github/workflows/f0-c-renderer.yml','spec/**','catalog/**']
+  pull_request:
+    paths: ['runtime/native/**','tests/renderer/**','tests/pipeline/**','tests/spikes/s1/**','tools/**','CMakeLists.txt','tests/CMakeLists.txt','.github/workflows/f0-c-renderer.yml','spec/**','catalog/**']
+permissions:
+  contents: read
+jobs:
+  native-inert:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        profile: [bash-posix-clean-v1, dash-clean-v1]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Build inert image from explicit source paths
+        run: |
+          set -eu
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          echo "SHA checkout $(git rev-parse HEAD)"
+          ctx=$(mktemp -d)
+          mkdir -p "$ctx/source"
+          cp tests/renderer/native/Dockerfile "$ctx/Dockerfile"
+          cp -r CMakeLists.txt cli runtime spec catalog tools tests "$ctx/source/"
+          docker build -t dictum-c05:fixture "$ctx"
+          rm -rf "$ctx"
+          docker image inspect dictum-c05:fixture --format '{{.Id}}'
+      - name: Run only inert fixture in isolated container
+        env:
+          PROFILE: ${{ matrix.profile }}
+        run: |
+          set -eu
+          id=$(docker create --network none --read-only --cap-drop ALL \
+            --security-opt no-new-privileges=true --pids-limit 32 --memory 256m \
+            --cpus 2 --user 65532:65532 --tmpfs /tmp:rw,noexec,nosuid,nodev,size=64m \
+            dictum-c05:fixture "$PROFILE")
+          trap 'docker rm -f "$id" >/dev/null 2>&1 || true' EXIT
+          docker inspect "$id" | python3 -c 'import json,sys; x=json.load(sys.stdin)[0]; h=x["HostConfig"]; assert h["NetworkMode"]=="none" and h["ReadonlyRootfs"] and h["CapDrop"]==["ALL"] and "no-new-privileges=true" in h["SecurityOpt"] and h["PidsLimit"]==32 and h["Memory"]==268435456 and h["NanoCpus"]==2000000000 and not h["Privileged"] and not h["Binds"] and all(m["Type"]=="tmpfs" and m["Destination"]=="/tmp" for m in x["Mounts"]) and x["Config"]["User"]=="65532:65532"; print("C05 inert container preflight passed")'
+          docker start -a "$id"
+          test "$(docker inspect "$id" --format '{{.State.ExitCode}}')" = 0
+
+      - name: Trace actual product CLI under independent isolation
+        if: matrix.profile == 'dash-clean-v1'
+        run: |
+          set -eu
+          id=$(docker create --network none --read-only --cap-drop ALL \
+            --security-opt no-new-privileges=true --pids-limit 32 --memory 256m \
+            --cpus 2 --user 65532:65532 --tmpfs /tmp:rw,noexec,nosuid,nodev,size=64m \
+            --entrypoint /usr/bin/python3 dictum-c05:fixture \
+            -B /lab/tests/pipeline/security_trace.py /fixture/bin/dictum)
+          trap 'docker rm -f "$id" >/dev/null 2>&1 || true' EXIT
+          docker inspect "$id" | python3 -c 'import json,sys; x=json.load(sys.stdin)[0]; h=x["HostConfig"]; assert h["NetworkMode"]=="none" and h["ReadonlyRootfs"] and h["CapDrop"]==["ALL"] and "no-new-privileges=true" in h["SecurityOpt"] and h["PidsLimit"]==32 and h["Memory"]==268435456 and h["NanoCpus"]==2000000000 and not h["Privileged"] and not h["Binds"] and all(m["Type"]=="tmpfs" and m["Destination"]=="/tmp" for m in x["Mounts"]) and x["Config"]["User"]=="65532:65532"; print("C06/C07 isolated container preflight passed")'
+          docker start -a "$id"
+          test "$(docker inspect "$id" --format '{{.State.ExitCode}}')" = 0

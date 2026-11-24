@@ -1,0 +1,258 @@
+{
+  "schema_version": 1,
+  "mode": "F0-C-SYNTHETIC-NONEXECUTABLE",
+  "source_git_blobs": {
+    "catalog/core/intents-v1.json": "110368054b8d9f1ffa89a18dc23f4927769a32e4",
+    "catalog/debian-13/v1.json": "2cc5431daaf3da0dcaaa7fdcacefdb7b04a8cae9",
+    "tests/spikes/s2/development-v1.json": "3081d95d327c2aa7851efaa673168591c1f7002c"
+  },
+  "scope": {
+    "roots": [
+      "/fixture/data",
+      "/fixture/logs",
+      "/fixture/projects",
+      "/fixture/team's files",
+      "/fixture/data set"
+    ],
+    "units": [
+      "demo.service",
+      "worker.service",
+      "nginx.service",
+      "postgresql.service",
+      "ssh.service"
+    ],
+    "extensions": [
+      "txt",
+      "log",
+      "json",
+      "csv",
+      "md"
+    ],
+    "filenames": [
+      "report.txt",
+      "-report",
+      "a'b.txt",
+      "events.log",
+      "notes.md"
+    ]
+  },
+  "recipes": [
+    {
+      "intent": "memory.summary",
+      "handler": "proposal.memory.summary",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "network.listener.lookup",
+      "handler": "proposal.network.listener.lookup",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "service.failed.list",
+      "handler": "proposal.service.failed.list",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "log.service.query",
+      "handler": "proposal.log.service.query",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "storage.filesystem.usage",
+      "handler": "proposal.storage.filesystem.usage",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "storage.directory.usage",
+      "handler": "proposal.storage.directory.usage",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "file.search",
+      "handler": "proposal.file.search",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    },
+    {
+      "intent": "service.restart",
+      "handler": "proposal.service.restart",
+      "mode": "structured-proposal",
+      "copyable": false,
+      "execution_allowed": false
+    }
+  ],
+  "patterns": {
+    "memory.summary": [
+      "ram tersedia",
+      "berapa ram yang tersedia",
+      "berapa ram tersisa",
+      "perlihatkan memori tersedia",
+      "ringkas ram mesin lokal",
+      "status pemakaian memori sekarang",
+      "memory usage summary",
+      "available memory",
+      "how much ram is available",
+      "what is the available memory",
+      "show memory usage",
+      "show available memory",
+      "ram",
+      "memory"
+    ],
+    "network.listener.lookup": [
+      "siapa yang menggunakan port {port}",
+      "siapa yang memakai port {port}",
+      "cek port {port}",
+      "cek port {port} {protocol}",
+      "port {port} {protocol}",
+      "port {port}",
+      "listener port {port}",
+      "which process uses port {port}",
+      "who is listening on port {port}",
+      "show {protocol} listener on port {port}",
+      "show listener on port {port}",
+      "find {protocol} listener port {port}",
+      "port {port} or {port}",
+      "port {port} atau {port}",
+      "port",
+      "cek port",
+      "which process uses port"
+    ],
+    "service.failed.list": [
+      "layanan yang gagal",
+      "daftar layanan gagal",
+      "tampilkan service gagal",
+      "service gagal sekarang",
+      "layanan gagal saat ini",
+      "failed services",
+      "show failed services",
+      "list failed systemd units",
+      "which services are failed",
+      "list currently failed services",
+      "current failed services"
+    ],
+    "log.service.query": [
+      "log {unit} {minutes} menit terakhir",
+      "log {unit} {minutes} menit",
+      "tampilkan log {unit} {minutes} menit terakhir",
+      "jurnal {unit} {minutes} menit terakhir",
+      "catatan {unit} {minutes} menit terakhir",
+      "logs for {unit} last {minutes} minutes",
+      "show logs for {unit} last {minutes} minutes",
+      "journal for {unit} last {minutes} minutes",
+      "show {unit} logs for last {minutes} minutes",
+      "logs {unit} last {minutes} minutes",
+      "log {unit}",
+      "logs for {unit}",
+      "log layanan",
+      "service logs"
+    ],
+    "storage.filesystem.usage": [
+      "kapasitas disk",
+      "pemakaian filesystem",
+      "tampilkan penggunaan sistem berkas",
+      "ruang disk tersedia",
+      "cek kapasitas partisi",
+      "disk usage",
+      "filesystem usage",
+      "show filesystem capacity",
+      "show available disk space",
+      "how much disk space is available",
+      "local filesystem usage",
+      "disk",
+      "filesystem"
+    ],
+    "storage.directory.usage": [
+      "ukuran folder {root}",
+      "ukuran direktori {root}",
+      "top {limit} direktori di {root}",
+      "urutkan ukuran folder {root}",
+      "folder terbesar di {root}",
+      "largest directories under {root}",
+      "top folders by size under {root}",
+      "top {limit} directories under {root}",
+      "directory usage under {root}",
+      "show directory sizes under {root}",
+      "directory usage",
+      "ukuran folder"
+    ],
+    "file.search": [
+      "cari berkas ekstensi {extension} di {root}",
+      "cari file ekstensi {extension} di {root}",
+      "temukan file nama {filename} di {root}",
+      "cari file nama {filename} di {root}",
+      "cari file di {root} ekstensi {extension}",
+      "cari file di {root} {minutes} menit terakhir",
+      "find files by extension {extension} under {root}",
+      "find files named {filename} under {root}",
+      "locate files with extension {extension} under {root}",
+      "find files under {root} last {minutes} minutes",
+      "find files under {root}",
+      "cari file di {root}",
+      "find files",
+      "cari file"
+    ],
+    "service.restart": [
+      "restart {unit}",
+      "restart service {unit}",
+      "mulai ulang {unit}",
+      "mulai ulang layanan {unit}",
+      "usulkan restart {unit}",
+      "propose restart of {unit}",
+      "restart systemd unit {unit}",
+      "propose service restart {unit}",
+      "restart {unit} or {unit}",
+      "restart {unit} atau {unit}",
+      "restart service",
+      "mulai ulang layanan",
+      "restart"
+    ]
+  },
+  "deny_tokens": [
+    "sudo",
+    "su",
+    "execute",
+    "jalankan",
+    "hapus",
+    "delete",
+    "rm",
+    "curl",
+    "wget",
+    "ping",
+    "remote",
+    "ssh",
+    "http",
+    "https",
+    "--force",
+    "--help",
+    "--version",
+    "--",
+    "production",
+    "produksi",
+    "secret",
+    "password",
+    "credential",
+    "token",
+    "shadow",
+    ".env",
+    "canary",
+    "DCT008_CANARY"
+  ],
+  "ambiguity_markers": [
+    "or",
+    "atau"
+  ],
+  "notes": "Authored fixture trust only. No path existence, target descriptor, utility identity, host equivalence or executable permission. Relative time is pinned UTC in request. No imported S5 excluded sources."
+}

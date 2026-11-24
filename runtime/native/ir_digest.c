@@ -12,6 +12,7 @@ bool ir_sha256_hex(const unsigned char *data, size_t size, char out[65])
     if (out == NULL) return false;
     out[0] = '\0';
     if (size > 65536u || (size != 0 && data == NULL)) return false;
+    if (OPENSSL_init_crypto(OPENSSL_INIT_NO_LOAD_CONFIG, NULL) != 1) return false;
     unsigned char digest[32];
     unsigned int length = 0;
     /* Maintained library, not a home-grown crypto primitive. SHA-256 is

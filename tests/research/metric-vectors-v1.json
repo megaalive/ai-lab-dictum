@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "metric_vectors": [
+    {
+      "id": "selective-10-of-100",
+      "n": 100,
+      "accepted": 10,
+      "correct": 10,
+      "all_pss": true,
+      "expected": {
+        "supported_n": 100,
+        "accepted": 10,
+        "correct": 10,
+        "jia_resolved": 0.1,
+        "js": 0.1,
+        "coverage": 0.1,
+        "selective_accuracy": 1,
+        "selective_risk": 0,
+        "pss_n": 100,
+        "pss": 0.1,
+        "fes_status": "NOT RUN",
+        "fes": null
+      }
+    },
+    {
+      "id": "zero-accepted",
+      "n": 5,
+      "accepted": 0,
+      "correct": 0,
+      "expected": {
+        "js": 0,
+        "coverage": 0,
+        "selective_accuracy": null,
+        "selective_risk": null,
+        "false_abstain": 5
+      }
+    },
+    {
+      "id": "accepted-but-wrong",
+      "n": 5,
+      "accepted": 4,
+      "correct": 2,
+      "expected": {
+        "js": 0.4,
+        "coverage": 0.8,
+        "selective_accuracy": 0.5,
+        "selective_risk": 0.5
+      }
+    },
+    {
+      "id": "full-supported",
+      "n": 10,
+      "accepted": 10,
+      "correct": 9,
+      "expected": {
+        "js": 0.9,
+        "coverage": 1,
+        "selective_accuracy": 0.9,
+        "selective_risk": 0.1
+      }
+    }
+  ],
+  "split_records": [
+    {
+      "id": "a",
+      "group": "g1",
+      "family": "f1",
+      "normalized_hash": "h1",
+      "split": "train",
+      "parent": null
+    },
+    {
+      "id": "b",
+      "group": "g1",
+      "family": "f1",
+      "normalized_hash": "h2",
+      "split": "train",
+      "parent": "a"
+    },
+    {
+      "id": "c",
+      "group": "g2",
+      "family": "f2",
+      "normalized_hash": "h3",
+      "split": "dev",
+      "parent": null
+    },
+    {
+      "id": "d",
+      "group": "g3",
+      "family": "f3",
+      "normalized_hash": "h4",
+      "split": "blind",
+      "parent": null
+    }
+  ],
+  "split_mutations": [
+    {
+      "id": "group-cross",
+      "index": 1,
+      "field": "split",
+      "value": "dev",
+      "expected": "cross-split"
+    },
+    {
+      "id": "family-cross",
+      "index": 2,
+      "field": "family",
+      "value": "f1",
+      "expected": "cross-split"
+    },
+    {
+      "id": "duplicate-cross",
+      "index": 3,
+      "field": "normalized_hash",
+      "value": "h1",
+      "expected": "cross-split"
+    },
+    {
+      "id": "parent-cross",
+      "index": 2,
+      "field": "parent",
+      "value": "a",
+      "expected": "parent-split"
+    },
+    {
+      "id": "duplicate-record",
+      "index": 3,
+      "field": "id",
+      "value": "a",
+      "expected": "duplicate-record"
+    }
+  ]
+}

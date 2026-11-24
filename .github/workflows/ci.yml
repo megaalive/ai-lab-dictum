@@ -121,3 +121,6 @@ jobs:
 
       - name: Uji registry dan profil katalog A3
         run: python3 -B tests/catalog/run.py
+
+      - name: Uji domain kandidat F1 (data-only)
+        run: python3 -B tests/catalog/f1_domains.py

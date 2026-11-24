@@ -17,7 +17,8 @@ KEYS = {"schema_version", "mode", "phase", "profile", "target", "vcpu",
 
 
 def lint(record):
-    if set(record) != KEYS or type(record["schema_version"]) is not int or record["schema_version"] != 1:
+    if (type(record) is not dict or set(record) != KEYS or
+            type(record["schema_version"]) is not int or record["schema_version"] != 1):
         return "shape"
     if record["mode"] != "synthetic-contract-only":
         return "mode"
@@ -34,10 +35,11 @@ def lint(record):
     if type(checks) is not list or any(type(c) is not dict or set(c) !=
                                       {"id", "state", "evidence_sha256"} for c in checks):
         return "check-shape"
-    if len(checks) != len(REQUIRED) or {c["id"] for c in checks} != REQUIRED:
+    if (len(checks) != len(REQUIRED) or any(type(c["id"]) is not str for c in checks) or
+            {c["id"] for c in checks} != REQUIRED):
         return "check-ids"
     for c in checks:
-        if c["state"] != "VERIFIED":
+        if type(c["state"]) is not str or c["state"] != "VERIFIED":
             return "check-state"
         if not isinstance(c["evidence_sha256"], str) or not re.fullmatch(r"[0-9a-f]{64}", c["evidence_sha256"]):
             return "evidence"
@@ -47,7 +49,9 @@ def lint(record):
 def main():
     path = Path(__file__).with_name("lab-preflight-v1.json")
     vectors = json.loads(path.read_text(encoding="utf-8"))
-    tests = [("positive", vectors["record"], vectors["expected"])]
+    tests = [("positive", vectors["record"], vectors["expected"]),
+             ("root-not-object", [], "shape"),
+             ("root-null", None, "shape")]
     for m in vectors["mutations"]:
         rec = copy.deepcopy(vectors["record"])
         obj = rec

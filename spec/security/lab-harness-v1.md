@@ -19,3 +19,7 @@ Preregister case IDs, expected allowed operation/effects/target/read projection/
 ## Data-only oracle A5
 
 tests/security/lab-preflight-v1.json defines synthetic check records and mutations; tests/security/run.py checks all fields, exactly the mandatory IDs, states, evidence shape, environment/limits, phase/authorization and rejects unknown/false/extra. Expected synthetic eligible means contract record is complete, **not** actual VM authorized or attested. No sockets, host inspection, target execution or privilege. Actual lab state: **S3 BLOCKED / NOT RUN**, no access/attestation of owner disposable VM in A5. F0-B only after gate; proposal path not blocked by S3.
+
+### Format evidence aktual dan batas lint
+
+Sebelum S3, controller dan operator harus menyediakan evidence aktual per check ID: status VERIFIED/BLOCKED, artifact SHA-256 + lokasi yang dapat diaudit, metode/pengamatan, VM/snapshot ID, scope decision ID, commit SHA, operator dan timestamp. Checklist synthetic-contract-only tidak menyediakan field authority tersebut, sehingga output SYNTHETIC-COMPLETE **tidak dapat dikonversi** menjadi izin lab. Shape/type error pada data uji menghasilkan reject; tidak ada jalan fallback. Format evidence aktual dan proof isolation harus ditinjau sebelum operasi pertama; sampai itu semua S3 tetap BLOCKED/NOT RUN.

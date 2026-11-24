@@ -240,6 +240,78 @@
       ],
       "value": true,
       "expected": "check-shape"
+    },
+    {
+      "id": "id-not-string",
+      "path": [
+        "checks",
+        0,
+        "id"
+      ],
+      "value": [],
+      "expected": "check-ids"
+    },
+    {
+      "id": "state-not-string",
+      "path": [
+        "checks",
+        0,
+        "state"
+      ],
+      "value": [
+        "VERIFIED"
+      ],
+      "expected": "check-state"
+    },
+    {
+      "id": "digest-not-string",
+      "path": [
+        "checks",
+        0,
+        "evidence_sha256"
+      ],
+      "value": 1,
+      "expected": "evidence"
+    },
+    {
+      "id": "schema-bool",
+      "path": [
+        "schema_version"
+      ],
+      "value": true,
+      "expected": "shape"
+    },
+    {
+      "id": "vcpu-bool",
+      "path": [
+        "vcpu"
+      ],
+      "value": true,
+      "expected": "limits"
+    },
+    {
+      "id": "checks-not-array",
+      "path": [
+        "checks"
+      ],
+      "value": {},
+      "expected": "check-shape"
+    },
+    {
+      "id": "resource-zero",
+      "path": [
+        "timeout_ms"
+      ],
+      "value": 0,
+      "expected": "limits"
+    },
+    {
+      "id": "memory-over",
+      "path": [
+        "memory_mib"
+      ],
+      "value": 4096,
+      "expected": "limits"
     }
   ]
 }

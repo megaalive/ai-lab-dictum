@@ -1,0 +1,102 @@
+[
+  {"id":"PF-original","expect":"ok","edits":[]},
+  {
+    "id": "PF-metaschema",
+    "expect": "profile/metaschema",
+    "edits": [["put",["nlu-proposal-v1.schema.json","properties","slot_candidates","maxItems"],"32"]]
+  },
+  {
+    "id": "PF-remote-ref",
+    "expect": "profile/subset",
+    "edits": [
+      [
+        "put",
+        ["nlu-proposal-v1.schema.json","properties","slot_candidates","items","$ref"],
+        "https://dictum.invalid/other#/$defs/x"
+      ]
+    ]
+  },
+  {
+    "id": "PF-traversal-ref",
+    "expect": "profile/subset",
+    "edits": [
+      [
+        "put",
+        ["nlu-proposal-v1.schema.json","properties","slot_candidates","items","$ref"],
+        "../ir/nlu-proposal-v1.schema.json#/$defs/slot_candidate"
+      ]
+    ]
+  },
+  {
+    "id": "PF-missing-ref",
+    "expect": "profile/subset",
+    "edits": [["put",["nlu-proposal-v1.schema.json","properties","slot_candidates","items","$ref"],"#/$defs/not_found"]]
+  },
+  {
+    "id": "PF-ref-sibling",
+    "expect": "profile/subset",
+    "edits": [["put",["nlu-proposal-v1.schema.json","properties","slot_candidates","items","title"],"sibling"]]
+  },
+  {
+    "id": "PF-cycle-direct",
+    "expect": "profile/subset",
+    "edits": [["put",["nlu-proposal-v1.schema.json","$defs","orphan"],{"$ref":"#/$defs/orphan"}]]
+  },
+  {
+    "id": "PF-cycle-cross-file",
+    "expect": "profile/subset",
+    "edits": [
+      [
+        "put",
+        ["nlu-proposal-v1.schema.json","$defs","orphan"],
+        {"$ref":"resolved-ir-v1.schema.json#/$defs/back"}
+      ],
+      [
+        "put",
+        ["resolved-ir-v1.schema.json","$defs","back"],
+        {"$ref":"nlu-proposal-v1.schema.json#/$defs/orphan"}
+      ]
+    ]
+  },
+  {
+    "id": "PF-keyword-unreachable",
+    "expect": "profile/subset",
+    "edits": [
+      [
+        "put",
+        ["nlu-proposal-v1.schema.json","$defs","orphan"],
+        {"type":"string","minLength":1,"maxLength":2,"format":"uri"}
+      ]
+    ]
+  },
+  {
+    "id": "PF-nested-open-object",
+    "expect": "profile/subset",
+    "edits": [["put",["nlu-proposal-v1.schema.json","$defs","span","additionalProperties"],true]]
+  },
+  {
+    "id": "PF-foreign-required",
+    "expect": "profile/subset",
+    "edits": [["put",["nlu-proposal-v1.schema.json","$defs","span","required"],["start","garbage"]]]
+  },
+  {
+    "id": "PF-unbounded-items",
+    "expect": "profile/subset",
+    "edits": [["remove",["nlu-proposal-v1.schema.json","properties","slot_candidates","maxItems"]]]
+  },
+  {
+    "id": "PF-arbitrary-regex",
+    "expect": "profile/subset",
+    "edits": [["put",["nlu-proposal-v1.schema.json","$defs","intent_id","pattern"],"(a+)+$"]]
+  },
+  {
+    "id": "PF-union-tag-duplicate",
+    "expect": "profile/subset",
+    "edits": [["put",["policy-decision-v1.schema.json","$defs","scope","oneOf",1,"properties","kind","const"],"none"]]
+  },
+  {
+    "id": "PF-union-tag-optional",
+    "expect": "profile/subset",
+    "edits": [["put",["policy-decision-v1.schema.json","$defs","scope","oneOf",1,"required"],["scope_id"]]]
+  }
+]

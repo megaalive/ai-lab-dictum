@@ -69,3 +69,33 @@ jobs:
 
       - name: Uji CLI
         run: ctest --test-dir build/ci --output-on-failure --no-tests=error
+
+  ir-contract:
+    name: Kontrak IR Draft 2020-12
+    runs-on: ubuntu-24.04
+    container: debian:13.5-slim@sha256:a617c1cdde36a7e0194b2f07dff669e1753c03c3205356b94f9f350b0f9a57d1
+    timeout-minutes: 10
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Pasang oracle pengembangan
+        run: |
+          apt-get -o APT::Update::Error-Mode=any update
+          apt-get install -y --no-install-recommends ca-certificates git python3-jsonschema
+
+      - name: Ambil sumber
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Uji kontrak dan fixture
+        run: |
+          checked_sha=$(git -c safe.directory="$GITHUB_WORKSPACE" rev-parse HEAD)
+          printf 'SHA checkout %s\n' "$checked_sha"
+          test "$checked_sha" = "$GITHUB_SHA"
+          cat /etc/debian_version
+          uname -smr
+          python3 --version
+          dpkg-query -W python3-jsonschema python3-referencing python3-jsonschema-specifications python3-attr python3-rpds-py
+          python3 -B tests/ir/run.py

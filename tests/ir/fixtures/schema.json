@@ -1,0 +1,311 @@
+[
+  {
+    "id": "SC-unknown-version-nlu",
+    "stage": "nlu",
+    "base": "listener",
+    "expect": "schema/structure",
+    "edits": [["put",["schema_version"],2]]
+  },
+  {
+    "id": "SC-unknown-version-ir",
+    "stage": "ir",
+    "base": "listener",
+    "expect": "schema/structure",
+    "edits": [["put",["schema_version"],2]]
+  },
+  {
+    "id": "SC-unknown-version-policy",
+    "stage": "policy",
+    "base": "listener",
+    "expect": "schema/structure",
+    "edits": [["put",["schema_version"],2]]
+  },
+  {
+    "id": "SC-unknown-version-plan",
+    "stage": "plan",
+    "base": "listener",
+    "expect": "schema/structure",
+    "edits": [["put",["schema_version"],2]]
+  },
+  {
+    "id": "SC-boolean-version",
+    "stage": "nlu",
+    "base": "listener",
+    "expect": "schema/structure",
+    "edits": [["put",["schema_version"],true]]
+  },
+  {
+    "id": "SC-no-version",
+    "stage": "nlu",
+    "base": "listener",
+    "expect": "schema/structure",
+    "edits": [["remove",["schema_version"]]]
+  },
+  {
+    "id": "SC-nlu-authority-executable",
+    "stage": "nlu",
+    "base": "listener",
+    "expect": "schema/structure",
+    "edits": [["put",["intent_candidates",0,"executable"],"/fixture/bin/ignored"]]
+  },
+  {
+    "id": "SC-nlu-authority-argv",
+    "stage": "nlu",
+    "base": "listener",
+    "expect": "schema/structure",
+    "edits": [["put",["intent_candidates",0,"argv"],["literal"]]]
+  },
+  {
+    "id": "SC-nlu-authority-approval",
+    "stage": "nlu",
+    "base": "listener",
+    "expect": "schema/structure",
+    "edits": [["put",["intent_candidates",0,"approval"],true]]
+  },
+  {
+    "id": "SC-nlu-authority-privilege",
+    "stage": "nlu",
+    "base": "listener",
+    "expect": "schema/structure",
+    "edits": [["put",["intent_candidates",0,"privilege"],"root"]]
+  },
+  {
+    "id": "SC-nlu-authority-risk",
+    "stage": "nlu",
+    "base": "listener",
+    "expect": "schema/structure",
+    "edits": [["put",["intent_candidates",0,"risk"],"INFO"]]
+  },
+  {
+    "id": "SC-nlu-authority-context_id",
+    "stage": "nlu",
+    "base": "listener",
+    "expect": "schema/structure",
+    "edits": [
+      [
+        "put",
+        ["intent_candidates",0,"context_id"],
+        "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+      ]
+    ]
+  },
+  {
+    "id": "SC-nlu-authority-policy_exception",
+    "stage": "nlu",
+    "base": "listener",
+    "expect": "schema/structure",
+    "edits": [["put",["intent_candidates",0,"policy_exception"],true]]
+  },
+  {
+    "id": "SC-nlu-authority-execution_allowed",
+    "stage": "nlu",
+    "base": "listener",
+    "expect": "schema/structure",
+    "edits": [["put",["intent_candidates",0,"execution_allowed"],true]]
+  },
+  {
+    "id": "SC-nlu-nested-authority",
+    "stage": "nlu",
+    "base": "listener",
+    "expect": "schema/structure",
+    "edits": [["put",["slot_candidates",0,"source","executable"],"/fixture/bin/ignored"]]
+  },
+  {
+    "id": "SC-nlu-unknown-field",
+    "stage": "nlu",
+    "base": "listener",
+    "expect": "schema/structure",
+    "edits": [["put",["unexpected"],0]]
+  },
+  {
+    "id": "SC-intent-newline",
+    "stage": "nlu",
+    "base": "listener",
+    "expect": "schema/structure",
+    "edits": [["put",["intent_candidates",0,"intent"],"network.listener.lookup\n"]]
+  },
+  {
+    "id": "SC-syntactic-unknown-intent",
+    "stage": "ir",
+    "base": "listener",
+    "expect": "ok",
+    "edits": [["put",["intent"],"fixture.unknown"]]
+  },
+  {
+    "id": "SC-missing-discriminator",
+    "stage": "nlu",
+    "base": "listener",
+    "expect": "schema/structure",
+    "edits": [["remove",["slot_candidates",0,"source","kind"]]]
+  },
+  {
+    "id": "SC-mixed-source-branches",
+    "stage": "nlu",
+    "base": "listener",
+    "expect": "schema/structure",
+    "edits": [["put",["slot_candidates",0,"source","candidate_id"],"00000000000000000000000000000001"]]
+  },
+  {
+    "id": "SC-intent-count-over",
+    "stage": "nlu",
+    "base": "listener",
+    "expect": "schema/structure",
+    "edits": [
+      [
+        "put",
+        ["intent_candidates"],
+        [
+          {"intent":"network.listener.lookup","slot_candidate_ids":[0],"score_bp":9000},
+          {"intent":"network.listener.lookup","slot_candidate_ids":[0],"score_bp":9000},
+          {"intent":"network.listener.lookup","slot_candidate_ids":[0],"score_bp":9000},
+          {"intent":"network.listener.lookup","slot_candidate_ids":[0],"score_bp":9000},
+          {"intent":"network.listener.lookup","slot_candidate_ids":[0],"score_bp":9000},
+          {"intent":"network.listener.lookup","slot_candidate_ids":[0],"score_bp":9000},
+          {"intent":"network.listener.lookup","slot_candidate_ids":[0],"score_bp":9000},
+          {"intent":"network.listener.lookup","slot_candidate_ids":[0],"score_bp":9000},
+          {"intent":"network.listener.lookup","slot_candidate_ids":[0],"score_bp":9000}
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "SC-score-over",
+    "stage": "nlu",
+    "base": "listener",
+    "expect": "schema/structure",
+    "edits": [["put",["intent_candidates",0,"score_bp"],10001]]
+  },
+  {
+    "id": "SC-port-below",
+    "stage": "ir",
+    "base": "listener",
+    "expect": "schema/structure",
+    "edits": [["put",["slots",0,"value","value"],0]]
+  },
+  {
+    "id": "SC-port-min",
+    "stage": "ir",
+    "base": "listener",
+    "expect": "ok",
+    "edits": [["put",["slots",0,"value","value"],1]]
+  },
+  {
+    "id": "SC-port-max",
+    "stage": "ir",
+    "base": "listener",
+    "expect": "ok",
+    "edits": [["put",["slots",0,"value","value"],65535]]
+  },
+  {
+    "id": "SC-port-over",
+    "stage": "ir",
+    "base": "listener",
+    "expect": "schema/structure",
+    "edits": [["put",["slots",0,"value","value"],65536]]
+  },
+  {
+    "id": "SC-port-boolean",
+    "stage": "ir",
+    "base": "listener",
+    "expect": "schema/structure",
+    "edits": [["put",["slots",0,"value","value"],true]]
+  },
+  {
+    "id": "SC-wrong-provenance",
+    "stage": "ir",
+    "base": "listener",
+    "expect": "schema/structure",
+    "edits": [["put",["slots",0,"provenance","kind"],"model-asserted"]]
+  },
+  {
+    "id": "SC-invalid-unit",
+    "stage": "ir",
+    "base": "restart",
+    "expect": "schema/structure",
+    "edits": [["put",["slots",0,"value","value"],"--help"]]
+  },
+  {
+    "id": "SC-unknown-ir-field",
+    "stage": "ir",
+    "base": "listener",
+    "expect": "schema/structure",
+    "edits": [["put",["slots",0,"approval"],true]]
+  },
+  {
+    "id": "SC-unknown-policy-field",
+    "stage": "policy",
+    "base": "listener",
+    "expect": "schema/structure",
+    "edits": [["put",["approval"],true]]
+  },
+  {
+    "id": "SC-bad-decision",
+    "stage": "policy",
+    "base": "listener",
+    "expect": "schema/structure",
+    "edits": [["put",["decision"],"allow_proposal"]]
+  },
+  {
+    "id": "SC-abstain-decision",
+    "stage": "policy",
+    "base": "listener",
+    "expect": "schema/structure",
+    "edits": [["put",["decision"],"abstain"]]
+  },
+  {
+    "id": "SC-future-enum",
+    "stage": "policy",
+    "base": "listener",
+    "expect": "ok",
+    "edits": [["put",["decision"],"allow-execute-eligible"]]
+  },
+  {
+    "id": "SC-unknown-axis",
+    "stage": "policy",
+    "base": "listener",
+    "expect": "schema/structure",
+    "edits": [["put",["effect","axes"],["unbounded-effect"]]]
+  },
+  {
+    "id": "SC-shell-in-plan",
+    "stage": "plan",
+    "base": "listener",
+    "expect": "schema/structure",
+    "edits": [["put",["action","operation","shell"],"synthetic string"]]
+  },
+  {
+    "id": "SC-top-approval-plan",
+    "stage": "plan",
+    "base": "listener",
+    "expect": "schema/structure",
+    "edits": [["put",["approval"],true]]
+  },
+  {
+    "id": "SC-proposal-with-expiry",
+    "stage": "plan",
+    "base": "listener",
+    "expect": "schema/structure",
+    "edits": [["put",["action","expires_boottime_ms"],2000]]
+  },
+  {
+    "id": "SC-flag-as-operand-end",
+    "stage": "plan",
+    "base": "listener",
+    "expect": "schema/structure",
+    "edits": [["put",["action","operation","argv",0,"value"],"--"]]
+  },
+  {
+    "id": "SC-unknown-action",
+    "stage": "plan",
+    "base": "listener",
+    "expect": "schema/structure",
+    "edits": [["put",["action","kind"],"run"]]
+  },
+  {
+    "id": "SC-digest-format",
+    "stage": "plan",
+    "base": "listener",
+    "expect": "schema/structure",
+    "edits": [["put",["digest"],"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"]]
+  }
+]

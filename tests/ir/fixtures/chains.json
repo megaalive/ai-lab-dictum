@@ -1,0 +1,791 @@
+{
+  "identities": {
+    "catalog": {"version":1,"sha256":"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"},
+    "policy": {"version":1,"sha256":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}
+  },
+  "chains": [
+    {
+      "id": "memory",
+      "input": "berapa RAM yang tersedia?",
+      "rule": {
+        "intent": "memory.summary",
+        "slots": {},
+        "effect": {"class":"READ","axes":["filesystem-read","spawn"]},
+        "proposal_eligible": true,
+        "execute_eligible": true
+      },
+      "trusted": {
+        "request_id": "00000000000000000000000000000065",
+        "resolution_id": "00000000000000000000000000000066",
+        "decision_id": "00000000000000000000000000000067",
+        "action_id": "00000000000000000000000000000068",
+        "context_id": "1111111111111111111111111111111111111111111111111111111111111111",
+        "scope_id": "00000000000000000000000000000069",
+        "now_boottime_ms": 1000,
+        "context_until_boottime_ms": 200000,
+        "phase": "F0",
+        "candidates": {},
+        "recipe": {
+          "slots": {},
+          "operation": {
+            "kind": "executable",
+            "identity": {
+              "path": "/fixture/bin/memory",
+              "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "version": "fixture-v1"
+            },
+            "argv": [{"kind":"flag","value":"--available"}]
+          },
+          "target_bindings": [],
+          "constraints": {"timeout_ms":1000,"max_output_bytes":4096}
+        }
+      },
+      "objects": {
+        "nlu": {
+          "schema_version": 1,
+          "intent_candidates": [{"intent":"memory.summary","slot_candidate_ids":[]}],
+          "slot_candidates": [],
+          "abstain_hint": "none"
+        },
+        "ir": {
+          "schema_version": 1,
+          "request_id": "00000000000000000000000000000065",
+          "resolution_id": "00000000000000000000000000000066",
+          "context_id": "1111111111111111111111111111111111111111111111111111111111111111",
+          "catalog": {"version":1,"sha256":"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"},
+          "intent": "memory.summary",
+          "slots": [],
+          "resolution": {"state":"resolved","unresolved":[],"alternatives":[]}
+        },
+        "policy": {
+          "schema_version": 1,
+          "request_id": "00000000000000000000000000000065",
+          "resolution_id": "00000000000000000000000000000066",
+          "context_id": "1111111111111111111111111111111111111111111111111111111111111111",
+          "catalog": {"version":1,"sha256":"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"},
+          "decision_id": "00000000000000000000000000000067",
+          "policy": {"version":1,"sha256":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+          "decision": "allow-proposal",
+          "effect": {"class":"READ","axes":["filesystem-read","spawn"]},
+          "scope": {"kind":"local","scope_id":"00000000000000000000000000000069"},
+          "reason": "proposal-eligible"
+        },
+        "plan": {
+          "schema_version": 1,
+          "request_id": "00000000000000000000000000000065",
+          "resolution_id": "00000000000000000000000000000066",
+          "context_id": "1111111111111111111111111111111111111111111111111111111111111111",
+          "catalog": {"version":1,"sha256":"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"},
+          "decision_id": "00000000000000000000000000000067",
+          "action_id": "00000000000000000000000000000068",
+          "policy": {"version":1,"sha256":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+          "effect": {"class":"READ","axes":["filesystem-read","spawn"]},
+          "scope": {"kind":"local","scope_id":"00000000000000000000000000000069"},
+          "target_bindings": [],
+          "action": {
+            "kind": "proposal-only",
+            "operation": {
+              "kind": "executable",
+              "identity": {
+                "path": "/fixture/bin/memory",
+                "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                "version": "fixture-v1"
+              },
+              "argv": [{"kind":"flag","value":"--available"}]
+            }
+          },
+          "digest": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+        }
+      }
+    },
+    {
+      "id": "listener",
+      "input": "siapa yang menggunakan port 5432?",
+      "rule": {
+        "intent": "network.listener.lookup",
+        "slots": {
+          "port": {"kind":"port","required":true},
+          "protocol": {"kind":"protocol","required":true,"default":{"kind":"protocol","value":"tcp"}}
+        },
+        "effect": {"class":"READ","axes":["ipc","spawn"]},
+        "proposal_eligible": true,
+        "execute_eligible": true
+      },
+      "trusted": {
+        "request_id": "000000000000000000000000000000c9",
+        "resolution_id": "000000000000000000000000000000ca",
+        "decision_id": "000000000000000000000000000000cb",
+        "action_id": "000000000000000000000000000000cc",
+        "context_id": "2222222222222222222222222222222222222222222222222222222222222222",
+        "scope_id": "000000000000000000000000000000cd",
+        "now_boottime_ms": 1000,
+        "context_until_boottime_ms": 200000,
+        "phase": "F0",
+        "candidates": {},
+        "recipe": {
+          "slots": {"port":{"kind":"port","value":5432},"protocol":{"kind":"protocol","value":"tcp"}},
+          "operation": {
+            "kind": "executable",
+            "identity": {
+              "path": "/fixture/bin/listener",
+              "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "version": "fixture-v1"
+            },
+            "argv": [
+              {"kind":"flag","value":"--listening"},
+              {"kind":"literal","value":"tcp"},
+              {"kind":"integer","value":5432}
+            ]
+          },
+          "target_bindings": [],
+          "constraints": {"timeout_ms":1000,"max_output_bytes":4096}
+        }
+      },
+      "objects": {
+        "nlu": {
+          "schema_version": 1,
+          "intent_candidates": [{"intent":"network.listener.lookup","slot_candidate_ids":[0],"score_bp":9000}],
+          "slot_candidates": [{"id":0,"slot":"port","source":{"kind":"input-span","span":{"start":28,"end":32}}}],
+          "abstain_hint": "none"
+        },
+        "ir": {
+          "schema_version": 1,
+          "request_id": "000000000000000000000000000000c9",
+          "resolution_id": "000000000000000000000000000000ca",
+          "context_id": "2222222222222222222222222222222222222222222222222222222222222222",
+          "catalog": {"version":1,"sha256":"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"},
+          "intent": "network.listener.lookup",
+          "slots": [
+            {
+              "name": "port",
+              "value": {"kind":"port","value":5432},
+              "provenance": {"kind":"input-span","span":{"start":28,"end":32}}
+            },
+            {
+              "name": "protocol",
+              "value": {"kind":"protocol","value":"tcp"},
+              "provenance": {"kind":"catalog-default"}
+            }
+          ],
+          "resolution": {"state":"resolved","unresolved":[],"alternatives":[]}
+        },
+        "policy": {
+          "schema_version": 1,
+          "request_id": "000000000000000000000000000000c9",
+          "resolution_id": "000000000000000000000000000000ca",
+          "context_id": "2222222222222222222222222222222222222222222222222222222222222222",
+          "catalog": {"version":1,"sha256":"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"},
+          "decision_id": "000000000000000000000000000000cb",
+          "policy": {"version":1,"sha256":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+          "decision": "allow-proposal",
+          "effect": {"class":"READ","axes":["ipc","spawn"]},
+          "scope": {"kind":"local","scope_id":"000000000000000000000000000000cd"},
+          "reason": "proposal-eligible"
+        },
+        "plan": {
+          "schema_version": 1,
+          "request_id": "000000000000000000000000000000c9",
+          "resolution_id": "000000000000000000000000000000ca",
+          "context_id": "2222222222222222222222222222222222222222222222222222222222222222",
+          "catalog": {"version":1,"sha256":"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"},
+          "decision_id": "000000000000000000000000000000cb",
+          "action_id": "000000000000000000000000000000cc",
+          "policy": {"version":1,"sha256":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+          "effect": {"class":"READ","axes":["ipc","spawn"]},
+          "scope": {"kind":"local","scope_id":"000000000000000000000000000000cd"},
+          "target_bindings": [],
+          "action": {
+            "kind": "proposal-only",
+            "operation": {
+              "kind": "executable",
+              "identity": {
+                "path": "/fixture/bin/listener",
+                "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                "version": "fixture-v1"
+              },
+              "argv": [
+                {"kind":"flag","value":"--listening"},
+                {"kind":"literal","value":"tcp"},
+                {"kind":"integer","value":5432}
+              ]
+            }
+          },
+          "digest": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+        }
+      }
+    },
+    {
+      "id": "failed",
+      "input": "layanan mana yang sedang gagal?",
+      "rule": {
+        "intent": "service.failed.list",
+        "slots": {},
+        "effect": {"class":"READ","axes":["ipc"]},
+        "proposal_eligible": true,
+        "execute_eligible": false
+      },
+      "trusted": {
+        "request_id": "0000000000000000000000000000012d",
+        "resolution_id": "0000000000000000000000000000012e",
+        "decision_id": "0000000000000000000000000000012f",
+        "action_id": "00000000000000000000000000000130",
+        "context_id": "3333333333333333333333333333333333333333333333333333333333333333",
+        "scope_id": "00000000000000000000000000000131",
+        "now_boottime_ms": 1000,
+        "context_until_boottime_ms": 200000,
+        "phase": "F0",
+        "candidates": {},
+        "recipe": {
+          "slots": {},
+          "operation": {"kind":"native","handler":"fixture.service.failed","input_slots":[]},
+          "target_bindings": [],
+          "constraints": {"timeout_ms":1000,"max_output_bytes":4096}
+        }
+      },
+      "objects": {
+        "nlu": {
+          "schema_version": 1,
+          "intent_candidates": [{"intent":"service.failed.list","slot_candidate_ids":[]}],
+          "slot_candidates": [],
+          "abstain_hint": "none"
+        },
+        "ir": {
+          "schema_version": 1,
+          "request_id": "0000000000000000000000000000012d",
+          "resolution_id": "0000000000000000000000000000012e",
+          "context_id": "3333333333333333333333333333333333333333333333333333333333333333",
+          "catalog": {"version":1,"sha256":"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"},
+          "intent": "service.failed.list",
+          "slots": [],
+          "resolution": {"state":"resolved","unresolved":[],"alternatives":[]}
+        },
+        "policy": {
+          "schema_version": 1,
+          "request_id": "0000000000000000000000000000012d",
+          "resolution_id": "0000000000000000000000000000012e",
+          "context_id": "3333333333333333333333333333333333333333333333333333333333333333",
+          "catalog": {"version":1,"sha256":"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"},
+          "decision_id": "0000000000000000000000000000012f",
+          "policy": {"version":1,"sha256":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+          "decision": "allow-proposal",
+          "effect": {"class":"READ","axes":["ipc"]},
+          "scope": {"kind":"local","scope_id":"00000000000000000000000000000131"},
+          "reason": "proposal-eligible"
+        },
+        "plan": {
+          "schema_version": 1,
+          "request_id": "0000000000000000000000000000012d",
+          "resolution_id": "0000000000000000000000000000012e",
+          "context_id": "3333333333333333333333333333333333333333333333333333333333333333",
+          "catalog": {"version":1,"sha256":"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"},
+          "decision_id": "0000000000000000000000000000012f",
+          "action_id": "00000000000000000000000000000130",
+          "policy": {"version":1,"sha256":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+          "effect": {"class":"READ","axes":["ipc"]},
+          "scope": {"kind":"local","scope_id":"00000000000000000000000000000131"},
+          "target_bindings": [],
+          "action": {
+            "kind": "structured-proposal",
+            "operation": {"kind":"native","handler":"fixture.service.failed","input_slots":[]}
+          },
+          "digest": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+        }
+      }
+    },
+    {
+      "id": "logs",
+      "input": "log nginx.service selama sepuluh menit",
+      "rule": {
+        "intent": "log.service.query",
+        "slots": {
+          "unit": {"kind":"unit-name","required":true},
+          "window": {"kind":"time-window","required":true},
+          "limit": {"kind":"positive-int","required":true,"default":{"kind":"positive-int","value":30}}
+        },
+        "effect": {"class":"READ","axes":["ipc","secret-exposure"]},
+        "proposal_eligible": true,
+        "execute_eligible": false
+      },
+      "trusted": {
+        "request_id": "00000000000000000000000000000191",
+        "resolution_id": "00000000000000000000000000000192",
+        "decision_id": "00000000000000000000000000000193",
+        "action_id": "00000000000000000000000000000194",
+        "context_id": "4444444444444444444444444444444444444444444444444444444444444444",
+        "scope_id": "00000000000000000000000000000195",
+        "now_boottime_ms": 1000,
+        "context_until_boottime_ms": 200000,
+        "phase": "F0",
+        "candidates": {
+          "000000000000000000000000000001a5": {"slot":"window","value":{"kind":"time-window","start_unix_s":1760000000,"end_unix_s":1760000600}}
+        },
+        "recipe": {
+          "slots": {
+            "unit": {"kind":"unit-name","value":"nginx.service"},
+            "window": {"kind":"time-window","start_unix_s":1760000000,"end_unix_s":1760000600},
+            "limit": {"kind":"positive-int","value":30}
+          },
+          "operation": {"kind":"native","handler":"fixture.service.logs","input_slots":["unit","window","limit"]},
+          "target_bindings": [{"slot":"unit","binding_id":"0000000000000000000000000000019a"}],
+          "constraints": {"timeout_ms":1000,"max_output_bytes":4096}
+        }
+      },
+      "objects": {
+        "nlu": {
+          "schema_version": 1,
+          "intent_candidates": [{"intent":"log.service.query","slot_candidate_ids":[0,1]}],
+          "slot_candidates": [
+            {"id":0,"slot":"unit","source":{"kind":"input-span","span":{"start":4,"end":17}}},
+            {
+              "id": 1,
+              "slot": "window",
+              "source": {
+                "kind": "context-ref",
+                "candidate_id": "000000000000000000000000000001a5",
+                "expected_kind": "time-window"
+              }
+            }
+          ],
+          "abstain_hint": "none"
+        },
+        "ir": {
+          "schema_version": 1,
+          "request_id": "00000000000000000000000000000191",
+          "resolution_id": "00000000000000000000000000000192",
+          "context_id": "4444444444444444444444444444444444444444444444444444444444444444",
+          "catalog": {"version":1,"sha256":"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"},
+          "intent": "log.service.query",
+          "slots": [
+            {
+              "name": "unit",
+              "value": {"kind":"unit-name","value":"nginx.service"},
+              "provenance": {"kind":"input-span","span":{"start":4,"end":17}}
+            },
+            {
+              "name": "window",
+              "value": {"kind":"time-window","start_unix_s":1760000000,"end_unix_s":1760000600},
+              "provenance": {"kind":"context-ref","candidate_id":"000000000000000000000000000001a5"}
+            },
+            {"name":"limit","value":{"kind":"positive-int","value":30},"provenance":{"kind":"catalog-default"}}
+          ],
+          "resolution": {"state":"resolved","unresolved":[],"alternatives":[]}
+        },
+        "policy": {
+          "schema_version": 1,
+          "request_id": "00000000000000000000000000000191",
+          "resolution_id": "00000000000000000000000000000192",
+          "context_id": "4444444444444444444444444444444444444444444444444444444444444444",
+          "catalog": {"version":1,"sha256":"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"},
+          "decision_id": "00000000000000000000000000000193",
+          "policy": {"version":1,"sha256":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+          "decision": "allow-proposal",
+          "effect": {"class":"READ","axes":["ipc","secret-exposure"]},
+          "scope": {"kind":"local","scope_id":"00000000000000000000000000000195"},
+          "reason": "proposal-eligible"
+        },
+        "plan": {
+          "schema_version": 1,
+          "request_id": "00000000000000000000000000000191",
+          "resolution_id": "00000000000000000000000000000192",
+          "context_id": "4444444444444444444444444444444444444444444444444444444444444444",
+          "catalog": {"version":1,"sha256":"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"},
+          "decision_id": "00000000000000000000000000000193",
+          "action_id": "00000000000000000000000000000194",
+          "policy": {"version":1,"sha256":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+          "effect": {"class":"READ","axes":["ipc","secret-exposure"]},
+          "scope": {"kind":"local","scope_id":"00000000000000000000000000000195"},
+          "target_bindings": [{"slot":"unit","binding_id":"0000000000000000000000000000019a"}],
+          "action": {
+            "kind": "structured-proposal",
+            "operation": {"kind":"native","handler":"fixture.service.logs","input_slots":["unit","window","limit"]}
+          },
+          "digest": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+        }
+      }
+    },
+    {
+      "id": "filesystem",
+      "input": "kapasitas sistem berkas lokal",
+      "rule": {
+        "intent": "storage.filesystem.usage",
+        "slots": {},
+        "effect": {"class":"READ","axes":["filesystem-read"]},
+        "proposal_eligible": true,
+        "execute_eligible": true
+      },
+      "trusted": {
+        "request_id": "000000000000000000000000000001f5",
+        "resolution_id": "000000000000000000000000000001f6",
+        "decision_id": "000000000000000000000000000001f7",
+        "action_id": "000000000000000000000000000001f8",
+        "context_id": "5555555555555555555555555555555555555555555555555555555555555555",
+        "scope_id": "000000000000000000000000000001f9",
+        "now_boottime_ms": 1000,
+        "context_until_boottime_ms": 200000,
+        "phase": "F0",
+        "candidates": {},
+        "recipe": {
+          "slots": {},
+          "operation": {"kind":"native","handler":"fixture.filesystem.usage","input_slots":[]},
+          "target_bindings": [],
+          "constraints": {"timeout_ms":1000,"max_output_bytes":4096}
+        }
+      },
+      "objects": {
+        "nlu": {
+          "schema_version": 1,
+          "intent_candidates": [{"intent":"storage.filesystem.usage","slot_candidate_ids":[]}],
+          "slot_candidates": [],
+          "abstain_hint": "none"
+        },
+        "ir": {
+          "schema_version": 1,
+          "request_id": "000000000000000000000000000001f5",
+          "resolution_id": "000000000000000000000000000001f6",
+          "context_id": "5555555555555555555555555555555555555555555555555555555555555555",
+          "catalog": {"version":1,"sha256":"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"},
+          "intent": "storage.filesystem.usage",
+          "slots": [],
+          "resolution": {"state":"resolved","unresolved":[],"alternatives":[]}
+        },
+        "policy": {
+          "schema_version": 1,
+          "request_id": "000000000000000000000000000001f5",
+          "resolution_id": "000000000000000000000000000001f6",
+          "context_id": "5555555555555555555555555555555555555555555555555555555555555555",
+          "catalog": {"version":1,"sha256":"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"},
+          "decision_id": "000000000000000000000000000001f7",
+          "policy": {"version":1,"sha256":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+          "decision": "allow-proposal",
+          "effect": {"class":"READ","axes":["filesystem-read"]},
+          "scope": {"kind":"local","scope_id":"000000000000000000000000000001f9"},
+          "reason": "proposal-eligible"
+        },
+        "plan": {
+          "schema_version": 1,
+          "request_id": "000000000000000000000000000001f5",
+          "resolution_id": "000000000000000000000000000001f6",
+          "context_id": "5555555555555555555555555555555555555555555555555555555555555555",
+          "catalog": {"version":1,"sha256":"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"},
+          "decision_id": "000000000000000000000000000001f7",
+          "action_id": "000000000000000000000000000001f8",
+          "policy": {"version":1,"sha256":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+          "effect": {"class":"READ","axes":["filesystem-read"]},
+          "scope": {"kind":"local","scope_id":"000000000000000000000000000001f9"},
+          "target_bindings": [],
+          "action": {
+            "kind": "structured-proposal",
+            "operation": {"kind":"native","handler":"fixture.filesystem.usage","input_slots":[]}
+          },
+          "digest": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+        }
+      }
+    },
+    {
+      "id": "directory",
+      "input": "tampilkan 5 direktori terbesar di /fixture/data",
+      "rule": {
+        "intent": "storage.directory.usage",
+        "slots": {
+          "root": {"kind":"path","required":true},
+          "limit": {"kind":"positive-int","required":true},
+          "depth": {"kind":"depth","required":true,"default":{"kind":"depth","value":3}}
+        },
+        "effect": {"class":"READ","axes":["filesystem-read","resource-usage"]},
+        "proposal_eligible": true,
+        "execute_eligible": true
+      },
+      "trusted": {
+        "request_id": "00000000000000000000000000000259",
+        "resolution_id": "0000000000000000000000000000025a",
+        "decision_id": "0000000000000000000000000000025b",
+        "action_id": "0000000000000000000000000000025c",
+        "context_id": "6666666666666666666666666666666666666666666666666666666666666666",
+        "scope_id": "0000000000000000000000000000025d",
+        "now_boottime_ms": 1000,
+        "context_until_boottime_ms": 200000,
+        "phase": "F0",
+        "candidates": {},
+        "recipe": {
+          "slots": {
+            "root": {"kind":"path","value":"/fixture/data"},
+            "limit": {"kind":"positive-int","value":5},
+            "depth": {"kind":"depth","value":3}
+          },
+          "operation": {"kind":"native","handler":"fixture.directory.top","input_slots":["root","limit","depth"]},
+          "target_bindings": [{"slot":"root","binding_id":"00000000000000000000000000000262"}],
+          "constraints": {"timeout_ms":1000,"max_output_bytes":4096}
+        }
+      },
+      "objects": {
+        "nlu": {
+          "schema_version": 1,
+          "intent_candidates": [{"intent":"storage.directory.usage","slot_candidate_ids":[0,1]}],
+          "slot_candidates": [
+            {"id":0,"slot":"root","source":{"kind":"input-span","span":{"start":34,"end":47}}},
+            {"id":1,"slot":"limit","source":{"kind":"input-span","span":{"start":10,"end":11}}}
+          ],
+          "abstain_hint": "none"
+        },
+        "ir": {
+          "schema_version": 1,
+          "request_id": "00000000000000000000000000000259",
+          "resolution_id": "0000000000000000000000000000025a",
+          "context_id": "6666666666666666666666666666666666666666666666666666666666666666",
+          "catalog": {"version":1,"sha256":"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"},
+          "intent": "storage.directory.usage",
+          "slots": [
+            {
+              "name": "root",
+              "value": {"kind":"path","value":"/fixture/data"},
+              "provenance": {"kind":"input-span","span":{"start":34,"end":47}}
+            },
+            {
+              "name": "limit",
+              "value": {"kind":"positive-int","value":5},
+              "provenance": {"kind":"input-span","span":{"start":10,"end":11}}
+            },
+            {"name":"depth","value":{"kind":"depth","value":3},"provenance":{"kind":"catalog-default"}}
+          ],
+          "resolution": {"state":"resolved","unresolved":[],"alternatives":[]}
+        },
+        "policy": {
+          "schema_version": 1,
+          "request_id": "00000000000000000000000000000259",
+          "resolution_id": "0000000000000000000000000000025a",
+          "context_id": "6666666666666666666666666666666666666666666666666666666666666666",
+          "catalog": {"version":1,"sha256":"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"},
+          "decision_id": "0000000000000000000000000000025b",
+          "policy": {"version":1,"sha256":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+          "decision": "allow-proposal",
+          "effect": {"class":"READ","axes":["filesystem-read","resource-usage"]},
+          "scope": {"kind":"local","scope_id":"0000000000000000000000000000025d"},
+          "reason": "proposal-eligible"
+        },
+        "plan": {
+          "schema_version": 1,
+          "request_id": "00000000000000000000000000000259",
+          "resolution_id": "0000000000000000000000000000025a",
+          "context_id": "6666666666666666666666666666666666666666666666666666666666666666",
+          "catalog": {"version":1,"sha256":"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"},
+          "decision_id": "0000000000000000000000000000025b",
+          "action_id": "0000000000000000000000000000025c",
+          "policy": {"version":1,"sha256":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+          "effect": {"class":"READ","axes":["filesystem-read","resource-usage"]},
+          "scope": {"kind":"local","scope_id":"0000000000000000000000000000025d"},
+          "target_bindings": [{"slot":"root","binding_id":"00000000000000000000000000000262"}],
+          "action": {
+            "kind": "structured-proposal",
+            "operation": {"kind":"native","handler":"fixture.directory.top","input_slots":["root","limit","depth"]}
+          },
+          "digest": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+        }
+      }
+    },
+    {
+      "id": "files",
+      "input": "cari pdf di -arsip'café",
+      "rule": {
+        "intent": "file.search",
+        "slots": {
+          "root": {"kind":"path","required":true},
+          "extension": {"kind":"extension","required":true},
+          "filename": {"kind":"filename","required":false},
+          "window": {"kind":"time-window","required":false}
+        },
+        "effect": {"class":"READ","axes":["filesystem-read","resource-usage"]},
+        "proposal_eligible": true,
+        "execute_eligible": true
+      },
+      "trusted": {
+        "request_id": "000000000000000000000000000002bd",
+        "resolution_id": "000000000000000000000000000002be",
+        "decision_id": "000000000000000000000000000002bf",
+        "action_id": "000000000000000000000000000002c0",
+        "context_id": "7777777777777777777777777777777777777777777777777777777777777777",
+        "scope_id": "000000000000000000000000000002c1",
+        "now_boottime_ms": 1000,
+        "context_until_boottime_ms": 200000,
+        "phase": "F0",
+        "candidates": {},
+        "recipe": {
+          "slots": {"root":{"kind":"path","value":"-arsip'café"},"extension":{"kind":"extension","value":"pdf"}},
+          "operation": {"kind":"native","handler":"fixture.file.search","input_slots":["root","extension"]},
+          "target_bindings": [{"slot":"root","binding_id":"000000000000000000000000000002c6"}],
+          "constraints": {"timeout_ms":1000,"max_output_bytes":4096}
+        }
+      },
+      "objects": {
+        "nlu": {
+          "schema_version": 1,
+          "intent_candidates": [{"intent":"file.search","slot_candidate_ids":[0,1]}],
+          "slot_candidates": [
+            {"id":0,"slot":"root","source":{"kind":"input-span","span":{"start":12,"end":25}}},
+            {"id":1,"slot":"extension","source":{"kind":"input-span","span":{"start":5,"end":8}}}
+          ],
+          "abstain_hint": "none"
+        },
+        "ir": {
+          "schema_version": 1,
+          "request_id": "000000000000000000000000000002bd",
+          "resolution_id": "000000000000000000000000000002be",
+          "context_id": "7777777777777777777777777777777777777777777777777777777777777777",
+          "catalog": {"version":1,"sha256":"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"},
+          "intent": "file.search",
+          "slots": [
+            {
+              "name": "root",
+              "value": {"kind":"path","value":"-arsip'café"},
+              "provenance": {"kind":"input-span","span":{"start":12,"end":25}}
+            },
+            {
+              "name": "extension",
+              "value": {"kind":"extension","value":"pdf"},
+              "provenance": {"kind":"input-span","span":{"start":5,"end":8}}
+            }
+          ],
+          "resolution": {"state":"resolved","unresolved":[],"alternatives":[]}
+        },
+        "policy": {
+          "schema_version": 1,
+          "request_id": "000000000000000000000000000002bd",
+          "resolution_id": "000000000000000000000000000002be",
+          "context_id": "7777777777777777777777777777777777777777777777777777777777777777",
+          "catalog": {"version":1,"sha256":"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"},
+          "decision_id": "000000000000000000000000000002bf",
+          "policy": {"version":1,"sha256":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+          "decision": "allow-proposal",
+          "effect": {"class":"READ","axes":["filesystem-read","resource-usage"]},
+          "scope": {"kind":"local","scope_id":"000000000000000000000000000002c1"},
+          "reason": "proposal-eligible"
+        },
+        "plan": {
+          "schema_version": 1,
+          "request_id": "000000000000000000000000000002bd",
+          "resolution_id": "000000000000000000000000000002be",
+          "context_id": "7777777777777777777777777777777777777777777777777777777777777777",
+          "catalog": {"version":1,"sha256":"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"},
+          "decision_id": "000000000000000000000000000002bf",
+          "action_id": "000000000000000000000000000002c0",
+          "policy": {"version":1,"sha256":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+          "effect": {"class":"READ","axes":["filesystem-read","resource-usage"]},
+          "scope": {"kind":"local","scope_id":"000000000000000000000000000002c1"},
+          "target_bindings": [{"slot":"root","binding_id":"000000000000000000000000000002c6"}],
+          "action": {
+            "kind": "structured-proposal",
+            "operation": {"kind":"native","handler":"fixture.file.search","input_slots":["root","extension"]}
+          },
+          "digest": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+        }
+      }
+    },
+    {
+      "id": "restart",
+      "input": "mulai ulang nginx.service",
+      "rule": {
+        "intent": "service.restart",
+        "slots": {"unit":{"kind":"unit-name","required":true}},
+        "effect": {"class":"CHANGE","axes":["ipc","persistent-mutation","requires-privilege","spawn"]},
+        "proposal_eligible": true,
+        "execute_eligible": false
+      },
+      "trusted": {
+        "request_id": "00000000000000000000000000000321",
+        "resolution_id": "00000000000000000000000000000322",
+        "decision_id": "00000000000000000000000000000323",
+        "action_id": "00000000000000000000000000000324",
+        "context_id": "8888888888888888888888888888888888888888888888888888888888888888",
+        "scope_id": "00000000000000000000000000000325",
+        "now_boottime_ms": 1000,
+        "context_until_boottime_ms": 200000,
+        "phase": "F0",
+        "candidates": {},
+        "recipe": {
+          "slots": {"unit":{"kind":"unit-name","value":"nginx.service"}},
+          "operation": {
+            "kind": "executable",
+            "identity": {
+              "path": "/fixture/bin/service",
+              "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "version": "fixture-v1"
+            },
+            "argv": [
+              {"kind":"flag","value":"--restart"},
+              {"kind":"option-end"},
+              {"kind":"literal","value":"nginx.service"}
+            ]
+          },
+          "target_bindings": [{"slot":"unit","binding_id":"0000000000000000000000000000032a"}],
+          "constraints": {"timeout_ms":1000,"max_output_bytes":4096}
+        }
+      },
+      "objects": {
+        "nlu": {
+          "schema_version": 1,
+          "intent_candidates": [{"intent":"service.restart","slot_candidate_ids":[0]}],
+          "slot_candidates": [{"id":0,"slot":"unit","source":{"kind":"input-span","span":{"start":12,"end":25}}}],
+          "abstain_hint": "none"
+        },
+        "ir": {
+          "schema_version": 1,
+          "request_id": "00000000000000000000000000000321",
+          "resolution_id": "00000000000000000000000000000322",
+          "context_id": "8888888888888888888888888888888888888888888888888888888888888888",
+          "catalog": {"version":1,"sha256":"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"},
+          "intent": "service.restart",
+          "slots": [
+            {
+              "name": "unit",
+              "value": {"kind":"unit-name","value":"nginx.service"},
+              "provenance": {"kind":"input-span","span":{"start":12,"end":25}}
+            }
+          ],
+          "resolution": {"state":"resolved","unresolved":[],"alternatives":[]}
+        },
+        "policy": {
+          "schema_version": 1,
+          "request_id": "00000000000000000000000000000321",
+          "resolution_id": "00000000000000000000000000000322",
+          "context_id": "8888888888888888888888888888888888888888888888888888888888888888",
+          "catalog": {"version":1,"sha256":"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"},
+          "decision_id": "00000000000000000000000000000323",
+          "policy": {"version":1,"sha256":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+          "decision": "allow-proposal",
+          "effect": {"class":"CHANGE","axes":["ipc","persistent-mutation","requires-privilege","spawn"]},
+          "scope": {"kind":"local","scope_id":"00000000000000000000000000000325"},
+          "reason": "proposal-eligible"
+        },
+        "plan": {
+          "schema_version": 1,
+          "request_id": "00000000000000000000000000000321",
+          "resolution_id": "00000000000000000000000000000322",
+          "context_id": "8888888888888888888888888888888888888888888888888888888888888888",
+          "catalog": {"version":1,"sha256":"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"},
+          "decision_id": "00000000000000000000000000000323",
+          "action_id": "00000000000000000000000000000324",
+          "policy": {"version":1,"sha256":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+          "effect": {"class":"CHANGE","axes":["ipc","persistent-mutation","requires-privilege","spawn"]},
+          "scope": {"kind":"local","scope_id":"00000000000000000000000000000325"},
+          "target_bindings": [{"slot":"unit","binding_id":"0000000000000000000000000000032a"}],
+          "action": {
+            "kind": "proposal-only",
+            "operation": {
+              "kind": "executable",
+              "identity": {
+                "path": "/fixture/bin/service",
+                "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                "version": "fixture-v1"
+              },
+              "argv": [
+                {"kind":"flag","value":"--restart"},
+                {"kind":"option-end"},
+                {"kind":"literal","value":"nginx.service"}
+              ]
+            }
+          },
+          "digest": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+        }
+      }
+    }
+  ]
+}

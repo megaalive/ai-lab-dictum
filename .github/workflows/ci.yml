@@ -99,3 +99,6 @@ jobs:
           python3 --version
           dpkg-query -W python3-jsonschema python3-referencing python3-jsonschema-specifications python3-attr python3-rpds-py
           python3 -B tests/ir/run.py
+
+      - name: Uji registry dan profil katalog A3
+        run: python3 -B tests/catalog/run.py

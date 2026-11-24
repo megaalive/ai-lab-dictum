@@ -1,5 +1,6 @@
 #include "pipeline.h"
 #include "ir_digest.h"
+#include "renderer.h"
 
 #include <inttypes.h>
 #include <stdio.h>
@@ -663,6 +664,11 @@ static bool render(const struct request *q,const struct resolved_ir *r,struct po
     if (p.outcome==PIPE_PROPOSAL) {
         char expected[PIPE_FRAME];
         if (!verified_values(q,r) || !compile(q,r,p,expected) || strcmp(expected,plan)!=0) return false;
+        struct ir_document doc={0};
+        const bool structured=ir_parse(&doc,(const unsigned char *)plan,strlen(plan))==IR_OK &&
+            renderer_structured_plan(&doc);
+        ir_destroy(&doc);
+        if (!structured) return false;
     }
     add(&w,"{\"copyability\":\"NON_COPYABLE\",");
     field(&w,"decision",decision_name(p.outcome)); add(&w,","); field(&w,"reason",p.reason);

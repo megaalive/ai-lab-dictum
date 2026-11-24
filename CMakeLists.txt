@@ -38,7 +38,12 @@ add_custom_command(OUTPUT "${pipeline_generated}"
     DEPENDS tools/generate_pipeline.py spec/pipeline/f0-c-fixture-v1.json
         catalog/core/intents-v1.json catalog/debian-13/v1.json tests/spikes/s2/development-v1.json
     VERBATIM)
-add_library(dictum_pipeline STATIC runtime/native/pipeline.c "${pipeline_generated}")
+set(renderer_unicode "${CMAKE_CURRENT_BINARY_DIR}/renderer_unicode.inc")
+add_custom_command(OUTPUT "${renderer_unicode}"
+    COMMAND "${Python3_EXECUTABLE}" -B "${CMAKE_CURRENT_SOURCE_DIR}/tools/generate_unicode.py" "${renderer_unicode}"
+    DEPENDS tools/generate_unicode.py VERBATIM)
+add_library(dictum_pipeline STATIC runtime/native/pipeline.c runtime/native/renderer.c
+    "${pipeline_generated}" "${renderer_unicode}")
 set_target_properties(dictum_pipeline PROPERTIES C_STANDARD 17 C_STANDARD_REQUIRED YES C_EXTENSIONS NO)
 target_include_directories(dictum_pipeline PUBLIC runtime/native PRIVATE "${CMAKE_CURRENT_BINARY_DIR}")
 target_link_libraries(dictum_pipeline PUBLIC dictum_ir)

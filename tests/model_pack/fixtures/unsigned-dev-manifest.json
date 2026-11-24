@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "role": "synthetic-test-only",
+  "publisher_key_id": "dev-fixture-a6",
+  "release_sequence": 1,
+  "model_version": {
+    "major": 0,
+    "minor": 1,
+    "patch": 0
+  },
+  "pack": {
+    "sha256": "0afe2e2bfb71cfdaf77dee5eaaed5eca2eb02f6a7bad795e9a69c15130b5e458",
+    "length": 600,
+    "major": 1,
+    "minor": 0
+  },
+  "architecture": {
+    "id": 2147483647,
+    "profile_version": 1
+  },
+  "tokenizer": {
+    "sha256": "62013d368c238d978af06f3b52f1e747d5c3af9f34a9d163dfc33b1366083abb",
+    "length": 30,
+    "kind": 1,
+    "version": 1
+  },
+  "catalog": {
+    "sha256": "993b27d6547cc7c135413066c669e1f94ca54ff0b93cd00f6cd64cb418a8eeee",
+    "length": 27,
+    "version": 1
+  },
+  "policy": {
+    "sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+    "length": 3,
+    "version": 1
+  },
+  "compatibility": {
+    "platform": "debian-13",
+    "arch": "x86-64",
+    "runtime_min": {
+      "major": 0,
+      "minor": 1,
+      "patch": 0
+    },
+    "runtime_max": {
+      "major": 0,
+      "minor": 1,
+      "patch": 1
+    }
+  }
+}

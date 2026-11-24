@@ -1,0 +1,478 @@
+{
+  "schema_version": 1,
+  "tested_sha": "3b54a95ed094aad9ec7b8740761d24b2f9f7220b",
+  "run_ids": [
+    45355039990,
+    45355181127
+  ],
+  "results": [
+    [
+      {
+        "accepted": 78,
+        "clarify_correct": 10,
+        "confusion": {
+          "file.search": {
+            "file.search": 9,
+            "unsupported": 1
+          },
+          "log.service.query": {
+            "log.service.query": 10
+          },
+          "memory.summary": {
+            "memory.summary": 10
+          },
+          "network.listener.lookup": {
+            "network.listener.lookup": 10
+          },
+          "service.failed.list": {
+            "service.failed.list": 10
+          },
+          "service.restart": {
+            "service.restart": 10
+          },
+          "storage.directory.usage": {
+            "storage.directory.usage": 9,
+            "unsupported": 1
+          },
+          "storage.filesystem.usage": {
+            "storage.filesystem.usage": 10
+          }
+        },
+        "coverage": 0.975,
+        "first_pass_ms": 2.199866,
+        "intent_correct": 78,
+        "language_counts": {
+          "en": [
+            24,
+            24
+          ],
+          "id": [
+            56,
+            54
+          ]
+        },
+        "model": "B0-rules",
+        "ood_correct": 10,
+        "peak_rss_process_kib": 18404,
+        "prototype_joint_slot_correct": 78,
+        "selective_joint_accuracy": 1,
+        "slot_errors": {
+          "intent-or-abstention": 2
+        },
+        "supported": 80,
+        "timing_n": 2000,
+        "warm_p50_us": 9.128,
+        "warm_p95_us": 17.499
+      },
+      {
+        "accepted": 80,
+        "clarify_correct": 10,
+        "confusion": {
+          "file.search": {
+            "file.search": 10
+          },
+          "log.service.query": {
+            "log.service.query": 9,
+            "service.failed.list": 1
+          },
+          "memory.summary": {
+            "memory.summary": 7,
+            "service.failed.list": 1,
+            "storage.filesystem.usage": 2
+          },
+          "network.listener.lookup": {
+            "network.listener.lookup": 10
+          },
+          "service.failed.list": {
+            "service.failed.list": 10
+          },
+          "service.restart": {
+            "service.restart": 10
+          },
+          "storage.directory.usage": {
+            "storage.directory.usage": 10
+          },
+          "storage.filesystem.usage": {
+            "memory.summary": 3,
+            "storage.filesystem.usage": 7
+          }
+        },
+        "coverage": 1,
+        "first_pass_ms": 6.698789,
+        "intent_correct": 73,
+        "language_counts": {
+          "en": [
+            24,
+            22
+          ],
+          "id": [
+            56,
+            51
+          ]
+        },
+        "model": "B1-tfidf",
+        "ood_correct": 4,
+        "peak_rss_process_kib": 18404,
+        "prototype_joint_slot_correct": 73,
+        "selective_joint_accuracy": 0.9125,
+        "slot_errors": {
+          "intent-or-abstention": 7
+        },
+        "supported": 80,
+        "timing_n": 2000,
+        "warm_p50_us": 70.725,
+        "warm_p95_us": 84.003
+      }
+    ],
+    [
+      {
+        "accepted": 78,
+        "clarify_correct": 10,
+        "confusion": {
+          "file.search": {
+            "file.search": 9,
+            "unsupported": 1
+          },
+          "log.service.query": {
+            "log.service.query": 10
+          },
+          "memory.summary": {
+            "memory.summary": 10
+          },
+          "network.listener.lookup": {
+            "network.listener.lookup": 10
+          },
+          "service.failed.list": {
+            "service.failed.list": 10
+          },
+          "service.restart": {
+            "service.restart": 10
+          },
+          "storage.directory.usage": {
+            "storage.directory.usage": 9,
+            "unsupported": 1
+          },
+          "storage.filesystem.usage": {
+            "storage.filesystem.usage": 10
+          }
+        },
+        "coverage": 0.975,
+        "first_pass_ms": 2.23483,
+        "intent_correct": 78,
+        "language_counts": {
+          "en": [
+            24,
+            24
+          ],
+          "id": [
+            56,
+            54
+          ]
+        },
+        "model": "B0-rules",
+        "ood_correct": 10,
+        "peak_rss_process_kib": 18596,
+        "prototype_joint_slot_correct": 78,
+        "selective_joint_accuracy": 1,
+        "slot_errors": {
+          "intent-or-abstention": 2
+        },
+        "supported": 80,
+        "timing_n": 2000,
+        "warm_p50_us": 9.16,
+        "warm_p95_us": 17.79
+      },
+      {
+        "accepted": 80,
+        "clarify_correct": 10,
+        "confusion": {
+          "file.search": {
+            "file.search": 10
+          },
+          "log.service.query": {
+            "log.service.query": 9,
+            "service.failed.list": 1
+          },
+          "memory.summary": {
+            "memory.summary": 7,
+            "service.failed.list": 1,
+            "storage.filesystem.usage": 2
+          },
+          "network.listener.lookup": {
+            "network.listener.lookup": 10
+          },
+          "service.failed.list": {
+            "service.failed.list": 10
+          },
+          "service.restart": {
+            "service.restart": 10
+          },
+          "storage.directory.usage": {
+            "storage.directory.usage": 10
+          },
+          "storage.filesystem.usage": {
+            "memory.summary": 3,
+            "storage.filesystem.usage": 7
+          }
+        },
+        "coverage": 1,
+        "first_pass_ms": 6.878692,
+        "intent_correct": 73,
+        "language_counts": {
+          "en": [
+            24,
+            22
+          ],
+          "id": [
+            56,
+            51
+          ]
+        },
+        "model": "B1-tfidf",
+        "ood_correct": 4,
+        "peak_rss_process_kib": 18596,
+        "prototype_joint_slot_correct": 73,
+        "selective_joint_accuracy": 0.9125,
+        "slot_errors": {
+          "intent-or-abstention": 7
+        },
+        "supported": 80,
+        "timing_n": 2000,
+        "warm_p50_us": 70.134,
+        "warm_p95_us": 84.634
+      }
+    ]
+  ],
+  "errors_push": [
+    {
+      "actual": {
+        "status": "unsupported"
+      },
+      "expected": {
+        "intent": "storage.directory.usage",
+        "slots": {
+          "depth": {
+            "kind": "depth",
+            "value": 1
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 5
+          },
+          "root": {
+            "kind": "path",
+            "value": "/fixture/logs"
+          }
+        },
+        "status": "candidate"
+      },
+      "id": "dev-6-7",
+      "model": "B0-rules"
+    },
+    {
+      "actual": {
+        "status": "unsupported"
+      },
+      "expected": {
+        "intent": "file.search",
+        "slots": {
+          "depth": {
+            "kind": "depth",
+            "value": 3
+          },
+          "extension": {
+            "kind": "extension",
+            "value": "log"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "root": {
+            "kind": "path",
+            "value": "/fixture/logs"
+          }
+        },
+        "status": "candidate"
+      },
+      "id": "dev-7-7",
+      "model": "B0-rules"
+    },
+    {
+      "actual": {
+        "intent": "storage.filesystem.usage",
+        "slots": {},
+        "status": "candidate"
+      },
+      "expected": {
+        "intent": "memory.summary",
+        "slots": {},
+        "status": "candidate"
+      },
+      "id": "dev-1-1",
+      "model": "B1-tfidf"
+    },
+    {
+      "actual": {
+        "intent": "storage.filesystem.usage",
+        "slots": {},
+        "status": "candidate"
+      },
+      "expected": {
+        "intent": "memory.summary",
+        "slots": {},
+        "status": "candidate"
+      },
+      "id": "dev-1-3",
+      "model": "B1-tfidf"
+    },
+    {
+      "actual": {
+        "intent": "service.failed.list",
+        "slots": {},
+        "status": "candidate"
+      },
+      "expected": {
+        "intent": "memory.summary",
+        "slots": {},
+        "status": "candidate"
+      },
+      "id": "dev-1-4",
+      "model": "B1-tfidf"
+    },
+    {
+      "actual": {
+        "intent": "service.failed.list",
+        "slots": {},
+        "status": "candidate"
+      },
+      "expected": {
+        "intent": "log.service.query",
+        "slots": {
+          "limit": {
+            "kind": "positive-int",
+            "value": 5
+          },
+          "unit": {
+            "kind": "unit-name",
+            "value": "worker.service"
+          },
+          "window": {
+            "end_unix_s": 1760000600,
+            "kind": "time-window",
+            "start_unix_s": 1760000420
+          }
+        },
+        "status": "candidate"
+      },
+      "id": "dev-4-9",
+      "model": "B1-tfidf"
+    },
+    {
+      "actual": {
+        "intent": "memory.summary",
+        "slots": {},
+        "status": "candidate"
+      },
+      "expected": {
+        "intent": "storage.filesystem.usage",
+        "slots": {},
+        "status": "candidate"
+      },
+      "id": "dev-5-3",
+      "model": "B1-tfidf"
+    },
+    {
+      "actual": {
+        "intent": "memory.summary",
+        "slots": {},
+        "status": "candidate"
+      },
+      "expected": {
+        "intent": "storage.filesystem.usage",
+        "slots": {},
+        "status": "candidate"
+      },
+      "id": "dev-5-7",
+      "model": "B1-tfidf"
+    },
+    {
+      "actual": {
+        "intent": "memory.summary",
+        "slots": {},
+        "status": "candidate"
+      },
+      "expected": {
+        "intent": "storage.filesystem.usage",
+        "slots": {},
+        "status": "candidate"
+      },
+      "id": "dev-5-9",
+      "model": "B1-tfidf"
+    },
+    {
+      "actual": {
+        "status": "clarify"
+      },
+      "expected": {
+        "status": "unsupported"
+      },
+      "id": "dev-unsupported-2",
+      "model": "B1-tfidf"
+    },
+    {
+      "actual": {
+        "intent": "service.failed.list",
+        "slots": {},
+        "status": "candidate"
+      },
+      "expected": {
+        "status": "unsupported"
+      },
+      "id": "dev-unsupported-3",
+      "model": "B1-tfidf"
+    },
+    {
+      "actual": {
+        "status": "clarify"
+      },
+      "expected": {
+        "status": "unsupported"
+      },
+      "id": "dev-unsupported-4",
+      "model": "B1-tfidf"
+    },
+    {
+      "actual": {
+        "status": "clarify"
+      },
+      "expected": {
+        "status": "unsupported"
+      },
+      "id": "dev-unsupported-5",
+      "model": "B1-tfidf"
+    },
+    {
+      "actual": {
+        "intent": "memory.summary",
+        "slots": {},
+        "status": "candidate"
+      },
+      "expected": {
+        "status": "unsupported"
+      },
+      "id": "dev-unsupported-9",
+      "model": "B1-tfidf"
+    },
+    {
+      "actual": {
+        "status": "clarify"
+      },
+      "expected": {
+        "status": "unsupported"
+      },
+      "id": "dev-unsupported-10",
+      "model": "B1-tfidf"
+    }
+  ]
+}

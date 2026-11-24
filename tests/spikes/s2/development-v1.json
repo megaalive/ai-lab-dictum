@@ -1,0 +1,1841 @@
+{
+  "schema_version": 1,
+  "provenance": "SELF-authored synthetic development examples; not human gold, not blind, no external corpus",
+  "fixed_time_end_unix_s": 1760000600,
+  "reference": [
+    {
+      "id": "ref-1-1",
+      "intent": "memory.summary",
+      "language": "id",
+      "text": "berapa memori bebas tersedia"
+    },
+    {
+      "id": "ref-1-2",
+      "intent": "memory.summary",
+      "language": "id",
+      "text": "ringkasan penggunaan RAM"
+    },
+    {
+      "id": "ref-1-3",
+      "intent": "memory.summary",
+      "language": "en",
+      "text": "show available memory"
+    },
+    {
+      "id": "ref-1-4",
+      "intent": "memory.summary",
+      "language": "en",
+      "text": "memory capacity and usage"
+    },
+    {
+      "id": "ref-2-1",
+      "intent": "network.listener.lookup",
+      "language": "id",
+      "text": "cek port yang listening"
+    },
+    {
+      "id": "ref-2-2",
+      "intent": "network.listener.lookup",
+      "language": "id",
+      "text": "siapa mendengarkan port tcp"
+    },
+    {
+      "id": "ref-2-3",
+      "intent": "network.listener.lookup",
+      "language": "en",
+      "text": "show listeners on a port"
+    },
+    {
+      "id": "ref-2-4",
+      "intent": "network.listener.lookup",
+      "language": "en",
+      "text": "which process owns a UDP socket"
+    },
+    {
+      "id": "ref-3-1",
+      "intent": "service.failed.list",
+      "language": "id",
+      "text": "layanan gagal sekarang"
+    },
+    {
+      "id": "ref-3-2",
+      "intent": "service.failed.list",
+      "language": "id",
+      "text": "daftar service failed"
+    },
+    {
+      "id": "ref-3-3",
+      "intent": "service.failed.list",
+      "language": "en",
+      "text": "show failed systemd units"
+    },
+    {
+      "id": "ref-3-4",
+      "intent": "service.failed.list",
+      "language": "en",
+      "text": "which services are currently failed"
+    },
+    {
+      "id": "ref-4-1",
+      "intent": "log.service.query",
+      "language": "id",
+      "text": "log unit layanan beberapa menit terakhir"
+    },
+    {
+      "id": "ref-4-2",
+      "intent": "log.service.query",
+      "language": "id",
+      "text": "tampilkan jurnal service"
+    },
+    {
+      "id": "ref-4-3",
+      "intent": "log.service.query",
+      "language": "en",
+      "text": "show service journal"
+    },
+    {
+      "id": "ref-4-4",
+      "intent": "log.service.query",
+      "language": "en",
+      "text": "recent log lines for unit"
+    },
+    {
+      "id": "ref-5-1",
+      "intent": "storage.filesystem.usage",
+      "language": "id",
+      "text": "kapasitas disk sistem berkas"
+    },
+    {
+      "id": "ref-5-2",
+      "intent": "storage.filesystem.usage",
+      "language": "id",
+      "text": "berapa ruang filesystem tersisa"
+    },
+    {
+      "id": "ref-5-3",
+      "intent": "storage.filesystem.usage",
+      "language": "en",
+      "text": "show filesystem free space"
+    },
+    {
+      "id": "ref-5-4",
+      "intent": "storage.filesystem.usage",
+      "language": "en",
+      "text": "disk filesystem usage"
+    },
+    {
+      "id": "ref-6-1",
+      "intent": "storage.directory.usage",
+      "language": "id",
+      "text": "direktori terbesar dalam folder"
+    },
+    {
+      "id": "ref-6-2",
+      "intent": "storage.directory.usage",
+      "language": "id",
+      "text": "urutkan ukuran folder"
+    },
+    {
+      "id": "ref-6-3",
+      "intent": "storage.directory.usage",
+      "language": "en",
+      "text": "largest directories under a path"
+    },
+    {
+      "id": "ref-6-4",
+      "intent": "storage.directory.usage",
+      "language": "en",
+      "text": "top folders by size"
+    },
+    {
+      "id": "ref-7-1",
+      "intent": "file.search",
+      "language": "id",
+      "text": "cari berkas ekstensi pada folder"
+    },
+    {
+      "id": "ref-7-2",
+      "intent": "file.search",
+      "language": "id",
+      "text": "temukan file dengan nama"
+    },
+    {
+      "id": "ref-7-3",
+      "intent": "file.search",
+      "language": "en",
+      "text": "find files by extension"
+    },
+    {
+      "id": "ref-7-4",
+      "intent": "file.search",
+      "language": "en",
+      "text": "locate named files under root"
+    },
+    {
+      "id": "ref-8-1",
+      "intent": "service.restart",
+      "language": "id",
+      "text": "mulai ulang service"
+    },
+    {
+      "id": "ref-8-2",
+      "intent": "service.restart",
+      "language": "id",
+      "text": "restart unit layanan"
+    },
+    {
+      "id": "ref-8-3",
+      "intent": "service.restart",
+      "language": "en",
+      "text": "restart a systemd unit"
+    },
+    {
+      "id": "ref-8-4",
+      "intent": "service.restart",
+      "language": "en",
+      "text": "propose service restart"
+    }
+  ],
+  "development": [
+    {
+      "id": "dev-1-1",
+      "group": "authored-1-1",
+      "language": "id",
+      "text": "RAM tersisa berapa?",
+      "expected": {
+        "status": "candidate",
+        "intent": "memory.summary",
+        "slots": {}
+      }
+    },
+    {
+      "id": "dev-1-2",
+      "group": "authored-1-2",
+      "language": "id",
+      "text": "Tolong perlihatkan memori tersedia",
+      "expected": {
+        "status": "candidate",
+        "intent": "memory.summary",
+        "slots": {}
+      }
+    },
+    {
+      "id": "dev-1-3",
+      "group": "authored-1-3",
+      "language": "id",
+      "text": "Mau tahu kapasitas dan sisa RAM",
+      "expected": {
+        "status": "candidate",
+        "intent": "memory.summary",
+        "slots": {}
+      }
+    },
+    {
+      "id": "dev-1-4",
+      "group": "authored-1-4",
+      "language": "id",
+      "text": "Status pemakaian memori sekarang",
+      "expected": {
+        "status": "candidate",
+        "intent": "memory.summary",
+        "slots": {}
+      }
+    },
+    {
+      "id": "dev-1-5",
+      "group": "authored-1-5",
+      "language": "id",
+      "text": "Masih ada memori kosong?",
+      "expected": {
+        "status": "candidate",
+        "intent": "memory.summary",
+        "slots": {}
+      }
+    },
+    {
+      "id": "dev-1-6",
+      "group": "authored-1-6",
+      "language": "id",
+      "text": "Ringkas RAM mesin lokal",
+      "expected": {
+        "status": "candidate",
+        "intent": "memory.summary",
+        "slots": {}
+      }
+    },
+    {
+      "id": "dev-1-7",
+      "group": "authored-1-7",
+      "language": "id",
+      "text": "Kebutuhan memori saat ini",
+      "expected": {
+        "status": "candidate",
+        "intent": "memory.summary",
+        "slots": {}
+      }
+    },
+    {
+      "id": "dev-1-8",
+      "group": "authored-1-8",
+      "language": "en",
+      "text": "How much RAM is available?",
+      "expected": {
+        "status": "candidate",
+        "intent": "memory.summary",
+        "slots": {}
+      }
+    },
+    {
+      "id": "dev-1-9",
+      "group": "authored-1-9",
+      "language": "en",
+      "text": "Give me the memory usage summary",
+      "expected": {
+        "status": "candidate",
+        "intent": "memory.summary",
+        "slots": {}
+      }
+    },
+    {
+      "id": "dev-1-10",
+      "group": "authored-1-10",
+      "language": "en",
+      "text": "What is the available memory?",
+      "expected": {
+        "status": "candidate",
+        "intent": "memory.summary",
+        "slots": {}
+      }
+    },
+    {
+      "id": "dev-2-1",
+      "group": "authored-2-1",
+      "language": "id",
+      "text": "Proses apa memakai port 5432 TCP?",
+      "expected": {
+        "status": "candidate",
+        "intent": "network.listener.lookup",
+        "slots": {
+          "port": {
+            "kind": "port",
+            "value": 5432
+          },
+          "protocol": {
+            "kind": "protocol",
+            "value": "tcp"
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-2-2",
+      "group": "authored-2-2",
+      "language": "id",
+      "text": "Listener UDP port 53 siapa?",
+      "expected": {
+        "status": "candidate",
+        "intent": "network.listener.lookup",
+        "slots": {
+          "port": {
+            "kind": "port",
+            "value": 53
+          },
+          "protocol": {
+            "kind": "protocol",
+            "value": "udp"
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-2-3",
+      "group": "authored-2-3",
+      "language": "id",
+      "text": "Periksa port 8080",
+      "expected": {
+        "status": "candidate",
+        "intent": "network.listener.lookup",
+        "slots": {
+          "port": {
+            "kind": "port",
+            "value": 8080
+          },
+          "protocol": {
+            "kind": "protocol",
+            "value": "tcp"
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-2-4",
+      "group": "authored-2-4",
+      "language": "id",
+      "text": "Siapa mendengarkan port 443?",
+      "expected": {
+        "status": "candidate",
+        "intent": "network.listener.lookup",
+        "slots": {
+          "port": {
+            "kind": "port",
+            "value": 443
+          },
+          "protocol": {
+            "kind": "protocol",
+            "value": "tcp"
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-2-5",
+      "group": "authored-2-5",
+      "language": "id",
+      "text": "Socket UDP pada port 5353",
+      "expected": {
+        "status": "candidate",
+        "intent": "network.listener.lookup",
+        "slots": {
+          "port": {
+            "kind": "port",
+            "value": 5353
+          },
+          "protocol": {
+            "kind": "protocol",
+            "value": "udp"
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-2-6",
+      "group": "authored-2-6",
+      "language": "id",
+      "text": "Lihat pemilik port 22",
+      "expected": {
+        "status": "candidate",
+        "intent": "network.listener.lookup",
+        "slots": {
+          "port": {
+            "kind": "port",
+            "value": 22
+          },
+          "protocol": {
+            "kind": "protocol",
+            "value": "tcp"
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-2-7",
+      "group": "authored-2-7",
+      "language": "id",
+      "text": "Port 65535 TCP dipakai siapa",
+      "expected": {
+        "status": "candidate",
+        "intent": "network.listener.lookup",
+        "slots": {
+          "port": {
+            "kind": "port",
+            "value": 65535
+          },
+          "protocol": {
+            "kind": "protocol",
+            "value": "tcp"
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-2-8",
+      "group": "authored-2-8",
+      "language": "en",
+      "text": "Who is listening on port 3000?",
+      "expected": {
+        "status": "candidate",
+        "intent": "network.listener.lookup",
+        "slots": {
+          "port": {
+            "kind": "port",
+            "value": 3000
+          },
+          "protocol": {
+            "kind": "protocol",
+            "value": "tcp"
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-2-9",
+      "group": "authored-2-9",
+      "language": "en",
+      "text": "Identify the UDP listener on port 161",
+      "expected": {
+        "status": "candidate",
+        "intent": "network.listener.lookup",
+        "slots": {
+          "port": {
+            "kind": "port",
+            "value": 161
+          },
+          "protocol": {
+            "kind": "protocol",
+            "value": "udp"
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-2-10",
+      "group": "authored-2-10",
+      "language": "en",
+      "text": "Look up port 1024 TCP",
+      "expected": {
+        "status": "candidate",
+        "intent": "network.listener.lookup",
+        "slots": {
+          "port": {
+            "kind": "port",
+            "value": 1024
+          },
+          "protocol": {
+            "kind": "protocol",
+            "value": "tcp"
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-3-1",
+      "group": "authored-3-1",
+      "language": "id",
+      "text": "Unit layanan yang gagal sekarang",
+      "expected": {
+        "status": "candidate",
+        "intent": "service.failed.list",
+        "slots": {}
+      }
+    },
+    {
+      "id": "dev-3-2",
+      "group": "authored-3-2",
+      "language": "id",
+      "text": "Ada service berstatus failed?",
+      "expected": {
+        "status": "candidate",
+        "intent": "service.failed.list",
+        "slots": {}
+      }
+    },
+    {
+      "id": "dev-3-3",
+      "group": "authored-3-3",
+      "language": "id",
+      "text": "Daftar unit gagal saat ini",
+      "expected": {
+        "status": "candidate",
+        "intent": "service.failed.list",
+        "slots": {}
+      }
+    },
+    {
+      "id": "dev-3-4",
+      "group": "authored-3-4",
+      "language": "id",
+      "text": "Layanan error dengan status gagal",
+      "expected": {
+        "status": "candidate",
+        "intent": "service.failed.list",
+        "slots": {}
+      }
+    },
+    {
+      "id": "dev-3-5",
+      "group": "authored-3-5",
+      "language": "id",
+      "text": "Mana saja service gagal?",
+      "expected": {
+        "status": "candidate",
+        "intent": "service.failed.list",
+        "slots": {}
+      }
+    },
+    {
+      "id": "dev-3-6",
+      "group": "authored-3-6",
+      "language": "id",
+      "text": "Perlihatkan unit systemd yang failed",
+      "expected": {
+        "status": "candidate",
+        "intent": "service.failed.list",
+        "slots": {}
+      }
+    },
+    {
+      "id": "dev-3-7",
+      "group": "authored-3-7",
+      "language": "id",
+      "text": "Status gagal dari semua layanan",
+      "expected": {
+        "status": "candidate",
+        "intent": "service.failed.list",
+        "slots": {}
+      }
+    },
+    {
+      "id": "dev-3-8",
+      "group": "authored-3-8",
+      "language": "en",
+      "text": "List currently failed services",
+      "expected": {
+        "status": "candidate",
+        "intent": "service.failed.list",
+        "slots": {}
+      }
+    },
+    {
+      "id": "dev-3-9",
+      "group": "authored-3-9",
+      "language": "en",
+      "text": "Any units in failed state?",
+      "expected": {
+        "status": "candidate",
+        "intent": "service.failed.list",
+        "slots": {}
+      }
+    },
+    {
+      "id": "dev-3-10",
+      "group": "authored-3-10",
+      "language": "en",
+      "text": "Which systemd services have failed now?",
+      "expected": {
+        "status": "candidate",
+        "intent": "service.failed.list",
+        "slots": {}
+      }
+    },
+    {
+      "id": "dev-4-1",
+      "group": "authored-4-1",
+      "language": "id",
+      "text": "Lihat log nginx.service 10 menit terakhir",
+      "expected": {
+        "status": "candidate",
+        "intent": "log.service.query",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "nginx.service"
+          },
+          "window": {
+            "kind": "time-window",
+            "start_unix_s": 1760000000,
+            "end_unix_s": 1760000600
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-4-2",
+      "group": "authored-4-2",
+      "language": "id",
+      "text": "Jurnal demo.service 5 menit, limit 12",
+      "expected": {
+        "status": "candidate",
+        "intent": "log.service.query",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "demo.service"
+          },
+          "window": {
+            "kind": "time-window",
+            "start_unix_s": 1760000300,
+            "end_unix_s": 1760000600
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 12
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-4-3",
+      "group": "authored-4-3",
+      "language": "id",
+      "text": "Tampilkan log alpha.service 60 menit",
+      "expected": {
+        "status": "candidate",
+        "intent": "log.service.query",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "alpha.service"
+          },
+          "window": {
+            "kind": "time-window",
+            "start_unix_s": 1759997000,
+            "end_unix_s": 1760000600
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-4-4",
+      "group": "authored-4-4",
+      "language": "id",
+      "text": "Log beta.service 1 menit terakhir",
+      "expected": {
+        "status": "candidate",
+        "intent": "log.service.query",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "beta.service"
+          },
+          "window": {
+            "kind": "time-window",
+            "start_unix_s": 1760000540,
+            "end_unix_s": 1760000600
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-4-5",
+      "group": "authored-4-5",
+      "language": "id",
+      "text": "Jurnal gamma.service 30 menit limit 8",
+      "expected": {
+        "status": "candidate",
+        "intent": "log.service.query",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "gamma.service"
+          },
+          "window": {
+            "kind": "time-window",
+            "start_unix_s": 1759998800,
+            "end_unix_s": 1760000600
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 8
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-4-6",
+      "group": "authored-4-6",
+      "language": "id",
+      "text": "Log agent.service 15 menit",
+      "expected": {
+        "status": "candidate",
+        "intent": "log.service.query",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "agent.service"
+          },
+          "window": {
+            "kind": "time-window",
+            "start_unix_s": 1759999700,
+            "end_unix_s": 1760000600
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-4-7",
+      "group": "authored-4-7",
+      "language": "id",
+      "text": "Lihat catatan delta.service 120 menit",
+      "expected": {
+        "status": "candidate",
+        "intent": "log.service.query",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "delta.service"
+          },
+          "window": {
+            "kind": "time-window",
+            "start_unix_s": 1759993400,
+            "end_unix_s": 1760000600
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-4-8",
+      "group": "authored-4-8",
+      "language": "en",
+      "text": "Show journal for alpha.service last 20 minutes",
+      "expected": {
+        "status": "candidate",
+        "intent": "log.service.query",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "alpha.service"
+          },
+          "window": {
+            "kind": "time-window",
+            "start_unix_s": 1759999400,
+            "end_unix_s": 1760000600
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-4-9",
+      "group": "authored-4-9",
+      "language": "en",
+      "text": "Log worker.service last 3 minutes limit 5",
+      "expected": {
+        "status": "candidate",
+        "intent": "log.service.query",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "worker.service"
+          },
+          "window": {
+            "kind": "time-window",
+            "start_unix_s": 1760000420,
+            "end_unix_s": 1760000600
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 5
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-4-10",
+      "group": "authored-4-10",
+      "language": "en",
+      "text": "Recent logs for queue.service last 45 minutes",
+      "expected": {
+        "status": "candidate",
+        "intent": "log.service.query",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "queue.service"
+          },
+          "window": {
+            "kind": "time-window",
+            "start_unix_s": 1759997900,
+            "end_unix_s": 1760000600
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-5-1",
+      "group": "authored-5-1",
+      "language": "id",
+      "text": "Sisa ruang filesystem lokal",
+      "expected": {
+        "status": "candidate",
+        "intent": "storage.filesystem.usage",
+        "slots": {}
+      }
+    },
+    {
+      "id": "dev-5-2",
+      "group": "authored-5-2",
+      "language": "id",
+      "text": "Berapa kapasitas sistem berkas?",
+      "expected": {
+        "status": "candidate",
+        "intent": "storage.filesystem.usage",
+        "slots": {}
+      }
+    },
+    {
+      "id": "dev-5-3",
+      "group": "authored-5-3",
+      "language": "id",
+      "text": "Penggunaan disk per filesystem",
+      "expected": {
+        "status": "candidate",
+        "intent": "storage.filesystem.usage",
+        "slots": {}
+      }
+    },
+    {
+      "id": "dev-5-4",
+      "group": "authored-5-4",
+      "language": "id",
+      "text": "Disk lokal masih cukup ruang?",
+      "expected": {
+        "status": "candidate",
+        "intent": "storage.filesystem.usage",
+        "slots": {}
+      }
+    },
+    {
+      "id": "dev-5-5",
+      "group": "authored-5-5",
+      "language": "id",
+      "text": "Cek kapasitas partisi lokal",
+      "expected": {
+        "status": "candidate",
+        "intent": "storage.filesystem.usage",
+        "slots": {}
+      }
+    },
+    {
+      "id": "dev-5-6",
+      "group": "authored-5-6",
+      "language": "id",
+      "text": "Ruang tersedia pada sistem berkas",
+      "expected": {
+        "status": "candidate",
+        "intent": "storage.filesystem.usage",
+        "slots": {}
+      }
+    },
+    {
+      "id": "dev-5-7",
+      "group": "authored-5-7",
+      "language": "id",
+      "text": "Ringkasan pemakaian disk",
+      "expected": {
+        "status": "candidate",
+        "intent": "storage.filesystem.usage",
+        "slots": {}
+      }
+    },
+    {
+      "id": "dev-5-8",
+      "group": "authored-5-8",
+      "language": "en",
+      "text": "How much filesystem space is free?",
+      "expected": {
+        "status": "candidate",
+        "intent": "storage.filesystem.usage",
+        "slots": {}
+      }
+    },
+    {
+      "id": "dev-5-9",
+      "group": "authored-5-9",
+      "language": "en",
+      "text": "Report disk capacity",
+      "expected": {
+        "status": "candidate",
+        "intent": "storage.filesystem.usage",
+        "slots": {}
+      }
+    },
+    {
+      "id": "dev-5-10",
+      "group": "authored-5-10",
+      "language": "en",
+      "text": "Show local filesystem usage",
+      "expected": {
+        "status": "candidate",
+        "intent": "storage.filesystem.usage",
+        "slots": {}
+      }
+    },
+    {
+      "id": "dev-6-1",
+      "group": "authored-6-1",
+      "language": "id",
+      "text": "Direktori terbesar di /fixture/data",
+      "expected": {
+        "status": "candidate",
+        "intent": "storage.directory.usage",
+        "slots": {
+          "root": {
+            "kind": "path",
+            "value": "/fixture/data"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 5
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 3
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-6-2",
+      "group": "authored-6-2",
+      "language": "id",
+      "text": "Top 7 folder di /fixture/archive",
+      "expected": {
+        "status": "candidate",
+        "intent": "storage.directory.usage",
+        "slots": {
+          "root": {
+            "kind": "path",
+            "value": "/fixture/archive"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 7
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 3
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-6-3",
+      "group": "authored-6-3",
+      "language": "id",
+      "text": "Ukuran folder dalam /fixture/media depth 2",
+      "expected": {
+        "status": "candidate",
+        "intent": "storage.directory.usage",
+        "slots": {
+          "root": {
+            "kind": "path",
+            "value": "/fixture/media"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 5
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 2
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-6-4",
+      "group": "authored-6-4",
+      "language": "id",
+      "text": "Tampilkan 3 direktori terbesar /fixture/photos",
+      "expected": {
+        "status": "candidate",
+        "intent": "storage.directory.usage",
+        "slots": {
+          "root": {
+            "kind": "path",
+            "value": "/fixture/photos"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 3
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 3
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-6-5",
+      "group": "authored-6-5",
+      "language": "id",
+      "text": "Folder terbesar di \"/fixture/My Files\"",
+      "expected": {
+        "status": "candidate",
+        "intent": "storage.directory.usage",
+        "slots": {
+          "root": {
+            "kind": "path",
+            "value": "/fixture/My Files"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 5
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 3
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-6-6",
+      "group": "authored-6-6",
+      "language": "id",
+      "text": "Urutkan ukuran direktori /fixture/café",
+      "expected": {
+        "status": "candidate",
+        "intent": "storage.directory.usage",
+        "slots": {
+          "root": {
+            "kind": "path",
+            "value": "/fixture/café"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 5
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 3
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-6-7",
+      "group": "authored-6-7",
+      "language": "id",
+      "text": "Pemakaian direktori /fixture/logs depth 1",
+      "expected": {
+        "status": "candidate",
+        "intent": "storage.directory.usage",
+        "slots": {
+          "root": {
+            "kind": "path",
+            "value": "/fixture/logs"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 5
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 1
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-6-8",
+      "group": "authored-6-8",
+      "language": "en",
+      "text": "Largest directories under /fixture/docs limit 8",
+      "expected": {
+        "status": "candidate",
+        "intent": "storage.directory.usage",
+        "slots": {
+          "root": {
+            "kind": "path",
+            "value": "/fixture/docs"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 8
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 3
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-6-9",
+      "group": "authored-6-9",
+      "language": "en",
+      "text": "Top 4 folders in /fixture/tmp depth 2",
+      "expected": {
+        "status": "candidate",
+        "intent": "storage.directory.usage",
+        "slots": {
+          "root": {
+            "kind": "path",
+            "value": "/fixture/tmp"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 4
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 2
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-6-10",
+      "group": "authored-6-10",
+      "language": "en",
+      "text": "Directory sizes in /fixture/images",
+      "expected": {
+        "status": "candidate",
+        "intent": "storage.directory.usage",
+        "slots": {
+          "root": {
+            "kind": "path",
+            "value": "/fixture/images"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 5
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 3
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-7-1",
+      "group": "authored-7-1",
+      "language": "id",
+      "text": "Cari file ekstensi pdf di /fixture/docs",
+      "expected": {
+        "status": "candidate",
+        "intent": "file.search",
+        "slots": {
+          "root": {
+            "kind": "path",
+            "value": "/fixture/docs"
+          },
+          "extension": {
+            "kind": "extension",
+            "value": "pdf"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 3
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-7-2",
+      "group": "authored-7-2",
+      "language": "id",
+      "text": "Temukan berkas ekstensi jpg di /fixture/photos",
+      "expected": {
+        "status": "candidate",
+        "intent": "file.search",
+        "slots": {
+          "root": {
+            "kind": "path",
+            "value": "/fixture/photos"
+          },
+          "extension": {
+            "kind": "extension",
+            "value": "jpg"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 3
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-7-3",
+      "group": "authored-7-3",
+      "language": "id",
+      "text": "Cari file nama report.txt di /fixture/data",
+      "expected": {
+        "status": "candidate",
+        "intent": "file.search",
+        "slots": {
+          "root": {
+            "kind": "path",
+            "value": "/fixture/data"
+          },
+          "filename": {
+            "kind": "filename",
+            "value": "report.txt"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 3
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-7-4",
+      "group": "authored-7-4",
+      "language": "id",
+      "text": "Temukan file ekstensi csv di \"/fixture/My Files\"",
+      "expected": {
+        "status": "candidate",
+        "intent": "file.search",
+        "slots": {
+          "root": {
+            "kind": "path",
+            "value": "/fixture/My Files"
+          },
+          "extension": {
+            "kind": "extension",
+            "value": "csv"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 3
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-7-5",
+      "group": "authored-7-5",
+      "language": "id",
+      "text": "Cari berkas ekstensi png di /fixture/café limit 9",
+      "expected": {
+        "status": "candidate",
+        "intent": "file.search",
+        "slots": {
+          "root": {
+            "kind": "path",
+            "value": "/fixture/café"
+          },
+          "extension": {
+            "kind": "extension",
+            "value": "png"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 9
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 3
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-7-6",
+      "group": "authored-7-6",
+      "language": "id",
+      "text": "Cari file nama A.txt di /fixture/work depth 2",
+      "expected": {
+        "status": "candidate",
+        "intent": "file.search",
+        "slots": {
+          "root": {
+            "kind": "path",
+            "value": "/fixture/work"
+          },
+          "filename": {
+            "kind": "filename",
+            "value": "A.txt"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 2
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-7-7",
+      "group": "authored-7-7",
+      "language": "id",
+      "text": "Temukan file ekstensi log di /fixture/logs",
+      "expected": {
+        "status": "candidate",
+        "intent": "file.search",
+        "slots": {
+          "root": {
+            "kind": "path",
+            "value": "/fixture/logs"
+          },
+          "extension": {
+            "kind": "extension",
+            "value": "log"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 3
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-7-8",
+      "group": "authored-7-8",
+      "language": "en",
+      "text": "Find files extension md under /fixture/docs",
+      "expected": {
+        "status": "candidate",
+        "intent": "file.search",
+        "slots": {
+          "root": {
+            "kind": "path",
+            "value": "/fixture/docs"
+          },
+          "extension": {
+            "kind": "extension",
+            "value": "md"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 3
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-7-9",
+      "group": "authored-7-9",
+      "language": "en",
+      "text": "Locate files named Test.json in /fixture/work",
+      "expected": {
+        "status": "candidate",
+        "intent": "file.search",
+        "slots": {
+          "root": {
+            "kind": "path",
+            "value": "/fixture/work"
+          },
+          "filename": {
+            "kind": "filename",
+            "value": "Test.json"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 3
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-7-10",
+      "group": "authored-7-10",
+      "language": "en",
+      "text": "Find files extension txt in /fixture/text limit 4",
+      "expected": {
+        "status": "candidate",
+        "intent": "file.search",
+        "slots": {
+          "root": {
+            "kind": "path",
+            "value": "/fixture/text"
+          },
+          "extension": {
+            "kind": "extension",
+            "value": "txt"
+          },
+          "limit": {
+            "kind": "positive-int",
+            "value": 4
+          },
+          "depth": {
+            "kind": "depth",
+            "value": 3
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-8-1",
+      "group": "authored-8-1",
+      "language": "id",
+      "text": "Mulai ulang nginx.service",
+      "expected": {
+        "status": "candidate",
+        "intent": "service.restart",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "nginx.service"
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-8-2",
+      "group": "authored-8-2",
+      "language": "id",
+      "text": "Usulkan restart demo.service",
+      "expected": {
+        "status": "candidate",
+        "intent": "service.restart",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "demo.service"
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-8-3",
+      "group": "authored-8-3",
+      "language": "id",
+      "text": "Restart layanan alpha.service",
+      "expected": {
+        "status": "candidate",
+        "intent": "service.restart",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "alpha.service"
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-8-4",
+      "group": "authored-8-4",
+      "language": "id",
+      "text": "Tolong mulai ulang beta.service",
+      "expected": {
+        "status": "candidate",
+        "intent": "service.restart",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "beta.service"
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-8-5",
+      "group": "authored-8-5",
+      "language": "id",
+      "text": "Minta proposal restart queue.service",
+      "expected": {
+        "status": "candidate",
+        "intent": "service.restart",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "queue.service"
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-8-6",
+      "group": "authored-8-6",
+      "language": "id",
+      "text": "Restart unit gamma.service",
+      "expected": {
+        "status": "candidate",
+        "intent": "service.restart",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "gamma.service"
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-8-7",
+      "group": "authored-8-7",
+      "language": "id",
+      "text": "Mulai ulang worker.service nanti",
+      "expected": {
+        "status": "candidate",
+        "intent": "service.restart",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "worker.service"
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-8-8",
+      "group": "authored-8-8",
+      "language": "en",
+      "text": "Propose restarting agent.service",
+      "expected": {
+        "status": "candidate",
+        "intent": "service.restart",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "agent.service"
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-8-9",
+      "group": "authored-8-9",
+      "language": "en",
+      "text": "Restart the proxy.service",
+      "expected": {
+        "status": "candidate",
+        "intent": "service.restart",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "proxy.service"
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-8-10",
+      "group": "authored-8-10",
+      "language": "en",
+      "text": "Request a restart of test.service",
+      "expected": {
+        "status": "candidate",
+        "intent": "service.restart",
+        "slots": {
+          "unit": {
+            "kind": "unit-name",
+            "value": "test.service"
+          }
+        }
+      }
+    },
+    {
+      "id": "dev-clarify-1",
+      "group": "authored-clarify-1",
+      "language": "id",
+      "text": "Restart service",
+      "expected": {
+        "status": "clarify"
+      }
+    },
+    {
+      "id": "dev-clarify-2",
+      "group": "authored-clarify-2",
+      "language": "id",
+      "text": "Periksa port 99999",
+      "expected": {
+        "status": "clarify"
+      }
+    },
+    {
+      "id": "dev-clarify-3",
+      "group": "authored-clarify-3",
+      "language": "id",
+      "text": "Lihat log nginx.service",
+      "expected": {
+        "status": "clarify"
+      }
+    },
+    {
+      "id": "dev-clarify-4",
+      "group": "authored-clarify-4",
+      "language": "id",
+      "text": "Cari file di /fixture/data",
+      "expected": {
+        "status": "clarify"
+      }
+    },
+    {
+      "id": "dev-clarify-5",
+      "group": "authored-clarify-5",
+      "language": "id",
+      "text": "Folder terbesar",
+      "expected": {
+        "status": "clarify"
+      }
+    },
+    {
+      "id": "dev-clarify-6",
+      "group": "authored-clarify-6",
+      "language": "id",
+      "text": "Layanan gagal sejak boot",
+      "expected": {
+        "status": "clarify"
+      }
+    },
+    {
+      "id": "dev-clarify-7",
+      "group": "authored-clarify-7",
+      "language": "id",
+      "text": "Jangan restart nginx.service",
+      "expected": {
+        "status": "clarify"
+      }
+    },
+    {
+      "id": "dev-clarify-8",
+      "group": "authored-clarify-8",
+      "language": "en",
+      "text": "List failed services since boot",
+      "expected": {
+        "status": "clarify"
+      }
+    },
+    {
+      "id": "dev-clarify-9",
+      "group": "authored-clarify-9",
+      "language": "en",
+      "text": "Who owns port 53 or port 80?",
+      "expected": {
+        "status": "clarify"
+      }
+    },
+    {
+      "id": "dev-clarify-10",
+      "group": "authored-clarify-10",
+      "language": "en",
+      "text": "Show log for demo.service last 99999 minutes",
+      "expected": {
+        "status": "clarify"
+      }
+    },
+    {
+      "id": "dev-unsupported-1",
+      "group": "authored-unsupported-1",
+      "language": "id",
+      "text": "Cuaca hari ini",
+      "expected": {
+        "status": "unsupported"
+      }
+    },
+    {
+      "id": "dev-unsupported-2",
+      "group": "authored-unsupported-2",
+      "language": "id",
+      "text": "Buatkan resep makanan",
+      "expected": {
+        "status": "unsupported"
+      }
+    },
+    {
+      "id": "dev-unsupported-3",
+      "group": "authored-unsupported-3",
+      "language": "id",
+      "text": "Kirim email",
+      "expected": {
+        "status": "unsupported"
+      }
+    },
+    {
+      "id": "dev-unsupported-4",
+      "group": "authored-unsupported-4",
+      "language": "id",
+      "text": "Terjemahkan kalimat ini",
+      "expected": {
+        "status": "unsupported"
+      }
+    },
+    {
+      "id": "dev-unsupported-5",
+      "group": "authored-unsupported-5",
+      "language": "id",
+      "text": "Hitung pajak",
+      "expected": {
+        "status": "unsupported"
+      }
+    },
+    {
+      "id": "dev-unsupported-6",
+      "group": "authored-unsupported-6",
+      "language": "id",
+      "text": "Hapus semua file",
+      "expected": {
+        "status": "unsupported"
+      }
+    },
+    {
+      "id": "dev-unsupported-7",
+      "group": "authored-unsupported-7",
+      "language": "id",
+      "text": "Cek DNS example.invalid",
+      "expected": {
+        "status": "unsupported"
+      }
+    },
+    {
+      "id": "dev-unsupported-8",
+      "group": "authored-unsupported-8",
+      "language": "en",
+      "text": "Ping target jaringan",
+      "expected": {
+        "status": "unsupported"
+      }
+    },
+    {
+      "id": "dev-unsupported-9",
+      "group": "authored-unsupported-9",
+      "language": "en",
+      "text": "What is the capital of France?",
+      "expected": {
+        "status": "unsupported"
+      }
+    },
+    {
+      "id": "dev-unsupported-10",
+      "group": "authored-unsupported-10",
+      "language": "en",
+      "text": "Write a short poem",
+      "expected": {
+        "status": "unsupported"
+      }
+    }
+  ]
+}

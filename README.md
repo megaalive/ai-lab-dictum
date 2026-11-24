@@ -20,7 +20,7 @@ bawah. `libclang-rt-dev` menyediakan runtime sanitizer untuk build uji Clang.
 
 ```sh
 apt-get update
-apt-get install --no-install-recommends cmake make gcc clang libc6-dev libclang-rt-dev
+apt-get install --no-install-recommends cmake make gcc clang libc6-dev libclang-rt-dev python3-jsonschema
 ```
 
 Dari root repositori, gunakan direktori terpisah untuk setiap konfigurasi.
@@ -39,7 +39,7 @@ ctest --test-dir build/sanitizer --output-on-failure --no-tests=error
 ```
 
 Opsi sanitizer dinonaktifkan secara bawaan dan dapat diaktifkan satu per satu.
-Build produk hanya membutuhkan executable dan pustaka sistem yang ditautkan.
+Build dari source memakai Python dan jsonschema untuk codegen IR; executable produk tidak membutuhkan Python saat berjalan.
 
 ## CLI saat ini
 

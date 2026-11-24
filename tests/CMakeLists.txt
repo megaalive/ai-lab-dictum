@@ -32,3 +32,18 @@ dictum_cli_test(ask_canary unsupported ask "DCT008_CANARY %s; literal")
 dictum_cli_test(run_question denied run "${question}")
 dictum_cli_test(run_missing denied run)
 dictum_cli_test(run_extra denied run --version DCT008_CANARY)
+
+add_executable(ir_probe ir/native_probe.c)
+target_link_libraries(ir_probe PRIVATE dictum_ir)
+set_target_properties(ir_probe PROPERTIES C_STANDARD 17 C_STANDARD_REQUIRED YES C_EXTENSIONS NO)
+target_compile_options(ir_probe PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wformat=2
+    -Wstrict-prototypes -Wmissing-prototypes -Wundef -Wvla)
+if(dictum_sanitizers)
+    target_compile_options(ir_probe PRIVATE "${dictum_sanitizer_flag}" -fno-omit-frame-pointer)
+    if(DICTUM_ENABLE_UBSAN)
+        target_compile_options(ir_probe PRIVATE -fno-sanitize-recover=undefined)
+    endif()
+endif()
+add_test(NAME ir.differential COMMAND "${Python3_EXECUTABLE}" -B
+    "${CMAKE_CURRENT_SOURCE_DIR}/ir/differential.py" "$<TARGET_FILE:ir_probe>")
+set_tests_properties(ir.differential PROPERTIES TIMEOUT 180)

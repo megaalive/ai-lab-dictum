@@ -33,7 +33,7 @@ jobs:
       - name: Pasang toolchain Debian
         run: |
           apt-get -o APT::Update::Error-Mode=any update
-          packages=(ca-certificates git cmake make libc6-dev "$CC")
+          packages=(ca-certificates git cmake make libc6-dev python3-jsonschema "$CC")
           if [[ "$CC" == clang && "$SANITIZERS" == ON ]]; then
             packages+=(libclang-rt-dev)
           fi

@@ -52,6 +52,8 @@ for i in ids:
     effect = json.dumps(reg["effect"],separators=(",",":"),sort_keys=True)
     lines.append("    {" + ",".join([c(i),c(recipe["handler"]),c(reg["effect"]["class"]),c(effect),
                                     c(reg["description"]["id"]),c(reg["description"]["en"])]) + ", {")
+    if not reg["slots"]:
+        lines.append("        {0},")
     for s in reg["slots"]:
         default = s["default"]
         v = default["value"] if default else None

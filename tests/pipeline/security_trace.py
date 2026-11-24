@@ -21,7 +21,10 @@ CANARIES=(b"CANARY_SECRET",b"DCT008_CANARY",b"CANARY_SECRET_CONTENT_FIXTURE_V1",
 # Fixed paths are loader/process metadata only, not target data access.
 LOADER_PATHS={"","/etc/ld.so.preload","/etc/ld.so.cache","/proc/self/exe",
               "/lib/x86_64-linux-gnu/libcrypto.so.3","/usr/lib/x86_64-linux-gnu/libcrypto.so.3",
-              "/lib/x86_64-linux-gnu/libc.so.6","/usr/lib/x86_64-linux-gnu/libc.so.6"}
+              "/lib/x86_64-linux-gnu/libc.so.6","/usr/lib/x86_64-linux-gnu/libc.so.6",
+              # Exact transitive dependencies observed in native CI ldd (run 45367398117).
+              "/lib/x86_64-linux-gnu/libz.so.1","/usr/lib/x86_64-linux-gnu/libz.so.1",
+              "/lib/x86_64-linux-gnu/libzstd.so.1","/usr/lib/x86_64-linux-gnu/libzstd.so.1"}
 READ_ONLY={"access","faccessat","faccessat2","stat","lstat","fstat","newfstatat","statx",
            "readlink","readlinkat","getcwd"}
 OPENS={"open","openat","openat2"}
@@ -32,7 +35,7 @@ def need(condition,code):
         raise AssertionError(code)
 
 
-def check_trace(raw):
+def check_trace(raw,diagnose=False):
     need(0<len(raw)<s1.CAP,"trace-size")
     need(not any(c in raw for c in CANARIES),"trace-canary")
     count=0
@@ -56,6 +59,9 @@ def check_trace(raw):
         quoted=re.search(r'"((?:\\.|[^"\\])*)"',line)
         if quoted is not None:
             path=quoted.group(1)
+            if diagnose and path not in LOADER_PATHS:
+                # Fixed --version input in disposable synthetic image only; never log raw argv.
+                print("PREFLIGHT unexpected path",repr(path),flush=True)
             need(path in LOADER_PATHS,"non-loader-file")
         else:
             need(name in {"fstat","getcwd"},"missing-file-path")
@@ -99,7 +105,7 @@ def traced(args,trace,cwd):
              "trace=%process,%network,%file,io_uring_setup,io_uring_enter,io_uring_register",
              "-o",str(trace),CLI,*args]
     rc,out,err=s1.bounded_process(command,cwd,env)
-    check_trace(trace.read_bytes())
+    check_trace(trace.read_bytes(),diagnose=(args==["--version"]))
     trace.unlink()
     need(not any(c in out+err for c in CANARIES),"output-canary")
     need(not list(cwd.iterdir()),"cwd-mutation")

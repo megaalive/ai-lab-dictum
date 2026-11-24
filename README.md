@@ -3,9 +3,9 @@
 **From words to operations.**
 
 Dictum adalah riset AI Lab tentang penerjemahan instruksi bahasa manusia ke
-usulan operasi sistem operasi secara lokal. DCT-008 menyediakan fondasi
-executable native C17. Bantuan dan versi tersedia. Penerjemahan, model, dan
-preview operasi belum tersedia.
+usulan operasi sistem operasi secara lokal. F0-C mengembangkan pipeline native C17 untuk delapan intent dan
+usulan terstruktur non-copyable. Semua binding Debian masih NOT VERIFIED;
+mode ini hanya memakai katalog dan scope sintetis, bukan data host.
 
 Dictum mengikuti batas **proposal-only**. Produk tidak menjalankan operasi
 OS atas permintaan pengguna, tidak membuka koneksi jaringan, dan tidak
@@ -41,25 +41,25 @@ ctest --test-dir build/sanitizer --output-on-failure --no-tests=error
 Opsi sanitizer dinonaktifkan secara bawaan dan dapat diaktifkan satu per satu.
 Build dari source memakai Python dan jsonschema untuk codegen IR; executable produk tidak membutuhkan Python saat berjalan. Library OpenSSL libcrypto (>=3.0) digunakan untuk SHA-256 identitas/digest, bukan approval atau signature; versi dan link dicatat CI.
 
-## CLI saat ini
+## CLI F0-C
 
 ```sh
-./build/release/dictum --help
-./build/release/dictum --version
 ./build/release/dictum ask "siapa yang menggunakan port 5432?"
-./build/release/dictum run "siapa yang menggunakan port 5432?"
+./build/release/dictum explain "show available memory"
+./build/release/dictum search memory.summary
+./build/release/dictum inspect
+./build/release/dictum run "restart demo.service"
 ```
 
-| Exit code | Perilaku |
-| --- | --- |
-| `0` | `--help` atau `--version` tanpa tambahan argumen menulis ke stdout. |
-| `1` | Penulisan atau flush ke stream gagal dan kesalahan terdeteksi. |
-| `2` | Argumen tidak valid, termasuk `ask` tanpa tepat satu argumen instruksi yang tidak kosong. |
-| `3` | `ask` menerima satu argumen instruksi yang tidak kosong dan melaporkan `unsupported`. |
-| `4` | `run` ditolak dengan atau tanpa argumen tambahan. |
-
-Penolakan menulis diagnostik tetap ke stderr. Isi instruksi tidak muncul pada
-keluaran dan tidak diinterpretasikan.
+`ask` dan `explain` stateless menampilkan JSON non-copyable: arti intent,
+sumber, typed slots yang diizinkan pada fixture, dan batasan. Exit 0 proposal,
+1 I/O, 2 argumen invalid, 3 unsupported, 4 deny, 5 clarify, 6 internal.
+`run` selalu ditolak, termasuk tanpa atau dengan argumen tambahan.
+Tidak ada hasil OS palsu, command copyable, akses filesystem target, spawn
+atau jaringan. Scope hanya literal synthetic allowlist; bukan klaim target ada.
+`search` adalah lookup ID persis; `inspect` melaporkan identitas versi/hash
+dan tidak mengklaim pengukuran latency. B0 primary; B1 guarded retrieval
+hanya tersedia melalui probe development dengan interface pipeline yang sama.
 
 [ADR runtime C17 dan CMake](docs/adr/0001-runtime-c17-cmake.md) ·
 [Baseline proyek v3 dan amandemen governance DEC-009](plans/baseline-v3.md)

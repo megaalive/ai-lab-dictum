@@ -288,19 +288,23 @@ static bool match(const struct request *q,size_t first,size_t end,struct nlu_pro
     *n=(struct nlu_proposal){0};
     if (first<end && (word(q,first,"tolong")||word(q,first,"please"))) ++first;
     bool found=false;
+    size_t best_specificity=0;
     for (size_t i=0;i<COUNT(grammar);++i) {
         struct nlu_proposal candidate;
         if (!match_grammar(q,&grammar[i],first,end,&candidate)) continue;
-        /* Prefer an exact longer grammar over an interpretation of its
-         * trailing tokens as optional fields; conflicting interpretations
-         * fail closed, rather than rely on table ordering. */
-        if (found) {
+        size_t specificity=0;
+        for (const char *p=grammar[i].pattern;*p!='\0';++p) {
+            if (*p=='{') { while (*p!='}' && *p!='\0') ++p; if (*p=='\0') break; }
+            else ++specificity;
+        }
+        if (found && specificity<best_specificity) continue;
+        if (found && specificity==best_specificity) {
             if (candidate.intents[0]!=n->intents[0] || candidate.used!=n->used) return false;
             for (size_t j=0;j<n->used;++j)
                 if (candidate.candidates[j].name!=n->candidates[j].name ||
                     candidate.candidates[j].token.start!=n->candidates[j].token.start ||
                     candidate.candidates[j].token.end!=n->candidates[j].token.end) return false;
-        } else { *n=candidate; found=true; }
+        } else { *n=candidate; found=true; best_specificity=specificity; }
     }
     return found;
 }
@@ -545,10 +549,38 @@ static bool serialize_ir(const struct request *q,const struct resolved_ir *r,cha
     add(&w,"]}}");
     return validate_frame(&w,IR_RESOLVED);
 }
-static struct policy_decision policy(const struct resolved_ir *r)
+static bool verified_values(const struct request *q,const struct resolved_ir *r)
+{
+    if (q==NULL || q->invalid || r->intent>=COUNT(rules) || r->count>SLOTS ||
+        r->pending_count!=0 || r->alternative_count!=0) return false;
+    const struct intent_rule *rule=&rules[r->intent];
+    for (size_t i=0;i<r->count;++i) {
+        const struct value *v=&r->slots[i];
+        if (v->rule==NULL || find_slot(r->intent,v->rule->name)!=v->rule) return false;
+        for (size_t j=0;j<i;++j) if (r->slots[j].rule==v->rule) return false;
+        if (v->by_default) {
+            if (!v->rule->has_default || v->context_ref || v->number!=v->rule->number ||
+                strcmp(v->literal,v->rule->literal==NULL?"":v->rule->literal)!=0) return false;
+        } else {
+            struct value actual;
+            const struct candidate c={v->rule->name,v->token};
+            if (!value_from(q,&c,v->rule,&actual) || actual.number!=v->number ||
+                actual.end!=v->end || actual.context_ref!=v->context_ref ||
+                strcmp(actual.literal,v->literal)!=0) return false;
+        }
+    }
+    for (size_t i=0;i<rule->count;++i)
+        if (rule->slots[i].required && !has_slot(r,rule->slots[i].name)) return false;
+    if (strcmp(rule->id,"network.listener.lookup")==0 && !has_slot(r,S_PORT)) return false;
+    if (strcmp(rule->id,"file.search")==0 && !has_slot(r,S_EXTENSION)&&!has_slot(r,S_FILENAME)&&!has_slot(r,S_WINDOW)) return false;
+    return strcmp(rule->effect_class,"READ")==0 || strcmp(rule->effect_class,"CHANGE")==0;
+}
+static struct policy_decision policy(const struct request *q,const struct resolved_ir *r)
 {
     switch (r->state) {
-    case RES_RESOLVED: return (struct policy_decision){PIPE_PROPOSAL,"proposal-eligible"};
+    case RES_RESOLVED:
+        if (!verified_values(q,r)) return (struct policy_decision){PIPE_DENY,"policy-restriction"};
+        return (struct policy_decision){PIPE_PROPOSAL,"proposal-eligible"};
     case RES_INCOMPLETE: return (struct policy_decision){PIPE_CLARIFY,"missing-slot"};
     case RES_AMBIGUOUS: return (struct policy_decision){PIPE_CLARIFY,"ambiguous"};
     case RES_UNSUPPORTED: return (struct policy_decision){PIPE_UNSUPPORTED,"unsupported-intent"};
@@ -569,7 +601,7 @@ static const char *decision_name(enum pipeline_outcome p)
 static void effect_scope(struct writer *w,const struct request *q,const struct resolved_ir *r,bool allowed)
 {
     add(w,",\"effect\":");
-    add(w,allowed?rules[r->intent].effect_json:"{\"class\":\"UNKNOWN\",\"axes\":[]}");
+    add(w,r->state==RES_RESOLVED?rules[r->intent].effect_json:"{\"class\":\"UNKNOWN\",\"axes\":[]}");
     add(w,",\"scope\":{"); field(w,"kind",allowed?"local":"none");
     if (allowed) { add(w,","); field(w,"scope_id",q->scope_id); }
     add(w,"}");
@@ -624,10 +656,14 @@ static bool compile(const struct request *q,const struct resolved_ir *r,struct p
     ir_destroy(&doc);
     return ok;
 }
-static bool render(const struct resolved_ir *r,struct policy_decision p,const char *plan,char out[PIPE_FRAME])
+static bool render(const struct request *q,const struct resolved_ir *r,struct policy_decision p,const char *plan,char out[PIPE_FRAME])
 {
     struct writer w=writer(out,PIPE_FRAME);
     if ((p.outcome==PIPE_PROPOSAL)!=(plan[0]!='\0')) return false;
+    if (p.outcome==PIPE_PROPOSAL) {
+        char expected[PIPE_FRAME];
+        if (!verified_values(q,r) || !compile(q,r,p,expected) || strcmp(expected,plan)!=0) return false;
+    }
     add(&w,"{\"copyability\":\"NON_COPYABLE\",");
     field(&w,"decision",decision_name(p.outcome)); add(&w,","); field(&w,"reason",p.reason);
     add(&w,",\"execution_allowed\":false,\"observed_os_data\":false,");
@@ -667,7 +703,7 @@ bool pipeline_run(const unsigned char *input,size_t size,int64_t reference_unix_
     if (ir_check_input(input,size)!=IR_OK) {
         out->outcome=PIPE_DENY;
         const struct resolved_ir r={.state=RES_INVALID,.intent=NO_INTENT};
-        return render(&r,policy(&r),out->plan,out->view);
+        return render(NULL,&r,policy(NULL,&r),out->plan,out->view);
     }
     struct request q={.data=input,.size=size,.reference=reference_unix_s};
     if (!context(&q,request_sequence,out->context)) return false;
@@ -675,10 +711,10 @@ bool pipeline_run(const unsigned char *input,size_t size,int64_t reference_unix_
     if (!serialize_nlu(&q,&n,out->nlu)) return false;
     const struct resolved_ir r=resolve(&q,&n);
     if (!serialize_ir(&q,&r,out->ir)) return false;
-    const struct policy_decision p=policy(&r);
+    const struct policy_decision p=policy(&q,&r);
     if (!serialize_policy(&q,&r,p,out->policy)) return false;
     if (p.outcome==PIPE_PROPOSAL && !compile(&q,&r,p,out->plan)) return false;
-    if (!render(&r,p,out->plan,out->view)) return false;
+    if (!render(&q,&r,p,out->plan,out->view)) return false;
     out->outcome=p.outcome;
     return true;
 }

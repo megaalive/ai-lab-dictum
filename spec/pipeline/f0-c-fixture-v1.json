@@ -186,7 +186,8 @@
       "directory usage under {root}",
       "show directory sizes under {root}",
       "directory usage",
-      "ukuran folder"
+      "ukuran folder",
+      "pemakaian direktori {root}"
     ],
     "file.search": [
       "cari berkas ekstensi {extension} di {root}",
@@ -202,7 +203,8 @@
       "find files under {root}",
       "cari file di {root}",
       "find files",
-      "cari file"
+      "cari file",
+      "temukan file ekstensi {extension} di {root}"
     ],
     "service.restart": [
       "restart {unit}",

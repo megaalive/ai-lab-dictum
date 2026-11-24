@@ -107,3 +107,7 @@ endif()
 add_test(NAME pipeline.benchmark COMMAND "${Python3_EXECUTABLE}" -B
     "${CMAKE_CURRENT_SOURCE_DIR}/pipeline/bench.py" "$<TARGET_FILE:pipeline_bench>")
 set_tests_properties(pipeline.benchmark PROPERTIES TIMEOUT 120)
+
+add_test(NAME pipeline.s2_regression COMMAND "${Python3_EXECUTABLE}" -B
+    "${CMAKE_CURRENT_SOURCE_DIR}/pipeline/s2_regression.py" "$<TARGET_FILE:pipeline_probe>" "$<TARGET_FILE:dictum>")
+set_tests_properties(pipeline.s2_regression PROPERTIES TIMEOUT 120)

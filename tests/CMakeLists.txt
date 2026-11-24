@@ -158,3 +158,10 @@ set_tests_properties(pipeline.f1_v2_functional PROPERTIES TIMEOUT 240)
 add_test(NAME pipeline.f1_v2_benchmark COMMAND "${Python3_EXECUTABLE}" -B
     "${CMAKE_CURRENT_SOURCE_DIR}/pipeline/bench.py" "$<TARGET_FILE:pipeline_bench>" f1-v2-functional.json)
 set_tests_properties(pipeline.f1_v2_benchmark PROPERTIES TIMEOUT 120)
+
+add_test(NAME ir.v2_differential COMMAND "${Python3_EXECUTABLE}" -B
+    "${CMAKE_CURRENT_SOURCE_DIR}/ir/v2_differential.py" "$<TARGET_FILE:ir_probe>")
+set_tests_properties(ir.v2_differential PROPERTIES TIMEOUT 180)
+add_test(NAME pipeline.v2_semantic_mutations COMMAND "${Python3_EXECUTABLE}" -B
+    "${CMAKE_CURRENT_SOURCE_DIR}/pipeline/v2_semantic_mutations.py" "$<TARGET_FILE:pipeline_probe>" "$<TARGET_FILE:dictum>")
+set_tests_properties(pipeline.v2_semantic_mutations PROPERTIES TIMEOUT 90)

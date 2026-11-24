@@ -20,6 +20,8 @@ PINS={
     "tests/pipeline/raw-gold-v1.json":"e2c328ca211aa4a90f00e3fd2b94e0e572d42161",
     "tests/pipeline/f1-functional-v1.json":"08c97353580b97db7738d86d0c446367dd99aaf4",
     "tests/pipeline/f1-raw-gold-v1.json":"bcec0847640eea5a79fa23dceb40cb723eb5e9c3",
+    "tests/pipeline/f1-v2-functional.json":"b85324dd85a840c15abad97a6ddc512f4b7d24eb",
+    "tests/pipeline/f1-v2-raw-gold.json":"7fd6d5dbf08fde3a1acfd27133d8eeeebfb11926",
     "tests/spikes/s2/development-v1.json":"3081d95d327c2aa7851efaa673168591c1f7002c",
     "data/manifests/license-ledger-v1.json":"da53ad25f9f1b1e31f601ff43c7e1bcd78c18fa3",
     "data/manifests/corpus-protocol-v1.md":"5ba9a21857a78ad85c881e8c94e816d07880bb10",
@@ -62,7 +64,8 @@ def inventory():
          all(x["decision"]=="HOLD" and not x["training_allowed"] and
              not x["distribution_allowed"] for x in ledger["sources"]), "rights")
     expected=[("functional-v1.json",140,"raw-gold-v1.json",48),
-              ("f1-functional-v1.json",232,"f1-raw-gold-v1.json",150)]
+              ("f1-functional-v1.json",232,"f1-raw-gold-v1.json",150),
+              ("f1-v2-functional.json",202,"f1-v2-raw-gold.json",102)]
     combined=[]
     for name,n,labels,supported in expected:
         path="tests/pipeline/"+name
@@ -74,11 +77,11 @@ def inventory():
         sources[path]["role"]="SELF-FUNCTIONAL-REGRESSION"
         sources[path]["suite_counts"]=dict(Counter(x["suite"] for x in cases))
         combined+=cases
-    need(len(combined)==len({x["id"] for x in combined})==372,"case-id")
+    need(len(combined)==len({x["id"] for x in combined})==574,"case-id")
     counts=Counter(x["suite"] for x in combined)
-    need(counts=={"supported":198,"ambiguity":36,"ood":33,"security":105},"case-count")
+    need(counts=={"supported":300,"ambiguity":60,"ood":47,"security":167},"case-count")
     intents=Counter(x["expected"]["intent"] for x in combined if x["suite"]=="supported")
-    need(len(intents)==33 and all(n==6 for n in intents.values()),"intent-count")
+    need(len(intents)==48 and all(n>=6 for n in intents.values()),"intent-count")
     s2=json.loads(pinned("tests/spikes/s2/development-v1.json"))
     need(len(s2["reference"])==32 and len(s2["development"])==100,"s2-count")
     return {"schema_version":1,"role":"REGRESSION-INVENTORY-NOT-CORPUS",

@@ -10,7 +10,7 @@ m=importlib.util.module_from_spec(spec)
 spec.loader.exec_module(m)
 
 inventory=m.inventory()
-assert inventory["functional_counts"]=={"supported":198,"ambiguity":36,"ood":33,"security":105}
+assert inventory["functional_counts"]=={"supported":300,"ambiguity":60,"ood":47,"security":167}
 assert inventory["human_gold_count"]==0 and inventory["actual_split"]=="NOT RUN"
 assert not inventory["training_allowed"] and inventory["rights"]=="HOLD"
 
@@ -74,4 +74,4 @@ print("F1_CORPUS_MECHANICS",len(rows),"toy rows",out["component_count"],"compone
       "deterministic manifest",out["manifest_sha256"],"counts",
       {k:v["all"] for k,v in out["counts"].items()},"actual split/training NOT RUN")
 print("F1_CORPUS_INVENTORY_COUNTS",json.dumps(inventory["functional_counts"],sort_keys=True),
-      "33 intents; human gold 0; rights HOLD")
+      "48 intents; human gold 0; rights HOLD")

@@ -1,0 +1,241 @@
+{
+  "schema_version": 1,
+  "checked_date": "2026-11-24",
+  "source_sha": "05902bafc79be48a9d784a43ab40d50fbbb5b942",
+  "push_run": 45355518730,
+  "pr_run": 45355541124,
+  "arch": "amd64",
+  "sources": [
+    {
+      "copyright_sha256": "90a66617c36d83068b52bbb77cbfef1234f526bfa287156d9d05f7df4d339539",
+      "deb_sha256": "4db90bb6776772fc52585d6b1fbfc52ec2a85480e1b4363b743fbb2ffa2a5375",
+      "decision": "HOLD-PER-FILE-RIGHTS",
+      "gzip_sha256": "b9e0d8d030e8607f4ac776601895d630e122acd96ce1e7746ddd79d2f245ebae",
+      "header_hints": [
+        "Copyright",
+        "License"
+      ],
+      "license_identifiers": [
+        "GPL-2.0+",
+        "LGPL-2.0+",
+        "LGPL-2.1+"
+      ],
+      "metadata": [
+        "Package: procps",
+        "Version: 2:4.0.4-9",
+        "Architecture: amd64"
+      ],
+      "package": "procps",
+      "path": "usr/share/man/man1/free.1.gz",
+      "text_sha256": "3d0c716e68a282d43445075f72d0a50c484c364d73f0aa35644e2640b11bc90a",
+      "source_uri": "https://packages.debian.org/trixie/procps",
+      "license_claim": "PACKAGE-IDENTIFIERS-ONLY; EXACT-FILE RIGHTS NOT VERIFIED",
+      "attribution": "Copyright holders in pinned package copyright; exact attribution required before import",
+      "training_allowed": false,
+      "distribution_allowed": false,
+      "imported": false
+    },
+    {
+      "copyright_sha256": "344ddcf4dfe65b86416e058309218b4ac1ee7bc1e624cc40ad87222cc979fdac",
+      "deb_sha256": "7b2dcade4a83ded723fcab21c5a53c47f29352c9c5e1661a089a1e481b3fb48a",
+      "decision": "HOLD-PER-FILE-RIGHTS",
+      "gzip_sha256": "724c1985c8609c98e55ec95ea2aa05a2d6fb04d2231feb55c4b794fdfa07fd63",
+      "header_hints": [],
+      "license_identifiers": [
+        "GPL-2"
+      ],
+      "metadata": [
+        "Package: iproute2",
+        "Version: 6.15.0-1",
+        "Architecture: amd64"
+      ],
+      "package": "iproute2",
+      "path": "usr/share/man/man8/ss.8.gz",
+      "text_sha256": "d5c85fb7771d2fb9c8cd138d97e443ae9958b6371fa8d7734e593ff11eb53140",
+      "source_uri": "https://packages.debian.org/trixie/iproute2",
+      "license_claim": "PACKAGE-IDENTIFIERS-ONLY; EXACT-FILE RIGHTS NOT VERIFIED",
+      "attribution": "Copyright holders in pinned package copyright; exact attribution required before import",
+      "training_allowed": false,
+      "distribution_allowed": false,
+      "imported": false
+    },
+    {
+      "copyright_sha256": "a79e4b379cabbd960bb44f6cc1a069081a3778c59a25ee529b68df5a2cb7d27d",
+      "deb_sha256": "ee81302a1d5b7434762b6e784a572854d4b6cf6235e33e2d104ad4e1cae71ab4",
+      "decision": "HOLD-PER-FILE-RIGHTS",
+      "gzip_sha256": "d4f90764e1c7c948977eeb274c220b182ee3d1d644ddcb611debd18f3a1f69f1",
+      "header_hints": [],
+      "license_identifiers": [
+        "CC0-1.0",
+        "Expat",
+        "GPL-2 with Linux-syscall-note exception",
+        "GPL-2+",
+        "LGPL-2.1+",
+        "public-domain"
+      ],
+      "metadata": [
+        "Package: systemd",
+        "Version: 257.13-1~deb13u1",
+        "Architecture: amd64"
+      ],
+      "package": "systemd",
+      "path": "usr/share/man/man1/systemctl.1.gz",
+      "text_sha256": "83912846450c0a5ba0c2e3424e68c84f509e7ba243844e8b4fa56daaadcfbfb6",
+      "source_uri": "https://packages.debian.org/trixie/systemd",
+      "license_claim": "PACKAGE-IDENTIFIERS-ONLY; EXACT-FILE RIGHTS NOT VERIFIED",
+      "attribution": "Copyright holders in pinned package copyright; exact attribution required before import",
+      "training_allowed": false,
+      "distribution_allowed": false,
+      "imported": false
+    },
+    {
+      "copyright_sha256": "a79e4b379cabbd960bb44f6cc1a069081a3778c59a25ee529b68df5a2cb7d27d",
+      "deb_sha256": "ee81302a1d5b7434762b6e784a572854d4b6cf6235e33e2d104ad4e1cae71ab4",
+      "decision": "HOLD-PER-FILE-RIGHTS",
+      "gzip_sha256": "3f8991e12b44fb171fcd53ce86e7e8b2af8dfa1d521e9bf9505f8cd5e45916dd",
+      "header_hints": [],
+      "license_identifiers": [
+        "CC0-1.0",
+        "Expat",
+        "GPL-2 with Linux-syscall-note exception",
+        "GPL-2+",
+        "LGPL-2.1+",
+        "public-domain"
+      ],
+      "metadata": [
+        "Package: systemd",
+        "Version: 257.13-1~deb13u1",
+        "Architecture: amd64"
+      ],
+      "package": "systemd",
+      "path": "usr/share/man/man1/journalctl.1.gz",
+      "text_sha256": "00a440ac171befbeb8bff3718c616f683777ae533a056216bf28fd9f6b4e247b",
+      "source_uri": "https://packages.debian.org/trixie/systemd",
+      "license_claim": "PACKAGE-IDENTIFIERS-ONLY; EXACT-FILE RIGHTS NOT VERIFIED",
+      "attribution": "Copyright holders in pinned package copyright; exact attribution required before import",
+      "training_allowed": false,
+      "distribution_allowed": false,
+      "imported": false
+    },
+    {
+      "copyright_sha256": "3a63d4b11a7ba4c1c17175072ea28e07b0f80c7bc1ca042b27431fe65a14755b",
+      "deb_sha256": "1299ab6f9389a288eb2f5f3dd222c26cc777b9a2d5ecb6ee4cbd340cebcdada2",
+      "decision": "HOLD-PER-FILE-RIGHTS",
+      "gzip_sha256": "ee84eff63af074ec3156541507d29a758a9324f07672e50b261022c32c5a107d",
+      "header_hints": [
+        "Copyright",
+        "GPL",
+        "GPLv3",
+        "License",
+        "gpl"
+      ],
+      "license_identifiers": [
+        "BSD-4-clause-UC",
+        "FSFULLR",
+        "GFDL-NIV-1.3",
+        "GPL-3+",
+        "GPL-3+ and BSD-4-clause-UC",
+        "GPL-3+ and ISC",
+        "ISC"
+      ],
+      "metadata": [
+        "Package: coreutils",
+        "Version: 9.7-3",
+        "Architecture: amd64"
+      ],
+      "package": "coreutils",
+      "path": "usr/share/man/man1/df.1.gz",
+      "text_sha256": "6db8230582782c82d2e6d68b3bbc02f36f412e496bf0929e3610ca60d0cf0e87",
+      "source_uri": "https://packages.debian.org/trixie/coreutils",
+      "license_claim": "PACKAGE-IDENTIFIERS-ONLY; EXACT-FILE RIGHTS NOT VERIFIED",
+      "attribution": "Copyright holders in pinned package copyright; exact attribution required before import",
+      "training_allowed": false,
+      "distribution_allowed": false,
+      "imported": false
+    },
+    {
+      "copyright_sha256": "3a63d4b11a7ba4c1c17175072ea28e07b0f80c7bc1ca042b27431fe65a14755b",
+      "deb_sha256": "1299ab6f9389a288eb2f5f3dd222c26cc777b9a2d5ecb6ee4cbd340cebcdada2",
+      "decision": "HOLD-PER-FILE-RIGHTS",
+      "gzip_sha256": "306135367e11085fe0c08c22bd5c6193f39045402539811c8e192026b0adc451",
+      "header_hints": [
+        "Copyright",
+        "GPL",
+        "GPLv3",
+        "License",
+        "gpl"
+      ],
+      "license_identifiers": [
+        "BSD-4-clause-UC",
+        "FSFULLR",
+        "GFDL-NIV-1.3",
+        "GPL-3+",
+        "GPL-3+ and BSD-4-clause-UC",
+        "GPL-3+ and ISC",
+        "ISC"
+      ],
+      "metadata": [
+        "Package: coreutils",
+        "Version: 9.7-3",
+        "Architecture: amd64"
+      ],
+      "package": "coreutils",
+      "path": "usr/share/man/man1/du.1.gz",
+      "text_sha256": "afc498a94f8860918ff8e78761cb93006f7e4a4d127679529fdfdcfbdbe65552",
+      "source_uri": "https://packages.debian.org/trixie/coreutils",
+      "license_claim": "PACKAGE-IDENTIFIERS-ONLY; EXACT-FILE RIGHTS NOT VERIFIED",
+      "attribution": "Copyright holders in pinned package copyright; exact attribution required before import",
+      "training_allowed": false,
+      "distribution_allowed": false,
+      "imported": false
+    },
+    {
+      "copyright_sha256": "f51541fbdfe15c01cd3fd3a06ad3b74478902d36a958d95b1756434979d97ed5",
+      "deb_sha256": "3edf02b016456b6a98cefdbab99c5ce6f829b786f63affe970badea221aecfc7",
+      "decision": "HOLD-PER-FILE-RIGHTS",
+      "gzip_sha256": "601aa677d537d8a33d58d387f90d3ba1f2de38a79474f49d5199fc26ed257d52",
+      "header_hints": [],
+      "license_identifiers": [
+        "BSD-3-clause",
+        "BSD-3-clause or GPL-3+",
+        "BSD-3-clause or LGPL-2.1+",
+        "BSD-3-clause or LGPL-3+",
+        "FSFAP",
+        "FSFULLR",
+        "FSFULLR or GPL or LGPL",
+        "GFDL-NIV-1.3+",
+        "GFDL-NIV-1.3+ or GFDL-NIV-1.3+",
+        "GPL",
+        "GPL with automake exception",
+        "GPL-2+",
+        "GPL-2+ with Autoconf-data exception",
+        "GPL-3+",
+        "GPL-3+ with Autoconf-data exception",
+        "GPL-3+ with Bison-2.2 exception",
+        "ISC",
+        "ISC or LGPL-2.1+",
+        "LGPL",
+        "LGPL-2+",
+        "LGPL-2.1+",
+        "LGPL-3",
+        "LGPL-3+",
+        "X11",
+        "public-domain"
+      ],
+      "metadata": [
+        "Package: findutils",
+        "Version: 4.10.0-3",
+        "Architecture: amd64"
+      ],
+      "package": "findutils",
+      "path": "usr/share/man/man1/find.1.gz",
+      "text_sha256": "66b4e7de8170dcc6582a7d2322d228f7128cc200ed81a3580a74fe6ad13b6cac",
+      "source_uri": "https://packages.debian.org/trixie/findutils",
+      "license_claim": "PACKAGE-IDENTIFIERS-ONLY; EXACT-FILE RIGHTS NOT VERIFIED",
+      "attribution": "Copyright holders in pinned package copyright; exact attribution required before import",
+      "training_allowed": false,
+      "distribution_allowed": false,
+      "imported": false
+    }
+  ]
+}

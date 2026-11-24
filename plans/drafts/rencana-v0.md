@@ -1,16 +1,16 @@
-# AI Lab — Trans OS: Draft Rencana v0
+# AI Lab — Dictum: Draft Rencana v0
 
 **Tanggal:** 24 November 2026  
 **Status:** DRAFT-0 — eksplorasi, belum disetujui sebagai kontrak implementasi  
-**Repositori:** [megaalive/ai-lab-trans-os](https://github.com/megaalive/ai-lab-trans-os)  
-**Nama kerja:** Trans OS (penerjemah bahasa manusia ke operasi sistem operasi)  
+**Repositori:** [megaalive/ai-lab-dictum](https://github.com/megaalive/ai-lab-dictum)  
+**Nama proyek:** Dictum (penerjemah bahasa manusia ke operasi sistem operasi)  
 **Keputusan saat ini:** GO untuk riset dan prototipe terisolasi; NO-GO untuk eksekusi otomatis di mesin produksi.
 
 ## 1. Latar belakang dan visi
 
 Pengguna sistem operasi tidak semestinya harus menghafal ratusan nama utilitas, opsi, kombinasi argumen, perbedaan distribusi dan sintaks shell hanya untuk menyatakan pekerjaan yang sudah dipahaminya. Dokumentasi dan command history membantu, tetapi masih mengharuskan pengguna mengetahui kata kunci yang tepat. LLM umum dapat menerjemahkan maksud tersebut, tetapi biaya memori, latensi, ketergantungan layanan, risiko kerahasiaan, dan halusinasi kurang ideal untuk tugas lokal yang sempit.
 
-Trans OS adalah eksperimen membangun model bahasa kecil milik sendiri yang memahami instruksi sehari-hari dalam bahasa Indonesia dan Inggris, menerjemahkannya ke representasi operasi formal, dan bila diminta membantu pengguna menjalankannya secara aman. Fokus pertama bukan percakapan umum, melainkan **natural language → OS operation**.
+Dictum adalah eksperimen membangun model bahasa kecil milik sendiri yang memahami instruksi sehari-hari dalam bahasa Indonesia dan Inggris, menerjemahkannya ke representasi operasi formal, dan bila diminta membantu pengguna menjalankannya secara aman. Fokus pertama bukan percakapan umum, melainkan **natural language → OS operation**.
 
 Visi jangka panjang: setiap orang dapat memiliki penerjemah OS pribadi, offline, ringan, bisa diaudit, dilatih ulang dan diperluas tanpa bergantung kepada penyedia AI. Ini juga menjadi instrumen pendidikan AI Lab: Explore (inspeksi mekanisme), Experiment (latih dan bandingkan), Research (uji hipotesis dan reproduksi). Model hasil training dari nol adalah keluaran riset utama; aplikasi praktis boleh memakai pendekatan non-neural atau hibrida bila bukti lebih mendukungnya.
 
@@ -154,13 +154,13 @@ Gunakan schema-version, capability-id stabil, adapter version dan compatibility 
 
 Pilihan awal: C17 atau C++17/20, CMake atau Make sederhana; pilih setelah spike berdasarkan waktu build, footprint, portability, memory safety dan maintainability. C# NativeAOT adalah alternatif produk/binding, bukan keputusan awal. Python/PyTorch untuk training, export dan test oracle. Evaluasi llama2.c, llm.c dan llama.cpp sebagai referensi/benchmark; jangan menambah runtime besar tanpa pembuktian. Gunakan reference scalar CPU, kemudian SIMD/BLAS opsional jika profiling mendukung; batasi threads. Target single executable + model file + catalog pack, tanpa daemon wajib, telemetry, network, updater otomatis, framework GUI berat, Python/Node runtime.
 
-Perintah CLI ilustratif (nama final belum dipilih):
-- transos ask "siapa yang menggunakan port 8080?" — preview + arti + source.
-- transos explain — jelaskan langkah yang dipilih dan batasannya.
-- transos search — cari dokumentasi/katalog tanpa neural.
-- transos run — opt-in, setelah gate keamanan dan persetujuan.
-- transos inspect — model/catalog version, parameter count, latency, profile.
-- transos lab — mode edukasi opsional, visualisasi token, logits, loss, quantization dan benchmark; tidak menambah izin eksekusi.
+Perintah CLI ilustratif (executable: dictum):
+- dictum ask "siapa yang menggunakan port 8080?" — preview + arti + source.
+- dictum explain — jelaskan langkah yang dipilih dan batasannya.
+- dictum search — cari dokumentasi/katalog tanpa neural.
+- dictum run — opt-in, setelah gate keamanan dan persetujuan.
+- dictum inspect — model/catalog version, parameter count, latency, profile.
+- dictum lab — mode edukasi opsional, visualisasi token, logits, loss, quantization dan benchmark; tidak menambah izin eksekusi.
 
 UX default jawaban ringkas, tampilkan perintah, tujuan, scope, sumber versi dan dampak. Clarification hanya bila material; tampilkan kandidat jika ambigu. Tidak mengandalkan confidence softmax mentah sebagai probabilitas kebenaran. Mode verbose untuk debugging; history lokal opt-in, redacted, retensi terbatas, tidak dipakai training secara otomatis. TUI, completion shell, keyboard shortcut dan voice interface (STT/TTS lokal) adalah ide lanjutan; bukan prasyarat produk. Tidak menyisipkan teks model langsung ke shell history sebagai perintah yang dijalankan.
 
@@ -283,11 +283,11 @@ Struktur belum dibuat pada v0. Data besar, weights, training logs dan fixture se
 | Scope creep menjadi agent umum | non-goal eksplisit, adapter dan fase terpisah |
 | Mesin training terbatas | model kecil, fixed compute budget, profiling CPU, GPU opsional |
 
-Keputusan yang masih perlu review pada v1: nama executable; bahasa runtime; lisensi proyek/data/model terpisah; daftar intent prioritas; definisi oracle; hardware referensi dan budget compute; ukuran/model architecture pertama; format IR/model pack; apakah catalog license memungkinkan distribusi; metode sandbox; apakah produk awal hanya preview. Jangan memutuskan berdasarkan popularitas repositori.
+Keputusan yang masih perlu review pada v1: bahasa runtime; lisensi proyek/data/model terpisah; daftar intent prioritas; definisi oracle; hardware referensi dan budget compute; ukuran/model architecture pertama; format IR/model pack; apakah catalog license memungkinkan distribusi; metode sandbox; apakah produk awal hanya preview. Jangan memutuskan berdasarkan popularitas repositori.
 
 ## 15. Referensi inspirasi (ditelusuri 24 November 2026)
 
-Referensi di bawah ditinjau melalui halaman proyek, README atau abstrak publik; belum direproduksi atau diaudit kode secara penuh. Klaim pengembang bukan hasil benchmark Trans OS. Pin commit/release, verifikasi lisensi dan reproduksi pada F0/F1.
+Referensi di bawah ditinjau melalui halaman proyek, README atau abstrak publik; belum direproduksi atau diaudit kode secara penuh. Klaim pengembang bukan hasil benchmark Dictum. Pin commit/release, verifikasi lisensi dan reproduksi pada F0/F1.
 
 | ID | Referensi | Ide yang diambil dan batasnya |
 |---|---|---|

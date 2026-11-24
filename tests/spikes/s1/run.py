@@ -87,6 +87,8 @@ def generated(profile):
                       for _ in range(rng.randint(1,4))]
             if n % 11 == 0:
                 values.append("")
+        # Keep every generated input unique, not merely its ID; preserve the edge tokens.
+        values.append(f"case-{n:04d}")
         # Known grammar: -- followed by literals; "-" alone has special meaning.
         yield case(cid,profile,[{"kind":"option-end"},*[lit(x) for x in values]]), \
             [DUMPER,"--",*values], None
@@ -95,7 +97,7 @@ def generated(profile):
         kind = n % 10
         marker = f"CANARY_SECRET_{n}"
         if kind == 0:
-            yield case(cid,profile,[]), None, INVALID[n % len(INVALID)]
+            yield case(cid,profile,[]), None, INVALID[(n//10) % len(INVALID)]+str(n).encode("ascii")
             continue
         args = [{"kind":"option-end"},lit(marker)]
         c = case(cid,profile,args)
@@ -107,6 +109,7 @@ def generated(profile):
             c["shell"] = "unknown"
         elif kind == 4:
             args[1] = lit("-")
+            args.append(lit(marker))
         elif kind == 5:
             c["gate"] = "blocked"
         elif kind == 6:
@@ -115,10 +118,10 @@ def generated(profile):
         elif kind == 7:
             c["action"]["kind"] = "execution-candidate"
         elif kind == 8:
-            c["action"]["operation"]["argv"] = [lit("x")]*33
+            c["action"]["operation"]["argv"] = [lit("x")]*32+[lit(marker)]
         elif kind == 9:
             c["action"]["operation"]["argv"] = [
-                {"kind":"option-end"}, *[lit("'"*1024) for _ in range(10)]]
+                {"kind":"option-end"}, *[lit("'"*1024) for _ in range(10)],lit(marker)]
         yield c, None, None
 
 
@@ -261,6 +264,7 @@ def run_profile(profile):
     accepted = rejected = 0
     corpus = hashlib.sha256()
     ids = set()
+    input_hashes = set()
     with tempfile.TemporaryDirectory(prefix="s1-") as temp:
         root = Path(temp)
         cwd = root/"empty"
@@ -272,12 +276,22 @@ def run_profile(profile):
             result = render(probe)
             roundtrip(result["preview"],[DUMPER,"--","probe"],profile,trace,cwd)
         except (AssertionError,KeyError,OSError,subprocess.TimeoutExpired) as exc:
+            # Fixed synthetic preflight probe only; never log generated/canary argv.
+            if trace.exists():
+                for line in trace.read_text(errors="backslashreplace").splitlines():
+                    if re.search(r"\b(?:open|openat|openat2)\(",line) and not "O_RDONLY" in line:
+                        print("S1 preflight diagnostic "+line[:400],flush=True)
             raise Blocked("tracer-or-inert-preflight:"+str(exc)) from exc
         print(f"S1 preflight round-trip verified profile={profile}",flush=True)
         for c,expected,invalid in generated(profile):
             cid = c["id"]
             need(cid not in ids,"duplicate-id")
             ids.add(cid)
+            payload = {k:v for k,v in c.items() if k not in {"id","expected"}}
+            unique = hashlib.sha256(json.dumps([payload,invalid.hex() if invalid else None],
+                                    ensure_ascii=True,sort_keys=True).encode()).hexdigest()
+            need(unique not in input_hashes,"duplicate-input")
+            input_hashes.add(unique)
             corpus.update(json.dumps([c,expected,invalid.hex() if invalid else None],
                           ensure_ascii=True,sort_keys=True,separators=(",",":")).encode()+b"\n")
             try:

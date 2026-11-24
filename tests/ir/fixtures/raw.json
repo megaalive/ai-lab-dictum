@@ -3,6 +3,7 @@
   {"id":"BY-whitespace","expect":"ok","text":" \r\n{}\t "},
   {"id":"BY-key-scope","expect":"ok","text":"[{\"a\":1},{\"a\":2}]"},
   {"id":"BY-escaped-pair","expect":"ok","text":"{\"x\":\"\\ud83d\\ude42\"}"},
+  {"id":"BY-escaped-last-allowed","expect":"ok","text":"{\"x\":\"\\udbff\\udffd\"}"},
   {"id":"BY-escaped-backslash","expect":"ok","text":"{\"x\":\"\\\\u0000\"}"},
   {"id":"BY-brackets-inside-string","expect":"ok","text":"{\"x\":\"]{[\\\"\\\\\"}"},
   {"id":"BY-max-integer","expect":"ok","text":"{\"x\":9007199254740991}"},
@@ -33,6 +34,9 @@
   {"id":"BY-utf16le","expect":"byte/nul","hex":"7b007d00"},
   {"id":"BY-high-surrogate","expect":"byte/surrogate","text":"{\"x\":\"\\ud800\"}"},
   {"id":"BY-low-surrogate-key","expect":"byte/surrogate","text":"{\"\\udc00\":1}"},
+  {"id":"BY-noncharacter-utf8","expect":"byte/noncharacter","hex":"7b2278223a22efb790227d"},
+  {"id":"BY-noncharacter-escaped-key","expect":"byte/noncharacter","text":"{\"\\uffff\":1}"},
+  {"id":"BY-noncharacter-plane-end","expect":"byte/noncharacter","text":"{\"x\":\"\\udbff\\udffe\"}"},
   {"id":"BY-positive-overflow","expect":"byte/integer-range","text":"{\"x\":9007199254740992}"},
   {"id":"BY-negative-overflow","expect":"byte/integer-range","text":"{\"x\":-9007199254740992}"},
   {"id":"BY-long-number","expect":"byte/integer-range","text":"{\"x\":90071992547409929007199254740992}"},
@@ -62,5 +66,6 @@
   {"id":"BY-key-bytes-over","expect":"byte/string-size","repeat":["{\"","é",2049,"\":0}"]},
   {"id":"BY-empty-input","expect":"byte/input-size","target":"input","text":""},
   {"id":"BY-input-over","expect":"byte/input-size","target":"input","repeat":["","é",2049,""]},
-  {"id":"BY-input-utf8","expect":"byte/utf8","target":"input","hex":"eda080"}
+  {"id":"BY-input-utf8","expect":"byte/utf8","target":"input","hex":"eda080"},
+  {"id":"BY-input-noncharacter","expect":"byte/noncharacter","target":"input","hex":"efbfbe"}
 ]

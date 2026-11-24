@@ -16,7 +16,6 @@ WHITESPACE = " \t\r\n"
 class Reject(Exception):
     def __init__(self, layer, code):
         super().__init__(f"{layer}/{code}")
-        self.layer = layer
 
 
 def unique_object(pairs):
@@ -47,13 +46,22 @@ def reject_nonfinite(_token):
     raise Reject("byte", "nonfinite")
 
 
+def check_noncharacters(text):
+    for character in text:
+        codepoint = ord(character)
+        if 0xFDD0 <= codepoint <= 0xFDEF or (codepoint & 0xFFFF) >= 0xFFFE:
+            raise Reject("byte", "noncharacter")
+
+
 def scalar_bytes(text):
     if "\x00" in text:
         raise Reject("byte", "nul")
     try:
-        return text.encode("utf-8", errors="strict")
+        data = text.encode("utf-8", errors="strict")
     except UnicodeEncodeError as exc:
         raise Reject("byte", "surrogate") from exc
+    check_noncharacters(text)
+    return data
 
 
 def decode_utf8(data):
@@ -68,7 +76,7 @@ def decode_utf8(data):
 def check_input(data):
     if not 1 <= len(data) <= MAX_INPUT:
         raise Reject("byte", "input-size")
-    decode_utf8(data)
+    check_noncharacters(decode_utf8(data))
     return data
 
 

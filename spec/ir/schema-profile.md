@@ -49,13 +49,16 @@ normalisasi. Tolak duplikat dalam objek yang sama, termasuk ejaan escaped
 yang menghasilkan key identik. Tolak NUL pada byte mentah, nama, dan nilai
 terdekode. Tolak UTF-8 overlong, terpotong, encoding surrogate, serta
 surrogate tunggal atau pasangan escape yang tidak sah. Pasangan high–low
-yang sah menghasilkan satu scalar. Tolak sintaks rusak, nilai JSON kedua,
+yang sah menghasilkan satu scalar. Tolak noncharacter Unicode di nama dan
+nilai, termasuk U+FDD0–U+FDEF serta dua titik kode terakhir di tiap plane,
+agar semua objek v1 memenuhi batas karakter I-JSON untuk kanonisasi.
+Tolak sintaks rusak, nilai JSON kedua,
 dan data lain setelah nilai pertama selain whitespace yang diizinkan.
-[RFC 8259](https://www.rfc-editor.org/rfc/rfc8259.html)
+[RFC 8259](https://www.rfc-editor.org/rfc/rfc8259.html) · [RFC 7493](https://www.rfc-editor.org/rfc/rfc7493.html#section-2.1)
 
 | Batas | Nilai dan alasan |
 | --- | --- |
-| Instruksi asli | 1–4.096 byte UTF-8 tanpa NUL. Cukup untuk pertanyaan CLI dan menjaga span kecil. |
+| Instruksi asli | 1–4.096 byte UTF-8 tanpa NUL atau noncharacter. Cukup untuk pertanyaan CLI dan menjaga span kecil. |
 | Payload JSON per objek | 32.768 byte termasuk whitespace. Memberi ruang untuk slot, argv, dan provenance sambil membatasi kerja decode. Instruksi asli berada di envelope lokal terpisah. |
 | Kedalaman | Maksimum 12 kontainer, akar objek/array dihitung satu. Bentuk IR saat ini dangkal dan parser memeriksa depth sebelum decode rekursif. |
 | Lebar kontainer | Maksimum 32 anggota per objek dan 64 elemen per array di layer byte. Schema memperketat per field. |

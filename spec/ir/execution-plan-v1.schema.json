@@ -1,0 +1,183 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dictum.invalid/spec/ir/execution-plan-v1.schema.json",
+  "title": "ExecutionPlan v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "request_id",
+    "resolution_id",
+    "decision_id",
+    "action_id",
+    "context_id",
+    "catalog",
+    "policy",
+    "effect",
+    "scope",
+    "target_bindings",
+    "action",
+    "digest"
+  ],
+  "properties": {
+    "schema_version": { "type": "integer", "const": 1 },
+    "request_id": { "$ref": "nlu-proposal-v1.schema.json#/$defs/opaque_id" },
+    "resolution_id": { "$ref": "nlu-proposal-v1.schema.json#/$defs/opaque_id" },
+    "decision_id": { "$ref": "nlu-proposal-v1.schema.json#/$defs/opaque_id" },
+    "action_id": { "$ref": "nlu-proposal-v1.schema.json#/$defs/opaque_id" },
+    "context_id": { "$ref": "resolved-ir-v1.schema.json#/$defs/sha256" },
+    "catalog": { "$ref": "resolved-ir-v1.schema.json#/$defs/versioned_identity" },
+    "policy": { "$ref": "resolved-ir-v1.schema.json#/$defs/versioned_identity" },
+    "effect": { "$ref": "policy-decision-v1.schema.json#/$defs/effect" },
+    "scope": { "$ref": "policy-decision-v1.schema.json#/$defs/scope" },
+    "target_bindings": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 16,
+      "items": {
+        "type": "object",
+        "required": ["slot", "binding_id"],
+        "properties": {
+          "slot": { "$ref": "nlu-proposal-v1.schema.json#/$defs/slot_name" },
+          "binding_id": { "$ref": "nlu-proposal-v1.schema.json#/$defs/opaque_id" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "action": { "$ref": "#/$defs/action" },
+    "digest": { "$ref": "resolved-ir-v1.schema.json#/$defs/sha256" }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "action": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["kind", "operation"],
+          "properties": {
+            "kind": { "type": "string", "const": "proposal-only" },
+            "operation": { "$ref": "#/$defs/executable" }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": ["kind", "operation"],
+          "properties": {
+            "kind": { "type": "string", "const": "structured-proposal" },
+            "operation": { "$ref": "#/$defs/native" }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": ["kind", "operation", "constraints", "expires_boottime_ms"],
+          "properties": {
+            "kind": { "type": "string", "const": "execution-candidate" },
+            "operation": {
+              "oneOf": [
+                { "$ref": "#/$defs/executable" },
+                { "$ref": "#/$defs/native" }
+              ]
+            },
+            "constraints": { "$ref": "#/$defs/constraints" },
+            "expires_boottime_ms": { "type": "integer", "minimum": 1, "maximum": 9007199254740991 }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "executable": {
+      "type": "object",
+      "required": ["kind", "identity", "argv"],
+      "properties": {
+        "kind": { "type": "string", "const": "executable" },
+        "identity": { "$ref": "#/$defs/executable_identity" },
+        "argv": {
+          "type": "array",
+          "minItems": 0,
+          "maxItems": 32,
+          "items": { "$ref": "#/$defs/argument" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "native": {
+      "type": "object",
+      "required": ["kind", "handler", "input_slots"],
+      "properties": {
+        "kind": { "type": "string", "const": "native" },
+        "handler": { "$ref": "nlu-proposal-v1.schema.json#/$defs/intent_id" },
+        "input_slots": {
+          "type": "array",
+          "minItems": 0,
+          "maxItems": 16,
+          "items": { "$ref": "nlu-proposal-v1.schema.json#/$defs/slot_name" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "executable_identity": {
+      "type": "object",
+      "required": ["path", "sha256", "version"],
+      "properties": {
+        "path": { "type": "string", "minLength": 2, "maxLength": 1024, "pattern": "^/" },
+        "sha256": { "$ref": "resolved-ir-v1.schema.json#/$defs/sha256" },
+        "version": { "type": "string", "minLength": 1, "maxLength": 64 }
+      },
+      "additionalProperties": false
+    },
+    "argument": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["kind", "value"],
+          "properties": {
+            "kind": { "type": "string", "const": "flag" },
+            "value": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 64,
+              "pattern": "^--?[A-Za-z0-9][A-Za-z0-9-]*(?![\\s\\S])"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": ["kind"],
+          "properties": {
+            "kind": { "type": "string", "const": "option-end" }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": ["kind", "value"],
+          "properties": {
+            "kind": { "type": "string", "const": "literal" },
+            "value": { "type": "string", "minLength": 0, "maxLength": 1024 }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": ["kind", "value"],
+          "properties": {
+            "kind": { "type": "string", "const": "integer" },
+            "value": { "type": "integer", "minimum": -9007199254740991, "maximum": 9007199254740991 }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "constraints": {
+      "type": "object",
+      "required": ["timeout_ms", "max_output_bytes"],
+      "properties": {
+        "timeout_ms": { "type": "integer", "minimum": 1, "maximum": 5000 },
+        "max_output_bytes": { "type": "integer", "minimum": 1, "maximum": 65536 }
+      },
+      "additionalProperties": false
+    }
+  }
+}

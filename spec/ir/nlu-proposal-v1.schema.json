@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dictum.invalid/spec/ir/nlu-proposal-v1.schema.json",
+  "title": "NLUProposal v1",
+  "type": "object",
+  "required": ["schema_version", "intent_candidates", "slot_candidates", "abstain_hint"],
+  "properties": {
+    "schema_version": { "type": "integer", "const": 1 },
+    "intent_candidates": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 8,
+      "items": { "$ref": "#/$defs/intent_candidate" }
+    },
+    "slot_candidates": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 32,
+      "items": { "$ref": "#/$defs/slot_candidate" }
+    },
+    "abstain_hint": {
+      "type": "string",
+      "enum": ["none", "ambiguous", "out-of-domain", "low-confidence"]
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "intent_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 64,
+      "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)+(?![\\s\\S])"
+    },
+    "slot_name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 32,
+      "pattern": "^[a-z][a-z0-9_]*(?![\\s\\S])"
+    },
+    "span": {
+      "type": "object",
+      "required": ["start", "end"],
+      "properties": {
+        "start": { "type": "integer", "minimum": 0, "maximum": 4096 },
+        "end": { "type": "integer", "minimum": 0, "maximum": 4096 }
+      },
+      "additionalProperties": false
+    },
+    "opaque_id": {
+      "type": "string",
+      "minLength": 32,
+      "maxLength": 32,
+      "pattern": "^[0-9a-f]{32}(?![\\s\\S])"
+    },
+    "slot_kind": {
+      "type": "string",
+      "enum": [
+        "port",
+        "protocol",
+        "positive-int",
+        "depth",
+        "duration-seconds",
+        "time-window",
+        "path",
+        "unit-name",
+        "extension",
+        "filename"
+      ]
+    },
+    "slot_candidate_id": { "type": "integer", "minimum": 0, "maximum": 31 },
+    "intent_candidate": {
+      "type": "object",
+      "required": ["intent", "slot_candidate_ids"],
+      "properties": {
+        "intent": { "$ref": "#/$defs/intent_id" },
+        "slot_candidate_ids": {
+          "type": "array",
+          "minItems": 0,
+          "maxItems": 16,
+          "items": { "$ref": "#/$defs/slot_candidate_id" }
+        },
+        "score_bp": { "type": "integer", "minimum": 0, "maximum": 10000 }
+      },
+      "additionalProperties": false
+    },
+    "slot_candidate": {
+      "type": "object",
+      "required": ["id", "slot", "source"],
+      "properties": {
+        "id": { "$ref": "#/$defs/slot_candidate_id" },
+        "slot": { "$ref": "#/$defs/slot_name" },
+        "source": {
+          "oneOf": [
+            {
+              "type": "object",
+              "required": ["kind", "span"],
+              "properties": {
+                "kind": { "type": "string", "const": "input-span" },
+                "span": { "$ref": "#/$defs/span" }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": ["kind", "candidate_id", "expected_kind"],
+              "properties": {
+                "kind": { "type": "string", "const": "context-ref" },
+                "candidate_id": { "$ref": "#/$defs/opaque_id" },
+                "expected_kind": { "$ref": "#/$defs/slot_kind" }
+              },
+              "additionalProperties": false
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

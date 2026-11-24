@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dictum.invalid/spec/ir/policy-decision-v1.schema.json",
+  "title": "PolicyDecision v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "request_id",
+    "resolution_id",
+    "decision_id",
+    "context_id",
+    "catalog",
+    "policy",
+    "decision",
+    "effect",
+    "scope",
+    "reason"
+  ],
+  "properties": {
+    "schema_version": { "type": "integer", "const": 1 },
+    "request_id": { "$ref": "nlu-proposal-v1.schema.json#/$defs/opaque_id" },
+    "resolution_id": { "$ref": "nlu-proposal-v1.schema.json#/$defs/opaque_id" },
+    "decision_id": { "$ref": "nlu-proposal-v1.schema.json#/$defs/opaque_id" },
+    "context_id": { "$ref": "resolved-ir-v1.schema.json#/$defs/sha256" },
+    "catalog": { "$ref": "resolved-ir-v1.schema.json#/$defs/versioned_identity" },
+    "policy": { "$ref": "resolved-ir-v1.schema.json#/$defs/versioned_identity" },
+    "decision": { "$ref": "#/$defs/decision_kind" },
+    "effect": { "$ref": "#/$defs/effect" },
+    "scope": { "$ref": "#/$defs/scope" },
+    "reason": {
+      "type": "string",
+      "enum": [
+        "proposal-eligible",
+        "execute-eligible",
+        "ambiguous",
+        "missing-slot",
+        "unsupported-intent",
+        "unsupported-profile",
+        "invalid-candidate",
+        "policy-restriction"
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "decision_kind": {
+      "type": "string",
+      "enum": ["allow-proposal", "allow-execute-eligible", "clarify", "unsupported", "deny"]
+    },
+    "effect": {
+      "type": "object",
+      "required": ["class", "axes"],
+      "properties": {
+        "class": {
+          "type": "string",
+          "enum": ["INFO", "READ", "CHANGE", "HIGH", "UNKNOWN"]
+        },
+        "axes": {
+          "type": "array",
+          "minItems": 0,
+          "maxItems": 9,
+          "items": {
+            "type": "string",
+            "enum": [
+              "filesystem-read",
+              "filesystem-write",
+              "ipc",
+              "network",
+              "persistent-mutation",
+              "requires-privilege",
+              "resource-usage",
+              "secret-exposure",
+              "spawn"
+            ]
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "scope": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["kind"],
+          "properties": {
+            "kind": { "type": "string", "const": "none" }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": ["kind", "scope_id"],
+          "properties": {
+            "kind": { "type": "string", "const": "local" },
+            "scope_id": { "$ref": "nlu-proposal-v1.schema.json#/$defs/opaque_id" }
+          },
+          "additionalProperties": false
+        }
+      ]
+    }
+  }
+}

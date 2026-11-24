@@ -1,0 +1,849 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dictum.invalid/spec/catalog/catalog-v1.schema.json",
+  "title": "Dictum F0-A catalog contract v1",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/registry"
+    },
+    {
+      "$ref": "#/$defs/profile"
+    },
+    {
+      "$ref": "#/$defs/fixtures"
+    }
+  ],
+  "$defs": {
+    "slot": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 32,
+          "pattern": "^[a-z][a-z0-9_]*(?![\\s\\S])"
+        },
+        "kind": {
+          "$ref": "../ir/nlu-proposal-v1.schema.json#/$defs/slot_kind"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "default": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "../ir/resolved-ir-v1.schema.json#/$defs/slot_value"
+            }
+          ]
+        },
+        "minimum": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 604800
+            }
+          ]
+        },
+        "maximum": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 604800
+            }
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "kind",
+        "required",
+        "default",
+        "minimum",
+        "maximum"
+      ],
+      "additionalProperties": false
+    },
+    "deferred_slot": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 32,
+          "pattern": "^[a-z][a-z0-9_]*(?![\\s\\S])"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "domain": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "status": {
+          "const": "DEFERRED"
+        }
+      },
+      "required": [
+        "name",
+        "required",
+        "domain",
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "constraint": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "enum": [
+            "at-least-one",
+            "at-least-one-explicit"
+          ]
+        },
+        "slots": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 32,
+            "pattern": "^[a-z][a-z0-9_]*(?![\\s\\S])"
+          },
+          "minItems": 2,
+          "maxItems": 16,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "kind",
+        "slots"
+      ],
+      "additionalProperties": false
+    },
+    "scope": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "local"
+        },
+        "allowed_root_types": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "current-identity",
+              "explicit-archive-file",
+              "explicit-data-file",
+              "explicit-data-root",
+              "explicit-new-archive-file",
+              "explicit-new-data-root",
+              "local-journal",
+              "local-metadata-guidance",
+              "local-mount-metadata",
+              "local-network-metadata",
+              "local-package-metadata",
+              "local-process-metadata",
+              "local-service-metadata",
+              "local-session-metadata",
+              "system-metadata",
+              "verified-catalog"
+            ]
+          },
+          "minItems": 1,
+          "maxItems": 3,
+          "uniqueItems": true
+        },
+        "explicit_authorization": {
+          "const": true
+        },
+        "recursive_cwd_default": {
+          "const": false
+        },
+        "forbidden_path_classes": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "shadow",
+              "ssh-keys",
+              "cloud-kube-credentials",
+              "dotenv",
+              "shell-history",
+              "proc-environ-mem",
+              "device-nodes",
+              "database-data",
+              "browser-profiles",
+              "unknown-sensitive"
+            ]
+          },
+          "minItems": 10,
+          "maxItems": 10,
+          "uniqueItems": true
+        },
+        "limits": {
+          "type": "object",
+          "properties": {
+            "timeout_ms": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5000
+            },
+            "max_output_bytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 65536
+            },
+            "max_entries": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            },
+            "max_depth": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 8
+            },
+            "max_input_file_bytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1048576
+            }
+          },
+          "required": [
+            "timeout_ms",
+            "max_output_bytes",
+            "max_entries",
+            "max_depth",
+            "max_input_file_bytes"
+          ],
+          "additionalProperties": false
+        },
+        "path_boundary": {
+          "const": "descriptor-and-identity-required-before-access"
+        }
+      },
+      "required": [
+        "kind",
+        "allowed_root_types",
+        "explicit_authorization",
+        "recursive_cwd_default",
+        "forbidden_path_classes",
+        "limits",
+        "path_boundary"
+      ],
+      "additionalProperties": false
+    },
+    "source": {
+      "type": "object",
+      "properties": {
+        "baseline_blob": {
+          "const": "b3554946d62549b7417ea451294ff65b4f01a1fe"
+        },
+        "baseline_ordinal": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 48
+        },
+        "authorship": {
+          "const": "original-contract-summary"
+        },
+        "external_reference_candidate": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "external_version": {
+          "const": null
+        },
+        "external_hash": {
+          "const": null
+        },
+        "license_status": {
+          "const": "NOT VERIFIED"
+        },
+        "external_content_imported": {
+          "const": false
+        }
+      },
+      "required": [
+        "baseline_blob",
+        "baseline_ordinal",
+        "authorship",
+        "external_reference_candidate",
+        "external_version",
+        "external_hash",
+        "license_status",
+        "external_content_imported"
+      ],
+      "additionalProperties": false
+    },
+    "fixture_id": {
+      "type": "string",
+      "pattern": "^CAT-(0[1-9]|[1-3][0-9]|4[0-8])(?![\\s\\S])"
+    },
+    "intent": {
+      "type": "object",
+      "properties": {
+        "ordinal": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 48
+        },
+        "id": {
+          "$ref": "../ir/nlu-proposal-v1.schema.json#/$defs/intent_id"
+        },
+        "description": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "en": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "required": [
+            "id",
+            "en"
+          ],
+          "additionalProperties": false
+        },
+        "skeleton": {
+          "type": "boolean"
+        },
+        "slots": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/slot"
+          },
+          "minItems": 0,
+          "maxItems": 16
+        },
+        "deferred_slots": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/deferred_slot"
+          },
+          "minItems": 0,
+          "maxItems": 16
+        },
+        "slot_constraints": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/constraint"
+          },
+          "minItems": 0,
+          "maxItems": 8
+        },
+        "effect": {
+          "$ref": "../ir/policy-decision-v1.schema.json#/$defs/effect"
+        },
+        "proposal_eligible": {
+          "const": true
+        },
+        "execute_eligible": {
+          "const": false
+        },
+        "future_execution": {
+          "enum": [
+            "PERMANENT-PROPOSAL-ONLY",
+            "NO-EXECUTOR-NEEDED",
+            "F5-CANDIDATE-BLOCKED"
+          ]
+        },
+        "scope": {
+          "$ref": "#/$defs/scope"
+        },
+        "output_projection": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "active_state",
+              "address",
+              "allocated_bytes",
+              "approved_options",
+              "architecture",
+              "archive_id",
+              "available_bytes",
+              "boot_id",
+              "cache_bytes",
+              "cache_status",
+              "change_warning",
+              "comm",
+              "cores",
+              "count",
+              "cpu_percent",
+              "description",
+              "destination",
+              "destination_id",
+              "device_id",
+              "distribution",
+              "enabled_state",
+              "entry_name_redacted",
+              "entry_type",
+              "explanation",
+              "failed_state",
+              "file_execute_access",
+              "file_read_access",
+              "file_write_access",
+              "filesystem_type",
+              "free_inodes",
+              "frequency_if_visible",
+              "gateway",
+              "gid",
+              "group_ids",
+              "identity",
+              "installed",
+              "intent_id",
+              "interface",
+              "kernel",
+              "limitations",
+              "line_number",
+              "link_state",
+              "load_1",
+              "load_15",
+              "load_5",
+              "local_port",
+              "login_time",
+              "main_pid_if_visible",
+              "match_reason",
+              "match_redacted",
+              "memory_if_visible",
+              "message_redacted",
+              "metric",
+              "mode",
+              "mount_id",
+              "nameserver",
+              "network_warning",
+              "option",
+              "package",
+              "partial",
+              "percent",
+              "pid",
+              "pid_if_visible",
+              "ppid",
+              "priority",
+              "privilege_warning",
+              "proposal_status",
+              "protocol",
+              "query_name",
+              "query_type",
+              "rank",
+              "read_only",
+              "relative_path",
+              "remote_port",
+              "resolver_mode",
+              "rss_bytes",
+              "scope_warning",
+              "search_domain_if_allowed",
+              "size_bytes",
+              "source_id",
+              "state",
+              "steps",
+              "summary_redacted",
+              "swap_total_bytes",
+              "swap_used_bytes",
+              "symlink_warning",
+              "target",
+              "text_redacted",
+              "threads",
+              "timestamp",
+              "total_bytes",
+              "total_inodes",
+              "traversal_warning",
+              "tty",
+              "type",
+              "uid",
+              "unit",
+              "uptime_seconds",
+              "used_bytes",
+              "used_inodes",
+              "user",
+              "utility",
+              "version",
+              "visibility",
+              "warnings"
+            ]
+          },
+          "minItems": 1,
+          "maxItems": 24,
+          "uniqueItems": true
+        },
+        "redaction_profile": {
+          "const": "allowlisted-fields-canary-fail-closed-v1"
+        },
+        "source": {
+          "$ref": "#/$defs/source"
+        },
+        "fixture_id": {
+          "$ref": "#/$defs/fixture_id"
+        },
+        "requires_privilege": {
+          "enum": [
+            "POSSIBLE",
+            "NOT VERIFIED"
+          ]
+        }
+      },
+      "required": [
+        "ordinal",
+        "id",
+        "description",
+        "skeleton",
+        "slots",
+        "deferred_slots",
+        "slot_constraints",
+        "effect",
+        "proposal_eligible",
+        "execute_eligible",
+        "future_execution",
+        "scope",
+        "output_projection",
+        "redaction_profile",
+        "source",
+        "fixture_id",
+        "requires_privilege"
+      ],
+      "additionalProperties": false
+    },
+    "rights": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "NOT VERIFIED"
+        },
+        "minimum_access": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "required_groups": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "minItems": 0,
+          "maxItems": 0
+        },
+        "request_additional_groups": {
+          "const": false
+        },
+        "privilege_may_be_required": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "status",
+        "minimum_access",
+        "required_groups",
+        "request_additional_groups",
+        "privilege_may_be_required"
+      ],
+      "additionalProperties": false
+    },
+    "binding": {
+      "type": "object",
+      "properties": {
+        "intent": {
+          "$ref": "../ir/nlu-proposal-v1.schema.json#/$defs/intent_id"
+        },
+        "adapter": {
+          "const": "linux.debian13.v1"
+        },
+        "capability_id": {
+          "$ref": "../ir/nlu-proposal-v1.schema.json#/$defs/intent_id"
+        },
+        "backend_candidate": {
+          "enum": [
+            "indexed-documentation",
+            "native-metadata",
+            "executable-candidate",
+            "structured-candidate",
+            "diagnostic-guide"
+          ]
+        },
+        "minimum_version": {
+          "const": null
+        },
+        "version_status": {
+          "const": "NOT VERIFIED"
+        },
+        "compatibility": {
+          "const": "NOT VERIFIED"
+        },
+        "capability_status": {
+          "const": "BLOCKED"
+        },
+        "rights": {
+          "$ref": "#/$defs/rights"
+        },
+        "socket_domains": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "AF_NETLINK",
+              "AF_UNIX",
+              "AF_INET",
+              "AF_INET6"
+            ]
+          },
+          "minItems": 0,
+          "maxItems": 4,
+          "uniqueItems": true
+        },
+        "ipc_candidates": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "journal-ipc",
+              "netlink-route",
+              "netlink-sock-diag",
+              "resolver-ipc",
+              "systemd-dbus"
+            ]
+          },
+          "minItems": 0,
+          "maxItems": 8,
+          "uniqueItems": true
+        },
+        "namespace_visibility": {
+          "enum": [
+            "catalog",
+            "cpu-cgroup",
+            "host-identity",
+            "journal-mount-time",
+            "memory-cgroup",
+            "mount",
+            "mount-device",
+            "mount-network",
+            "mount-user",
+            "network",
+            "network-pid",
+            "none",
+            "pid-time",
+            "pid-user",
+            "service-manager",
+            "service-manager-mount",
+            "service-manager-pid",
+            "session-mount",
+            "user"
+          ]
+        },
+        "data_source_candidate": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "host_equivalence": {
+          "type": "object",
+          "properties": {
+            "method": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 512
+            },
+            "result": {
+              "const": "NOT RUN"
+            }
+          },
+          "required": [
+            "method",
+            "result"
+          ],
+          "additionalProperties": false
+        },
+        "fixture_id": {
+          "$ref": "#/$defs/fixture_id"
+        }
+      },
+      "required": [
+        "intent",
+        "adapter",
+        "capability_id",
+        "backend_candidate",
+        "minimum_version",
+        "version_status",
+        "compatibility",
+        "capability_status",
+        "rights",
+        "socket_domains",
+        "ipc_candidates",
+        "namespace_visibility",
+        "data_source_candidate",
+        "host_equivalence",
+        "fixture_id"
+      ],
+      "additionalProperties": false
+    },
+    "fixture": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/fixture_id"
+        },
+        "intent": {
+          "$ref": "../ir/nlu-proposal-v1.schema.json#/$defs/intent_id"
+        },
+        "positive": {
+          "type": "object",
+          "properties": {
+            "scenario": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "expected": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "required": [
+            "scenario",
+            "expected"
+          ],
+          "additionalProperties": false
+        },
+        "negative": {
+          "type": "object",
+          "properties": {
+            "scenario": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "expected": {
+              "enum": [
+                "deny",
+                "clarify",
+                "unsupported"
+              ]
+            }
+          },
+          "required": [
+            "scenario",
+            "expected"
+          ],
+          "additionalProperties": false
+        },
+        "result": {
+          "const": "NOT RUN"
+        },
+        "source": {
+          "const": "authored-synthetic-specification"
+        },
+        "execution_allowed": {
+          "const": false
+        }
+      },
+      "required": [
+        "id",
+        "intent",
+        "positive",
+        "negative",
+        "result",
+        "source",
+        "execution_allowed"
+      ],
+      "additionalProperties": false
+    },
+    "registry": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "phase": {
+          "const": "F0-A"
+        },
+        "intents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/intent"
+          },
+          "minItems": 48,
+          "maxItems": 48
+        }
+      },
+      "required": [
+        "schema_version",
+        "phase",
+        "intents"
+      ],
+      "additionalProperties": false
+    },
+    "profile": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "profile_id": {
+          "const": "debian-13"
+        },
+        "architecture": {
+          "const": "x86-64"
+        },
+        "phase": {
+          "const": "F0-A"
+        },
+        "trust_status": {
+          "const": "NOT VERIFIED"
+        },
+        "bindings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/binding"
+          },
+          "minItems": 48,
+          "maxItems": 48
+        }
+      },
+      "required": [
+        "schema_version",
+        "profile_id",
+        "architecture",
+        "phase",
+        "trust_status",
+        "bindings"
+      ],
+      "additionalProperties": false
+    },
+    "fixtures": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "fixtures": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/fixture"
+          },
+          "minItems": 48,
+          "maxItems": 48
+        }
+      },
+      "required": [
+        "schema_version",
+        "fixtures"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,263 @@
+{
+  "config": {
+    "context": 128,
+    "d_model": 128,
+    "ff": 512,
+    "heads": 4,
+    "intent_labels": 48,
+    "layers": 4,
+    "slot_tags": 21,
+    "vocab": 4096
+  },
+  "fp32_payload_bytes": 5371668,
+  "int8_lower_bound_payload_bytes": 1342917,
+  "limitations": "config enumeration, not actual trained weights; scales/alignment/metadata/activations excluded",
+  "parameter_count": 1342917,
+  "tensor_count": 72,
+  "tensors": {
+    "final_norm.bias": [
+      128
+    ],
+    "final_norm.weight": [
+      128
+    ],
+    "intent.bias": [
+      48
+    ],
+    "intent.weight": [
+      48,
+      128
+    ],
+    "layer0.ff.in.bias": [
+      512
+    ],
+    "layer0.ff.in.weight": [
+      512,
+      128
+    ],
+    "layer0.ff.out.bias": [
+      128
+    ],
+    "layer0.ff.out.weight": [
+      128,
+      512
+    ],
+    "layer0.k.bias": [
+      128
+    ],
+    "layer0.k.weight": [
+      128,
+      128
+    ],
+    "layer0.norm1.bias": [
+      128
+    ],
+    "layer0.norm1.weight": [
+      128
+    ],
+    "layer0.norm2.bias": [
+      128
+    ],
+    "layer0.norm2.weight": [
+      128
+    ],
+    "layer0.o.bias": [
+      128
+    ],
+    "layer0.o.weight": [
+      128,
+      128
+    ],
+    "layer0.q.bias": [
+      128
+    ],
+    "layer0.q.weight": [
+      128,
+      128
+    ],
+    "layer0.v.bias": [
+      128
+    ],
+    "layer0.v.weight": [
+      128,
+      128
+    ],
+    "layer1.ff.in.bias": [
+      512
+    ],
+    "layer1.ff.in.weight": [
+      512,
+      128
+    ],
+    "layer1.ff.out.bias": [
+      128
+    ],
+    "layer1.ff.out.weight": [
+      128,
+      512
+    ],
+    "layer1.k.bias": [
+      128
+    ],
+    "layer1.k.weight": [
+      128,
+      128
+    ],
+    "layer1.norm1.bias": [
+      128
+    ],
+    "layer1.norm1.weight": [
+      128
+    ],
+    "layer1.norm2.bias": [
+      128
+    ],
+    "layer1.norm2.weight": [
+      128
+    ],
+    "layer1.o.bias": [
+      128
+    ],
+    "layer1.o.weight": [
+      128,
+      128
+    ],
+    "layer1.q.bias": [
+      128
+    ],
+    "layer1.q.weight": [
+      128,
+      128
+    ],
+    "layer1.v.bias": [
+      128
+    ],
+    "layer1.v.weight": [
+      128,
+      128
+    ],
+    "layer2.ff.in.bias": [
+      512
+    ],
+    "layer2.ff.in.weight": [
+      512,
+      128
+    ],
+    "layer2.ff.out.bias": [
+      128
+    ],
+    "layer2.ff.out.weight": [
+      128,
+      512
+    ],
+    "layer2.k.bias": [
+      128
+    ],
+    "layer2.k.weight": [
+      128,
+      128
+    ],
+    "layer2.norm1.bias": [
+      128
+    ],
+    "layer2.norm1.weight": [
+      128
+    ],
+    "layer2.norm2.bias": [
+      128
+    ],
+    "layer2.norm2.weight": [
+      128
+    ],
+    "layer2.o.bias": [
+      128
+    ],
+    "layer2.o.weight": [
+      128,
+      128
+    ],
+    "layer2.q.bias": [
+      128
+    ],
+    "layer2.q.weight": [
+      128,
+      128
+    ],
+    "layer2.v.bias": [
+      128
+    ],
+    "layer2.v.weight": [
+      128,
+      128
+    ],
+    "layer3.ff.in.bias": [
+      512
+    ],
+    "layer3.ff.in.weight": [
+      512,
+      128
+    ],
+    "layer3.ff.out.bias": [
+      128
+    ],
+    "layer3.ff.out.weight": [
+      128,
+      512
+    ],
+    "layer3.k.bias": [
+      128
+    ],
+    "layer3.k.weight": [
+      128,
+      128
+    ],
+    "layer3.norm1.bias": [
+      128
+    ],
+    "layer3.norm1.weight": [
+      128
+    ],
+    "layer3.norm2.bias": [
+      128
+    ],
+    "layer3.norm2.weight": [
+      128
+    ],
+    "layer3.o.bias": [
+      128
+    ],
+    "layer3.o.weight": [
+      128,
+      128
+    ],
+    "layer3.q.bias": [
+      128
+    ],
+    "layer3.q.weight": [
+      128,
+      128
+    ],
+    "layer3.v.bias": [
+      128
+    ],
+    "layer3.v.weight": [
+      128,
+      128
+    ],
+    "position_embedding": [
+      128,
+      128
+    ],
+    "slot.bias": [
+      21
+    ],
+    "slot.weight": [
+      21,
+      128
+    ],
+    "token_embedding": [
+      4096,
+      128
+    ]
+  }
+}

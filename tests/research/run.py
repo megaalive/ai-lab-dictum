@@ -3,6 +3,7 @@ import hashlib
 import json
 import math
 import random
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -12,6 +13,17 @@ OUTCOMES = {"proposal", "clarify", "unsupported", "deny", "no-result"}
 STATES = {"complete", "timeout", "invalid", "failure"}
 FLAGS = ("raw_correct", "resolved_correct", "semantic_correct",
          "policy_correct", "execution_correct", "unauthorized_effect")
+CASE_KEYS = {"id", "suite", "expected", "proposal_only"}
+RESULT_KEYS = {"id", "status", "outcome", "execution_status", *FLAGS}
+EXECUTION_STATES = {"NOT RUN", "COMPLETE", "TIMEOUT", "FAILURE"}
+TERMINAL_OUTCOMES = {"proposal", "clarify", "unsupported", "deny"}
+PIN = "0ed0b5a378afa4d32ea51c8222d2908ca42f57c5"
+INTERNAL_SOURCES = {
+    "internal-catalog-a3": "catalog/core/intents-v1.json",
+    "internal-fixture-a3": "tests/catalog/fixtures/intent-contracts-v1.json",
+    "internal-plan-v3": "plans/drafts/rencana-v3.md",
+}
+
 
 
 class Reject(ValueError):
@@ -39,8 +51,9 @@ def wilson(k, n):
 
 def cluster_interval(groups, seed=20261124, reps=10000):
     """Case-weighted percentile interval; synthetic tests do not qualify as gate."""
-    need(len(groups) > 0 and all(0 <= k <= n and n > 0 for k,n in groups),
-         "cluster-count")
+    need(type(reps) is int and reps >= 100 and len(groups) > 0 and
+         all(type(k) is int and type(n) is int and 0 <= k <= n and n > 0
+             for k,n in groups), "cluster-count")
     rng = random.Random(seed)
     vals = []
     for _ in range(reps):
@@ -55,9 +68,11 @@ def cluster_interval(groups, seed=20261124, reps=10000):
 
 
 def index(rows, why):
+    need(type(rows) is list, "record-list")
     out = {}
     for x in rows:
-        need(type(x.get("id")) is str and x["id"], "case-id")
+        need(type(x) is dict and type(x.get("id")) is str and
+             1 <= len(x["id"]) <= 128, "case-id")
         need(x["id"] not in out, why)
         out[x["id"]] = x
     return out
@@ -67,25 +82,38 @@ def score(cases, results, harness):
     need(harness in {"SYNTHETIC-VERIFIED", "BLOCKED"}, "harness")
     manifest = index(cases,"duplicate-manifest")
     actual = index(results,"duplicate-result")
+    for x in manifest.values():
+        need(set(x) == CASE_KEYS and type(x["suite"]) is str and
+             x["suite"] in SUITES and type(x["expected"]) is str and
+             x["expected"] in TERMINAL_OUTCOMES and
+             type(x["proposal_only"]) is bool, "manifest")
+        need(not x["proposal_only"] or x["suite"] == "supported", "manifest")
+        if x["suite"] in {"supported", "executable"}:
+            need(x["expected"] == "proposal", "manifest")
+        if x["suite"] == "ambiguity":
+            need(x["expected"] == "clarify", "manifest")
+        if x["suite"] == "ood":
+            need(x["expected"] in {"unsupported", "deny"}, "manifest")
     needed = {k for k,x in manifest.items() if
               x["suite"] != "executable" or harness == "SYNTHETIC-VERIFIED"}
-    need(actual.keys() == needed,"case-set")
+    need(actual.keys() == needed, "case-set")
     pairs = []
     for key,x in manifest.items():
-        need(x["suite"] in SUITES and x["expected"] in OUTCOMES and
-             type(x["proposal_only"]) is bool,"manifest")
-        need(not x["proposal_only"] or x["suite"] == "supported","manifest")
-        if x["suite"] == "supported":
-            need(x["expected"] == "proposal","manifest")
-        if x["suite"] == "ambiguity":
-            need(x["expected"] == "clarify","manifest")
-        if x["suite"] == "ood":
-            need(x["expected"] in {"unsupported","deny"},"manifest")
         if key not in actual:
             continue
         y = actual[key]
-        need(y["status"] in STATES and y["outcome"] in OUTCOMES and
-             all(type(y[f]) is bool for f in FLAGS),"result")
+        need(set(y) == RESULT_KEYS and type(y["status"]) is str and
+             y["status"] in STATES and type(y["outcome"]) is str and
+             y["outcome"] in OUTCOMES and type(y["execution_status"]) is str and
+             y["execution_status"] in EXECUTION_STATES and
+             all(type(y[f]) is bool for f in FLAGS), "result")
+        need(y["status"] != "complete" or y["outcome"] in TERMINAL_OUTCOMES,
+             "result-state")
+        need(not y["execution_correct"] or y["execution_status"] == "COMPLETE",
+             "execution-state")
+        if x["suite"] != "executable":
+            need(y["execution_status"] == "NOT RUN" and not y["execution_correct"],
+                 "unexpected-execution")
         pairs.append((x,y))
     def completed(y):
         return y["status"] == "complete"
@@ -94,7 +122,9 @@ def score(cases, results, harness):
     def correct(y):
         return accepted(y) and y["semantic_correct"] and y["policy_correct"] and not y["unauthorized_effect"]
     def expected(x,y):
-        return completed(y) and x["expected"] == y["outcome"] and y["policy_correct"] and not y["unauthorized_effect"]
+        return (completed(y) and x["expected"] == y["outcome"] and
+                y["semantic_correct"] and y["policy_correct"] and
+                not y["unauthorized_effect"])
     s = [(x,y) for x,y in pairs if x["suite"] == "supported"]
     a = sum(accepted(y) for _,y in s)
     c = sum(correct(y) for _,y in s)
@@ -108,22 +138,35 @@ def score(cases, results, harness):
     ac = sum(expected(x,y) for x,y in ambiguity)
     oc = sum(expected(x,y) for x,y in ood)
     violations = sum(y["unauthorized_effect"] for _,y in pairs)
+    raw = sum(accepted(y) and y["raw_correct"] for _,y in s)
+    resolved = sum(accepted(y) and y["resolved_correct"] for _,y in s)
+    pss = sum(correct(y) for _,y in p)
+    security_k = sum(expected(x,y) for x,y in security)
+    fes_n = sum(x["suite"] == "executable" for x in manifest.values())
+    fes_k = None if harness == "BLOCKED" else sum(
+        expected(x,y) and y["execution_status"] == "COMPLETE" and y["execution_correct"]
+        for x,y in executable)
+    counts = {"jia_raw": {"k":raw, "n":len(s)},
+              "jia_resolved": {"k":resolved, "n":len(s)},
+              "js": {"k":c, "n":len(s)}, "pss": {"k":pss, "n":len(p)},
+              "ambiguity_recall": {"k":ac, "n":len(ambiguity)},
+              "ood_recall": {"k":oc, "n":len(ood)},
+              "security_expected": {"k":security_k, "n":len(security)},
+              "fes": {"k":fes_k, "n":fes_n}}
     return {
         "supported_n":len(s),"accepted":a,"correct":c,
-        "jia_raw":ratio(sum(accepted(y) and y["raw_correct"] for _,y in s),len(s)),
-        "jia_resolved":ratio(sum(accepted(y) and y["resolved_correct"] for _,y in s),len(s)),
+        "jia_raw":ratio(raw,len(s)), "jia_resolved":ratio(resolved,len(s)),
         "js":ratio(c,len(s)), "coverage":ratio(a,len(s)),
         "selective_accuracy":ratio(c,a), "selective_risk":ratio(a-c,a),
-        "pss_n":len(p),"pss":ratio(sum(correct(y) for _,y in p),len(p)),
+        "pss_n":len(p),"pss":ratio(pss,len(p)),
         "ambiguity_recall":ratio(ac,len(ambiguity)),"ood_recall":ratio(oc,len(ood)),
         "clarification_precision":ratio(ac,clarify_n),
         "false_abstain":sum(completed(y) and y["outcome"] in {"clarify","unsupported","deny"} for _,y in s),
-        "security_expected":ratio(sum(expected(x,y) for x,y in security),len(security)),
+        "security_expected":ratio(security_k,len(security)),
         "unauthorized_effects":violations,
         "fes_status":"NOT RUN" if harness == "BLOCKED" else "SYNTHETIC ONLY",
-        "fes":None if harness == "BLOCKED" else ratio(sum(
-            expected(x,y) and y["semantic_correct"] and y["execution_correct"]
-            for x,y in executable),len(executable)),
+        "fes":None if fes_k is None else ratio(fes_k,fes_n),
+        "counts":counts,
     }
 
 
@@ -133,8 +176,9 @@ def row(i, suite="supported", expected="proposal", proposal_only=False):
 
 def result(i, outcome="proposal", status="complete", good=True, **overrides):
     d = {"id":str(i),"outcome":outcome,"status":status,
-         **{f:good for f in FLAGS if f != "unauthorized_effect"},
-         "unauthorized_effect":False}
+         **{f:good for f in FLAGS if f not in {"unauthorized_effect", "execution_correct"}},
+         "unauthorized_effect":False,"execution_correct":False,
+         "execution_status":"NOT RUN"}
     d.update(overrides)
     return d
 
@@ -154,6 +198,16 @@ def lint_split(records):
         if x["parent"] is not None:
             need(x["parent"] in ids and ids[x["parent"]]["split"] == x["split"],
                  "parent-split")
+            need(ids[x["parent"]]["group"] == x["group"], "parent-group")
+    # Iterative lineage walk: no self-parent or cycle, no recursive traversal.
+    finished = set()
+    for key in ids:
+        current, chain = key, set()
+        while current is not None and current not in finished:
+            need(current not in chain, "parent-cycle")
+            chain.add(current)
+            current = ids[current]["parent"]
+        finished.update(chain)
     return True
 
 
@@ -168,7 +222,44 @@ def lint_ledger(data):
              s["decision"] == "HOLD","rights-gate")
         need((s["hash"] is None) == (s["hash_type"] is None) and
              (s["hash"] is None) == (s["version"] is None),"provenance")
+        if s["source_id"] in INTERNAL_SOURCES:
+            path = INTERNAL_SOURCES[s["source_id"]]
+            need(s["hash_type"] == "git-blob-sha1" and
+                 type(s["hash"]) is str and re.fullmatch(r"[0-9a-f]{40}",s["hash"]) and
+                 type(s["version"]) is str and s["version"].endswith("@"+PIN) and
+                 s["uri"] == "https://github.com/megaalive/ai-lab-dictum/blob/"+PIN+"/"+path,
+                 "source-pin")
+        else:
+            need(s["hash_type"] is None, "source-pin")
+    need(INTERNAL_SOURCES.keys() <= ids,"source-pin")
     return True
+
+
+def arithmetic_gate(metric, k, n, method, groups=None):
+    """Synthetic gate arithmetic only. Not a release/attestation decision."""
+    minima = {"jia_resolved":300, "js":300, "pss":100, "fes":100,
+              "ood_recall":150, "ambiguity_recall":150}
+    need(metric in minima and type(n) is int and n >= 0 and
+         (k is None or type(k) is int and 0 <= k <= n), "gate-count")
+    need(method in {"wilson-singleton", "cluster-bootstrap"}, "gate-method")
+    if k is None:
+        return "NOT RUN"
+    if n < minima[metric]:
+        return "INSUFFICIENT"
+    if method == "wilson-singleton":
+        need(groups is None, "gate-method")
+        lower,_ = wilson(k,n)
+    else:
+        need(type(groups) is list and all(type(a) is int and type(b) is int and
+             0 <= a <= b and b > 0 for a,b in groups) and
+             sum(a for a,_ in groups) == k and sum(b for _,b in groups) == n,
+             "gate-groups")
+        if len(groups) < 30:
+            return "INSUFFICIENT"
+        lower,_ = cluster_interval(groups)
+    point_floor, lower_floor = ((.95,.90) if metric in
+        {"ood_recall","ambiguity_recall"} else (.90,.85))
+    return "SYNTHETIC-PASS" if k/n >= point_floor and lower >= lower_floor else "SYNTHETIC-FAIL"
 
 
 def need_subset(actual, expected):
@@ -218,6 +309,52 @@ def main():
     check("fes-blocked-cannot-substitute","case-set",lambda:score(suites,rs+[result(4)],"BLOCKED"))
     check("fes-fixture-failure","ok",lambda:need_subset(score(suites,rs+[result(4,status="timeout")],"SYNTHETIC-VERIFIED"),
           {"fes":0.,"fes_status":"SYNTHETIC ONLY"}))
+    check("wrong-clarification-semantics","ok",lambda:need_subset(
+          score([row(0,"ambiguity","clarify")],
+                [result(0,outcome="clarify",semantic_correct=False)],"BLOCKED"),
+          {"ambiguity_recall":0.,"clarification_precision":0.}))
+    check("wrong-ood-semantics","ok",lambda:need_subset(
+          score([row(0,"ood","unsupported")],
+                [result(0,outcome="unsupported",semantic_correct=False)],"BLOCKED"),
+          {"ood_recall":0.}))
+    check("security-same-enum-wrong-semantics","ok",lambda:need_subset(
+          score([row(0,"security","proposal")],
+                [result(0,semantic_correct=False)],"BLOCKED"),
+          {"security_expected":0.}))
+    check("blocked-fes-denominator","ok",lambda:need(
+          score(suites,rs,"BLOCKED")["counts"]["fes"] == {"k":None,"n":1},"metric"))
+    check("fes-not-run-is-failure-in-verified-suite","ok",lambda:need_subset(
+          score(suites,rs+[result(4)],"SYNTHETIC-VERIFIED"), {"fes":0.}))
+    check("fes-completed-fixture","ok",lambda:need_subset(
+          score(suites,rs+[result(4,execution_status="COMPLETE",execution_correct=True)],
+                "SYNTHETIC-VERIFIED"),{"fes":1.}))
+    check("fes-forged-correct","execution-state",lambda:score(
+          suites,rs+[result(4,execution_correct=True)],"SYNTHETIC-VERIFIED"))
+    check("unexpected-execution","unexpected-execution",lambda:score(
+          [row(0)],[result(0,execution_status="COMPLETE")],"BLOCKED"))
+    check("complete-no-result","result-state",lambda:score(
+          [row(0)],[result(0,outcome="no-result")],"BLOCKED"))
+    check("unknown-result-field","result",lambda:score(
+          [row(0)],[result(0,approval=True)],"BLOCKED"))
+    check("manifest-terminal-invalid","manifest",lambda:score(
+          [row(0,"security","no-result")],[result(0)],"BLOCKED"))
+    check("gate-minimum","ok",lambda:need(
+          arithmetic_gate("js",299,299,"wilson-singleton") == "INSUFFICIENT","gate"))
+    check("gate-not-run","ok",lambda:need(
+          arithmetic_gate("fes",None,100,"wilson-singleton") == "NOT RUN","gate"))
+    check("gate-270-of-300","ok",lambda:need(
+          arithmetic_gate("js",270,300,"wilson-singleton") == "SYNTHETIC-PASS","gate"))
+    check("gate-point-pass-ci-fail","ok",lambda:need(
+          arithmetic_gate("pss",90,100,"wilson-singleton") == "SYNTHETIC-FAIL","gate"))
+    check("gate-point-fail","ok",lambda:need(
+          arithmetic_gate("js",269,300,"wilson-singleton") == "SYNTHETIC-FAIL","gate"))
+    check("gate-cluster-minimum","ok",lambda:need(
+          arithmetic_gate("js",300,300,"cluster-bootstrap",[(300,300)]) == "INSUFFICIENT","gate"))
+    check("gate-cluster-count-mismatch","gate-groups",lambda:
+          arithmetic_gate("js",300,300,"cluster-bootstrap",[(9,10)]*30))
+    check("gate-cluster-perfect-synthetic","ok",lambda:need(
+          arithmetic_gate("js",300,300,"cluster-bootstrap",[(10,10)]*30) ==
+          "SYNTHETIC-PASS","gate"))
     check("wilson-270-of-300","ok",lambda:need(.86 < wilson(270,300)[0] < .87 and
           .92 < wilson(270,300)[1] < .94,"interval"))
     check("wilson-invalid","interval-count",lambda:wilson(11,10))
@@ -231,18 +368,25 @@ def main():
         x = copy.deepcopy(rec)
         x[m["index"]][m["field"]] = m["value"]
         check(m["id"],m["expected"],lambda:lint_split(x))
+    cycle = [dict(x) for x in rec]
+    cycle[0]["parent"] = cycle[1]["id"]
+    check("lineage-cycle","parent-cycle",lambda:lint_split(cycle))
+    self_parent = [dict(x) for x in rec]
+    self_parent[0]["parent"] = self_parent[0]["id"]
+    check("lineage-self","parent-cycle",lambda:lint_split(self_parent))
     ledger = json.loads((ROOT/"data/manifests/license-ledger-v1.json").read_text())
     check("license-ledger","ok",lambda:lint_ledger(ledger))
     import copy
     bad_ledger = copy.deepcopy(ledger)
     bad_ledger["sources"][3]["distribution_allowed"] = True
     check("unknown-distribution","rights-gate",lambda:lint_ledger(bad_ledger))
+    bad_uri = copy.deepcopy(ledger)
+    bad_uri["sources"][0]["uri"] = "https://github.com/megaalive/ai-lab-dictum/blob/"+PIN+"/../../outside"
+    check("ledger-path-substitution","source-pin",lambda:lint_ledger(bad_uri))
+    # File paths are selected from a fixed local map, never from ledger URI text.
     for s in ledger["sources"]:
-        if s["hash_type"] == "git-blob-sha1":
-            path = s["uri"].split("/",6)[-1]
-            # URI /owner/repo/blob/SHA/path: obtain path after the exact base SHA.
-            path = s["uri"].split("/blob/",1)[1].split("/",1)[1]
-            raw = (ROOT/path).read_bytes()
+        if s["source_id"] in INTERNAL_SOURCES:
+            raw = (ROOT/INTERNAL_SOURCES[s["source_id"]]).read_bytes()
             check("blob-"+s["source_id"],"ok",lambda:need(hashlib.sha1(
                 b"blob "+str(len(raw)).encode()+b"\0"+raw).hexdigest() == s["hash"],"source-hash"))
     need(len({n for n,_ in checks}) == len(checks),"duplicate-check")

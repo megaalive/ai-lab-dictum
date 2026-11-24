@@ -1,0 +1,3970 @@
+{
+  "schema_version": 1,
+  "phase": "F0-A",
+  "intents": [
+    {
+      "ordinal": 1,
+      "id": "help.command.explain",
+      "description": {
+        "id": "Jelaskan utilitas dan opsi yang terdaftar",
+        "en": "Explain a catalogued utility and option"
+      },
+      "skeleton": false,
+      "slots": [],
+      "deferred_slots": [
+        {
+          "name": "utility",
+          "required": true,
+          "domain": "exact catalog utility identifier",
+          "status": "DEFERRED"
+        },
+        {
+          "name": "option",
+          "required": false,
+          "domain": "exact catalog option identifier",
+          "status": "DEFERRED"
+        }
+      ],
+      "slot_constraints": [],
+      "effect": {
+        "class": "INFO",
+        "axes": []
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "NO-EXECUTOR-NEEDED",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "verified-catalog"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "utility",
+        "option",
+        "explanation",
+        "source_id"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 1,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "catalog build index",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-01",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "indexed-docs"
+    },
+    {
+      "ordinal": 2,
+      "id": "help.intent.list",
+      "description": {
+        "id": "Daftar kemampuan Dictum",
+        "en": "List Dictum capabilities"
+      },
+      "skeleton": false,
+      "slots": [],
+      "deferred_slots": [],
+      "slot_constraints": [],
+      "effect": {
+        "class": "INFO",
+        "axes": []
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "NO-EXECUTOR-NEEDED",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "verified-catalog"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "intent_id",
+        "description",
+        "proposal_status"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 2,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "catalog build index",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-02",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "indexed-docs"
+    },
+    {
+      "ordinal": 3,
+      "id": "system.os.info",
+      "description": {
+        "id": "Informasi OS, kernel dan arsitektur",
+        "en": "Show OS, kernel and architecture"
+      },
+      "skeleton": false,
+      "slots": [],
+      "deferred_slots": [],
+      "slot_constraints": [],
+      "effect": {
+        "class": "INFO",
+        "axes": [
+          "filesystem-read"
+        ]
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "NO-EXECUTOR-NEEDED",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "system-metadata"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "distribution",
+        "version",
+        "kernel",
+        "architecture"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 3,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "os-release(5), uname(2)",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-03",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "native-candidate"
+    },
+    {
+      "ordinal": 4,
+      "id": "system.uptime.summary",
+      "description": {
+        "id": "Uptime dan rata-rata beban",
+        "en": "Show uptime and load averages"
+      },
+      "skeleton": false,
+      "slots": [],
+      "deferred_slots": [],
+      "slot_constraints": [],
+      "effect": {
+        "class": "INFO",
+        "axes": [
+          "filesystem-read"
+        ]
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "NO-EXECUTOR-NEEDED",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "system-metadata"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "uptime_seconds",
+        "load_1",
+        "load_5",
+        "load_15"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 4,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "proc_uptime(5), proc_loadavg(5)",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-04",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "native-candidate"
+    },
+    {
+      "ordinal": 5,
+      "id": "network.listener.lookup",
+      "description": {
+        "id": "Cari socket yang mendengarkan berdasarkan port atau protokol",
+        "en": "Find listening sockets by port or protocol"
+      },
+      "skeleton": true,
+      "slots": [
+        {
+          "name": "port",
+          "kind": "port",
+          "required": false,
+          "default": null,
+          "minimum": 1,
+          "maximum": 65535
+        },
+        {
+          "name": "protocol",
+          "kind": "protocol",
+          "required": true,
+          "default": {
+            "kind": "protocol",
+            "value": "tcp"
+          },
+          "minimum": null,
+          "maximum": null
+        }
+      ],
+      "deferred_slots": [],
+      "slot_constraints": [
+        {
+          "kind": "at-least-one-explicit",
+          "slots": [
+            "port",
+            "protocol"
+          ]
+        }
+      ],
+      "effect": {
+        "class": "READ",
+        "axes": [
+          "filesystem-read",
+          "ipc",
+          "secret-exposure",
+          "spawn"
+        ]
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "F5-CANDIDATE-BLOCKED",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "local-network-metadata"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "protocol",
+        "local_port",
+        "state",
+        "pid_if_visible",
+        "visibility"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 5,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "ss(8), proc_pid_fd(5)",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-05",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "ordinal": 6,
+      "id": "network.connection.active",
+      "description": {
+        "id": "Daftar koneksi jaringan aktif",
+        "en": "List active network connections"
+      },
+      "skeleton": false,
+      "slots": [
+        {
+          "name": "protocol",
+          "kind": "protocol",
+          "required": true,
+          "default": {
+            "kind": "protocol",
+            "value": "all"
+          },
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "limit",
+          "kind": "positive-int",
+          "required": true,
+          "default": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "minimum": 1,
+          "maximum": 100
+        }
+      ],
+      "deferred_slots": [],
+      "slot_constraints": [],
+      "effect": {
+        "class": "READ",
+        "axes": [
+          "ipc",
+          "resource-usage",
+          "secret-exposure",
+          "spawn"
+        ]
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "F5-CANDIDATE-BLOCKED",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "local-network-metadata"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "protocol",
+        "state",
+        "local_port",
+        "remote_port",
+        "visibility"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 6,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "ss(8)",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-06",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "ordinal": 7,
+      "id": "network.interface.list",
+      "description": {
+        "id": "Antarmuka, alamat dan status link",
+        "en": "List interfaces, addresses and link states"
+      },
+      "skeleton": false,
+      "slots": [],
+      "deferred_slots": [],
+      "slot_constraints": [],
+      "effect": {
+        "class": "READ",
+        "axes": [
+          "ipc",
+          "secret-exposure",
+          "spawn"
+        ]
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "F5-CANDIDATE-BLOCKED",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "local-network-metadata"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "interface",
+        "address",
+        "link_state",
+        "visibility"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 7,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "ip-link(8), ip-address(8)",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-07",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "ordinal": 8,
+      "id": "network.route.table",
+      "description": {
+        "id": "Tabel routing IP dan gateway lokal",
+        "en": "Show local IP routes and default gateway"
+      },
+      "skeleton": false,
+      "slots": [],
+      "deferred_slots": [],
+      "slot_constraints": [],
+      "effect": {
+        "class": "READ",
+        "axes": [
+          "ipc",
+          "secret-exposure",
+          "spawn"
+        ]
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "F5-CANDIDATE-BLOCKED",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "local-network-metadata"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "destination",
+        "gateway",
+        "interface",
+        "metric",
+        "visibility"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 8,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "ip-route(8)",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-08",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "ordinal": 9,
+      "id": "network.dns.config",
+      "description": {
+        "id": "Konfigurasi resolver DNS aktif",
+        "en": "Show active DNS resolver configuration"
+      },
+      "skeleton": false,
+      "slots": [],
+      "deferred_slots": [],
+      "slot_constraints": [],
+      "effect": {
+        "class": "READ",
+        "axes": [
+          "filesystem-read",
+          "ipc",
+          "secret-exposure"
+        ]
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "F5-CANDIDATE-BLOCKED",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "local-network-metadata"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "resolver_mode",
+        "nameserver",
+        "search_domain_if_allowed",
+        "visibility"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 9,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "resolv.conf(5), resolved.conf(5), org.freedesktop.resolve1(5)",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-09",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "native-ipc-candidate"
+    },
+    {
+      "ordinal": 10,
+      "id": "network.dns.lookup",
+      "description": {
+        "id": "Usulkan kueri DNS",
+        "en": "Propose a DNS query"
+      },
+      "skeleton": false,
+      "slots": [],
+      "deferred_slots": [
+        {
+          "name": "domain",
+          "required": true,
+          "domain": "validated DNS name; no arbitrary resolver or option",
+          "status": "DEFERRED"
+        }
+      ],
+      "slot_constraints": [],
+      "effect": {
+        "class": "READ",
+        "axes": [
+          "filesystem-read",
+          "ipc",
+          "network",
+          "resource-usage",
+          "secret-exposure",
+          "spawn"
+        ]
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "PERMANENT-PROPOSAL-ONLY",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "local-network-metadata"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "query_name",
+        "query_type",
+        "network_warning"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 10,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "dig(1), resolv.conf(5)",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-10",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "ordinal": 11,
+      "id": "network.connectivity.ping",
+      "description": {
+        "id": "Usulkan ping maksimal empat paket",
+        "en": "Propose ping with at most four packets"
+      },
+      "skeleton": false,
+      "slots": [
+        {
+          "name": "count",
+          "kind": "positive-int",
+          "required": true,
+          "default": {
+            "kind": "positive-int",
+            "value": 4
+          },
+          "minimum": 1,
+          "maximum": 4
+        }
+      ],
+      "deferred_slots": [
+        {
+          "name": "target",
+          "required": true,
+          "domain": "validated hostname or IP; no arbitrary flags",
+          "status": "DEFERRED"
+        }
+      ],
+      "slot_constraints": [],
+      "effect": {
+        "class": "READ",
+        "axes": [
+          "filesystem-read",
+          "ipc",
+          "network",
+          "requires-privilege",
+          "resource-usage",
+          "secret-exposure",
+          "spawn"
+        ]
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "PERMANENT-PROPOSAL-ONLY",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "local-network-metadata"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "target",
+        "count",
+        "network_warning"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 11,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "ping(8), resolv.conf(5)",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-11",
+      "requires_privilege": "POSSIBLE",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "ordinal": 12,
+      "id": "diagnosis.connectivity",
+      "description": {
+        "id": "Panduan diagnosis konektivitas lokal",
+        "en": "Guide local connectivity diagnosis"
+      },
+      "skeleton": false,
+      "slots": [],
+      "deferred_slots": [
+        {
+          "name": "target",
+          "required": false,
+          "domain": "local service identifier; clarify nonlocal target",
+          "status": "DEFERRED"
+        }
+      ],
+      "slot_constraints": [],
+      "effect": {
+        "class": "READ",
+        "axes": []
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "PERMANENT-PROPOSAL-ONLY",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "local-metadata-guidance"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "guidance_text",
+        "limitations",
+        "warnings"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 12,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "baseline v3 diagnostic guide",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-12",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "narrative-only"
+    },
+    {
+      "ordinal": 13,
+      "id": "service.status.get",
+      "description": {
+        "id": "Status, PID utama dan memori satu layanan",
+        "en": "Show status, main PID and memory of one service"
+      },
+      "skeleton": false,
+      "slots": [
+        {
+          "name": "unit",
+          "kind": "unit-name",
+          "required": true,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        }
+      ],
+      "deferred_slots": [],
+      "slot_constraints": [],
+      "effect": {
+        "class": "READ",
+        "axes": [
+          "filesystem-read",
+          "ipc",
+          "secret-exposure",
+          "spawn"
+        ]
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "PERMANENT-PROPOSAL-ONLY",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "local-service-metadata"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "unit",
+        "state",
+        "main_pid_if_visible",
+        "memory_if_visible"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 13,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "systemctl(1)",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-13",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "ordinal": 14,
+      "id": "service.list.active",
+      "description": {
+        "id": "Daftar layanan aktif sekarang",
+        "en": "List currently active services"
+      },
+      "skeleton": false,
+      "slots": [
+        {
+          "name": "limit",
+          "kind": "positive-int",
+          "required": true,
+          "default": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "minimum": 1,
+          "maximum": 100
+        }
+      ],
+      "deferred_slots": [],
+      "slot_constraints": [],
+      "effect": {
+        "class": "READ",
+        "axes": [
+          "filesystem-read",
+          "ipc",
+          "resource-usage",
+          "secret-exposure",
+          "spawn"
+        ]
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "PERMANENT-PROPOSAL-ONLY",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "local-service-metadata"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "unit",
+        "active_state",
+        "visibility"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 14,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "systemctl(1)",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-14",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "ordinal": 15,
+      "id": "service.failed.list",
+      "description": {
+        "id": "Daftar layanan berstatus gagal sekarang",
+        "en": "List currently failed services"
+      },
+      "skeleton": true,
+      "slots": [],
+      "deferred_slots": [],
+      "slot_constraints": [],
+      "effect": {
+        "class": "READ",
+        "axes": [
+          "filesystem-read",
+          "ipc",
+          "resource-usage",
+          "secret-exposure",
+          "spawn"
+        ]
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "PERMANENT-PROPOSAL-ONLY",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "local-service-metadata"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "unit",
+        "failed_state",
+        "visibility"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 15,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "systemctl(1)",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-15",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "ordinal": 16,
+      "id": "service.enabled.list",
+      "description": {
+        "id": "Daftar layanan yang diaktifkan saat boot",
+        "en": "List services enabled for boot"
+      },
+      "skeleton": false,
+      "slots": [
+        {
+          "name": "limit",
+          "kind": "positive-int",
+          "required": true,
+          "default": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "minimum": 1,
+          "maximum": 100
+        }
+      ],
+      "deferred_slots": [],
+      "slot_constraints": [],
+      "effect": {
+        "class": "READ",
+        "axes": [
+          "filesystem-read",
+          "ipc",
+          "resource-usage",
+          "secret-exposure",
+          "spawn"
+        ]
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "PERMANENT-PROPOSAL-ONLY",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "local-service-metadata"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "unit",
+        "enabled_state",
+        "visibility"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 16,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "systemctl(1)",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-16",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "ordinal": 17,
+      "id": "log.service.query",
+      "description": {
+        "id": "Log jurnal satu unit dalam rentang waktu dan batas baris",
+        "en": "Query one unit journal within time and line bounds"
+      },
+      "skeleton": true,
+      "slots": [
+        {
+          "name": "unit",
+          "kind": "unit-name",
+          "required": true,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "window",
+          "kind": "time-window",
+          "required": true,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "limit",
+          "kind": "positive-int",
+          "required": true,
+          "default": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "minimum": 1,
+          "maximum": 100
+        }
+      ],
+      "deferred_slots": [],
+      "slot_constraints": [],
+      "effect": {
+        "class": "READ",
+        "axes": [
+          "filesystem-read",
+          "ipc",
+          "requires-privilege",
+          "resource-usage",
+          "secret-exposure",
+          "spawn"
+        ]
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "PERMANENT-PROPOSAL-ONLY",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "local-journal"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "unit",
+        "timestamp",
+        "priority",
+        "message_redacted",
+        "visibility"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 17,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "journalctl(1)",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-17",
+      "requires_privilege": "POSSIBLE",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "ordinal": 18,
+      "id": "log.system.errors",
+      "description": {
+        "id": "Log sistem prioritas err hingga emerg",
+        "en": "Show system journal errors through emergency priority"
+      },
+      "skeleton": false,
+      "slots": [
+        {
+          "name": "window",
+          "kind": "time-window",
+          "required": true,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "limit",
+          "kind": "positive-int",
+          "required": true,
+          "default": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "minimum": 1,
+          "maximum": 100
+        }
+      ],
+      "deferred_slots": [],
+      "slot_constraints": [],
+      "effect": {
+        "class": "READ",
+        "axes": [
+          "filesystem-read",
+          "ipc",
+          "requires-privilege",
+          "resource-usage",
+          "secret-exposure",
+          "spawn"
+        ]
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "PERMANENT-PROPOSAL-ONLY",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "local-journal"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "timestamp",
+        "priority",
+        "message_redacted",
+        "visibility"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 18,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "journalctl(1)",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-18",
+      "requires_privilege": "POSSIBLE",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "ordinal": 19,
+      "id": "log.boot.messages",
+      "description": {
+        "id": "Pesan kernel atau boot terakhir yang dapat diakses",
+        "en": "Show accessible kernel or latest boot messages"
+      },
+      "skeleton": false,
+      "slots": [
+        {
+          "name": "limit",
+          "kind": "positive-int",
+          "required": true,
+          "default": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "minimum": 1,
+          "maximum": 100
+        }
+      ],
+      "deferred_slots": [],
+      "slot_constraints": [],
+      "effect": {
+        "class": "READ",
+        "axes": [
+          "filesystem-read",
+          "ipc",
+          "requires-privilege",
+          "resource-usage",
+          "secret-exposure",
+          "spawn"
+        ]
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "PERMANENT-PROPOSAL-ONLY",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "local-journal"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "boot_id",
+        "timestamp",
+        "priority",
+        "message_redacted",
+        "visibility"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 19,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "dmesg(1), journalctl(1)",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-19",
+      "requires_privilege": "POSSIBLE",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "ordinal": 20,
+      "id": "storage.filesystem.usage",
+      "description": {
+        "id": "Kapasitas dan penggunaan sistem berkas lokal",
+        "en": "Show local filesystem capacity and usage"
+      },
+      "skeleton": true,
+      "slots": [],
+      "deferred_slots": [],
+      "slot_constraints": [],
+      "effect": {
+        "class": "READ",
+        "axes": [
+          "filesystem-read",
+          "secret-exposure",
+          "spawn"
+        ]
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "F5-CANDIDATE-BLOCKED",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "local-mount-metadata"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "mount_id",
+        "total_bytes",
+        "used_bytes",
+        "available_bytes",
+        "percent",
+        "visibility"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 20,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "df(1)",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-20",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "ordinal": 21,
+      "id": "storage.inode.usage",
+      "description": {
+        "id": "Penggunaan inode per sistem berkas",
+        "en": "Show inode usage per filesystem"
+      },
+      "skeleton": false,
+      "slots": [],
+      "deferred_slots": [],
+      "slot_constraints": [],
+      "effect": {
+        "class": "READ",
+        "axes": [
+          "filesystem-read",
+          "secret-exposure",
+          "spawn"
+        ]
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "F5-CANDIDATE-BLOCKED",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "local-mount-metadata"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "mount_id",
+        "total_inodes",
+        "used_inodes",
+        "free_inodes",
+        "percent"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 21,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "df(1)",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-21",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "ordinal": 22,
+      "id": "storage.directory.usage",
+      "description": {
+        "id": "Urutkan subdirektori terbesar dalam root terotorisasi",
+        "en": "Rank largest subdirectories under an authorized root"
+      },
+      "skeleton": true,
+      "slots": [
+        {
+          "name": "root",
+          "kind": "path",
+          "required": true,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "limit",
+          "kind": "positive-int",
+          "required": true,
+          "default": {
+            "kind": "positive-int",
+            "value": 5
+          },
+          "minimum": 1,
+          "maximum": 100
+        },
+        {
+          "name": "depth",
+          "kind": "depth",
+          "required": true,
+          "default": {
+            "kind": "depth",
+            "value": 3
+          },
+          "minimum": 1,
+          "maximum": 8
+        }
+      ],
+      "deferred_slots": [],
+      "slot_constraints": [],
+      "effect": {
+        "class": "READ",
+        "axes": [
+          "filesystem-read",
+          "resource-usage",
+          "secret-exposure"
+        ]
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "F5-CANDIDATE-BLOCKED",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "explicit-data-root"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "relative_path",
+        "allocated_bytes",
+        "rank",
+        "partial"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 22,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "openat2(2), getdents64(2), statx(2)",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-22",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "native-candidate"
+    },
+    {
+      "ordinal": 23,
+      "id": "storage.block.list",
+      "description": {
+        "id": "Daftar perangkat blok, partisi dan mount",
+        "en": "List block devices, partitions and mount points"
+      },
+      "skeleton": false,
+      "slots": [],
+      "deferred_slots": [],
+      "slot_constraints": [],
+      "effect": {
+        "class": "READ",
+        "axes": [
+          "filesystem-read",
+          "secret-exposure",
+          "spawn"
+        ]
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "F5-CANDIDATE-BLOCKED",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "local-mount-metadata"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "device_id",
+        "size_bytes",
+        "type",
+        "mount_id",
+        "visibility"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 23,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "lsblk(8)",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-23",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "ordinal": 24,
+      "id": "storage.mount.list",
+      "description": {
+        "id": "Daftar mount dan opsi yang boleh ditampilkan",
+        "en": "List mounts and allowed mount options"
+      },
+      "skeleton": false,
+      "slots": [],
+      "deferred_slots": [],
+      "slot_constraints": [],
+      "effect": {
+        "class": "READ",
+        "axes": [
+          "filesystem-read",
+          "secret-exposure",
+          "spawn"
+        ]
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "F5-CANDIDATE-BLOCKED",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "local-mount-metadata"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "mount_id",
+        "filesystem_type",
+        "read_only",
+        "approved_options"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 24,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "findmnt(8), proc_pid_mountinfo(5)",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-24",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "ordinal": 25,
+      "id": "file.search",
+      "description": {
+        "id": "Cari file berdasarkan nama, ekstensi atau waktu dalam root terotorisasi",
+        "en": "Find files by name, extension or time under an authorized root"
+      },
+      "skeleton": true,
+      "slots": [
+        {
+          "name": "root",
+          "kind": "path",
+          "required": true,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "extension",
+          "kind": "extension",
+          "required": false,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "filename",
+          "kind": "filename",
+          "required": false,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "window",
+          "kind": "time-window",
+          "required": false,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "limit",
+          "kind": "positive-int",
+          "required": true,
+          "default": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "minimum": 1,
+          "maximum": 100
+        },
+        {
+          "name": "depth",
+          "kind": "depth",
+          "required": true,
+          "default": {
+            "kind": "depth",
+            "value": 3
+          },
+          "minimum": 1,
+          "maximum": 8
+        }
+      ],
+      "deferred_slots": [],
+      "slot_constraints": [
+        {
+          "kind": "at-least-one",
+          "slots": [
+            "extension",
+            "filename",
+            "window"
+          ]
+        }
+      ],
+      "effect": {
+        "class": "READ",
+        "axes": [
+          "filesystem-read",
+          "resource-usage",
+          "secret-exposure"
+        ]
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "F5-CANDIDATE-BLOCKED",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "explicit-data-root"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "relative_path",
+        "match_reason",
+        "partial"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 25,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "openat2(2), getdents64(2), statx(2)",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-25",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "native-candidate"
+    },
+    {
+      "ordinal": 26,
+      "id": "file.text.search",
+      "description": {
+        "id": "Cari teks literal dalam berkas teks terbatas",
+        "en": "Search literal text within bounded text files"
+      },
+      "skeleton": false,
+      "slots": [
+        {
+          "name": "root",
+          "kind": "path",
+          "required": true,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "limit",
+          "kind": "positive-int",
+          "required": true,
+          "default": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "minimum": 1,
+          "maximum": 100
+        },
+        {
+          "name": "depth",
+          "kind": "depth",
+          "required": true,
+          "default": {
+            "kind": "depth",
+            "value": 3
+          },
+          "minimum": 1,
+          "maximum": 8
+        }
+      ],
+      "deferred_slots": [
+        {
+          "name": "text",
+          "required": true,
+          "domain": "bounded literal UTF-8 text; not a regular expression",
+          "status": "DEFERRED"
+        }
+      ],
+      "slot_constraints": [],
+      "effect": {
+        "class": "READ",
+        "axes": [
+          "filesystem-read",
+          "resource-usage",
+          "secret-exposure"
+        ]
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "F5-CANDIDATE-BLOCKED",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "explicit-data-root"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "relative_path",
+        "line_number",
+        "match_redacted",
+        "partial"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 26,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "openat2(2), getdents64(2), read(2), statx(2)",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-26",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "native-candidate"
+    },
+    {
+      "ordinal": 27,
+      "id": "file.metadata.stat",
+      "description": {
+        "id": "Metadata ukuran, izin, pemilik dan waktu file",
+        "en": "Show file size, permissions, owner and timestamps"
+      },
+      "skeleton": false,
+      "slots": [
+        {
+          "name": "path",
+          "kind": "path",
+          "required": true,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        }
+      ],
+      "deferred_slots": [],
+      "slot_constraints": [],
+      "effect": {
+        "class": "READ",
+        "axes": [
+          "filesystem-read",
+          "secret-exposure"
+        ]
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "F5-CANDIDATE-BLOCKED",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "explicit-data-file"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "relative_path",
+        "size_bytes",
+        "mode",
+        "uid",
+        "gid",
+        "timestamp"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 27,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "openat2(2), statx(2), fstat(2)",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-27",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "native-candidate"
+    },
+    {
+      "ordinal": 28,
+      "id": "file.permission.check",
+      "description": {
+        "id": "Periksa akses baca, tulis dan eksekusi target",
+        "en": "Check read, write and execute access to a target"
+      },
+      "skeleton": false,
+      "slots": [
+        {
+          "name": "path",
+          "kind": "path",
+          "required": true,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        }
+      ],
+      "deferred_slots": [],
+      "slot_constraints": [],
+      "effect": {
+        "class": "READ",
+        "axes": [
+          "filesystem-read",
+          "secret-exposure"
+        ]
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "F5-CANDIDATE-BLOCKED",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "explicit-data-file"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "file_read_access",
+        "file_write_access",
+        "file_execute_access",
+        "identity",
+        "visibility"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 28,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "access(2), faccessat2(2)",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-28",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "native-candidate"
+    },
+    {
+      "ordinal": 29,
+      "id": "file.head_tail.view",
+      "description": {
+        "id": "Tampilkan N baris awal atau akhir file teks non-sensitif",
+        "en": "Show first or last N lines of a non-sensitive text file"
+      },
+      "skeleton": false,
+      "slots": [
+        {
+          "name": "path",
+          "kind": "path",
+          "required": true,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "limit",
+          "kind": "positive-int",
+          "required": true,
+          "default": {
+            "kind": "positive-int",
+            "value": 10
+          },
+          "minimum": 1,
+          "maximum": 100
+        }
+      ],
+      "deferred_slots": [
+        {
+          "name": "direction",
+          "required": true,
+          "domain": "enum first or last; no default when ambiguous",
+          "status": "DEFERRED"
+        }
+      ],
+      "slot_constraints": [],
+      "effect": {
+        "class": "READ",
+        "axes": [
+          "filesystem-read",
+          "resource-usage",
+          "secret-exposure"
+        ]
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "F5-CANDIDATE-BLOCKED",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "explicit-data-file"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "relative_path",
+        "line_number",
+        "text_redacted",
+        "partial"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 29,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "openat2(2), read(2), lseek(2)",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-29",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "native-candidate"
+    },
+    {
+      "ordinal": 30,
+      "id": "archive.contents.list",
+      "description": {
+        "id": "Daftar isi arsip tanpa ekstraksi",
+        "en": "List archive entries without extraction"
+      },
+      "skeleton": false,
+      "slots": [
+        {
+          "name": "path",
+          "kind": "path",
+          "required": true,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "limit",
+          "kind": "positive-int",
+          "required": true,
+          "default": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "minimum": 1,
+          "maximum": 100
+        }
+      ],
+      "deferred_slots": [],
+      "slot_constraints": [],
+      "effect": {
+        "class": "READ",
+        "axes": [
+          "filesystem-read",
+          "resource-usage",
+          "secret-exposure",
+          "spawn"
+        ]
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "F5-CANDIDATE-BLOCKED",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "explicit-archive-file"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "entry_name_redacted",
+        "entry_type",
+        "size_bytes",
+        "partial"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 30,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "tar(1), unzip(1)",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-30",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "ordinal": 31,
+      "id": "process.list.top_cpu",
+      "description": {
+        "id": "Daftar proses dengan CPU tertinggi",
+        "en": "List processes with highest CPU use"
+      },
+      "skeleton": false,
+      "slots": [
+        {
+          "name": "limit",
+          "kind": "positive-int",
+          "required": true,
+          "default": {
+            "kind": "positive-int",
+            "value": 10
+          },
+          "minimum": 1,
+          "maximum": 100
+        }
+      ],
+      "deferred_slots": [],
+      "slot_constraints": [],
+      "effect": {
+        "class": "READ",
+        "axes": [
+          "filesystem-read",
+          "resource-usage",
+          "secret-exposure"
+        ]
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "F5-CANDIDATE-BLOCKED",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "local-process-metadata"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "pid",
+        "comm",
+        "cpu_percent",
+        "visibility"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 31,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "proc_pid_stat(5), proc_stat(5)",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-31",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "native-candidate"
+    },
+    {
+      "ordinal": 32,
+      "id": "process.list.top_mem",
+      "description": {
+        "id": "Daftar proses dengan RSS tertinggi",
+        "en": "List processes with highest RSS"
+      },
+      "skeleton": false,
+      "slots": [
+        {
+          "name": "limit",
+          "kind": "positive-int",
+          "required": true,
+          "default": {
+            "kind": "positive-int",
+            "value": 10
+          },
+          "minimum": 1,
+          "maximum": 100
+        }
+      ],
+      "deferred_slots": [],
+      "slot_constraints": [],
+      "effect": {
+        "class": "READ",
+        "axes": [
+          "filesystem-read",
+          "resource-usage",
+          "secret-exposure"
+        ]
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "F5-CANDIDATE-BLOCKED",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "local-process-metadata"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "pid",
+        "comm",
+        "rss_bytes",
+        "visibility"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 32,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "proc_pid_status(5)",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-32",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "native-candidate"
+    },
+    {
+      "ordinal": 33,
+      "id": "process.lookup.name",
+      "description": {
+        "id": "Cari PID dan detail aman berdasarkan nama proses",
+        "en": "Find PID and allowed process details by name"
+      },
+      "skeleton": false,
+      "slots": [
+        {
+          "name": "limit",
+          "kind": "positive-int",
+          "required": true,
+          "default": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "minimum": 1,
+          "maximum": 100
+        }
+      ],
+      "deferred_slots": [
+        {
+          "name": "name",
+          "required": true,
+          "domain": "literal comm name; no arbitrary regex",
+          "status": "DEFERRED"
+        }
+      ],
+      "slot_constraints": [],
+      "effect": {
+        "class": "READ",
+        "axes": [
+          "filesystem-read",
+          "resource-usage",
+          "secret-exposure"
+        ]
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "F5-CANDIDATE-BLOCKED",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "local-process-metadata"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "pid",
+        "comm",
+        "state",
+        "rss_bytes",
+        "visibility"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 33,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "proc_pid_comm(5), proc_pid_status(5)",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-33",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "native-candidate"
+    },
+    {
+      "ordinal": 34,
+      "id": "process.tree.view",
+      "description": {
+        "id": "Hierarki induk dan anak proses",
+        "en": "Show parent-child process hierarchy"
+      },
+      "skeleton": false,
+      "slots": [
+        {
+          "name": "limit",
+          "kind": "positive-int",
+          "required": true,
+          "default": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "minimum": 1,
+          "maximum": 100
+        },
+        {
+          "name": "depth",
+          "kind": "depth",
+          "required": true,
+          "default": {
+            "kind": "depth",
+            "value": 3
+          },
+          "minimum": 1,
+          "maximum": 8
+        }
+      ],
+      "deferred_slots": [],
+      "slot_constraints": [],
+      "effect": {
+        "class": "READ",
+        "axes": [
+          "filesystem-read",
+          "resource-usage",
+          "secret-exposure"
+        ]
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "F5-CANDIDATE-BLOCKED",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "local-process-metadata"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "pid",
+        "ppid",
+        "comm",
+        "visibility",
+        "partial"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 34,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "proc_pid_stat(5), proc_pid_comm(5)",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-34",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "native-candidate"
+    },
+    {
+      "ordinal": 35,
+      "id": "memory.summary",
+      "description": {
+        "id": "Ringkasan RAM tersedia, cache dan swap",
+        "en": "Summarize available RAM, cache and swap"
+      },
+      "skeleton": true,
+      "slots": [],
+      "deferred_slots": [],
+      "slot_constraints": [],
+      "effect": {
+        "class": "READ",
+        "axes": [
+          "filesystem-read",
+          "spawn"
+        ]
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "F5-CANDIDATE-BLOCKED",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "system-metadata"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "total_bytes",
+        "available_bytes",
+        "cache_bytes",
+        "swap_total_bytes",
+        "swap_used_bytes"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 35,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "free(1), proc_meminfo(5)",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-35",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "ordinal": 36,
+      "id": "cpu.hardware.info",
+      "description": {
+        "id": "Arsitektur, core, thread dan frekuensi CPU",
+        "en": "Show CPU architecture, cores, threads and frequency"
+      },
+      "skeleton": false,
+      "slots": [],
+      "deferred_slots": [],
+      "slot_constraints": [],
+      "effect": {
+        "class": "READ",
+        "axes": [
+          "filesystem-read",
+          "secret-exposure",
+          "spawn"
+        ]
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "F5-CANDIDATE-BLOCKED",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "system-metadata"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "architecture",
+        "cores",
+        "threads",
+        "frequency_if_visible"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 36,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "lscpu(1)",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-36",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "ordinal": 37,
+      "id": "package.installed.check",
+      "description": {
+        "id": "Periksa paket terpasang dan versinya",
+        "en": "Check installed package and version"
+      },
+      "skeleton": false,
+      "slots": [],
+      "deferred_slots": [
+        {
+          "name": "package",
+          "required": true,
+          "domain": "exact Debian package identifier including optional architecture",
+          "status": "DEFERRED"
+        }
+      ],
+      "slot_constraints": [],
+      "effect": {
+        "class": "READ",
+        "axes": [
+          "filesystem-read",
+          "secret-exposure",
+          "spawn"
+        ]
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "F5-CANDIDATE-BLOCKED",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "local-package-metadata"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "package",
+        "installed",
+        "version",
+        "architecture"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 37,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "dpkg-query(1)",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-37",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "ordinal": 38,
+      "id": "package.search.local",
+      "description": {
+        "id": "Cari paket dalam cache repositori lokal",
+        "en": "Search packages in the local repository cache"
+      },
+      "skeleton": false,
+      "slots": [
+        {
+          "name": "limit",
+          "kind": "positive-int",
+          "required": true,
+          "default": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "minimum": 1,
+          "maximum": 100
+        }
+      ],
+      "deferred_slots": [
+        {
+          "name": "query",
+          "required": true,
+          "domain": "bounded literal package search text; no regex or remote update",
+          "status": "DEFERRED"
+        }
+      ],
+      "slot_constraints": [],
+      "effect": {
+        "class": "READ",
+        "axes": [
+          "filesystem-read",
+          "resource-usage",
+          "secret-exposure",
+          "spawn"
+        ]
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "F5-CANDIDATE-BLOCKED",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "local-package-metadata"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "package",
+        "version",
+        "summary_redacted",
+        "cache_status"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 38,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "apt-cache(8)",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-38",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "ordinal": 39,
+      "id": "user.session.who",
+      "description": {
+        "id": "Daftar sesi login yang terlihat",
+        "en": "List visible logged-in sessions"
+      },
+      "skeleton": false,
+      "slots": [
+        {
+          "name": "limit",
+          "kind": "positive-int",
+          "required": true,
+          "default": {
+            "kind": "positive-int",
+            "value": 30
+          },
+          "minimum": 1,
+          "maximum": 100
+        }
+      ],
+      "deferred_slots": [],
+      "slot_constraints": [],
+      "effect": {
+        "class": "READ",
+        "axes": [
+          "filesystem-read",
+          "secret-exposure",
+          "spawn"
+        ]
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "F5-CANDIDATE-BLOCKED",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "local-session-metadata"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "user",
+        "tty",
+        "login_time",
+        "visibility"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 39,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "who(1), utmp(5)",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-39",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "ordinal": 40,
+      "id": "user.identity.info",
+      "description": {
+        "id": "UID, GID dan grup identitas saat ini",
+        "en": "Show current UID, GID and group membership"
+      },
+      "skeleton": false,
+      "slots": [],
+      "deferred_slots": [],
+      "slot_constraints": [],
+      "effect": {
+        "class": "READ",
+        "axes": []
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "F5-CANDIDATE-BLOCKED",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "current-identity"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "uid",
+        "gid",
+        "group_ids"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 40,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "getuid(2), getgid(2), getgroups(2)",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-40",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "native-candidate"
+    },
+    {
+      "ordinal": 41,
+      "id": "diagnosis.disk_full",
+      "description": {
+        "id": "Panduan diagnosis disk penuh",
+        "en": "Guide disk-full diagnosis"
+      },
+      "skeleton": false,
+      "slots": [],
+      "deferred_slots": [],
+      "slot_constraints": [],
+      "effect": {
+        "class": "READ",
+        "axes": []
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "PERMANENT-PROPOSAL-ONLY",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "local-metadata-guidance"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "guidance_text",
+        "limitations",
+        "warnings"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 41,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "baseline v3 diagnostic guide",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-41",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "narrative-only"
+    },
+    {
+      "ordinal": 42,
+      "id": "diagnosis.high_load",
+      "description": {
+        "id": "Panduan diagnosis beban tinggi",
+        "en": "Guide high-load diagnosis"
+      },
+      "skeleton": false,
+      "slots": [],
+      "deferred_slots": [],
+      "slot_constraints": [],
+      "effect": {
+        "class": "READ",
+        "axes": []
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "PERMANENT-PROPOSAL-ONLY",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "local-metadata-guidance"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "guidance_text",
+        "limitations",
+        "warnings"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 42,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "baseline v3 diagnostic guide",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-42",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "narrative-only"
+    },
+    {
+      "ordinal": 43,
+      "id": "diagnosis.service_crash",
+      "description": {
+        "id": "Panduan diagnosis layanan gagal mulai",
+        "en": "Guide diagnosis of a service startup failure"
+      },
+      "skeleton": false,
+      "slots": [
+        {
+          "name": "unit",
+          "kind": "unit-name",
+          "required": true,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        }
+      ],
+      "deferred_slots": [],
+      "slot_constraints": [],
+      "effect": {
+        "class": "READ",
+        "axes": []
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "PERMANENT-PROPOSAL-ONLY",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "local-metadata-guidance"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "guidance_text",
+        "limitations",
+        "warnings"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 43,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "baseline v3 diagnostic guide",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-43",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "narrative-only"
+    },
+    {
+      "ordinal": 44,
+      "id": "diagnosis.dns_failure",
+      "description": {
+        "id": "Panduan diagnosis kegagalan DNS",
+        "en": "Guide DNS resolution failure diagnosis"
+      },
+      "skeleton": false,
+      "slots": [],
+      "deferred_slots": [],
+      "slot_constraints": [],
+      "effect": {
+        "class": "READ",
+        "axes": []
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "PERMANENT-PROPOSAL-ONLY",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "local-metadata-guidance"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "guidance_text",
+        "limitations",
+        "warnings"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 44,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "baseline v3 diagnostic guide",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-44",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "narrative-only"
+    },
+    {
+      "ordinal": 45,
+      "id": "service.restart",
+      "description": {
+        "id": "Usulkan restart satu layanan",
+        "en": "Propose restarting one service"
+      },
+      "skeleton": true,
+      "slots": [
+        {
+          "name": "unit",
+          "kind": "unit-name",
+          "required": true,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        }
+      ],
+      "deferred_slots": [],
+      "slot_constraints": [],
+      "effect": {
+        "class": "CHANGE",
+        "axes": [
+          "filesystem-read",
+          "ipc",
+          "persistent-mutation",
+          "requires-privilege",
+          "resource-usage",
+          "spawn"
+        ]
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "PERMANENT-PROPOSAL-ONLY",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "local-service-metadata"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "unit",
+        "change_warning",
+        "privilege_warning"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 45,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "systemctl(1)",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-45",
+      "requires_privilege": "POSSIBLE",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "ordinal": 46,
+      "id": "service.reload",
+      "description": {
+        "id": "Usulkan reload konfigurasi satu layanan",
+        "en": "Propose reloading one service configuration"
+      },
+      "skeleton": false,
+      "slots": [
+        {
+          "name": "unit",
+          "kind": "unit-name",
+          "required": true,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        }
+      ],
+      "deferred_slots": [],
+      "slot_constraints": [],
+      "effect": {
+        "class": "CHANGE",
+        "axes": [
+          "filesystem-read",
+          "ipc",
+          "persistent-mutation",
+          "requires-privilege",
+          "resource-usage",
+          "spawn"
+        ]
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "PERMANENT-PROPOSAL-ONLY",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "local-service-metadata"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "unit",
+        "change_warning",
+        "privilege_warning"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 46,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "systemctl(1)",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-46",
+      "requires_privilege": "POSSIBLE",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "ordinal": 47,
+      "id": "archive.extract.safe",
+      "description": {
+        "id": "Usulkan ekstraksi ke subdirektori baru dengan pemeriksaan isi",
+        "en": "Propose extraction into a new subdirectory with archive checks"
+      },
+      "skeleton": false,
+      "slots": [
+        {
+          "name": "archive",
+          "kind": "path",
+          "required": true,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "destination",
+          "kind": "path",
+          "required": true,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        }
+      ],
+      "deferred_slots": [],
+      "slot_constraints": [],
+      "effect": {
+        "class": "CHANGE",
+        "axes": [
+          "filesystem-read",
+          "filesystem-write",
+          "persistent-mutation",
+          "resource-usage",
+          "secret-exposure",
+          "spawn"
+        ]
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "PERMANENT-PROPOSAL-ONLY",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "explicit-archive-file",
+          "explicit-new-data-root"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "archive_id",
+        "destination_id",
+        "traversal_warning",
+        "symlink_warning",
+        "change_warning"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 47,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "tar(1), unzip(1)",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-47",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "ordinal": 48,
+      "id": "file.compress.archive",
+      "description": {
+        "id": "Usulkan pengarsipan file atau direktori ke tar.gz",
+        "en": "Propose archiving a file or directory to tar.gz"
+      },
+      "skeleton": false,
+      "slots": [
+        {
+          "name": "source",
+          "kind": "path",
+          "required": true,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "destination",
+          "kind": "path",
+          "required": true,
+          "default": null,
+          "minimum": null,
+          "maximum": null
+        }
+      ],
+      "deferred_slots": [],
+      "slot_constraints": [],
+      "effect": {
+        "class": "CHANGE",
+        "axes": [
+          "filesystem-read",
+          "filesystem-write",
+          "persistent-mutation",
+          "resource-usage",
+          "secret-exposure",
+          "spawn"
+        ]
+      },
+      "proposal_eligible": true,
+      "execute_eligible": false,
+      "future_execution": "PERMANENT-PROPOSAL-ONLY",
+      "scope": {
+        "kind": "local",
+        "allowed_root_types": [
+          "explicit-data-root",
+          "explicit-new-archive-file"
+        ],
+        "explicit_authorization": true,
+        "recursive_cwd_default": false,
+        "forbidden_path_classes": [
+          "shadow",
+          "ssh-keys",
+          "cloud-kube-credentials",
+          "dotenv",
+          "shell-history",
+          "proc-environ-mem",
+          "device-nodes",
+          "database-data",
+          "browser-profiles",
+          "unknown-sensitive"
+        ],
+        "limits": {
+          "timeout_ms": 5000,
+          "max_output_bytes": 65536,
+          "max_entries": 1000,
+          "max_depth": 8,
+          "max_input_file_bytes": 1048576
+        },
+        "path_boundary": "descriptor-and-identity-required-before-access"
+      },
+      "output_projection": [
+        "source_id",
+        "destination_id",
+        "change_warning",
+        "scope_warning"
+      ],
+      "redaction_profile": "allowlisted-fields-canary-fail-closed-v1",
+      "source": {
+        "baseline_blob": "b3554946d62549b7417ea451294ff65b4f01a1fe",
+        "baseline_ordinal": 48,
+        "authorship": "original-contract-summary",
+        "external_reference_candidate": "tar(1)",
+        "external_version": null,
+        "external_hash": null,
+        "license_status": "NOT VERIFIED",
+        "external_content_imported": false
+      },
+      "fixture_id": "CAT-48",
+      "requires_privilege": "NOT VERIFIED",
+      "operation_surface": "command-candidate"
+    }
+  ]
+}

@@ -1,0 +1,1373 @@
+{
+  "schema_version": 1,
+  "profile_id": "debian-13",
+  "architecture": "x86-64",
+  "phase": "F0-A",
+  "trust_status": "NOT VERIFIED",
+  "bindings": [
+    {
+      "intent": "help.command.explain",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.help.command.explain",
+      "backend_candidate": "indexed-documentation",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "verified bounded catalog index",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [],
+      "ipc_candidates": [],
+      "namespace_visibility": "catalog",
+      "data_source_candidate": "catalog build index",
+      "host_equivalence": {
+        "method": "Compare exact indexed entry with pinned build source; no man or help spawn.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-01",
+      "operation_surface": "indexed-docs"
+    },
+    {
+      "intent": "help.intent.list",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.help.intent.list",
+      "backend_candidate": "indexed-documentation",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "verified bounded catalog index",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [],
+      "ipc_candidates": [],
+      "namespace_visibility": "catalog",
+      "data_source_candidate": "catalog build index",
+      "host_equivalence": {
+        "method": "Compare projected list against exact registry and profile; no spawn.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-02",
+      "operation_surface": "indexed-docs"
+    },
+    {
+      "intent": "system.os.info",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.system.os.info",
+      "backend_candidate": "native-metadata",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "read allowlisted OS metadata; no arbitrary files",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [],
+      "ipc_candidates": [],
+      "namespace_visibility": "host-identity",
+      "data_source_candidate": "os-release(5), uname(2)",
+      "host_equivalence": {
+        "method": "Compare fixture OS metadata and uname fields for same host identity.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-03",
+      "operation_surface": "native-candidate"
+    },
+    {
+      "intent": "system.uptime.summary",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.system.uptime.summary",
+      "backend_candidate": "native-metadata",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "read allowlisted uptime and load fields",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [],
+      "ipc_candidates": [],
+      "namespace_visibility": "pid-time",
+      "data_source_candidate": "proc_uptime(5), proc_loadavg(5)",
+      "host_equivalence": {
+        "method": "Compare same time/PID namespace and sampled uptime/load with bounded tolerance.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-04",
+      "operation_surface": "native-candidate"
+    },
+    {
+      "intent": "network.listener.lookup",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.network.listener.lookup",
+      "backend_candidate": "executable-candidate",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "netlink socket diagnostics and allowlisted proc PID attribution; existing permissions only; report visibility limited/unknown",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [
+        "AF_NETLINK"
+      ],
+      "ipc_candidates": [
+        "netlink-sock-diag"
+      ],
+      "namespace_visibility": "network-pid",
+      "data_source_candidate": "ss(8), proc_pid_fd(5)",
+      "host_equivalence": {
+        "method": "Compare known lab listeners and PID visibility in intended network/PID namespaces; no active probe.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-05",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "intent": "network.connection.active",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.network.connection.active",
+      "backend_candidate": "executable-candidate",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "socket diagnostic visibility without added rights",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [
+        "AF_NETLINK"
+      ],
+      "ipc_candidates": [
+        "netlink-sock-diag"
+      ],
+      "namespace_visibility": "network-pid",
+      "data_source_candidate": "ss(8)",
+      "host_equivalence": {
+        "method": "Compare seeded local socket states; normalize changing ephemeral state; no DNS.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-06",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "intent": "network.interface.list",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.network.interface.list",
+      "backend_candidate": "executable-candidate",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "read interface metadata in intended namespace",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [
+        "AF_NETLINK"
+      ],
+      "ipc_candidates": [
+        "netlink-route"
+      ],
+      "namespace_visibility": "network",
+      "data_source_candidate": "ip-link(8), ip-address(8)",
+      "host_equivalence": {
+        "method": "Compare lab links and addresses with host snapshot; namespace mismatch is failure.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-07",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "intent": "network.route.table",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.network.route.table",
+      "backend_candidate": "executable-candidate",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "read route metadata in intended namespace",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [
+        "AF_NETLINK"
+      ],
+      "ipc_candidates": [
+        "netlink-route"
+      ],
+      "namespace_visibility": "network",
+      "data_source_candidate": "ip-route(8)",
+      "host_equivalence": {
+        "method": "Compare pinned lab routes and default gateway in intended namespace.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-08",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "intent": "network.dns.config",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.network.dns.config",
+      "backend_candidate": "structured-candidate",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "allowlisted resolv.conf and effective resolver metadata; resolve1 D-Bus interface candidate; no DNS request or proxy egress",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [
+        "AF_UNIX"
+      ],
+      "ipc_candidates": [
+        "resolver-ipc"
+      ],
+      "namespace_visibility": "mount-network",
+      "data_source_candidate": "resolv.conf(5), resolved.conf(5), org.freedesktop.resolve1(5)",
+      "host_equivalence": {
+        "method": "Compare controlled resolver configuration and effective mode; no queries or daemon proxy egress.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-09",
+      "operation_surface": "native-ipc-candidate"
+    },
+    {
+      "intent": "network.dns.lookup",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.network.dns.lookup",
+      "backend_candidate": "structured-candidate",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "resolver access not verified; network prohibited in product",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [
+        "AF_INET",
+        "AF_INET6",
+        "AF_UNIX"
+      ],
+      "ipc_candidates": [
+        "resolver-ipc"
+      ],
+      "namespace_visibility": "network",
+      "data_source_candidate": "dig(1), resolv.conf(5)",
+      "host_equivalence": {
+        "method": "MVP proposal oracle only; compare query target and NET effect, never run.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-10",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "intent": "network.connectivity.ping",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.network.connectivity.ping",
+      "backend_candidate": "structured-candidate",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "ICMP socket/capability may be required; no elevation",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": true
+      },
+      "socket_domains": [
+        "AF_INET",
+        "AF_INET6",
+        "AF_UNIX"
+      ],
+      "ipc_candidates": [
+        "resolver-ipc"
+      ],
+      "namespace_visibility": "network",
+      "data_source_candidate": "ping(8), resolv.conf(5)",
+      "host_equivalence": {
+        "method": "MVP proposal oracle only; count <=4 and NET effect, no traffic.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-11",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "intent": "diagnosis.connectivity",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.diagnosis.connectivity",
+      "backend_candidate": "diagnostic-guide",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "narrative guidance only; no OS access or invocation; no child operation IR",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [],
+      "ipc_candidates": [],
+      "namespace_visibility": "none",
+      "data_source_candidate": "baseline v3 diagnostic guide",
+      "host_equivalence": {
+        "method": "Proposal oracle: bounded non-copyable narrative only; no argv, handler, child operation IR or host observation. ordered bounded local checks; no automatic probe or agent loop.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-12",
+      "operation_surface": "narrative-only"
+    },
+    {
+      "intent": "service.status.get",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.service.status.get",
+      "backend_candidate": "structured-candidate",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "existing systemd read visibility; no new rights",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [
+        "AF_UNIX"
+      ],
+      "ipc_candidates": [
+        "systemd-dbus"
+      ],
+      "namespace_visibility": "service-manager-pid",
+      "data_source_candidate": "systemctl(1)",
+      "host_equivalence": {
+        "method": "MVP proposal oracle: exact unit and current status, no D-Bus access.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-13",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "intent": "service.list.active",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.service.list.active",
+      "backend_candidate": "structured-candidate",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "existing systemd read visibility; no new rights",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [
+        "AF_UNIX"
+      ],
+      "ipc_candidates": [
+        "systemd-dbus"
+      ],
+      "namespace_visibility": "service-manager",
+      "data_source_candidate": "systemctl(1)",
+      "host_equivalence": {
+        "method": "MVP proposal oracle: current active state, not enabled or historical.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-14",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "intent": "service.failed.list",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.service.failed.list",
+      "backend_candidate": "structured-candidate",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "existing systemd read visibility; no new rights",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [
+        "AF_UNIX"
+      ],
+      "ipc_candidates": [
+        "systemd-dbus"
+      ],
+      "namespace_visibility": "service-manager",
+      "data_source_candidate": "systemctl(1)",
+      "host_equivalence": {
+        "method": "MVP proposal oracle: currently failed vs since-boot history; no D-Bus access.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-15",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "intent": "service.enabled.list",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.service.enabled.list",
+      "backend_candidate": "structured-candidate",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "existing unit metadata visibility; no new rights",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [
+        "AF_UNIX"
+      ],
+      "ipc_candidates": [
+        "systemd-dbus"
+      ],
+      "namespace_visibility": "service-manager-mount",
+      "data_source_candidate": "systemctl(1)",
+      "host_equivalence": {
+        "method": "MVP proposal oracle: enabled state distinct from active.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-16",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "intent": "log.service.query",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.log.service.query",
+      "backend_candidate": "structured-candidate",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "existing journal ACL only; system journal visibility may require root or existing adm/systemd-journal membership; never request elevation",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": true
+      },
+      "socket_domains": [
+        "AF_UNIX"
+      ],
+      "ipc_candidates": [
+        "journal-ipc"
+      ],
+      "namespace_visibility": "journal-mount-time",
+      "data_source_candidate": "journalctl(1)",
+      "host_equivalence": {
+        "method": "MVP proposal oracle: unit, half-open pinned time range and limit; no raw journal read.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-17",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "intent": "log.system.errors",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.log.system.errors",
+      "backend_candidate": "structured-candidate",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "existing journal ACL only; system journal visibility may require root or existing adm/systemd-journal membership; never request elevation",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": true
+      },
+      "socket_domains": [
+        "AF_UNIX"
+      ],
+      "ipc_candidates": [
+        "journal-ipc"
+      ],
+      "namespace_visibility": "journal-mount-time",
+      "data_source_candidate": "journalctl(1)",
+      "host_equivalence": {
+        "method": "MVP proposal oracle: err..emerg and pinned time window, never raw read.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-18",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "intent": "log.boot.messages",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.log.boot.messages",
+      "backend_candidate": "structured-candidate",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "existing journal ACL or kernel read rights only; no privilege/group change; limited visibility if unavailable",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": true
+      },
+      "socket_domains": [
+        "AF_UNIX"
+      ],
+      "ipc_candidates": [
+        "journal-ipc"
+      ],
+      "namespace_visibility": "journal-mount-time",
+      "data_source_candidate": "dmesg(1), journalctl(1)",
+      "host_equivalence": {
+        "method": "MVP proposal oracle: current boot scope and visible messages, not privilege bypass.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-19",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "intent": "storage.filesystem.usage",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.storage.filesystem.usage",
+      "backend_candidate": "executable-candidate",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "metadata of explicitly allowed local mounts; no remote mount probing",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [],
+      "ipc_candidates": [],
+      "namespace_visibility": "mount",
+      "data_source_candidate": "df(1)",
+      "host_equivalence": {
+        "method": "Compare fixed local mount fixture capacities; exclude unapproved remote/sensitive mounts.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-20",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "intent": "storage.inode.usage",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.storage.inode.usage",
+      "backend_candidate": "executable-candidate",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "metadata of allowed local mounts; no remote mount probing",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [],
+      "ipc_candidates": [],
+      "namespace_visibility": "mount",
+      "data_source_candidate": "df(1)",
+      "host_equivalence": {
+        "method": "Compare inode counts on seeded allowed local filesystem.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-21",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "intent": "storage.directory.usage",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.storage.directory.usage",
+      "backend_candidate": "structured-candidate",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "explicit root descriptor, traversal and readable entries; no automatic cwd authority",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [],
+      "ipc_candidates": [],
+      "namespace_visibility": "mount",
+      "data_source_candidate": "openat2(2), getdents64(2), statx(2)",
+      "host_equivalence": {
+        "method": "Native descriptor-based fixture tree, allocated blocks, hardlink policy and depth; compare to independent lab oracle, not a du invocation by product.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-22",
+      "operation_surface": "native-candidate"
+    },
+    {
+      "intent": "storage.block.list",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.storage.block.list",
+      "backend_candidate": "executable-candidate",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "allowlisted sysfs and mount metadata, no device reads",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [],
+      "ipc_candidates": [],
+      "namespace_visibility": "mount-device",
+      "data_source_candidate": "lsblk(8)",
+      "host_equivalence": {
+        "method": "Compare lab block topology and allowed fields; no raw device/serial disclosure.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-23",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "intent": "storage.mount.list",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.storage.mount.list",
+      "backend_candidate": "executable-candidate",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "allowlisted mount metadata; filter sensitive mount options",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [],
+      "ipc_candidates": [],
+      "namespace_visibility": "mount",
+      "data_source_candidate": "findmnt(8), proc_pid_mountinfo(5)",
+      "host_equivalence": {
+        "method": "Compare lab mount namespace and projected options; omit credentials.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-24",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "intent": "file.search",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.file.search",
+      "backend_candidate": "structured-candidate",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "explicit root descriptor; bounded traversal, no link or mount escape",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [],
+      "ipc_candidates": [],
+      "namespace_visibility": "mount",
+      "data_source_candidate": "openat2(2), getdents64(2), statx(2)",
+      "host_equivalence": {
+        "method": "Native descriptor-based traversal with literal names, Unicode, dash, half-open mtime bounds, sensitive canary and no mount escape; compare with fixed lab tree.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-25",
+      "operation_surface": "native-candidate"
+    },
+    {
+      "intent": "file.text.search",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.file.text.search",
+      "backend_candidate": "structured-candidate",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "explicit root and allowlisted text files; no unrestricted recursion",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [],
+      "ipc_candidates": [],
+      "namespace_visibility": "mount",
+      "data_source_candidate": "openat2(2), getdents64(2), read(2), statx(2)",
+      "host_equivalence": {
+        "method": "Compare seeded text including canary, binary/oversized files and literal pattern.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-26",
+      "operation_surface": "native-candidate"
+    },
+    {
+      "intent": "file.metadata.stat",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.file.metadata.stat",
+      "backend_candidate": "structured-candidate",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "explicit file handle, no follow outside allowed root",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [],
+      "ipc_candidates": [],
+      "namespace_visibility": "mount-user",
+      "data_source_candidate": "openat2(2), statx(2), fstat(2)",
+      "host_equivalence": {
+        "method": "Compare pinned fixture inode metadata; deny symlink race/outside scope.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-27",
+      "operation_surface": "native-candidate"
+    },
+    {
+      "intent": "file.permission.check",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.file.permission.check",
+      "backend_candidate": "structured-candidate",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "explicit target, current identity and ACL semantics; no actual write",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [],
+      "ipc_candidates": [],
+      "namespace_visibility": "mount-user",
+      "data_source_candidate": "access(2), faccessat2(2)",
+      "host_equivalence": {
+        "method": "Compare lab ACL and effective identity without opening write or executing file.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-28",
+      "operation_surface": "native-candidate"
+    },
+    {
+      "intent": "file.head_tail.view",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.file.head_tail.view",
+      "backend_candidate": "structured-candidate",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "explicit allowlisted text file; cap bytes and redact",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [],
+      "ipc_candidates": [],
+      "namespace_visibility": "mount",
+      "data_source_candidate": "openat2(2), read(2), lseek(2)",
+      "host_equivalence": {
+        "method": "Compare fixed text with byte cap, last-line handling and canary; no raw secret.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-29",
+      "operation_surface": "native-candidate"
+    },
+    {
+      "intent": "archive.contents.list",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.archive.contents.list",
+      "backend_candidate": "structured-candidate",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "explicit allowed archive; bounded decompression, no extraction",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [],
+      "ipc_candidates": [],
+      "namespace_visibility": "mount",
+      "data_source_candidate": "tar(1), unzip(1)",
+      "host_equivalence": {
+        "method": "Candidate archive listing command, never extraction; compare member metadata with independent fixture; malformed/link/traversal names remain data; spawn only hypothetical future effect.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-30",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "intent": "process.list.top_cpu",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.process.list.top_cpu",
+      "backend_candidate": "structured-candidate",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "existing proc visibility, bounded sampling; no full cmdline",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [],
+      "ipc_candidates": [],
+      "namespace_visibility": "pid-user",
+      "data_source_candidate": "proc_pid_stat(5), proc_stat(5)",
+      "host_equivalence": {
+        "method": "Compare fixed process fixture and CPU sampling definition/window; tie-break PID.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-31",
+      "operation_surface": "native-candidate"
+    },
+    {
+      "intent": "process.list.top_mem",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.process.list.top_mem",
+      "backend_candidate": "structured-candidate",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "existing proc visibility; no full cmdline",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [],
+      "ipc_candidates": [],
+      "namespace_visibility": "pid-user",
+      "data_source_candidate": "proc_pid_status(5)",
+      "host_equivalence": {
+        "method": "Compare seeded process RSS snapshot and deterministic tie-break.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-32",
+      "operation_surface": "native-candidate"
+    },
+    {
+      "intent": "process.lookup.name",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.process.lookup.name",
+      "backend_candidate": "structured-candidate",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "existing proc visibility; no cmdline or environ",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [],
+      "ipc_candidates": [],
+      "namespace_visibility": "pid-user",
+      "data_source_candidate": "proc_pid_comm(5), proc_pid_status(5)",
+      "host_equivalence": {
+        "method": "Compare seeded exact comm names, duplicate names and hidepid.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-33",
+      "operation_surface": "native-candidate"
+    },
+    {
+      "intent": "process.tree.view",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.process.tree.view",
+      "backend_candidate": "structured-candidate",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "existing proc visibility; no full cmdline",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [],
+      "ipc_candidates": [],
+      "namespace_visibility": "pid-user",
+      "data_source_candidate": "proc_pid_stat(5), proc_pid_comm(5)",
+      "host_equivalence": {
+        "method": "Compare seeded parent-child hierarchy, disappeared parents and depth cap.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-34",
+      "operation_surface": "native-candidate"
+    },
+    {
+      "intent": "memory.summary",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.memory.summary",
+      "backend_candidate": "executable-candidate",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "read allowlisted memory metadata; no memory contents",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [],
+      "ipc_candidates": [],
+      "namespace_visibility": "memory-cgroup",
+      "data_source_candidate": "free(1), proc_meminfo(5)",
+      "host_equivalence": {
+        "method": "Compare known MemAvailable, cache and swap fixture; distinguish host from cgroup.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-35",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "intent": "cpu.hardware.info",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.cpu.hardware.info",
+      "backend_candidate": "executable-candidate",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "allowlisted CPU metadata; no arbitrary sysfs read",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [],
+      "ipc_candidates": [],
+      "namespace_visibility": "cpu-cgroup",
+      "data_source_candidate": "lscpu(1)",
+      "host_equivalence": {
+        "method": "Compare fixed topology and frequency visibility; do not infer host topology from guest.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-36",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "intent": "package.installed.check",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.package.installed.check",
+      "backend_candidate": "executable-candidate",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "read local package database only",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [],
+      "ipc_candidates": [],
+      "namespace_visibility": "mount",
+      "data_source_candidate": "dpkg-query(1)",
+      "host_equivalence": {
+        "method": "Compare pinned dpkg database installed/not installed/version.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-37",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "intent": "package.search.local",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.package.search.local",
+      "backend_candidate": "executable-candidate",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "read local cache; no update/download",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [],
+      "ipc_candidates": [],
+      "namespace_visibility": "mount",
+      "data_source_candidate": "apt-cache(8)",
+      "host_equivalence": {
+        "method": "Compare pinned offline cache matches and stale/missing-cache outcome.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-38",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "intent": "user.session.who",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.user.session.who",
+      "backend_candidate": "executable-candidate",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "read permitted current utmp records only; no reverse lookup or NSS expansion; history deferred",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [],
+      "ipc_candidates": [],
+      "namespace_visibility": "session-mount",
+      "data_source_candidate": "who(1), utmp(5)",
+      "host_equivalence": {
+        "method": "Compare synthetic utmp snapshot and redaction of remote origin; history separate.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-39",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "intent": "user.identity.info",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.user.identity.info",
+      "backend_candidate": "native-metadata",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "numeric real/effective identity semantics to be verified; getuid/getgid/getgroups only; no name or NSS lookup",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [],
+      "ipc_candidates": [],
+      "namespace_visibility": "user",
+      "data_source_candidate": "getuid(2), getgid(2), getgroups(2)",
+      "host_equivalence": {
+        "method": "Compare current numeric IDs under intended user namespace; no remote NSS.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-40",
+      "operation_surface": "native-candidate"
+    },
+    {
+      "intent": "diagnosis.disk_full",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.diagnosis.disk_full",
+      "backend_candidate": "diagnostic-guide",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "narrative guidance only; no OS access or invocation; no child operation IR",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [],
+      "ipc_candidates": [],
+      "namespace_visibility": "none",
+      "data_source_candidate": "baseline v3 diagnostic guide",
+      "host_equivalence": {
+        "method": "Proposal oracle: bounded non-copyable narrative only; no argv, handler, child operation IR or host observation. capacity, inode and bounded explicit-root checks; no automatic deletion.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-41",
+      "operation_surface": "narrative-only"
+    },
+    {
+      "intent": "diagnosis.high_load",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.diagnosis.high_load",
+      "backend_candidate": "diagnostic-guide",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "narrative guidance only; no OS access or invocation; no child operation IR",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [],
+      "ipc_candidates": [],
+      "namespace_visibility": "none",
+      "data_source_candidate": "baseline v3 diagnostic guide",
+      "host_equivalence": {
+        "method": "Proposal oracle: bounded non-copyable narrative only; no argv, handler, child operation IR or host observation. CPU/load, memory and I/O distinctions; no process kill.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-42",
+      "operation_surface": "narrative-only"
+    },
+    {
+      "intent": "diagnosis.service_crash",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.diagnosis.service_crash",
+      "backend_candidate": "diagnostic-guide",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "narrative guidance only; no OS access or invocation; no child operation IR",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [],
+      "ipc_candidates": [],
+      "namespace_visibility": "none",
+      "data_source_candidate": "baseline v3 diagnostic guide",
+      "host_equivalence": {
+        "method": "Proposal oracle: bounded non-copyable narrative only; no argv, handler, child operation IR or host observation. status, bounded logs and listener checks; no restart.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-43",
+      "operation_surface": "narrative-only"
+    },
+    {
+      "intent": "diagnosis.dns_failure",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.diagnosis.dns_failure",
+      "backend_candidate": "diagnostic-guide",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "narrative guidance only; no OS access or invocation; no child operation IR",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [],
+      "ipc_candidates": [],
+      "namespace_visibility": "none",
+      "data_source_candidate": "baseline v3 diagnostic guide",
+      "host_equivalence": {
+        "method": "Proposal oracle: bounded non-copyable narrative only; no argv, handler, child operation IR or host observation. config vs resolution; NET subproposal explicitly marked, no query.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-44",
+      "operation_surface": "narrative-only"
+    },
+    {
+      "intent": "service.restart",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.service.restart",
+      "backend_candidate": "structured-candidate",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "may require administrative authorization; no sudo or group change",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": true
+      },
+      "socket_domains": [
+        "AF_UNIX"
+      ],
+      "ipc_candidates": [
+        "systemd-dbus"
+      ],
+      "namespace_visibility": "service-manager",
+      "data_source_candidate": "systemctl(1)",
+      "host_equivalence": {
+        "method": "Proposal oracle only: exact unit, restart intent and warning; hard deny execute.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-45",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "intent": "service.reload",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.service.reload",
+      "backend_candidate": "structured-candidate",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "may require administrative authorization; no sudo or group change",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": true
+      },
+      "socket_domains": [
+        "AF_UNIX"
+      ],
+      "ipc_candidates": [
+        "systemd-dbus"
+      ],
+      "namespace_visibility": "service-manager",
+      "data_source_candidate": "systemctl(1)",
+      "host_equivalence": {
+        "method": "Proposal oracle only: reload distinct from restart, not guaranteed disruption-free.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-46",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "intent": "archive.extract.safe",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.archive.extract.safe",
+      "backend_candidate": "structured-candidate",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "explicit archive and new destination under authorized root; reject existing/unsafe target",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [],
+      "ipc_candidates": [],
+      "namespace_visibility": "mount",
+      "data_source_candidate": "tar(1), unzip(1)",
+      "host_equivalence": {
+        "method": "Proposal oracle only: inspect traversal/link entries and new destination; no extraction or safety guarantee.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-47",
+      "operation_surface": "command-candidate"
+    },
+    {
+      "intent": "file.compress.archive",
+      "adapter": "linux.debian13.v1",
+      "capability_id": "linux.file.compress.archive",
+      "backend_candidate": "structured-candidate",
+      "minimum_version": null,
+      "version_status": "NOT VERIFIED",
+      "compatibility": "NOT VERIFIED",
+      "capability_status": "BLOCKED",
+      "rights": {
+        "status": "NOT VERIFIED",
+        "minimum_access": "explicit source and new destination; no overwrite, no sensitive traversal",
+        "required_groups": [],
+        "request_additional_groups": false,
+        "privilege_may_be_required": false
+      },
+      "socket_domains": [],
+      "ipc_candidates": [],
+      "namespace_visibility": "mount",
+      "data_source_candidate": "tar(1)",
+      "host_equivalence": {
+        "method": "Proposal oracle only: explicit source/new archive, bounds and sensitive exclusion; no writes.",
+        "result": "NOT RUN"
+      },
+      "fixture_id": "CAT-48",
+      "operation_surface": "command-candidate"
+    }
+  ]
+}

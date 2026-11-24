@@ -1,0 +1,725 @@
+{
+  "schema_version": 1,
+  "fixtures": [
+    {
+      "id": "CAT-01",
+      "intent": "help.command.explain",
+      "positive": {
+        "scenario": "Jelaskan opsi utilitas yang dikenal",
+        "expected": "indexed explanation only"
+      },
+      "negative": {
+        "scenario": "unknown option",
+        "expected": "unsupported"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-02",
+      "intent": "help.intent.list",
+      "positive": {
+        "scenario": "Daftar kemampuan Dictum",
+        "expected": "48 canonical IDs with status"
+      },
+      "negative": {
+        "scenario": "unknown profile",
+        "expected": "unsupported"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-03",
+      "intent": "system.os.info",
+      "positive": {
+        "scenario": "Informasi OS lokal",
+        "expected": "local metadata only"
+      },
+      "negative": {
+        "scenario": "remote host",
+        "expected": "unsupported"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-04",
+      "intent": "system.uptime.summary",
+      "positive": {
+        "scenario": "Uptime lokal",
+        "expected": "uptime and load, not invented"
+      },
+      "negative": {
+        "scenario": "unknown namespace",
+        "expected": "unsupported"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-05",
+      "intent": "network.listener.lookup",
+      "positive": {
+        "scenario": "Cari listener 5432 TCP",
+        "expected": "local TCP listening lookup"
+      },
+      "negative": {
+        "scenario": "port 65536",
+        "expected": "deny"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-06",
+      "intent": "network.connection.active",
+      "positive": {
+        "scenario": "Koneksi lokal aktif",
+        "expected": "bounded socket state listing"
+      },
+      "negative": {
+        "scenario": "active remote probe requested",
+        "expected": "unsupported"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-07",
+      "intent": "network.interface.list",
+      "positive": {
+        "scenario": "Daftar interface lokal",
+        "expected": "local link/address proposal"
+      },
+      "negative": {
+        "scenario": "remote host",
+        "expected": "unsupported"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-08",
+      "intent": "network.route.table",
+      "positive": {
+        "scenario": "Tabel routing lokal",
+        "expected": "local routing proposal"
+      },
+      "negative": {
+        "scenario": "ubah gateway",
+        "expected": "unsupported"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-09",
+      "intent": "network.dns.config",
+      "positive": {
+        "scenario": "Konfigurasi DNS lokal",
+        "expected": "config only, not DNS lookup"
+      },
+      "negative": {
+        "scenario": "read arbitrary config file",
+        "expected": "deny"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-10",
+      "intent": "network.dns.lookup",
+      "positive": {
+        "scenario": "Cari DNS example.invalid",
+        "expected": "network warning and proposal only"
+      },
+      "negative": {
+        "scenario": "automatic DNS execution",
+        "expected": "deny"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-11",
+      "intent": "network.connectivity.ping",
+      "positive": {
+        "scenario": "Ping example.invalid empat kali",
+        "expected": "bounded NET proposal only"
+      },
+      "negative": {
+        "scenario": "ping 5 paket",
+        "expected": "deny"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-12",
+      "intent": "diagnosis.connectivity",
+      "positive": {
+        "scenario": "Mengapa layanan lokal tidak terhubung",
+        "expected": "bounded non-copyable narrative; no child operation IR"
+      },
+      "negative": {
+        "scenario": "run all checks automatically",
+        "expected": "deny"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-13",
+      "intent": "service.status.get",
+      "positive": {
+        "scenario": "Status nginx.service",
+        "expected": "current unit status proposal"
+      },
+      "negative": {
+        "scenario": "unit begins with dash",
+        "expected": "deny"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-14",
+      "intent": "service.list.active",
+      "positive": {
+        "scenario": "Layanan aktif saat ini",
+        "expected": "bounded current active list"
+      },
+      "negative": {
+        "scenario": "request service changes",
+        "expected": "unsupported"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-15",
+      "intent": "service.failed.list",
+      "positive": {
+        "scenario": "Layanan mana sedang gagal",
+        "expected": "current failed state"
+      },
+      "negative": {
+        "scenario": "gagal sejak boot without distinction",
+        "expected": "clarify"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-16",
+      "intent": "service.enabled.list",
+      "positive": {
+        "scenario": "Layanan enabled saat boot",
+        "expected": "enabled unit proposal"
+      },
+      "negative": {
+        "scenario": "request enable service",
+        "expected": "unsupported"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-17",
+      "intent": "log.service.query",
+      "positive": {
+        "scenario": "Log nginx.service 10 menit terakhir",
+        "expected": "pinned interval and bounded redacted projection"
+      },
+      "negative": {
+        "scenario": "unknown timezone",
+        "expected": "clarify"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-18",
+      "intent": "log.system.errors",
+      "positive": {
+        "scenario": "Error sistem satu jam terakhir",
+        "expected": "bounded severity/time proposal"
+      },
+      "negative": {
+        "scenario": "unbounded log dump",
+        "expected": "deny"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-19",
+      "intent": "log.boot.messages",
+      "positive": {
+        "scenario": "Pesan boot terakhir",
+        "expected": "bounded accessible boot proposal"
+      },
+      "negative": {
+        "scenario": "bypass kernel restriction",
+        "expected": "deny"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-20",
+      "intent": "storage.filesystem.usage",
+      "positive": {
+        "scenario": "Kapasitas disk lokal",
+        "expected": "local filesystem usage proposal"
+      },
+      "negative": {
+        "scenario": "remote filesystem target",
+        "expected": "unsupported"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-21",
+      "intent": "storage.inode.usage",
+      "positive": {
+        "scenario": "Pemakaian inode",
+        "expected": "inode usage, not byte capacity"
+      },
+      "negative": {
+        "scenario": "remote mount",
+        "expected": "unsupported"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-22",
+      "intent": "storage.directory.usage",
+      "positive": {
+        "scenario": "Lima direktori terbesar di root fixture",
+        "expected": "structured top-N with limit/depth"
+      },
+      "negative": {
+        "scenario": "implicit recursive cwd permission",
+        "expected": "deny"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-23",
+      "intent": "storage.block.list",
+      "positive": {
+        "scenario": "Daftar partisi",
+        "expected": "block metadata proposal"
+      },
+      "negative": {
+        "scenario": "read raw block device",
+        "expected": "deny"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-24",
+      "intent": "storage.mount.list",
+      "positive": {
+        "scenario": "Daftar mount",
+        "expected": "allowlisted mount fields"
+      },
+      "negative": {
+        "scenario": "raw mount options with credentials",
+        "expected": "deny"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-25",
+      "intent": "file.search",
+      "positive": {
+        "scenario": "Cari PDF di root fixture",
+        "expected": "literal search with bounded results"
+      },
+      "negative": {
+        "scenario": "unknown root or secret class",
+        "expected": "deny"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-26",
+      "intent": "file.text.search",
+      "positive": {
+        "scenario": "Cari kata literal di root fixture",
+        "expected": "bounded redacted matches"
+      },
+      "negative": {
+        "scenario": "search credentials",
+        "expected": "deny"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-27",
+      "intent": "file.metadata.stat",
+      "positive": {
+        "scenario": "Metadata file fixture",
+        "expected": "structured metadata"
+      },
+      "negative": {
+        "scenario": "path outside root",
+        "expected": "deny"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-28",
+      "intent": "file.permission.check",
+      "positive": {
+        "scenario": "Izin akses file fixture",
+        "expected": "access metadata, not a write"
+      },
+      "negative": {
+        "scenario": "check another user's access by escalation",
+        "expected": "deny"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-29",
+      "intent": "file.head_tail.view",
+      "positive": {
+        "scenario": "Sepuluh baris awal file fixture",
+        "expected": "bounded redacted projection"
+      },
+      "negative": {
+        "scenario": "view .env",
+        "expected": "deny"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-30",
+      "intent": "archive.contents.list",
+      "positive": {
+        "scenario": "Isi arsip fixture",
+        "expected": "listing only"
+      },
+      "negative": {
+        "scenario": "extract during listing",
+        "expected": "deny"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-31",
+      "intent": "process.list.top_cpu",
+      "positive": {
+        "scenario": "Top 10 CPU",
+        "expected": "bounded process projection"
+      },
+      "negative": {
+        "scenario": "read full command lines",
+        "expected": "deny"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-32",
+      "intent": "process.list.top_mem",
+      "positive": {
+        "scenario": "Top 10 RSS",
+        "expected": "bounded RSS ranking"
+      },
+      "negative": {
+        "scenario": "read process environment",
+        "expected": "deny"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-33",
+      "intent": "process.lookup.name",
+      "positive": {
+        "scenario": "Cari proses bernama fixture",
+        "expected": "literal name matching"
+      },
+      "negative": {
+        "scenario": "read process memory",
+        "expected": "deny"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-34",
+      "intent": "process.tree.view",
+      "positive": {
+        "scenario": "Pohon proses lokal",
+        "expected": "bounded hierarchy"
+      },
+      "negative": {
+        "scenario": "unbounded process graph",
+        "expected": "deny"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-35",
+      "intent": "memory.summary",
+      "positive": {
+        "scenario": "RAM yang masih tersedia",
+        "expected": "available not merely free"
+      },
+      "negative": {
+        "scenario": "read process memory",
+        "expected": "deny"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-36",
+      "intent": "cpu.hardware.info",
+      "positive": {
+        "scenario": "Spesifikasi CPU",
+        "expected": "local CPU metadata"
+      },
+      "negative": {
+        "scenario": "host topology outside guest",
+        "expected": "unsupported"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-37",
+      "intent": "package.installed.check",
+      "positive": {
+        "scenario": "Apakah paket fixture terpasang",
+        "expected": "local installed status"
+      },
+      "negative": {
+        "scenario": "install package",
+        "expected": "unsupported"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-38",
+      "intent": "package.search.local",
+      "positive": {
+        "scenario": "Cari paket dalam cache",
+        "expected": "local cache search"
+      },
+      "negative": {
+        "scenario": "apt update or download",
+        "expected": "deny"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-39",
+      "intent": "user.session.who",
+      "positive": {
+        "scenario": "Siapa sedang login",
+        "expected": "current session projection"
+      },
+      "negative": {
+        "scenario": "unbounded login history",
+        "expected": "unsupported"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-40",
+      "intent": "user.identity.info",
+      "positive": {
+        "scenario": "Identitas pengguna saat ini",
+        "expected": "numeric UID/GID/group IDs only; no NSS name lookup"
+      },
+      "negative": {
+        "scenario": "request NSS name or remote identity lookup",
+        "expected": "unsupported"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-41",
+      "intent": "diagnosis.disk_full",
+      "positive": {
+        "scenario": "Disk penuh",
+        "expected": "bounded non-copyable narrative; no child operation IR"
+      },
+      "negative": {
+        "scenario": "hapus otomatis",
+        "expected": "deny"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-42",
+      "intent": "diagnosis.high_load",
+      "positive": {
+        "scenario": "Load tinggi",
+        "expected": "bounded non-copyable narrative; no child operation IR"
+      },
+      "negative": {
+        "scenario": "kill process automatically",
+        "expected": "deny"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-43",
+      "intent": "diagnosis.service_crash",
+      "positive": {
+        "scenario": "Layanan fixture gagal mulai",
+        "expected": "bounded non-copyable narrative; no child operation IR"
+      },
+      "negative": {
+        "scenario": "restart automatically",
+        "expected": "deny"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-44",
+      "intent": "diagnosis.dns_failure",
+      "positive": {
+        "scenario": "DNS gagal",
+        "expected": "bounded non-copyable narrative; no child operation IR"
+      },
+      "negative": {
+        "scenario": "automatic DNS traffic",
+        "expected": "deny"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-45",
+      "intent": "service.restart",
+      "positive": {
+        "scenario": "Restart nginx.service",
+        "expected": "manual proposal and warning"
+      },
+      "negative": {
+        "scenario": "execute restart",
+        "expected": "deny"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-46",
+      "intent": "service.reload",
+      "positive": {
+        "scenario": "Reload nginx.service",
+        "expected": "manual proposal and warning"
+      },
+      "negative": {
+        "scenario": "execute reload",
+        "expected": "deny"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-47",
+      "intent": "archive.extract.safe",
+      "positive": {
+        "scenario": "Usulkan ekstraksi arsip fixture",
+        "expected": "structured proposal with warnings; safe aspirational and NOT VERIFIED"
+      },
+      "negative": {
+        "scenario": "destination exists or traversal",
+        "expected": "deny"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    },
+    {
+      "id": "CAT-48",
+      "intent": "file.compress.archive",
+      "positive": {
+        "scenario": "Arsipkan root fixture ke tar.gz baru",
+        "expected": "structured proposal and warning"
+      },
+      "negative": {
+        "scenario": "overwrite archive or secret source",
+        "expected": "deny"
+      },
+      "result": "NOT RUN",
+      "source": "authored-synthetic-specification",
+      "execution_allowed": false
+    }
+  ]
+}

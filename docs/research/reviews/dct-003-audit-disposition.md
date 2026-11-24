@@ -1,0 +1,20 @@
+# Disposisi audit parsial DCT-003 (A3)
+
+Input: laporan yang diserahkan pemilik, "Laporan audit adversarial DCT-003 (A3)", Claude Sonnet 5.5 (ID dilaporkan claude-sonnet-5-5), 24 November 2026, target `6b01bccb922b9c7dbbd5ca7ba613e082048e7241`, HEAD dokumen `3ad437145cf6145d6fb73df2ea9cc6f2af3ed7a6`. Keputusan auditor REQUEST CHANGES sementara. Ini ringkasan disposisi implementer, bukan reproduksi laporan atau keputusan auditor baru. Cakupan: matriks turunan dan sebagian diff/evidence, bukan sumber registry/profil/schema/lint lengkap; probe dan CI log tidak dibuka auditor. Label review tersebut **audit dokumen parsial**, bukan LLM-ADV penuh atau EXT. Disposisi oleh ChatGPT GPT-6.2 (SELF), tanpa klaim exact effort historis.
+
+Revisi kode: [`8be0662a48d81761c6dc764755c8df2ba4c4d65d`](https://github.com/megaalive/ai-lab-dictum/commit/8be0662a48d81761c6dc764755c8df2ba4c4d65d). Base tetap `5f5478e3ddf80d2f8161d9ff6bf96e2a616cd44e`.
+
+| Finding | Tindakan | Verifikasi / batas |
+|---|---|---|
+| F-01 | Diagnosis #12,41–44 eksplisit narrative-only: efek OS kosong, guidance_text/limitations/warnings, tanpa argv, child IR, handler, probe, atau operasi tersisip. Request baru independen untuk operasi yang disebut. Tidak menambah READ+NET di luar #10–11. | Mutasi diagnosis-effect/argv-field/surface ditolak; kontrak renderer dan implementasi belum diuji. |
+| F-02 | operation_surface wajib pada registry dan profil. #22,25–29,31–34,40 memilih native API/metadata (sumber kandidat non-command); #30 command-candidate, menandai spawn. Command (1)/(8) mewajibkan spawn hipotetis; native tanpa spawn. #22/#25 tetap structured, bukan pipeline. | Mutasi command-no-spawn/native-spawn/native-command-source ditolak; native handler/host oracle belum diimplementasi. |
+| F-03 | #17–19 requires-privilege=POSSIBLE; journal/kernel hanya hak yang sudah ada. adm/systemd-journal contoh hak yang mungkin relevan, bukan grant atau grup yang disetujui. | Mutasi journal-privilege, journal-coherent-privilege-drop dan journal-ipc ditolak; visibility/rights NOT VERIFIED. |
+| F-04 | #5 filesystem-read untuk PID attribution; #9 resolve1 D-Bus kandidat; #10 filesystem-read dan #11 kemungkinan resolver filesystem/IPC, NET tetap P. #13–16,45–46 ditambah filesystem-read konservatif untuk akses metadata relevan. | Mutasi listener-proc/dns-filesystem ditolak; sumber dan kemampuan host masih NOT VERIFIED. |
+| F-05 | Registry asli #40 sudah hanya numeric uid/gid/group_ids; dikonfirmasi, kini lint exact projection, native tanpa IPC, no NSS. #39 tanpa lookup tambahan. | Mutasi identity-nss ditolak. Tidak mengklaim NSS runtime diuji. |
+| F-06 | Nama archive.extract.safe dipertahankan, eksplisit aspiratif; traversal/symlink/special files/scope dan keamanan ekstraksi NOT VERIFIED. | Kontrak dan fixture naratif diubah; bukan uji ekstraksi. |
+| F-07 | PR body diperbarui; evidence addendum mencatat push dan PR run kode revisi, checkout merge ref dan compare; run lama tambahan dicatat status metadata. | Lihat evidence dan CI. |
+| F-08 | Model implementer revisi disebut GPT-6.2, exact effort tidak diklaim. Audit ulang boleh menjalankan probe/test data-only yang beralasan; tidak boleh menjalankan operasi target. | Review awal tetap parsial. Auditor harus memeriksa sumber utuh, bukan mengulang label. |
+
+SELF tambahan: allowlist proyeksi field per intent, signature slot/requiredness dan deferred names, ping count <=4; lint terhadap perubahan konsisten pada dua sisi join. Hasil 70/70 lint/mutasi dan regresi pada [run push](https://github.com/megaalive/ai-lab-dictum/actions/runs/45327123227) dan [run PR](https://github.com/megaalive/ai-lab-dictum/actions/runs/45327128651). Semua capability host BLOCKED, semua execute_eligible false, tidak ada klaim runtime security/host-equivalence/S1–S5/C-01–C-10.
+
+Status: **REMEDIATED / RECHECK REQUIRED**. Temuan implementer dianggap ditangani pada kontrak/tes SELF, bukan ditutup oleh auditor. Cakupan yang belum diperiksa oleh auditor awal: prioritas 2–5, baseline lengkap, verifikasi log/identitas tree; auditor berikut perlu menutup gap tersebut. Tidak merge/close Issue #5 atau membuka DCT-004 sebelum keputusan A3.

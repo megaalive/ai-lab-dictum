@@ -60,3 +60,7 @@ if(dictum_sanitizers)
     endif()
 endif()
 add_test(NAME ir.span COMMAND ir_span)
+
+add_test(NAME ir.digest COMMAND "${Python3_EXECUTABLE}" -B
+    "${CMAKE_CURRENT_SOURCE_DIR}/ir/digest.py" "$<TARGET_FILE:ir_probe>")
+set_tests_properties(ir.digest PROPERTIES TIMEOUT 60)

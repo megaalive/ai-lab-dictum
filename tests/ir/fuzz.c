@@ -1,5 +1,5 @@
 /* Direct in-process fuzz of byte parser, schema validator and lifetime. */
-#include "ir_schema.h"
+#include "ir_digest.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -25,6 +25,11 @@ int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
                 need(n->offset <= d.string_used && n->length <= d.string_used - n->offset);
         }
         for (size_t j = 0; j < 4; ++j) results[j] = ir_validate(&d, (enum ir_stage)j);
+        if (results[IR_PLAN] == IR_OK) {
+            char digest[65];
+            need(ir_plan_digest(&d,digest));
+            (void)ir_plan_digest_matches(&d);
+        }
     } else {
         need(d.nodes == NULL && d.strings == NULL && d.used == 0 && d.string_used == 0);
     }

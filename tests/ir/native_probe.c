@@ -1,5 +1,5 @@
 /* Test-only byte transport. No product command or target invocation. */
-#include "ir_schema.h"
+#include "ir_digest.h"
 #include <stdio.h>
 #include <string.h>
 #include <inttypes.h>
@@ -37,7 +37,21 @@ int main(int argc, char **argv)
     unsigned char data[DICTUM_FRAME_MAX + 1u];
     const size_t size = fread(data, 1, sizeof(data), stdin);
     if (ferror(stdin)) return 2;
+    if (strcmp(argv[1], "hash") == 0) {
+        char digest[65];
+        if (!ir_sha256_hex(data,size,digest)) return 2;
+        puts(digest);
+        return ferror(stdout) || fflush(stdout) == EOF ? 2 : 0;
+    }
     struct ir_document d = {0};
+    if (strcmp(argv[1], "digest") == 0) {
+        char digest[65];
+        const bool valid=ir_parse(&d,data,size)==IR_OK && ir_plan_digest(&d,digest);
+        if (valid) printf("%s %s\n",digest,ir_plan_digest_matches(&d) ? "match" : "mismatch");
+        ir_destroy(&d);
+        if (!valid) puts("invalid");
+        return ferror(stdout) || fflush(stdout) == EOF ? 2 : 0;
+    }
     enum ir_status st;
     if (strcmp(argv[1], "input") == 0) {
         st = ir_check_input(data, size);

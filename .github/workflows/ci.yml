@@ -77,7 +77,7 @@ jobs:
           clang -std=c17 -O1 -g -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wformat=2 \
             -Wstrict-prototypes -Wmissing-prototypes -Wundef -Wvla -Werror \
             -fsanitize=fuzzer,address,undefined -fno-sanitize-recover=undefined \
-            -Iruntime/native -Ibuild/ci runtime/native/ir_wire.c runtime/native/ir_schema.c \
+            -Iruntime/native -Ibuild/ci runtime/native/ir_wire.c runtime/native/ir_schema.c runtime/native/ir_digest.c \
             tests/ir/fuzz.c -o build/ci/ir-fuzz
           build/ci/ir-fuzz -seed=23004 -runs=25000 -max_len=32769 -timeout=5 \
             -artifact_prefix=build/ci/ build/ci/fuzz-corpus

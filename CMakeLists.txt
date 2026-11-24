@@ -24,7 +24,7 @@ add_custom_command(OUTPUT "${ir_generated}"
     COMMAND "${Python3_EXECUTABLE}" -B "${CMAKE_CURRENT_SOURCE_DIR}/tools/generate_ir.py" "${ir_generated}"
     DEPENDS ${ir_schemas} tools/generate_ir.py tests/ir/schema_profile.py tests/ir/wire.py tests/ir/run.py tests/ir/semantics.py
     VERBATIM)
-add_library(dictum_ir STATIC runtime/native/ir_wire.c runtime/native/ir_schema.c "${ir_generated}")
+add_library(dictum_ir STATIC runtime/native/ir_wire.c runtime/native/ir_schema.c runtime/native/ir_digest.c "${ir_generated}")
 target_include_directories(dictum_ir PUBLIC runtime/native PRIVATE "${CMAKE_CURRENT_BINARY_DIR}")
 set_target_properties(dictum_ir PROPERTIES C_STANDARD 17 C_STANDARD_REQUIRED YES C_EXTENSIONS NO)
 target_compile_options(dictum_ir PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wformat=2

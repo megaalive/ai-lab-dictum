@@ -1,0 +1,634 @@
+{
+  "schema_version": 1,
+  "provenance": "SELF labels derived from authored functional utterances and expected explicit slots, not native outputs; defaults excluded from raw NLU. Not human gold or blind.",
+  "cases": {
+    "C03-memory.summary-1": {
+      "intent": "memory.summary",
+      "slots": {}
+    },
+    "C03-memory.summary-2": {
+      "intent": "memory.summary",
+      "slots": {}
+    },
+    "C03-memory.summary-3": {
+      "intent": "memory.summary",
+      "slots": {}
+    },
+    "C03-memory.summary-4": {
+      "intent": "memory.summary",
+      "slots": {}
+    },
+    "C03-memory.summary-5": {
+      "intent": "memory.summary",
+      "slots": {}
+    },
+    "C03-memory.summary-6": {
+      "intent": "memory.summary",
+      "slots": {}
+    },
+    "C03-network.listener.lookup-1": {
+      "intent": "network.listener.lookup",
+      "slots": {
+        "port": {
+          "kind": "input-span",
+          "span": {
+            "start": 28,
+            "end": 32
+          }
+        }
+      }
+    },
+    "C03-network.listener.lookup-2": {
+      "intent": "network.listener.lookup",
+      "slots": {
+        "port": {
+          "kind": "input-span",
+          "span": {
+            "start": 9,
+            "end": 10
+          }
+        },
+        "protocol": {
+          "kind": "input-span",
+          "span": {
+            "start": 11,
+            "end": 14
+          }
+        }
+      }
+    },
+    "C03-network.listener.lookup-3": {
+      "intent": "network.listener.lookup",
+      "slots": {
+        "port": {
+          "kind": "input-span",
+          "span": {
+            "start": 31,
+            "end": 36
+          }
+        }
+      }
+    },
+    "C03-network.listener.lookup-4": {
+      "intent": "network.listener.lookup",
+      "slots": {
+        "port": {
+          "kind": "input-span",
+          "span": {
+            "start": 25,
+            "end": 28
+          }
+        }
+      }
+    },
+    "C03-network.listener.lookup-5": {
+      "intent": "network.listener.lookup",
+      "slots": {
+        "port": {
+          "kind": "input-span",
+          "span": {
+            "start": 26,
+            "end": 28
+          }
+        },
+        "protocol": {
+          "kind": "input-span",
+          "span": {
+            "start": 5,
+            "end": 8
+          }
+        }
+      }
+    },
+    "C03-network.listener.lookup-6": {
+      "intent": "network.listener.lookup",
+      "slots": {
+        "port": {
+          "kind": "input-span",
+          "span": {
+            "start": 30,
+            "end": 34
+          }
+        },
+        "protocol": {
+          "kind": "input-span",
+          "span": {
+            "start": 12,
+            "end": 15
+          }
+        }
+      }
+    },
+    "C03-service.failed.list-1": {
+      "intent": "service.failed.list",
+      "slots": {}
+    },
+    "C03-service.failed.list-2": {
+      "intent": "service.failed.list",
+      "slots": {}
+    },
+    "C03-service.failed.list-3": {
+      "intent": "service.failed.list",
+      "slots": {}
+    },
+    "C03-service.failed.list-4": {
+      "intent": "service.failed.list",
+      "slots": {}
+    },
+    "C03-service.failed.list-5": {
+      "intent": "service.failed.list",
+      "slots": {}
+    },
+    "C03-service.failed.list-6": {
+      "intent": "service.failed.list",
+      "slots": {}
+    },
+    "C03-log.service.query-1": {
+      "intent": "log.service.query",
+      "slots": {
+        "unit": {
+          "kind": "input-span",
+          "span": {
+            "start": 4,
+            "end": 16
+          }
+        },
+        "window": {
+          "kind": "context-ref",
+          "value": {
+            "kind": "time-window",
+            "start_unix_s": 1760000300,
+            "end_unix_s": 1760000600
+          }
+        }
+      }
+    },
+    "C03-log.service.query-2": {
+      "intent": "log.service.query",
+      "slots": {
+        "unit": {
+          "kind": "input-span",
+          "span": {
+            "start": 14,
+            "end": 28
+          }
+        },
+        "window": {
+          "kind": "context-ref",
+          "value": {
+            "kind": "time-window",
+            "start_unix_s": 1760000000,
+            "end_unix_s": 1760000600
+          }
+        },
+        "limit": {
+          "kind": "input-span",
+          "span": {
+            "start": 53,
+            "end": 54
+          }
+        }
+      }
+    },
+    "C03-log.service.query-3": {
+      "intent": "log.service.query",
+      "slots": {
+        "unit": {
+          "kind": "input-span",
+          "span": {
+            "start": 8,
+            "end": 21
+          }
+        },
+        "window": {
+          "kind": "context-ref",
+          "value": {
+            "kind": "time-window",
+            "start_unix_s": 1760000540,
+            "end_unix_s": 1760000600
+          }
+        },
+        "limit": {
+          "kind": "input-span",
+          "span": {
+            "start": 45,
+            "end": 46
+          }
+        }
+      }
+    },
+    "C03-log.service.query-4": {
+      "intent": "log.service.query",
+      "slots": {
+        "unit": {
+          "kind": "input-span",
+          "span": {
+            "start": 14,
+            "end": 25
+          }
+        },
+        "window": {
+          "kind": "context-ref",
+          "value": {
+            "kind": "time-window",
+            "start_unix_s": 1759914200,
+            "end_unix_s": 1760000600
+          }
+        },
+        "limit": {
+          "kind": "input-span",
+          "span": {
+            "start": 50,
+            "end": 53
+          }
+        }
+      }
+    },
+    "C03-log.service.query-5": {
+      "intent": "log.service.query",
+      "slots": {
+        "unit": {
+          "kind": "input-span",
+          "span": {
+            "start": 12,
+            "end": 30
+          }
+        },
+        "window": {
+          "kind": "context-ref",
+          "value": {
+            "kind": "time-window",
+            "start_unix_s": 1759995200,
+            "end_unix_s": 1760000600
+          }
+        }
+      }
+    },
+    "C03-log.service.query-6": {
+      "intent": "log.service.query",
+      "slots": {
+        "unit": {
+          "kind": "input-span",
+          "span": {
+            "start": 5,
+            "end": 17
+          }
+        },
+        "window": {
+          "kind": "context-ref",
+          "value": {
+            "kind": "time-window",
+            "start_unix_s": 1759999700,
+            "end_unix_s": 1760000600
+          }
+        }
+      }
+    },
+    "C03-storage.filesystem.usage-1": {
+      "intent": "storage.filesystem.usage",
+      "slots": {}
+    },
+    "C03-storage.filesystem.usage-2": {
+      "intent": "storage.filesystem.usage",
+      "slots": {}
+    },
+    "C03-storage.filesystem.usage-3": {
+      "intent": "storage.filesystem.usage",
+      "slots": {}
+    },
+    "C03-storage.filesystem.usage-4": {
+      "intent": "storage.filesystem.usage",
+      "slots": {}
+    },
+    "C03-storage.filesystem.usage-5": {
+      "intent": "storage.filesystem.usage",
+      "slots": {}
+    },
+    "C03-storage.filesystem.usage-6": {
+      "intent": "storage.filesystem.usage",
+      "slots": {}
+    },
+    "C03-storage.directory.usage-1": {
+      "intent": "storage.directory.usage",
+      "slots": {
+        "root": {
+          "kind": "input-span",
+          "span": {
+            "start": 14,
+            "end": 27
+          }
+        }
+      }
+    },
+    "C03-storage.directory.usage-2": {
+      "intent": "storage.directory.usage",
+      "slots": {
+        "root": {
+          "kind": "input-span",
+          "span": {
+            "start": 19,
+            "end": 32
+          }
+        },
+        "limit": {
+          "kind": "input-span",
+          "span": {
+            "start": 4,
+            "end": 5
+          }
+        },
+        "depth": {
+          "kind": "input-span",
+          "span": {
+            "start": 39,
+            "end": 40
+          }
+        }
+      }
+    },
+    "C03-storage.directory.usage-3": {
+      "intent": "storage.directory.usage",
+      "slots": {
+        "root": {
+          "kind": "input-span",
+          "span": {
+            "start": 30,
+            "end": 51
+          }
+        },
+        "limit": {
+          "kind": "input-span",
+          "span": {
+            "start": 59,
+            "end": 60
+          }
+        }
+      }
+    },
+    "C03-storage.directory.usage-4": {
+      "intent": "storage.directory.usage",
+      "slots": {
+        "root": {
+          "kind": "input-span",
+          "span": {
+            "start": 26,
+            "end": 43
+          }
+        }
+      }
+    },
+    "C03-storage.directory.usage-5": {
+      "intent": "storage.directory.usage",
+      "slots": {
+        "root": {
+          "kind": "input-span",
+          "span": {
+            "start": 27,
+            "end": 44
+          }
+        },
+        "limit": {
+          "kind": "input-span",
+          "span": {
+            "start": 4,
+            "end": 7
+          }
+        },
+        "depth": {
+          "kind": "input-span",
+          "span": {
+            "start": 52,
+            "end": 53
+          }
+        }
+      }
+    },
+    "C03-storage.directory.usage-6": {
+      "intent": "storage.directory.usage",
+      "slots": {
+        "root": {
+          "kind": "input-span",
+          "span": {
+            "start": 34,
+            "end": 47
+          }
+        }
+      }
+    },
+    "C03-file.search-1": {
+      "intent": "file.search",
+      "slots": {
+        "root": {
+          "kind": "input-span",
+          "span": {
+            "start": 28,
+            "end": 41
+          }
+        },
+        "extension": {
+          "kind": "input-span",
+          "span": {
+            "start": 21,
+            "end": 24
+          }
+        }
+      }
+    },
+    "C03-file.search-2": {
+      "intent": "file.search",
+      "slots": {
+        "root": {
+          "kind": "input-span",
+          "span": {
+            "start": 29,
+            "end": 42
+          }
+        },
+        "filename": {
+          "kind": "input-span",
+          "span": {
+            "start": 18,
+            "end": 25
+          }
+        },
+        "depth": {
+          "kind": "input-span",
+          "span": {
+            "start": 49,
+            "end": 50
+          }
+        }
+      }
+    },
+    "C03-file.search-3": {
+      "intent": "file.search",
+      "slots": {
+        "root": {
+          "kind": "input-span",
+          "span": {
+            "start": 13,
+            "end": 30
+          }
+        },
+        "window": {
+          "kind": "context-ref",
+          "value": {
+            "kind": "time-window",
+            "start_unix_s": 1759998800,
+            "end_unix_s": 1760000600
+          }
+        },
+        "limit": {
+          "kind": "input-span",
+          "span": {
+            "start": 55,
+            "end": 56
+          }
+        }
+      }
+    },
+    "C03-file.search-4": {
+      "intent": "file.search",
+      "slots": {
+        "root": {
+          "kind": "input-span",
+          "span": {
+            "start": 35,
+            "end": 52
+          }
+        },
+        "extension": {
+          "kind": "input-span",
+          "span": {
+            "start": 24,
+            "end": 27
+          }
+        },
+        "limit": {
+          "kind": "input-span",
+          "span": {
+            "start": 60,
+            "end": 63
+          }
+        }
+      }
+    },
+    "C03-file.search-5": {
+      "intent": "file.search",
+      "slots": {
+        "root": {
+          "kind": "input-span",
+          "span": {
+            "start": 34,
+            "end": 55
+          }
+        },
+        "filename": {
+          "kind": "input-span",
+          "span": {
+            "start": 18,
+            "end": 25
+          }
+        },
+        "depth": {
+          "kind": "input-span",
+          "span": {
+            "start": 63,
+            "end": 64
+          }
+        }
+      }
+    },
+    "C03-file.search-6": {
+      "intent": "file.search",
+      "slots": {
+        "root": {
+          "kind": "input-span",
+          "span": {
+            "start": 37,
+            "end": 50
+          }
+        },
+        "extension": {
+          "kind": "input-span",
+          "span": {
+            "start": 28,
+            "end": 30
+          }
+        }
+      }
+    },
+    "C03-service.restart-1": {
+      "intent": "service.restart",
+      "slots": {
+        "unit": {
+          "kind": "input-span",
+          "span": {
+            "start": 12,
+            "end": 24
+          }
+        }
+      }
+    },
+    "C03-service.restart-2": {
+      "intent": "service.restart",
+      "slots": {
+        "unit": {
+          "kind": "input-span",
+          "span": {
+            "start": 27,
+            "end": 41
+          }
+        }
+      }
+    },
+    "C03-service.restart-3": {
+      "intent": "service.restart",
+      "slots": {
+        "unit": {
+          "kind": "input-span",
+          "span": {
+            "start": 16,
+            "end": 29
+          }
+        }
+      }
+    },
+    "C03-service.restart-4": {
+      "intent": "service.restart",
+      "slots": {
+        "unit": {
+          "kind": "input-span",
+          "span": {
+            "start": 19,
+            "end": 37
+          }
+        }
+      }
+    },
+    "C03-service.restart-5": {
+      "intent": "service.restart",
+      "slots": {
+        "unit": {
+          "kind": "input-span",
+          "span": {
+            "start": 21,
+            "end": 32
+          }
+        }
+      }
+    },
+    "C03-service.restart-6": {
+      "intent": "service.restart",
+      "slots": {
+        "unit": {
+          "kind": "input-span",
+          "span": {
+            "start": 31,
+            "end": 43
+          }
+        }
+      }
+    }
+  }
+}

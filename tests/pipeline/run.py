@@ -37,6 +37,8 @@ validators, _, retrievals = prepare_validators({name: read_source(SCHEMA_DIR/nam
                                                  for name in SCHEMAS.values()})
 reference = manifest["reference_unix_s"]
 cases = manifest["cases"]
+raw_gold_bytes = (HERE / "raw-gold-v1.json").read_bytes()
+raw_gold = json.loads(raw_gold_bytes)["cases"]
 
 
 def data(row):
@@ -156,6 +158,35 @@ def gold_correct(row,result):
     return True
 
 
+def raw_joint_correct(row,result):
+    nlu = result["nlu"]
+    expected = raw_gold[row["id"]]
+    if nlu is None or nlu["abstain_hint"]!="none":
+        return False
+    intents = nlu["intent_candidates"]
+    if len(intents)!=1 or intents[0]["intent"]!=expected["intent"]:
+        return False
+    slots=nlu["slot_candidates"]
+    ids=intents[0]["slot_candidate_ids"]
+    if len(ids)!=len(slots) or len(set(ids))!=len(ids) or set(ids)!={x["id"] for x in slots}:
+        return False
+    actual={}
+    for x in slots:
+        name=x["slot"]
+        if name in actual:
+            return False
+        source=x["source"]
+        if source["kind"]=="context-ref":
+            context=result["context"]["time_candidate"]
+            if context is None or source["expected_kind"]!="time-window":
+                return False
+            actual[name]={"kind":"context-ref","value":{"kind":"time-window",
+                "start_unix_s":context["start_unix_s"],"end_unix_s":context["end_unix_s"]}}
+        else:
+            actual[name]=source
+    return actual==expected["slots"]
+
+
 def run(model):
     stats=Counter()
     timing=[]
@@ -182,6 +213,12 @@ def run(model):
                 raw_correct=(result["nlu"] is not None and
                     [x["intent"] for x in result["nlu"]["intent_candidates"]]==[expected["intent"]])
                 stats["supported","raw_intent_correct"]+=raw_correct
+                raw_joint=raw_joint_correct(row,result)
+                stats["supported","raw_joint_correct"]+=raw_joint
+                if not raw_joint:
+                    print("RAW_JIA_MISS",model,row["id"])
+                    if model=="B0":
+                        failures.append(row["id"]+":raw-joint")
                 confusions[expected["intent"],result["ir"].get("intent",actual) if result["ir"] else actual]+=1
                 stats["language",row["language"],"total"]+=1
                 stats["language",row["language"],"correct"]+=correct
@@ -205,6 +242,7 @@ def run(model):
     print("PIPELINE_METRICS",model,json.dumps({
         "suite_counts":{x:{k:stats[x,k] for k in ("total","accepted","correct")} for x in ("supported","ambiguity","ood","security")},
         "raw_intent_accuracy":stats["supported","raw_intent_correct"]/n,
+        "raw_JIA":stats["supported","raw_joint_correct"]/n,
         "resolved_JIA":c/n,"supported_JS":c/n,"supported_coverage":a/n,
         "supported_selective_accuracy":c/a if a else None,
         "all_case_outcome_accuracy":all_c/all_n,"all_case_coverage":all_a/all_n,
@@ -256,7 +294,9 @@ def main():
     for i in registry:
         items=[r for r in cases if r["suite"]=="supported" and r["expected"]["intent"]==i]
         assert len(items)>=5 and {r["language"] for r in items}=={"id","en"}
+    assert set(raw_gold)=={r["id"] for r in cases if r["suite"]=="supported"}
     print("CORPUS",hash_bytes(manifest_raw),sorted(counts.items()),manifest["provenance"])
+    print("RAW_GOLD",hash_bytes(raw_gold_bytes),len(raw_gold),"explicit slots only; SELF development labels")
     b0=run("B0")
     b1=run("B1")
     # B0 is primary functional gate; B1 misses retained (development baseline).

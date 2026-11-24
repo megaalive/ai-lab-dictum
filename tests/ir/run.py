@@ -117,6 +117,8 @@ def main():
     catalog = {case["rule"]["intent"]: case["rule"] for case in chains.values()}
     if len(chains) != len(gold["chains"]) or len(catalog) != len(chains):
         raise ValueError("ID rantai atau intent fixture ganda")
+    if len(chains) != 8 or any(case["objects"].keys() != SCHEMAS.keys() for case in chains.values()):
+        raise ValueError("Walking skeleton memerlukan delapan rantai fixture dengan empat tahap")
     identities = gold["identities"]
     for case in chains.values():
         for stage, instance in case["objects"].items():

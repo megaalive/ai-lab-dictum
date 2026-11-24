@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.24)
 
-if(CMAKE_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)
+file(REAL_PATH "${CMAKE_SOURCE_DIR}" dictum_source_dir)
+file(REAL_PATH "${CMAKE_BINARY_DIR}" dictum_binary_dir)
+if(dictum_source_dir STREQUAL dictum_binary_dir)
     message(FATAL_ERROR "Gunakan direktori build terpisah, misalnya cmake -S . -B build/debug.")
 endif()
 

@@ -92,3 +92,18 @@ endif()
 add_test(NAME renderer.native COMMAND "${Python3_EXECUTABLE}" -B
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer/native_run.py" "$<TARGET_FILE:renderer_probe>")
 set_tests_properties(renderer.native PROPERTIES TIMEOUT 90)
+
+add_executable(pipeline_bench pipeline/bench.c)
+target_link_libraries(pipeline_bench PRIVATE dictum_pipeline)
+set_target_properties(pipeline_bench PROPERTIES C_STANDARD 17 C_STANDARD_REQUIRED YES C_EXTENSIONS NO)
+target_compile_options(pipeline_bench PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wformat=2
+    -Wstrict-prototypes -Wmissing-prototypes -Wundef -Wvla)
+if(dictum_sanitizers)
+    target_compile_options(pipeline_bench PRIVATE "${dictum_sanitizer_flag}" -fno-omit-frame-pointer)
+    if(DICTUM_ENABLE_UBSAN)
+        target_compile_options(pipeline_bench PRIVATE -fno-sanitize-recover=undefined)
+    endif()
+endif()
+add_test(NAME pipeline.benchmark COMMAND "${Python3_EXECUTABLE}" -B
+    "${CMAKE_CURRENT_SOURCE_DIR}/pipeline/bench.py" "$<TARGET_FILE:pipeline_bench>")
+set_tests_properties(pipeline.benchmark PROPERTIES TIMEOUT 120)

@@ -77,3 +77,18 @@ endif()
 add_test(NAME pipeline.functional COMMAND "${Python3_EXECUTABLE}" -B
     "${CMAKE_CURRENT_SOURCE_DIR}/pipeline/run.py" "$<TARGET_FILE:pipeline_probe>" "$<TARGET_FILE:dictum>")
 set_tests_properties(pipeline.functional PROPERTIES TIMEOUT 180)
+
+add_executable(renderer_probe renderer/native_fixture.c)
+target_link_libraries(renderer_probe PRIVATE dictum_pipeline)
+set_target_properties(renderer_probe PROPERTIES C_STANDARD 17 C_STANDARD_REQUIRED YES C_EXTENSIONS NO)
+target_compile_options(renderer_probe PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wformat=2
+    -Wstrict-prototypes -Wmissing-prototypes -Wundef -Wvla)
+if(dictum_sanitizers)
+    target_compile_options(renderer_probe PRIVATE "${dictum_sanitizer_flag}" -fno-omit-frame-pointer)
+    if(DICTUM_ENABLE_UBSAN)
+        target_compile_options(renderer_probe PRIVATE -fno-sanitize-recover=undefined)
+    endif()
+endif()
+add_test(NAME renderer.native COMMAND "${Python3_EXECUTABLE}" -B
+    "${CMAKE_CURRENT_SOURCE_DIR}/renderer/native_run.py" "$<TARGET_FILE:renderer_probe>")
+set_tests_properties(renderer.native PROPERTIES TIMEOUT 90)

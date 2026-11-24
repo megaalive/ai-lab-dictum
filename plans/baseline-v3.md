@@ -28,12 +28,14 @@ Blob kedua dokumen pada HEAD tersebut identik dengan blob pada commit asal. Selu
 | DEC-001 | V3 dan F0 v3 menjadi baseline normatif, termasuk seluruh acceptance dan batas | APPROVED oleh pemilik |
 | DEC-002 | Mulai F0-A; urutan awal DCT-001 lalu DCT-008; audit sebelum pekerjaan berikut | GO |
 | DEC-003 | F0-B menunggu review kontrak SELF + LLM-ADV dan otorisasi scope spike oleh pemilik; F0-C tunduk bukti relevan dan gate paket F0 | Historis; ketentuan wajib LLM-ADV digantikan DEC-009 |
-| DEC-004 | F1 menunggu acceptance F0-D serta keputusan pemilik | HOLD |
+| DEC-004 | F1 menunggu acceptance F0-D serta keputusan pemilik | Historis; dipenuhi oleh DEC-010 |
 | DEC-005 | Proposal-only; tidak ada executor produk, sudo otomatis, jaringan keluar saat inference, data produksi/sensitif atau training penuh pada F0 | NO-GO untuk pengecualian |
 | DEC-006 | Debian 13 x86-64, C17/CMake, 2 vCPU/2 GiB Proxmox referensi, 48 intent registry dan 8 intent skeleton; baseline B0/B1 sebelum neural | APPROVED sebagai scope dan target riset, bukan hasil |
 | DEC-007 | Detail melalui spesifikasi/ADR/evidence; perubahan material scope, tujuan atau gate memerlukan keputusan pemilik; histori tidak ditimpa | APPROVED |
 | DEC-008 | F0-A dipecah DCT-001–008, branch terpisah untuk coding, draft PR, evidence terikat SHA; tidak ada auto-merge/auto-accept | APPROVED sebagai tata kerja |
 | DEC-009 | Audit teknis SELF berbasis evidence cukup untuk persyaratan review LLM pada riset, F0–F4 dan proposal-only release/pilot; LLM-ADV opsional. Review manusia EXT untuk release executor tetap wajib. | APPROVED oleh pemilik, 24 November 2026 |
+
+| DEC-010 | F0-D diterima untuk scope sintetis proposal-only; GO F1 sesuai kontrak dan protocol/prereg yang ada | APPROVED oleh pemilik, 24 November 2026; S3/F2/executor tetap BLOCKED/HOLD |
 
 ## DEC-009 — Amandemen governance review
 
@@ -63,3 +65,12 @@ Tidak ada izin untuk F1, training penuh, atau executor. Pengujian eksekusi S3 ha
 ## Evidence DCT-001 (A1)
 
 Metode: pemeriksaan HEAD, pembacaan lengkap dua dokumen dari repo, perbandingan Git blob terhadap commit asal, persetujuan eksplisit manusia di atas. Hasil: identitas baseline dan scope tercatat. Label: SELF (catatan proyek oleh technical lead AI atas instruksi pemilik); tidak ada klaim EXT atau audit implementasi. Batas: tidak ada implementasi diuji. Langkah berikut: DCT-008, lalu audit draft PR sebelum melanjutkan.
+
+## DEC-010 — Acceptance F0-D dan GO F1 (24 November 2026)
+
+Sumber: instruksi eksplisit pemilik proyek dalam percakapan setelah laporan akhir PR #27, evidence C-01–C-10, audit F0-D 31 temuan, keterbatasan coverage S2 (B0 12/80, B1 11/80), dan permintaan keputusan merge serta GO F1: **"lakukan !"**. Dicatat oleh technical lead SELF, bukan signature atau EXT. Keputusan ini menerima scope/kontrak proposal-only, protokol corpus dan preregistrasi yang sudah ada untuk melanjutkan riset F1; tidak mengubah ambang kualitas atau mengotorisasi distribusi/training dengan rights HOLD.
+
+- PR #27 telah di-merge pada `9a39162601bc745e1ba21cad01650ce5f61f693c`; tree identik dengan kandidat evidence `897e4feeb677945a7e7e002d3f68281a187e3543`. Semua lima workflow final-head selesai success. Source teruji `74f7998d8077328f6fd333686db2a1957985b454`; native 5/5 dan isolated 2/2 jobs. [F0-C](../docs/research/evidence/f0-c.md), [F0-D matrix](../docs/research/evidence/f0-d-review.md), [raw results](../docs/research/evidence/f0-c-results-v1.json).
+- Owner menerima batas evidence C-01–C-10 untuk walking skeleton sintetis; A-01/A-07/A-09/A-11 proposal-side terverifikasi sesuai evidence; A-02 design dan F5 tests deferred; A-03 DEC-009. Tidak mengubah hasil, label, status verified/deferred, atau temuan kualitas negatif pada laporan historis. C-09 adalah measurement bukan blind gate. Seluruh real Debian binding tetap BLOCKED/NOT VERIFIED. S3 dan FES tetap NOT RUN/BLOCKED.
+- Salinan approved memuat dokumen asli byte-identical, berlaku bersama ledger ini: [rencana v3](approved/rencana-v3.md), [F0 v3](approved/f0-v3.md), [acceptance record](approved/f0-acceptance.md). Status DRAFT di dalam salinan asli merupakan histori, bukan perubahan kontrak. [Corpus protocol](../data/manifests/corpus-protocol-v1.md) dan [benchmark prereg](../docs/research/benchmark-preregistration-v1.md) tetap normatif. Semua hak sumber UNKNOWN/NOT VERIFIED, termasuk distribusi dan training, tetap HOLD sampai keputusan rights tersendiri. 
+- F1 GO: [#28](https://github.com/megaalive/ai-lab-dictum/issues/28). Perlu human gold, verified applicable compatibility, 48 intent dan baseline terukur sebelum F2. Tidak ada izin F2, training penuh/neural, release, executor, akses host atau jaringan produk. S3 bukan prasyarat riset proposal-only; scope lab aktual harus diotorisasi independen. DEC-009 dan EXT F5 tidak berubah. DEC-004 HOLD superseded hanya untuk masuk F1.

@@ -165,3 +165,19 @@ set_tests_properties(ir.v2_differential PROPERTIES TIMEOUT 180)
 add_test(NAME pipeline.v2_semantic_mutations COMMAND "${Python3_EXECUTABLE}" -B
     "${CMAKE_CURRENT_SOURCE_DIR}/pipeline/v2_semantic_mutations.py" "$<TARGET_FILE:pipeline_probe>" "$<TARGET_FILE:dictum>")
 set_tests_properties(pipeline.v2_semantic_mutations PROPERTIES TIMEOUT 90)
+
+# B2 development mechanics only; no link to product CLI or pipeline.
+add_executable(b2_probe research/b2_probe.c "${PROJECT_SOURCE_DIR}/runtime/native/b2_linear.c")
+target_link_libraries(b2_probe PRIVATE dictum_ir)
+set_target_properties(b2_probe PROPERTIES C_STANDARD 17 C_STANDARD_REQUIRED YES C_EXTENSIONS NO)
+target_compile_options(b2_probe PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wformat=2
+    -Wstrict-prototypes -Wmissing-prototypes -Wundef -Wvla)
+if(dictum_sanitizers)
+    target_compile_options(b2_probe PRIVATE "${dictum_sanitizer_flag}" -fno-omit-frame-pointer)
+    if(DICTUM_ENABLE_UBSAN)
+        target_compile_options(b2_probe PRIVATE -fno-sanitize-recover=undefined)
+    endif()
+endif()
+add_test(NAME research.b2_mechanics COMMAND "${Python3_EXECUTABLE}" -B
+    "${CMAKE_CURRENT_SOURCE_DIR}/research/b2_linear.py" "$<TARGET_FILE:b2_probe>")
+set_tests_properties(research.b2_mechanics PROPERTIES TIMEOUT 120)

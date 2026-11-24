@@ -62,4 +62,8 @@ Penolakan menulis diagnostik tetap ke stderr. Isi instruksi tidak muncul pada
 keluaran dan tidak diinterpretasikan.
 
 [ADR runtime C17 dan CMake](docs/adr/0001-runtime-c17-cmake.md) ·
-[Baseline proyek v3](plans/baseline-v3.md)
+[Baseline proyek v3 dan amandemen governance DEC-009](plans/baseline-v3.md)
+
+Review teknis SELF berbasis evidence dapat memenuhi persyaratan review model;
+LLM-ADV (model berbeda) opsional. Keputusan fase oleh pemilik, seluruh gate
+teknis dan review manusia EXT untuk release executor tetap wajib.

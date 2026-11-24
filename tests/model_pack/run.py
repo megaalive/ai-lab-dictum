@@ -172,10 +172,11 @@ def main():
     manifest = json.loads((here/"unsigned-dev-manifest.json").read_text(encoding="utf-8"))
     def check_manifest():
         info = validate(b)
-        need(manifest["role"] == "synthetic-test-only" and manifest["signature"] is None
-             and manifest["pack"] == {"sha256":info["sha256"],"length":info["length"]}
-             and manifest["catalog_sha256"] == info["catalog_sha256"]
-             and manifest["tokenizer_sha256"] == info["tokenizer_sha256"],"manifest-binding")
+        need(manifest["role"] == "synthetic-test-only" and "signature" not in manifest
+             and manifest["pack"] == {"sha256":info["sha256"],"length":info["length"],
+                                      "major":1,"minor":0}
+             and manifest["catalog"]["sha256"] == info["catalog_sha256"]
+             and manifest["tokenizer"]["sha256"] == info["tokenizer_sha256"],"manifest-binding")
     tests = [("golden","ok",lambda:need(validate(b) == vectors["expected"],"golden")),
              ("regenerate","ok",lambda:need(build() == b,"regenerate")),
              ("dev-manifest-binding","ok",check_manifest)]

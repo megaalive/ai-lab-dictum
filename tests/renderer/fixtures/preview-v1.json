@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "expected_count": 85,
+  "expected_count": 113,
   "cases": [
     {
       "id": "simple-bash-posix-clean-v1",
@@ -2732,6 +2732,766 @@
       "expected": {
         "kind": "NON_COPYABLE",
         "reason": "identity"
+      }
+    },
+    {
+      "id": "malformed-shell-bash-posix-clean-v1",
+      "shell": [],
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "abc"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unsupported-shell"
+      }
+    },
+    {
+      "id": "malformed-shell-dash-clean-v1",
+      "shell": [],
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "abc"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unsupported-shell"
+      }
+    },
+    {
+      "id": "unknown-case-field-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "abc"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "case-shape"
+      },
+      "approval": true
+    },
+    {
+      "id": "unknown-case-field-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "abc"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "case-shape"
+      },
+      "approval": true
+    },
+    {
+      "id": "action-not-object-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": [],
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "action-shape"
+      }
+    },
+    {
+      "id": "action-not-object-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": [],
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "action-shape"
+      }
+    },
+    {
+      "id": "action-missing-kind-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "abc"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "action-shape"
+      }
+    },
+    {
+      "id": "action-missing-kind-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "abc"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "action-shape"
+      }
+    },
+    {
+      "id": "operation-not-object-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": null
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "operation-shape"
+      }
+    },
+    {
+      "id": "operation-not-object-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": null
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "operation-shape"
+      }
+    },
+    {
+      "id": "operation-unknown-field-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "abc"
+            }
+          ],
+          "approval": true
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "operation-shape"
+      }
+    },
+    {
+      "id": "operation-unknown-field-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "abc"
+            }
+          ],
+          "approval": true
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "operation-shape"
+      }
+    },
+    {
+      "id": "argv-not-list-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": "abc"
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "argv-count"
+      }
+    },
+    {
+      "id": "argv-not-list-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": "abc"
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "argv-count"
+      }
+    },
+    {
+      "id": "atom-not-object-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            []
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "atom-type"
+      }
+    },
+    {
+      "id": "atom-not-object-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            []
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "atom-type"
+      }
+    },
+    {
+      "id": "atom-unknown-field-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "abc",
+              "approval": true
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "atom-shape"
+      }
+    },
+    {
+      "id": "atom-unknown-field-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "abc",
+              "approval": true
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "atom-shape"
+      }
+    },
+    {
+      "id": "flag-too-long-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "flag",
+              "value": "--aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            {
+              "kind": "integer",
+              "value": 1
+            },
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "x"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "flag-syntax"
+      }
+    },
+    {
+      "id": "flag-too-long-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "flag",
+              "value": "--aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            {
+              "kind": "integer",
+              "value": 1
+            },
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "x"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "flag-syntax"
+      }
+    },
+    {
+      "id": "canary-denied-by-authority-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "sensitive-data-denied",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "CANARY_SECRET"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unverified-binding"
+      }
+    },
+    {
+      "id": "canary-denied-by-authority-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "sensitive-data-denied",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "CANARY_SECRET"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unverified-binding"
+      }
+    },
+    {
+      "id": "canary-policy-deny-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "policy-deny",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "CANARY_SECRET"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unverified-binding"
+      }
+    },
+    {
+      "id": "canary-policy-deny-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "policy-deny",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "proposal-only",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "CANARY_SECRET"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "unverified-binding"
+      }
+    },
+    {
+      "id": "native-typed-noncopyable-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "structured-proposal",
+        "operation": {
+          "kind": "native",
+          "handler": "storage.directory.usage",
+          "input_slots": [
+            "root",
+            "limit"
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "non-executable-action"
+      }
+    },
+    {
+      "id": "native-typed-noncopyable-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "structured-proposal",
+        "operation": {
+          "kind": "native",
+          "handler": "storage.directory.usage",
+          "input_slots": [
+            "root",
+            "limit"
+          ]
+        }
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "non-executable-action"
+      }
+    },
+    {
+      "id": "candidate-typed-noncopyable-bash-posix-clean-v1",
+      "shell": "bash-posix-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "execution-candidate",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "abc"
+            }
+          ]
+        },
+        "constraints": {
+          "timeout_ms": 1000,
+          "max_output_bytes": 1024
+        },
+        "expires_boottime_ms": 12345
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "non-executable-action"
+      }
+    },
+    {
+      "id": "candidate-typed-noncopyable-dash-clean-v1",
+      "shell": "dash-clean-v1",
+      "gate": "verified-fixture",
+      "recipe": "fixture-end",
+      "action": {
+        "kind": "execution-candidate",
+        "operation": {
+          "kind": "executable",
+          "identity": {
+            "path": "/fixture/bin/argv-dumper",
+            "version": "fixture-v1",
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "argv": [
+            {
+              "kind": "option-end"
+            },
+            {
+              "kind": "literal",
+              "value": "abc"
+            }
+          ]
+        },
+        "constraints": {
+          "timeout_ms": 1000,
+          "max_output_bytes": 1024
+        },
+        "expires_boottime_ms": 12345
+      },
+      "expected": {
+        "kind": "NON_COPYABLE",
+        "reason": "non-executable-action"
       }
     }
   ],

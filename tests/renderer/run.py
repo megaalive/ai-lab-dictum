@@ -31,7 +31,7 @@ def check_token(value):
     need(len(raw) <= 1024, "token-size")
     for ch in value:
         n = ord(ch)
-        need(not (0xFDD0 <= n <= 0xFDEF or n & 0xFFFF >= 0xFFFE),
+        need(not (0xFDD0 <= n <= 0xFDEF or (n & 0xFFFF) >= 0xFFFE),
              "noncharacter")
         need(unicodedata.category(ch) not in {"Cc", "Cf", "Zl", "Zp"}
              and not any(a <= n <= b for a, b in INVISIBLE), "unsafe-character")
@@ -50,7 +50,8 @@ def atom(x):
         need(type(v) is int and -(2**53-1) <= v <= 2**53-1, "integer")
         return str(v)
     if kind == "flag":
-        need(type(v) is str and re.fullmatch(r"--?[A-Za-z0-9][A-Za-z0-9-]*", v),
+        need(type(v) is str and 2 <= len(v) <= 64 and
+             re.fullmatch(r"--?[A-Za-z0-9][A-Za-z0-9-]*", v),
              "flag-syntax")
     else:
         need(kind == "literal", "atom-type")
@@ -64,13 +65,19 @@ def quote(value):
 def render(case):
     """gate/recipe are harness-selected synthetic inputs, not model authority."""
     try:
-        need(case["shell"] in SHELLS, "unsupported-shell")
+        need(type(case) is dict and set(case) ==
+             {"id", "shell", "gate", "recipe", "action", "expected"}, "case-shape")
+        need(type(case["shell"]) is str and case["shell"] in SHELLS,
+             "unsupported-shell")
         need(case["gate"] == "verified-fixture", "unverified-binding")
         action = case["action"]
+        need(type(action) is dict and type(action.get("kind")) is str,
+             "action-shape")
         need(action["kind"] == "proposal-only", "non-executable-action")
         need(set(action) == {"kind", "operation"}, "action-shape")
         op = action["operation"]
-        need(set(op) == {"kind", "identity", "argv"} and op["kind"] == "executable",
+        need(type(op) is dict and set(op) == {"kind", "identity", "argv"} and
+             op["kind"] == "executable",
              "operation-shape")
         need(op["identity"] == IDENTITY, "identity")
         executable = check_token(op["identity"]["path"])
@@ -108,6 +115,8 @@ def main():
     bad = 0
     accepted = 0
     for c in data["cases"]:
+        need(type(c.get("id")) is str and re.fullmatch(r"[a-z0-9_-]{1,128}",c["id"]),
+             "case-id")
         need(c["id"] not in ids, "duplicate-case")
         ids.add(c["id"])
         result = render(c)

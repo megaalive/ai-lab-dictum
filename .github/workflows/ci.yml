@@ -148,3 +148,6 @@ jobs:
 
       - name: Uji review konten laporan C1 (mechanical only)
         run: python3 -B tests/catalog/f1_c1_review.py
+
+      - name: Uji paket kerja corpus manusia (mechanical only)
+        run: python3 -B tests/research/f1_collect.py

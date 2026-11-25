@@ -11,6 +11,10 @@ Dictum mengikuti batas **proposal-only**. Produk tidak menjalankan operasi
 OS atas permintaan pengguna, tidak membuka koneksi jaringan, dan tidak
 mensimulasikan hasil OS. Executor berstatus **NO-GO**.
 
+## Development B2
+
+[DEC-011](plans/baseline-v3.md#dec-011--development-sintetis-tanpa-blocker-kuota-seed-manusia-25-november-2026) mengizinkan corpus sintetis original tervalidasi tanpa menunggu seed manusia. [Workflow dan evidence aktual](docs/research/f1-synthetic-development-v1.md). Human gold, blind evaluation, kompatibilitas Debian dan executor tetap dibedakan.
+
 ## Build dan uji
 
 Target referensi adalah Debian 13 Trixie x86-64. Siapkan CMake 3.24 atau lebih baru

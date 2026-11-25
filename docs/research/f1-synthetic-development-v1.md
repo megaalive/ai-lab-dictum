@@ -1,0 +1,24 @@
+# DEC-011 — actual synthetic B2 development
+
+Owner instruction on 25 November 2026 removes the human-authored seed quota as a prerequisite for F1/B2 development; see [decision ledger](../../plans/baseline-v3.md). Only original project-authored synthetic examples are approved for internal fitting/evaluation. No external dataset rights, corpus/weight distribution, neural/F2 training, blind access or target execution. The historical corpus protocol and approved plan blobs are unchanged; DEC-011 supersedes their blocking human-seed requirement prospectively.
+
+## Fixed experiment
+
+`data/synthetic/f1-template-families-v1.json`: original AI-authored 384 bilingual positive template families (four train, two dev, two test per intent, both languages in each split) and 36 contrast families (ambiguity/OOD/security). Split assigned before rendering typed slots. Deterministic seed 20261124 and exact source pins; resolve values from synthetic contract and record byte spans/default/context provenance, validate independently using existing typed slot/scope rules. Reject both exact duplicate families, cross-split fuzzy matches at original token/trigram Jaccard threshold and all visible F0/F1/S2 regression/reference collisions before freeze. No use of old cases as fitting data. Labels SELF AI, not independently human-validated semantics. Shared canonical values/fixtures across split allowed specifically for **lexical-template diagnostic**; this is neither a compositional holdout nor a human representative sample. Balanced ID/EN diagnostic and actual split 204/108/108 are deliberately not the eventual 70/30 language and 70/15/15 corpus targets.
+
+`tools/f1_synthetic.py` supports only the pinned built-in source, checks DEC-011 blob, freezes manifest and records hashes, uses no private/external files as data. Train B2 on 192 supported training examples only, using native extractor masks, 12 epochs, fixed seed; margins 1/2/4/8/16/32 selected on dev supported exact outcomes, then raw intent correctness, then largest margin on ties. Test denominator fixed before fit. B2 remains a veto guard in research executable, no added product authority. Negative suites are measured without training on their labels. Failures retained.
+
+```sh
+python3 -B tools/f1_synthetic.py --prepare-only
+python3 -B tools/f1_synthetic.py \
+  --probe build/release/tests/pipeline_probe --cli build/release/dictum \
+  --b2-probe build/release/tests/b2_pipeline_probe --output /tmp/dictum-f1-results.json
+```
+
+Only clean checkout, output outside repository and no overwrite. CI GCC Release executes actual experiment. Temporary weights never persisted to product or uploaded; output has exact row/manifest/model/binary identities and outcomes, not text. CI preserves aggregate counts and digest; source reproduces manifest. Numeric fit wall time is not full training/extraction time, latency is cold subprocess wall time, no reference-VM/RSS measurement.
+
+## First actual result (source 9ab4572af95b6b6ac93b356b7da492f4aed8194a)
+
+[Actual exact-source result](evidence/f1-synthetic-first-results-v1.json) from [native CI](https://github.com/megaalive/ai-lab-dictum/actions/runs/45562062548) GCC Release. All 420 families accepted, 0 detected collisions, all 48 intent IDs in train/dev/test, 0 human gold. Matrix 98,400 bytes. 192 supported train; selected margin 1 (dev raw 46/96, end-to-end 0/96). Test B2 raw 47/96 (ID 18/48, EN 29/48); B0/B1 emitted raw intent 0/96. End-to-end resolved JIA 0/96 for all. Each completed 108/108 rows; non-supported 0 proposals out of 12, exact outcome 5/12 (clarify 0/4, OOD 4/4, security 1/4). Do not claim safety or semantic quality. B0/B1 emitted candidate vs B2 raw rank have different guard semantics, not equal raw classifier APIs. The first test is now observed; subsequent uses are diagnostic regression, not fresh test or blind evidence. Preserve this negative result, improve on train/dev and separately preregister any new test.
+
+**Technical conclusion:** exact full-utterance grammar rejects novel lexical families, so an abstention-only B2 cannot improve end-to-end recall. Improve compositional NLU on constrained read-only grammar/typed slots, preserving strict scope, negative/ambiguity rules, NET/CHANGE restrictions and no authority bypass. F1 remains in progress; real bindings BLOCKED, F2 HOLD, S3/FES NOT RUN, executor NO-GO. Human audit and independent blind/final evaluation are separate later evidence, not a reason to stop development.

@@ -1,6 +1,8 @@
 # F1 human seed — collection and review packet (not a dataset)
 
-Ref #35 / #28 and corpus protocol v1. **Human gold: 0. Actual split/training/holdout: NOT RUN.** Current F0/F1/S2 authored fixture labels are visible to implementer and must stay regression/development diagnostics; do not import them as human gold, training or blind. Rights ledger remains HOLD. No real data, credentials, hostnames, paths, logs or production information.
+> **DEC-011:** optional human contribution path, not a development blocker. See [synthetic workflow](../../docs/research/f1-synthetic-development-v1.md).
+
+Ref #35 / #28 and corpus protocol v1. **Human gold: 0. Actual private-human split/training/holdout: NOT RUN.** Current F0/F1/S2 authored fixture labels are visible to implementer and must stay regression/development diagnostics; do not import them as human gold, training or blind. Rights ledger remains HOLD. No real data, credentials, hostnames, paths, logs or production information.
 
 ## Human contribution and prerequisites
 

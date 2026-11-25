@@ -1,6 +1,8 @@
 # F1-D / B2 — private development workflow
 
-Ref #35, #40 and #41. **No human corpus, actual rights approval, split lock, actual fit or blind evaluation exists as of this technical increment.** Do not substitute the 574 SELF regression cases, S2 labels, LLM paraphrases or CI toy rows. F1-C1 inventory is completed as reported separately in #37; real Debian semantics/bindings remain blocked.
+> **DEC-011 (25 November 2026):** original validated AI-synthetic seed is an authorized alternative for F1 development/B2 fitting. The 200–500 human-authored quota and per-record human review are not development blockers. The private-human workflow below remains available when real contributions exist; it does not govern the separate synthetic path. [Synthetic development workflow](f1-synthetic-development-v1.md). Human gold remains 0; independent final evaluation and existing safety gates remain unchanged.
+
+Ref #35, #40 and #41. No private human corpus, actual private rights approval, private split lock or blind evaluation exists. Do not substitute the 574 SELF regression cases, S2 labels or CI toy rows. F1-C1 inventory is completed as reported separately in #37; real Debian semantics/bindings remain blocked.
 
 ## Collect and review once
 
@@ -33,7 +35,7 @@ python3 -B tools/f1_compare.py \
   --b2-probe build/release/tests/b2_pipeline_probe --output /private/results.json
 ```
 
-The runner rejects drift of the source, binary hashes, rights/candidate/split and review shape. It fits only supported train rows with native feature masks (never gold spans), 12 epochs and seed 20261124. Margin candidates 1/2/4/8/16/32 selected solely by dev supported exact outcomes, largest margin on a tie. Then B0/B1/B2 compare on exactly the same locked development test records. Full denominator counts timeouts and invalids as misses; no posthoc removals; incomplete dev run invalidates margin selection. Report raw intent and joint/resolved, coverage/selective accuracy, exact outcome counts by class/language, misses, cold process latency and weight hash. Report stays private; no persisted product weights. No actual independent effects oracle, JS/PSS/FES, reference VM warm/RSS or blind gate claim. Follow preregistration for actual reference VM and independent holdout at the separate approved stage. Keep corpus and output outside Git; return only aggregate sanitized counts and hashes. CI tests are mechanical shape/negative cases and fixed-weight native integration, not trained Dictum metrics.
+The runner rejects drift of the source, binary hashes, rights/candidate/split and review shape. It fits only supported train rows with native feature masks (never gold spans), 12 epochs and seed 20261124. Margin candidates 1/2/4/8/16/32 selected solely by dev supported exact outcomes, largest margin on a tie. Then B0/B1/B2 compare on exactly the same locked development test records. Full denominator counts timeouts and invalids as misses; no posthoc removals; incomplete dev run invalidates margin selection. Report raw intent and joint/resolved, coverage/selective accuracy, exact outcome counts by class/language, misses, cold process latency and weight hash. Report stays private; no persisted product weights. No actual independent effects oracle, JS/PSS/FES, reference VM warm/RSS or blind gate claim. Follow preregistration for actual reference VM and independent holdout at the separate approved stage. Keep corpus and output outside Git; return only aggregate sanitized counts and hashes. The private path's mechanical tests do not fit private human data; DEC-011 synthetic experiments have separate actual measured results.
 
 
 ## Ready-to-use author/reviewer packet

@@ -92,6 +92,9 @@ jobs:
           python3 -B tools/f1_synthetic.py --probe build/ci/tests/pipeline_probe \
             --cli build/ci/dictum --b2-probe build/ci/tests/b2_pipeline_probe \
             --output "$result_dir/results.json"
+          python3 -B tools/f1_synthetic.py --diagnostic-replay \
+            --probe build/ci/tests/composition_pipeline_probe --cli build/ci/dictum \
+            --b2-probe build/ci/tests/composition_b2_probe --output "$result_dir/composition.json"
 
       - name: Fuzz parser langsung
         if: matrix.compiler == 'clang' && matrix.config.sanitizers == 'ON'

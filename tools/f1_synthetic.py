@@ -241,12 +241,16 @@ def summary(manifest):
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--prepare-only",action="store_true")
+    parser.add_argument("--diagnostic-replay",action="store_true")
     for arg in ("probe","cli","b2-probe","output"):
         parser.add_argument("--"+arg,type=Path)
     a=parser.parse_args()
     try:
         need(__debug__,"asserts-required")
         rows,gold,manifest=prepare()
+        if a.diagnostic_replay:
+            need(manifest["manifest_sha256"]=="aa4c817e14e7901d25e062bdd3d60943ea4f927e178ec904492cd3673882c68e",
+                 "observed-diagnostic-manifest-drift")
         print("F1_SYNTHETIC_MANIFEST "+json.dumps(summary(manifest),sort_keys=True),flush=True)
         if a.prepare_only:
             need(all(x is None for x in (a.probe,a.cli,a.b2_probe,a.output)),"prepare-arguments")
@@ -261,6 +265,7 @@ def main():
         probes={k:v.resolve() for k,v in {"probe":a.probe,"cli":a.cli,"b2_probe":a.b2_probe}.items()}
         binaries={k:sha(bounded(v,128*1024*1024)) for k,v in probes.items()}
         out=_compare_core(rows,gold,manifest,{"owner_decision_ref":"DEC-011"},source,binaries,**probes,synthetic=True)
+        out["evaluation_role"]="OBSERVED-TEST-DIAGNOSTIC-REPLAY" if a.diagnostic_replay else "FROZEN-LEXICAL-BASELINE-REPRODUCTION"
         data=json.dumps({"manifest":manifest,"results":out},sort_keys=True,ensure_ascii=False,
                         separators=(",",":"),allow_nan=False).encode()+b"\n"
         with output.open("xb") as f:
@@ -271,7 +276,8 @@ def main():
         result["result_sha256"]=sha(data)
         result["dev_margin_counts"]={k:v["metrics"]["suite_counts"] for k,v in out["dev_margin_evaluation"].items()}
         result["test"]={m:v["metrics"] for m,v in out["test"].items()} if type(out["test"]) is dict else out["test"]
-        print("F1_SYNTHETIC_B2_RESULT "+json.dumps(result,sort_keys=True),flush=True)
+        result["evaluation_role"]=out["evaluation_role"]
+        print(("F1_COMPOSITION_B2_RESULT " if a.diagnostic_replay else "F1_SYNTHETIC_B2_RESULT ")+json.dumps(result,sort_keys=True),flush=True)
         need(out["status"]=="COMPLETE-SYNTHETIC-DEVELOPMENT","incomplete-run")
     except (Reject,ValueError,TypeError,KeyError,AssertionError,OSError,subprocess.SubprocessError,RecursionError) as exc:
         # No actual private inputs are accepted. Only fixed project data here.

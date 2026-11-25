@@ -589,8 +589,12 @@ static bool typed_role_anchor(const struct request *q,const struct typed_frame *
         return i>0u && compose_wordlist(q,i-1u,"matching match matches literal keyword query kata nama pencarian for");
     if (name==S_NAME)
         return i>0u && compose_wordlist(q,i-1u,"name named nama bernama exact tepat persis literal");
-    if (name==S_UNIT)
-        return i>0u && compose_wordlist(q,i-1u,"service unit layanan named bernama");
+    if (name==S_UNIT) {
+        if (i>0u && compose_wordlist(q,i-1u,"service unit layanan named bernama")) return true;
+        return strcmp(f->id,"log.service.query")==0 && i>1u &&
+            compose_wordlist(q,i-1u,"of for from") &&
+            compose_wordlist(q,i-2u,"journal journals log logs entries entry records record");
+    }
     if (name==S_PACKAGE)
         return i>0u && compose_wordlist(q,i-1u,"package paket version versi");
     if (name==S_PATH)

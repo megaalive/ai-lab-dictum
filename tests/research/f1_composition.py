@@ -90,3 +90,94 @@ for text in ("Report service active and failed","Show active network connections
 print("F1_COMPOSITION_BOUNDARY 574 old B0 outputs identical;",len(positive),"positive frames;",
       novel,"previously unsupported; 42 B2 guard transitions;",
       len(positive)*6+12,"contrast inputs rejected from proposal; research only")
+
+
+# Original project-authored train/dev-inspired hypotheses, not observed
+# test rows. Check typed values, explicit spans, defaults and B2 veto.
+typed=[
+ ("Rinci keadaan unit layanan demo.service sekarang","service.status.get",{"unit":"demo.service"}),
+ ("Describe runtime status of service worker.service","service.status.get",{"unit":"worker.service"}),
+ ("Temukan subdirektori terbesar di /fixture/projects","storage.directory.usage",{"root":"/fixture/projects"}),
+ ('Rank largest child folders within "/fixture/data set"',"storage.directory.usage",{"root":"/fixture/data set"}),
+ ("Rinci atribut berkas /fixture/data/report.txt","file.metadata.stat",{"path":"/fixture/data/report.txt"}),
+ ("Describe owner and metadata of file /fixture/data/notes.md","file.metadata.stat",{"path":"/fixture/data/notes.md"}),
+ ("Rinci izin akses efektif berkas /fixture/logs/events.log","file.permission.check",{"path":"/fixture/logs/events.log"}),
+ ("Determine allowed access modes of file /fixture/data/notes.md","file.permission.check",{"path":"/fixture/data/notes.md"}),
+ ("Rinci nama anggota arsip /fixture/data/demo.tar","archive.contents.list",{"path":"/fixture/data/demo.tar"}),
+ ("Enumerate member names inside archive /fixture/data/demo.zip","archive.contents.list",{"path":"/fixture/data/demo.zip"}),
+ ('Identifikasi PID proses bernama "fixture worker"',"process.lookup.name",{"name":"fixture worker"}),
+ ("Locate process identifiers associated with name demo-worker","process.lookup.name",{"name":"demo-worker"}),
+ ("Rinci status instalasi paket demo-package","package.installed.check",{"package":"demo-package"}),
+ ("Determine installed version of package libdemo1","package.installed.check",{"package":"libdemo1"}),
+ ('Telusuri indeks paket offline dengan kata "demo+tools"',"package.search.local",{"query":"demo+tools"}),
+ ('Find packages matching "fixture package" in local cache',"package.search.local",{"query":"fixture package"}),
+ ('Temukan kemunculan teks persis "teks uji" pada berkas di /fixture/logs',"file.text.search",{"root":"/fixture/logs","text":"teks uji"}),
+ ('Locate exact literal "café" in text files under /fixture/data',"file.text.search",{"root":"/fixture/data","text":"café"}),
+ ("Ambil 4 baris last berkas /fixture/logs/events.log","file.head_tail.view",{"path":"/fixture/logs/events.log","direction":"last","limit":4}),
+ ("Report first 3 lines from file /fixture/data/notes.md","file.head_tail.view",{"path":"/fixture/data/notes.md","direction":"first","limit":3}),
+]
+typed_novel=0
+typed_neg=0
+for sentence,intent,expected in typed:
+    raw=sentence.encode("utf-8")
+    before=invoke(original,raw)
+    after=invoke(compose,raw)
+    assert after["view"]["decision"]=="allow-proposal" and after["view"]["intent"]==intent,(sentence,after["view"])
+    assert after["view"]["execution_allowed"] is False
+    got={}
+    for slot in after["nlu"]["slot_candidates"]:
+        source=slot["source"]
+        assert source["kind"]=="input-span"
+        span=source["span"]
+        assert raw[span["start"]:span["end"]]==str(expected[slot["slot"]]).encode("utf-8"),(sentence,slot)
+        assert slot["slot"] not in got
+        got[slot["slot"]]=expected[slot["slot"]]
+    assert got==expected,(sentence,got)
+    values=after["view"]["slots"]
+    assert set(values)==set(expected)|{k for k,v in o.catalog[intent]["slots"].items() if v["required"]}
+    for key,value in values.items():
+        if key in expected:
+            assert value["value"]==expected[key],(sentence,key,value)
+        else:
+            assert value==o.catalog[intent]["slots"][key]["default"],(sentence,key,value)
+    typed_novel+=before["view"]["decision"]!="allow-proposal"
+    model=Linear.zero()
+    model.bias[registry[intent]]=100
+    for weights,decision in ((model,"allow-proposal"),(zero,"unsupported")):
+        obj,stdout=call(b2,model_frame(weights,1),raw)
+        trace=obj.pop("trace")
+        o.check_invariants(obj,raw,stdout)
+        assert obj["view"]["decision"]==decision and trace["grammar_class"]==registry[intent],(sentence,trace)
+        if decision=="allow-proposal":
+            assert obj==after
+    # Duplicate any existing explicit slot token, unknown target, negation,
+    # alternatives and mixed intent. No malformed typed fallback proposal.
+    first=after["nlu"]["slot_candidates"][0]["source"]["span"]
+    a,b=first["start"],first["end"]
+    duplicate=raw[a:b]
+    if a and raw[a-1:a]==b'"':
+        duplicate=b'"'+duplicate+b'"'
+    for neg in (raw+b" "+duplicate,raw+b" not",b"jangan "+raw,
+                raw+b" arbitrarytoken",raw+b";",raw+b" or inspect service status demo.service",
+                raw[:a]+b"outside_unlisted_value"+raw[b:]):
+        obj=invoke(compose,neg)
+        assert obj["view"]["decision"]!="allow-proposal",(neg,obj["view"])
+        typed_neg+=1
+assert typed_novel>=10
+# Cross-scope, wrong role, omitted/duplicate slots and out-of-range count.
+for sentence in (
+    "Report first 101 lines from file /fixture/data/report.txt",
+    "Report first lines from file /fixture/data/report.txt",
+    "Report first 4 lines from file /fixture/data/demo.tar",
+    "Rinci nama anggota arsip /fixture/data/report.txt",
+    "Describe runtime status of service other.service",
+    'Find packages matching demo in local cache',
+    'Locate exact literal "sample marker" in text files under /outside',
+    'Locate exact literal "sample marker" in text files under /fixture/data /fixture/logs',
+    'Locate exact literal "sample marker" in text files',
+    "Rinci keadaan unit layanan demo.service serta status worker.service",
+):
+    assert invoke(compose,sentence.encode())["view"]["decision"]!="allow-proposal",sentence
+    typed_neg+=1
+print("F1_TYPED_COMPOSITION",len(typed),"positive frames;",typed_novel,"previously unsupported;",
+      len(typed)*2,"B2 guard transitions;",typed_neg,"contrast inputs rejected from proposal; research only")

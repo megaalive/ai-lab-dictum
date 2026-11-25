@@ -486,6 +486,141 @@ static bool compose_match(const struct request *q,struct nlu_proposal *n)
     n->count=1;
     return true;
 }
+
+/* Typed research frames. Each explicitly bound role consumes exactly one
+ * original token. Values must already satisfy the existing typed resolver
+ * and scope; no new normalizer, inference, target, default or authority.
+ * Closed cue vocabulary is separate from the slotless experiment. */
+static bool value_from(const struct request *q,const struct candidate *c,const struct slot_rule *r,struct value *v);
+static bool slot_scope(const struct intent_rule *rule,const struct value *v);
+struct typed_frame {
+    const char *id,*first,*second,*extra;
+    enum slot_name slots[3];
+    size_t count;
+};
+static const struct typed_frame typed_frames[]={
+    {"service.status.get","service services unit units layanan",
+        "status state keadaan kondisi",
+        "runtime current active aktif utama main process proses pid information informasi named bernama",
+        {S_UNIT},1},
+    {"storage.directory.usage","directory directories subdirectories folder folders subfolder subfolders direktori subdirektori",
+        "largest heaviest size sizes space capacity terbesar ukuran ruang",
+        "child anak consume consumption consuming use usage occupied penggunaan pemakaian berdasarkan contained within below under bawah di paling rank",
+        {S_ROOT},1},
+    {"file.metadata.stat","file files berkas",
+        "metadata attributes attribute atribut timestamps timestamp ukuran size kepemilikan owner pemilik",
+        "ownership permissions mode modification modified changed time waktu perubahan details detail termasuk",
+        {S_PATH},1},
+    {"file.permission.check","file files berkas",
+        "permission permissions access hak izin",
+        "effective allowed mode modes read write baca tulis identity identitas terhadap",
+        {S_PATH},1},
+    {"archive.contents.list","archive archives arsip",
+        "member members entries contents entry anggota isi entri",
+        "names name nama stored inside contained paket list daftar hanya only",
+        {S_PATH},1},
+    {"process.lookup.name","process processes proses",
+        "name named nama bernama pid identifiers identifier",
+        "exact tepat literal running berjalan associated allowed details detail memiliki",
+        {S_NAME},1},
+    {"package.installed.check","package packages paket",
+        "installed installation install terpasang terinstal instalasi",
+        "version versions versi status presence local database basis data informasi apakah berapa versinya",
+        {S_PACKAGE},1},
+    {"package.search.local","package packages paket",
+        "cache cached index indeks offline repositori repository",
+        "literal matching match matches pencarian kecocokan kata nama metadata results hasil search",
+        {S_QUERY},1},
+    {"file.text.search","text teks string literal",
+        "file files berkas line lines baris occurrences occurrence kemunculan",
+        "exact persis matching contained berisi below under within bawah bounded search",
+        {S_ROOT,S_TEXT},2},
+    {"file.head_tail.view","line lines baris",
+        "file berkas excerpt potongan",
+        "text teks end akhir bagian contained sebanyak arah",
+        {S_PATH,S_DIRECTION,S_LIMIT},3},
+};
+static bool typed_prefix(const struct request *q,size_t *start)
+{
+    if (compose_prefix(q,start)) return true;
+    const size_t i=polite_start(q,0,q->tokens.count);
+    if (i>=q->tokens.count) return false;
+    if (compose_wordlist(q,i,"determine search temukan identifikasi telusuri ambil")) {
+        *start=i+1; return true;
+    }
+    if ((word(q,i,"look") && word(q,i+1,"for")) ||
+        (word(q,i,"saya") && word(q,i+1,"mencari"))) {
+        *start=i+2; return true;
+    }
+    return false;
+}
+static bool compose_typed_match(const struct request *q,struct nlu_proposal *out)
+{
+    size_t start=0;
+    if (q->invalid || q->time_valid || q->tokens.count>32u ||
+        !typed_prefix(q,&start) || q->tokens.count-start<3u) return false;
+    for (size_t i=0;i<q->tokens.count;++i)
+        if (compose_wordlist(q,i,
+            "not no never dont don't without except or versus vs bukan tidak jangan tanpa kecuali atau abaikan ignore bypass")) return false;
+    static const char *const common=
+        "a an the of for from to in on at by with and as is are me my this "
+        "current currently now local information details about "
+        "yang dan serta dengan untuk pada dalam di dari ke ini itu tersebut "
+        "saat kini sekarang lokal informasi berdasarkan saja apa berapa";
+    struct nlu_proposal selected={0};
+    for (size_t f=0;f<COUNT(typed_frames);++f) {
+        const struct typed_frame *frame=&typed_frames[f];
+        size_t intent=NO_INTENT;
+        for (size_t j=0;j<COUNT(rules);++j)
+            if (strcmp(rules[j].id,frame->id)==0) { intent=j; break; }
+        if (intent==NO_INTENT) return false;
+        const struct intent_rule *rule=&rules[intent];
+        if (strcmp(rule->effect_class,"READ")!=0 || rule->guidance!=NULL) return false;
+        struct nlu_proposal n={0};
+        bool seen[3]={false},first=false,second=false,ok=true;
+        for (size_t i=start;i<q->tokens.count;++i) {
+            const struct token t=q->tokens.item[i];
+            size_t role=SIZE_MAX;
+            for (size_t j=0;j<frame->count;++j) {
+                const enum slot_name name=frame->slots[j];
+                const struct slot_rule *s=find_slot(intent,name);
+                if (s==NULL) return false;
+                /* Quoting is mandatory for text/query, forbidden for
+                 * direction/numeric roles, and preserved in byte spans. */
+                if ((name==S_TEXT || name==S_QUERY) && !t.quoted) continue;
+                if ((name==S_DIRECTION || name==S_LIMIT) && t.quoted) continue;
+                const struct candidate c={name,t};
+                struct value v;
+                if (value_from(q,&c,s,&v) && slot_scope(rule,&v)) {
+                    if (role!=SIZE_MAX) { ok=false; break; }
+                    role=j;
+                }
+            }
+            if (!ok) break;
+            if (role!=SIZE_MAX) {
+                if (seen[role] || !candidate_add(&n,frame->slots[role],t)) { ok=false; break; }
+                seen[role]=true;
+            } else if (compose_wordlist(q,i,frame->first)) first=true;
+            else if (compose_wordlist(q,i,frame->second)) second=true;
+            else if (t.quoted || (!compose_wordlist(q,i,frame->extra) &&
+                                  !compose_wordlist(q,i,common))) { ok=false; break; }
+        }
+        if (!ok || !first || !second || n.used!=frame->count) continue;
+        for (size_t j=0;j<rule->count;++j) {
+            bool bound=false;
+            for (size_t k=0;k<n.used;++k)
+                if (n.candidates[k].name==rule->slots[j].name) bound=true;
+            if (rule->slots[j].required && !rule->slots[j].has_default && !bound) ok=false;
+        }
+        if (!ok) continue;
+        if (selected.count!=0) return false;
+        n.intents[0]=intent; n.count=1; selected=n;
+    }
+    if (selected.count!=1) return false;
+    *out=selected;
+    return true;
+}
+
 #endif
 
 static struct nlu_proposal propose(const struct request *q)
@@ -506,7 +641,7 @@ static struct nlu_proposal propose(const struct request *q)
         }
     }
 #ifdef DICTUM_DEV_COMPOSE
-    if (compose_match(q,&n)) return n;
+    if (compose_match(q,&n) || compose_typed_match(q,&n)) return n;
 #endif
     return (struct nlu_proposal){0};
 }

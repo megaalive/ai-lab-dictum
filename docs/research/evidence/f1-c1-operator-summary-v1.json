@@ -1,0 +1,203 @@
+{
+  "schema_version": 1,
+  "role": "OPERATOR-REPORTED-SANITIZED-SUMMARY-NOT-ORIGINAL-REPORT",
+  "date": "2026-11-25",
+  "scope": "F1-C1-OFFLINE-20261124-01",
+  "inventory_source_commit": "6adf5ec5acd792b38e71a8a136f2cd2eaf1a2051",
+  "review_source_commit": "8b7beddf815b10f75d7041603368aac522c27eca",
+  "operator_report_sha256": "66ed58a56e51e16b523d9c0cca8a1f3d932e38bb1b989bc026f69d1fc6c80bb6",
+  "operator_review_sha256": "f662be638911289d0bb88d480fe20f56a1c907cba1198e52fe7ddb82e57efc35",
+  "preflight_sha256": "fc92d2bd96b378fce8b99824a770fe445131ae3fb543edf4a62f38b48732fd6b",
+  "plan_sha256": "1e560fb47a568c125654ec2a5e7e8cb1e3af08f7bf7491d5d1b4a41925ae662e",
+  "controller_decision": "https://github.com/megaalive/ai-lab-dictum/issues/37#issuecomment-7139200383",
+  "review_disposition": "LOCAL-REPORT-CONTENT-REVIEW-REPORTED-COMPLETE",
+  "reviewed_rows": "Reported metadata compared against pinned repository plan and S5 package versions; original report/review bytes not independently accessed.",
+  "counts": {
+    "PRESENT-METADATA": 14,
+    "UNKNOWN": 1,
+    "ABSENT": 2
+  },
+  "s5_comparison_counts": {
+    "EXACT-PACKAGE-VERSION-MATCH-ONLY": 6,
+    "NOT-APPLICABLE": 3,
+    "NO-S5-PACKAGE-SAMPLE": 8
+  },
+  "utilities": [
+    {
+      "id": "ss",
+      "status": "PRESENT-METADATA",
+      "package": "iproute2",
+      "version": "6.15.0-1",
+      "path": "/usr/bin/ss",
+      "sha256": "772cf51fcd75313f9d1f16dbe45ac456904bb79a75367f79f0fedfec04e1e5fc",
+      "s5_version_status": "EXACT-PACKAGE-VERSION-MATCH-ONLY"
+    },
+    {
+      "id": "ip",
+      "status": "UNKNOWN",
+      "package": null,
+      "version": null,
+      "path": null,
+      "sha256": null,
+      "s5_version_status": "NOT-APPLICABLE"
+    },
+    {
+      "id": "dig",
+      "status": "ABSENT",
+      "package": null,
+      "version": null,
+      "path": null,
+      "sha256": null,
+      "s5_version_status": "NOT-APPLICABLE"
+    },
+    {
+      "id": "ping",
+      "status": "PRESENT-METADATA",
+      "package": "iputils-ping",
+      "version": "3:20240905-3",
+      "path": "/usr/bin/ping",
+      "sha256": "b51f3f92619a4ba05a66cb432c970ab275d0a5cf4b9b8cada543e4bcc1aa22dd",
+      "s5_version_status": "NO-S5-PACKAGE-SAMPLE"
+    },
+    {
+      "id": "systemctl",
+      "status": "PRESENT-METADATA",
+      "package": "systemd",
+      "version": "257.13-1~deb13u1",
+      "path": "/usr/bin/systemctl",
+      "sha256": "848c70d7e2c2f43f4f93287897ac8946e8eda45e7daa5f2975d9728071856b1a",
+      "s5_version_status": "EXACT-PACKAGE-VERSION-MATCH-ONLY"
+    },
+    {
+      "id": "journalctl",
+      "status": "PRESENT-METADATA",
+      "package": "systemd",
+      "version": "257.13-1~deb13u1",
+      "path": "/usr/bin/journalctl",
+      "sha256": "6ad392fc8f1a10ac892fdb328e67761944c32707db5e97602cb84eed502e47f1",
+      "s5_version_status": "EXACT-PACKAGE-VERSION-MATCH-ONLY"
+    },
+    {
+      "id": "dmesg",
+      "status": "PRESENT-METADATA",
+      "package": "util-linux",
+      "version": "2.41.5-0+deb13u1",
+      "path": "/usr/bin/dmesg",
+      "sha256": "605698ef166c53fc53c97338b7d0eadd95cec93daff93fac8b213932a9e8fbd0",
+      "s5_version_status": "NO-S5-PACKAGE-SAMPLE"
+    },
+    {
+      "id": "df",
+      "status": "PRESENT-METADATA",
+      "package": "coreutils",
+      "version": "9.7-3",
+      "path": "/usr/bin/df",
+      "sha256": "b0151157177079180b1e104c8c13962cf60dee40f8a415102aca57ac61998a69",
+      "s5_version_status": "EXACT-PACKAGE-VERSION-MATCH-ONLY"
+    },
+    {
+      "id": "lsblk",
+      "status": "PRESENT-METADATA",
+      "package": "util-linux",
+      "version": "2.41.5-0+deb13u1",
+      "path": "/usr/bin/lsblk",
+      "sha256": "764eac47b7a2bdd0fac3597af4ec2acecaf1446c50f10ee7c507d05a47423a86",
+      "s5_version_status": "NO-S5-PACKAGE-SAMPLE"
+    },
+    {
+      "id": "findmnt",
+      "status": "PRESENT-METADATA",
+      "package": "util-linux",
+      "version": "2.41.5-0+deb13u1",
+      "path": "/usr/bin/findmnt",
+      "sha256": "598a23e36910f5cf7a99dfe83b6b29b54dae26ec73faa82fb097c0d5ddc36334",
+      "s5_version_status": "NO-S5-PACKAGE-SAMPLE"
+    },
+    {
+      "id": "tar",
+      "status": "PRESENT-METADATA",
+      "package": "tar",
+      "version": "1.35+dfsg-3.1",
+      "path": "/usr/bin/tar",
+      "sha256": "38adf50825f773d353d6bda1a7cd70c22f8877823e44821c1d2bd0a52ddc3871",
+      "s5_version_status": "NO-S5-PACKAGE-SAMPLE"
+    },
+    {
+      "id": "unzip",
+      "status": "ABSENT",
+      "package": null,
+      "version": null,
+      "path": null,
+      "sha256": null,
+      "s5_version_status": "NOT-APPLICABLE"
+    },
+    {
+      "id": "free",
+      "status": "PRESENT-METADATA",
+      "package": "procps",
+      "version": "2:4.0.4-9",
+      "path": "/usr/bin/free",
+      "sha256": "e2b6980e319641edfa34420519a0eb4e73a5e176614837dd98148c80da3bb9d1",
+      "s5_version_status": "EXACT-PACKAGE-VERSION-MATCH-ONLY"
+    },
+    {
+      "id": "lscpu",
+      "status": "PRESENT-METADATA",
+      "package": "util-linux",
+      "version": "2.41.5-0+deb13u1",
+      "path": "/usr/bin/lscpu",
+      "sha256": "e923c66b14ed15668949e0d6e498e095fccb7516bb022197a6c6c778c1289191",
+      "s5_version_status": "NO-S5-PACKAGE-SAMPLE"
+    },
+    {
+      "id": "dpkg-query",
+      "status": "PRESENT-METADATA",
+      "package": "dpkg",
+      "version": "1.22.22",
+      "path": "/usr/bin/dpkg-query",
+      "sha256": "095817337215129933918cacae5fd62e86202fe238591bea207a75b73561e8c5",
+      "s5_version_status": "NO-S5-PACKAGE-SAMPLE"
+    },
+    {
+      "id": "apt-cache",
+      "status": "PRESENT-METADATA",
+      "package": "apt",
+      "version": "3.0.4",
+      "path": "/usr/bin/apt-cache",
+      "sha256": "b8fffaf4fd662ba887bc67d63d2f77490e8c33931090770e07698ae8a4df2f52",
+      "s5_version_status": "NO-S5-PACKAGE-SAMPLE"
+    },
+    {
+      "id": "who",
+      "status": "PRESENT-METADATA",
+      "package": "coreutils",
+      "version": "9.7-3",
+      "path": "/usr/bin/who",
+      "sha256": "4a23d89ae2e0ff021ba1344b4b96d3967ebd998ccb9cf16f38cf706819b498cd",
+      "s5_version_status": "EXACT-PACKAGE-VERSION-MATCH-ONLY"
+    }
+  ],
+  "semantic_status": "NOT RUN",
+  "host_equivalence": "NOT RUN",
+  "binding_status": "BLOCKED",
+  "rights": "HOLD",
+  "execution_allowed": false,
+  "network_allowed": false,
+  "S3": "NOT RUN",
+  "FES": "NOT RUN",
+  "human_collection": {
+    "assignment_count": 300,
+    "drafts_empty": 300,
+    "target_language": {
+      "id": 210,
+      "en": 90
+    },
+    "reference_intents": 48,
+    "human_gold_count": 0,
+    "actual_review": "NOT RUN",
+    "rights": "HOLD",
+    "split": "NOT RUN",
+    "actual_fit": "NOT RUN"
+  },
+  "checkout_note": "Initial local invocation rejected source bytes converted to CRLF by Windows Git; exact-byte export from pinned commit succeeded. No relaxation of hash validation."
+}

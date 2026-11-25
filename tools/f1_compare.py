@@ -176,14 +176,27 @@ def run_private(seed_bytes,rights_bytes,candidate,lock,source,binaries,probe,cli
     rows=parse(seed_bytes)["records"]
     rights=rights_check(parse(rights_bytes),sha(seed_bytes),False)
     contract=load_contract()
-    oracle=load_oracle(probe,cli)
-    from wire import Reject as OracleReject
     # Gold is human-supplied; only the native extractor supplies model features.
-    oracle.raw_gold={}
+    raw_gold={}
     for row in rows:
         _,raw_slots,suite=check_row(row,contract,rights,False)
         if suite=="supported":
-            oracle.raw_gold[row["id"]]={"intent":row["expected"]["intent"],"slots":raw_slots}
+            raw_gold[row["id"]]={"intent":row["expected"]["intent"],"slots":raw_slots}
+    return _compare_core(rows,raw_gold,candidate,lock,source,binaries,probe,cli,b2_probe)
+
+
+def _compare_core(rows,raw_gold,candidate,lock,source,binaries,probe,cli,b2_probe,*,mechanical=False):
+    """Shared orchestration; private CLI always enters via validated run_private.
+
+    The test-only mechanical invocation uses explicitly tagged artificial
+    numeric/lexical vectors and never a rights-approved or human corpus.
+    """
+    need(__debug__,"oracle-asserts-required")
+    need(all(r.get("role")==("MECHANICAL-TEST" if mechanical else "HUMAN-DEVELOPMENT-SEED")
+             for r in rows),"core-role")
+    oracle=load_oracle(probe,cli)
+    from wire import Reject as OracleReject
+    oracle.raw_gold=raw_gold
     partitions={s:[r for r in rows if candidate["rows"][r["id"]]["split"]==s] for s in ("train","dev","test")}
     for s in partitions:
         partitions[s].sort(key=lambda row:row["id"])
@@ -207,8 +220,10 @@ def run_private(seed_bytes,rights_bytes,candidate,lock,source,binaries,probe,cli
         features=tuple(trace["features"])
         need(bool(features),"training-feature-empty")
         fit_rows.append((features,registry[row["expected"]["intent"]]))
-    need(len({c for _,c in fit_rows})==48,"training-class-coverage")
+    need(len({c for _,c in fit_rows})==(2 if mechanical else 48),"training-class-coverage")
+    fit_started=time.perf_counter_ns()
     model=fit_numeric(fit_rows,epochs=EPOCHS,seed=SEED)
+    fit_ms=(time.perf_counter_ns()-fit_started)/1e6
     weight_sha=sha(model_frame(model,1)[4:])
 
     def evaluate(rows,model_name,margin=None):
@@ -248,14 +263,15 @@ def run_private(seed_bytes,rights_bytes,candidate,lock,source,binaries,probe,cli
             result.append(a)
         return {"metrics":score_rows(rows,result),"results":result}
 
-    base={"schema_version":1,"role":"PRIVATE-DEVELOPMENT-RESULTS","source_commit":source,
+    base={"schema_version":1,"role":"MECHANICAL-COMPARATOR-SMOKE" if mechanical else "PRIVATE-DEVELOPMENT-RESULTS","source_commit":source,
           "candidate_manifest_sha256":candidate["manifest_sha256"],"rights_sha256":candidate["rights_sha256"],
           "owner_decision_ref":lock["owner_decision_ref"],"binaries_sha256":binaries,
           "budget":BUDGET,"weight_sha256":weight_sha,"training_supported_rows":len(fit_rows),
+          "numeric_fit_wall_ms":fit_ms,"model_int16_bytes":len(model_frame(model,1))-4,
           "coverage_deficits":candidate["missing_supported_intents"],"blind":"NOT RUN",
           "reference_vm":"NOT RUN","FES":"NOT RUN","release_gate":"NOT EVALUATED",
           "timing":"cold subprocess wall time including model transport; no warm/RSS/reference claim",
-          "rights_review":"external decision recorded; not independently attested by program"}
+          "rights_review":"MECHANICAL-NOT-AUTHORIZED" if mechanical else "external decision recorded; not independently attested by program"}
     dev=partitions["dev"]
     need(any(suite_of(r)=="supported" for r in dev),"dev-supported-empty")
     dev_scores={}
@@ -270,8 +286,8 @@ def run_private(seed_bytes,rights_bytes,candidate,lock,source,binaries,probe,cli
     base["selected_margin"]=selected
     test=partitions["test"]
     base["test"]={m:evaluate(test,m,selected if m=="B2" else None) for m in ("B0","B1","B2")}
-    base["status"]="COMPLETE-DEVELOPMENT" if all(v["metrics"]["statuses"].get("complete",0)==len(test)
-                                             for v in base["test"].values()) else "COMPLETE-WITH-FAILURES"
+    base["status"]=("COMPLETE-MECHANICAL-SMOKE" if mechanical else "COMPLETE-DEVELOPMENT") if all(
+        v["metrics"]["statuses"].get("complete",0)==len(test) for v in base["test"].values()) else "COMPLETE-WITH-FAILURES"
     return base
 
 

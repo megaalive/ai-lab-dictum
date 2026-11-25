@@ -16,6 +16,8 @@ assert len(tasks)==300 and Counter(t["target_language"] for t in tasks)=={"id":2
 assert Counter(t["target_suite"] for t in tasks)=={"supported":240,"ambiguity":20,"ood":20,"security":20}
 assert set(Counter(t["intent"] for t in tasks if t["intent"]).values())=={5}
 assert len({t["intent"] for t in tasks if t["intent"]})==48
+assert all({t["target_language"] for t in tasks if t["intent"]==i}=={"id","en"} for i in contract["catalog"])
+assert all(len(t["id"])==27 for t in tasks)
 ref=reference(contract)
 assert len(ref["intents"])==48 and "patterns" not in ref and ref["execution_allowed"] is False
 author=author_packet(plan)

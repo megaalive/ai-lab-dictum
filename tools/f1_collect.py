@@ -22,11 +22,13 @@ REVIEW_FIELDS={"id","author_row_sha256","text","reviewer","decision","decision_r
 def collection_plan(contract):
     """300 assignment cards, not a corpus; do not show grammar/gold to authors."""
     rows=[]
+    # Opaque assignment IDs avoid revealing ordinal/suite to the reviewer.
+    def task_id(key):
+        return "F1-"+sha(("f1-collection-v1/"+key).encode())[:24]
     for index,(intent,c) in enumerate(contract["catalog"].items()):
         for j in range(5):
-            n=5*index+j
-            lang="id" if n%10<7 else "en"
-            rows.append({"id":f"F1-{c['ordinal']:02d}-{j+1:02d}","target_suite":"supported",
+            lang="id" if j<3+index%2 else "en"
+            rows.append({"id":task_id(f"{intent}/{j}"),"target_suite":"supported",
                          "target_language":lang,"intent":intent,"goal":c["description"][lang],
                          "fixture_id":c["fixture_id"]})
     negative_goals={
@@ -39,7 +41,7 @@ def collection_plan(contract):
     for suite,goals in negative_goals.items():
         for j in range(20):
             lang="id" if j%10<7 else "en"
-            rows.append({"id":f"F1-{suite.upper()}-{j+1:02d}","target_suite":suite,
+            rows.append({"id":task_id(f"{suite}/{j}"),"target_suite":suite,
                          "target_language":lang,"intent":None,"goal":goals[lang],"fixture_id":None})
     need(len(rows)==len({r["id"] for r in rows})==300,"plan")
     return {"schema_version":1,"role":"AUTHOR-ASSIGNMENTS-NOT-DATASET","identities":contract["identities"],

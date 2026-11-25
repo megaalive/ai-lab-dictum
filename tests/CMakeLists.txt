@@ -204,3 +204,8 @@ add_test(NAME research.b2_common_extractor COMMAND "${Python3_EXECUTABLE}" -B
     "${CMAKE_CURRENT_SOURCE_DIR}/research/b2_pipeline.py" "$<TARGET_FILE:pipeline_probe>"
     "$<TARGET_FILE:dictum>" "$<TARGET_FILE:b2_pipeline_probe>")
 set_tests_properties(research.b2_common_extractor PROPERTIES TIMEOUT 240)
+
+add_test(NAME research.f1_comparator_native_smoke COMMAND "${Python3_EXECUTABLE}" -B
+    "${CMAKE_CURRENT_SOURCE_DIR}/research/f1_compare_native_smoke.py" "$<TARGET_FILE:pipeline_probe>"
+    "$<TARGET_FILE:dictum>" "$<TARGET_FILE:b2_pipeline_probe>")
+set_tests_properties(research.f1_comparator_native_smoke PROPERTIES TIMEOUT 120)

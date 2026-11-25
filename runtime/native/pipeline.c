@@ -497,67 +497,110 @@ struct typed_frame {
     const char *id,*first,*second,*extra;
     enum slot_name slots[3];
     size_t count;
+    const char *third;
+    unsigned int optional_mask;
 };
 static const struct typed_frame typed_frames[]={
     {"service.status.get","service services unit units layanan",
         "status state keadaan kondisi",
         "runtime current active aktif utama main process proses pid information informasi named bernama",
-        {S_UNIT},1},
+        {S_UNIT},1,NULL,0u},
     {"storage.directory.usage","directory directories subdirectories folder folders subfolder subfolders direktori subdirektori",
         "largest heaviest size sizes space capacity terbesar ukuran ruang",
         "child anak consume consumption consuming use usage occupied penggunaan pemakaian berdasarkan contained within below under bawah di paling rank",
-        {S_ROOT},1},
+        {S_ROOT},1,NULL,0u},
     {"file.metadata.stat","file files berkas",
         "metadata attributes attribute atribut timestamps timestamp ukuran size kepemilikan owner pemilik",
-        "ownership permissions mode modification modified changed time waktu perubahan details detail termasuk",
-        {S_PATH},1},
+        "ownership modification modified changed time waktu perubahan details detail termasuk",
+        {S_PATH},1,NULL,0u},
     {"file.permission.check","file files berkas",
         "permission permissions access hak izin",
         "effective allowed mode modes read write baca tulis identity identitas terhadap",
-        {S_PATH},1},
+        {S_PATH},1,NULL,0u},
     {"archive.contents.list","archive archives arsip",
         "member members entries contents entry anggota isi entri",
         "names name nama stored inside contained paket list daftar hanya only",
-        {S_PATH},1},
+        {S_PATH},1,NULL,0u},
     {"process.lookup.name","process processes proses",
         "name named nama bernama pid identifiers identifier",
         "exact tepat literal running berjalan associated allowed details detail memiliki",
-        {S_NAME},1},
+        {S_NAME},1,"named bernama pid identifiers identifier exact tepat literal",0u},
     {"package.installed.check","package packages paket",
         "installed installation install terpasang terinstal instalasi",
         "version versions versi status presence local database basis data informasi apakah berapa versinya",
-        {S_PACKAGE},1},
+        {S_PACKAGE},1,NULL,0u},
     {"package.search.local","package packages paket",
         "cache cached index indeks offline repositori repository",
         "literal matching match matches pencarian kecocokan kata nama metadata results hasil search",
-        {S_QUERY},1},
+        {S_QUERY},1,NULL,0u},
     {"file.text.search","text teks string literal",
         "file files berkas line lines baris occurrences occurrence kemunculan",
         "exact persis matching contained berisi below under within bawah bounded search",
-        {S_ROOT,S_TEXT},2},
+        {S_ROOT,S_TEXT},2,NULL,0u},
     {"file.head_tail.view","line lines baris",
         "file berkas excerpt potongan",
         "text teks end akhir bagian contained sebanyak arah",
-        {S_PATH,S_DIRECTION,S_LIMIT},3},
+        {S_PATH,S_DIRECTION,S_LIMIT},3,NULL,0u},
+    {"file.search","file files berkas entries",
+        "extension ekstensi berekstensi akhiran suffix",
+        "ending beneath below under within inside folder directory directories direktori jenis berada bawah pencarian",
+        {S_ROOT,S_EXTENSION},2,NULL,0u},
+    {"network.listener.lookup","listener listening socket pendengar",
+        "port",
+        "associated accepting accepts connections connection koneksi waiting menunggu opens membuka process processes proses layanan milik siapa mana menggunakan",
+        {S_PORT,S_PROTOCOL},2,NULL,2u},
+    {"network.connection.active","connection connections sambungan koneksi",
+        "active current currently established aktif sedang sekarang",
+        "network jaringan entries entry daftar maximum maksimum batas limit protocol protokol",
+        {S_PROTOCOL,S_LIMIT},2,NULL,0u},
+    {"log.service.query","journal journals log logs jurnal catatan",
+        "service services unit units layanan",
+        "entries entry records record pesan messages message over within during selama sepanjang interval minutes menit last past previous terakhir belakangan",
+        {S_UNIT,S_WINDOW},2,NULL,0u},
+    {"log.system.errors","journal journals log logs jurnal catatan",
+        "system sistem",
+        "error errors severity priority high emergency emerg galat kesalahan prioritas pesan messages entries records over within selama sepanjang interval minutes menit last past previous terakhir belakangan",
+        {S_WINDOW},1,"error errors galat kesalahan",0u},
 };
 static bool typed_prefix(const struct request *q,size_t *start)
 {
     if (compose_prefix(q,start)) return true;
     const size_t i=polite_start(q,0,q->tokens.count);
     if (i>=q->tokens.count) return false;
-    if (compose_wordlist(q,i,"determine search temukan identifikasi telusuri ambil")) {
+    if (compose_wordlist(q,i,"determine search retrieve temukan identifikasi telusuri ambil")) {
         *start=i+1; return true;
     }
     if ((word(q,i,"look") && word(q,i+1,"for")) ||
-        (word(q,i,"saya") && word(q,i+1,"mencari"))) {
+        (word(q,i,"saya") && (word(q,i+1,"mencari") || word(q,i+1,"mau")))) {
         *start=i+2; return true;
     }
     return false;
 }
+/* A value is not evidence for a role by itself. Numeric/time/filter
+ * roles require local lexical anchors; a context window must already
+ * exist and denote the past, never a new timestamp guessed by NLU. */
+static bool typed_role_anchor(const struct request *q,const struct typed_frame *f,size_t i,enum slot_name name)
+{
+    if (name==S_PORT) return i>0u && word(q,i-1u,"port");
+    if (name==S_EXTENSION) return i>0u && compose_wordlist(q,i-1u,"extension ekstensi berekstensi akhiran suffix");
+    if (name==S_WINDOW) {
+        if (!q->time_valid) return false;
+        const bool before=i>0u && compose_wordlist(q,i-1u,"last past previous");
+        const bool after=i+2u<q->tokens.count && compose_wordlist(q,i+2u,"terakhir belakangan");
+        return before || after;
+    }
+    if (name==S_LIMIT && strcmp(f->id,"network.connection.active")==0) {
+        return (i>0u && compose_wordlist(q,i-1u,"limit batas maximum maksimum")) ||
+            (i>1u && word(q,i-1u,"of") && word(q,i-2u,"maximum"));
+    }
+    if (name==S_PROTOCOL && word(q,i,"all"))
+        return i>0u && compose_wordlist(q,i-1u,"protocol protokol");
+    return true;
+}
 static bool compose_typed_match(const struct request *q,struct nlu_proposal *out)
 {
     size_t start=0;
-    if (q->invalid || q->time_valid || q->tokens.count>32u ||
+    if (q->invalid || q->tokens.count>32u ||
         !typed_prefix(q,&start) || q->tokens.count-start<3u) return false;
     for (size_t i=0;i<q->tokens.count;++i)
         if (compose_wordlist(q,i,
@@ -566,7 +609,7 @@ static bool compose_typed_match(const struct request *q,struct nlu_proposal *out
         "a an the of for from to in on at by with and as is are me my this "
         "current currently now local information details about "
         "yang dan serta dengan untuk pada dalam di dari ke ini itu tersebut "
-        "saat kini sekarang lokal informasi berdasarkan saja apa berapa";
+        "saat kini sekarang lokal informasi berdasarkan saja apa berapa tahu mengetahui melihat";
     struct nlu_proposal selected={0};
     for (size_t f=0;f<COUNT(typed_frames);++f) {
         const struct typed_frame *frame=&typed_frames[f];
@@ -577,7 +620,7 @@ static bool compose_typed_match(const struct request *q,struct nlu_proposal *out
         const struct intent_rule *rule=&rules[intent];
         if (strcmp(rule->effect_class,"READ")!=0 || rule->guidance!=NULL) return false;
         struct nlu_proposal n={0};
-        bool seen[3]={false},first=false,second=false,ok=true;
+        bool seen[3]={false},first=false,second=false,third=frame->third==NULL,ok=true;
         for (size_t i=start;i<q->tokens.count;++i) {
             const struct token t=q->tokens.item[i];
             size_t role=SIZE_MAX;
@@ -592,6 +635,7 @@ static bool compose_typed_match(const struct request *q,struct nlu_proposal *out
                 const struct candidate c={name,t};
                 struct value v;
                 if (value_from(q,&c,s,&v) && slot_scope(rule,&v)) {
+                    if (!typed_role_anchor(q,frame,i,name)) { ok=false; break; }
                     if (role!=SIZE_MAX) { ok=false; break; }
                     role=j;
                 }
@@ -600,12 +644,22 @@ static bool compose_typed_match(const struct request *q,struct nlu_proposal *out
             if (role!=SIZE_MAX) {
                 if (seen[role] || !candidate_add(&n,frame->slots[role],t)) { ok=false; break; }
                 seen[role]=true;
-            } else if (compose_wordlist(q,i,frame->first)) first=true;
-            else if (compose_wordlist(q,i,frame->second)) second=true;
-            else if (t.quoted || (!compose_wordlist(q,i,frame->extra) &&
+            } else {
+                const bool a=compose_wordlist(q,i,frame->first);
+                const bool b=compose_wordlist(q,i,frame->second);
+                const bool c=frame->third!=NULL && compose_wordlist(q,i,frame->third);
+                first=first||a; second=second||b; third=third||c;
+                if (t.quoted || (!a && !b && !c && !compose_wordlist(q,i,frame->extra) &&
                                   !compose_wordlist(q,i,common))) { ok=false; break; }
+            }
         }
-        if (!ok || !first || !second || n.used!=frame->count) continue;
+        if (!ok || !first || !second || !third) continue;
+        bool window=false;
+        for (size_t j=0;j<frame->count;++j) {
+            if (!seen[j] && (frame->optional_mask & (1u<<j))==0u) ok=false;
+            if (seen[j] && frame->slots[j]==S_WINDOW) window=true;
+        }
+        if (!ok || window!=q->time_valid) continue;
         for (size_t j=0;j<rule->count;++j) {
             bool bound=false;
             for (size_t k=0;k<n.used;++k)

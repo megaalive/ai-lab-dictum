@@ -115,6 +115,16 @@ typed=[
  ('Locate exact literal "café" in text files under /fixture/data',"file.text.search",{"root":"/fixture/data","text":"café"}),
  ("Ambil 4 baris last berkas /fixture/logs/events.log","file.head_tail.view",{"path":"/fixture/logs/events.log","direction":"last","limit":4}),
  ("Report first 3 lines from file /fixture/data/notes.md","file.head_tail.view",{"path":"/fixture/data/notes.md","direction":"first","limit":3}),
+ ("Temukan berkas berekstensi log dalam folder /fixture/logs","file.search",{"root":"/fixture/logs","extension":"log"}),
+ ("Locate files of extension md beneath /fixture/data","file.search",{"root":"/fixture/data","extension":"md"}),
+ ("Cari layanan yang menunggu koneksi udp di port 8443","network.listener.lookup",{"port":8443,"protocol":"udp"}),
+ ("Identify listening socket associated with port 5432","network.listener.lookup",{"port":5432}),
+ ("Rincikan koneksi aktif udp dengan batas 7","network.connection.active",{"protocol":"udp","limit":7}),
+ ("Display active tcp connections with a maximum of 15 entries","network.connection.active",{"protocol":"tcp","limit":15}),
+ ("Rangkum catatan jurnal unit demo.service dalam 17 menit terakhir","log.service.query",{"unit":"demo.service","window":17}),
+ ("Find service journal entries of worker.service within the past 25 minutes","log.service.query",{"unit":"worker.service","window":25}),
+ ("Rinci pesan galat jurnal sistem dari 31 menit terakhir","log.system.errors",{"window":31}),
+ ("Report system error journal records over the last 42 minutes","log.system.errors",{"window":42}),
 ]
 typed_novel=0
 typed_neg=0
@@ -127,8 +137,12 @@ for sentence,intent,expected in typed:
     got={}
     for slot in after["nlu"]["slot_candidates"]:
         source=slot["source"]
-        assert source["kind"]=="input-span"
-        span=source["span"]
+        if slot["slot"]=="window":
+            assert source["kind"]=="context-ref" and source["expected_kind"]=="time-window"
+            span=after["context"]["time_candidate"]
+        else:
+            assert source["kind"]=="input-span"
+            span=source["span"]
         assert raw[span["start"]:span["end"]]==str(expected[slot["slot"]]).encode("utf-8"),(sentence,slot)
         assert slot["slot"] not in got
         got[slot["slot"]]=expected[slot["slot"]]
@@ -136,7 +150,10 @@ for sentence,intent,expected in typed:
     values=after["view"]["slots"]
     assert set(values)==set(expected)|{k for k,v in o.catalog[intent]["slots"].items() if v["required"]}
     for key,value in values.items():
-        if key in expected:
+        if key=="window":
+            assert value=={"kind":"time-window","start_unix_s":o.reference-expected[key]*60,
+                           "end_unix_s":o.reference},(sentence,key,value)
+        elif key in expected:
             assert value["value"]==expected[key],(sentence,key,value)
         else:
             assert value==o.catalog[intent]["slots"][key]["default"],(sentence,key,value)
@@ -152,7 +169,8 @@ for sentence,intent,expected in typed:
             assert obj==after
     # Duplicate any existing explicit slot token, unknown target, negation,
     # alternatives and mixed intent. No malformed typed fallback proposal.
-    first=after["nlu"]["slot_candidates"][0]["source"]["span"]
+    source=after["nlu"]["slot_candidates"][0]["source"]
+    first=source["span"] if source["kind"]=="input-span" else after["context"]["time_candidate"]
     a,b=first["start"],first["end"]
     duplicate=raw[a:b]
     if a and raw[a-1:a]==b'"':
@@ -176,6 +194,21 @@ for sentence in (
     'Locate exact literal "sample marker" in text files under /fixture/data /fixture/logs',
     'Locate exact literal "sample marker" in text files',
     "Rinci keadaan unit layanan demo.service serta status worker.service",
+    "Find process name demo-worker",
+    "Describe file metadata and permissions of /fixture/data/report.txt",
+    "Locate files extension txt under /fixture/data log",
+    "Locate files txt of extension under /fixture/data",
+    "Identify listening socket associated with 5432 port",
+    "Identify listening socket associated with port 65536",
+    "Rincikan koneksi aktif udp dengan batas 0",
+    "Display active udp connections with 15 entries",
+    "Display active all connections with a maximum of 15 entries",
+    "Report system error journal records over the next 42 minutes",
+    "Report system error journal records over 42 minutes",
+    "Report system error journal records over the last 1441 minutes",
+    "Report system error journal records over the last 42 minutes and 12 minutes",
+    "Find service journal entries of worker.service within the past 25 minutes and system errors",
+    "Report system journal records over the last 42 minutes",
 ):
     assert invoke(compose,sentence.encode())["view"]["decision"]!="allow-proposal",sentence
     typed_neg+=1

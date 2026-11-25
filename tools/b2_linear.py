@@ -1,7 +1,7 @@
 """Development-only B2 numeric mechanics; no corpus reader or model loader.
 
-The eventual eligible corpus/feature manifest must be approved independently.
-Nothing here reads repository gold, fits Dictum, or authorizes product use.
+Eligible corpus/feature manifest must be bound to actual owner scope.
+Nothing here reads repository gold or authorizes product use.
 """
 from dataclasses import dataclass
 import random
@@ -91,8 +91,8 @@ def fit_numeric(rows, *, epochs, seed):
     """Bounded multiclass perceptron on *already authorized* numeric rows.
 
     No text ingestion, split construction, evaluation or serialization.
-    Caller owns the independent rights/human-review gate. In current CI
-    only handcrafted abstract numeric vectors are used.
+    Caller owns the rights/label gate: private human evidence or DEC-011
+    original synthetic development. Never use visible regression/holdout labels.
     """
     if type(epochs) is not int or not 1 <= epochs <= 32 or not 1 <= len(rows) <= 10000:
         raise ValueError("budget")

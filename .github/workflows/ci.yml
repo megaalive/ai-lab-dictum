@@ -84,6 +84,15 @@ jobs:
       - name: Uji CLI dan native IR
         run: ctest --test-dir build/ci --verbose --output-on-failure --no-tests=error
 
+      - name: Actual B2 synthetic development (DEC-011)
+        if: matrix.compiler == 'gcc' && matrix.config.type == 'Release'
+        run: |
+          result_dir=$(mktemp -d)
+          trap 'rm -rf "$result_dir"' EXIT
+          python3 -B tools/f1_synthetic.py --probe build/ci/tests/pipeline_probe \
+            --cli build/ci/dictum --b2-probe build/ci/tests/b2_pipeline_probe \
+            --output "$result_dir/results.json"
+
       - name: Fuzz parser langsung
         if: matrix.compiler == 'clang' && matrix.config.sanitizers == 'ON'
         run: |
@@ -151,3 +160,6 @@ jobs:
 
       - name: Uji paket kerja corpus manusia (mechanical only)
         run: python3 -B tests/research/f1_collect.py
+
+      - name: Validate and freeze original synthetic development corpus
+        run: python3 -B tools/f1_synthetic.py --prepare-only

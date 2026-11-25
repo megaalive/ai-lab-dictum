@@ -1,7 +1,8 @@
 """Private F1 development comparator. No blind or product model pack support.
 
-Run only after actual human-reviewed seed, rights and split lock are supplied.
-Mechanical CI never invokes actual fit on text or repository regression cases.
+Private entrypoint requires human-reviewed seed and rights/split lock. DEC-011
+also permits a separate fixed project-original synthetic experiment; no fit on
+repository regression/S2 cases or blind data.
 All returned metrics are development, not a release/compatibility gate.
 """
 import argparse
@@ -27,6 +28,7 @@ EPOCHS=12
 MARGINS=(1,2,4,8,16,32)
 BUDGET={"seed":SEED,"epochs":EPOCHS,"margin_candidates":list(MARGINS),
         "fit_only":"supported-train","margin_selection":"max-dev-supported-exact-then-largest-margin"}
+SYNTHETIC_BUDGET={**BUDGET,"margin_selection":"max-dev-supported-exact-then-raw-intent-then-largest-margin"}
 LOCK_KEYS={"schema_version","role","scope","candidate_manifest_sha256","seed_sha256",
            "rights_sha256","owner_decision_ref","reviewer","review_evidence_sha256",
            "source_commit","binaries_sha256","fuzzy_review","budget",
@@ -116,10 +118,12 @@ def score_rows(rows,results):
         intent=row["expected"]["intent"]
         if s=="supported":
             for target,key in ((by_intent,intent),(by_language,row["language"])):
-                c=target.setdefault(key,Counter(total=0,correct=0,accepted=0))
+                c=target.setdefault(key,Counter(total=0,correct=0,accepted=0,raw_intent=0,raw_joint=0))
                 c["total"]+=1
                 c["correct"]+=a["correct"]
                 c["accepted"]+=a["accepted"]
+                c["raw_intent"]+=a["raw_intent"]
+                c["raw_joint"]+=a["raw_joint"]
             confusions[str(intent)+" -> "+str(a["actual_intent"] or a["outcome"])]+=1
     n=stats["supported"]["total"]
     a=stats["supported"]["accepted"]
@@ -185,15 +189,21 @@ def run_private(seed_bytes,rights_bytes,candidate,lock,source,binaries,probe,cli
     return _compare_core(rows,raw_gold,candidate,lock,source,binaries,probe,cli,b2_probe)
 
 
-def _compare_core(rows,raw_gold,candidate,lock,source,binaries,probe,cli,b2_probe,*,mechanical=False):
+def _compare_core(rows,raw_gold,candidate,lock,source,binaries,probe,cli,b2_probe,*,mechanical=False,synthetic=False):
     """Shared orchestration; private CLI always enters via validated run_private.
 
     The test-only mechanical invocation uses explicitly tagged artificial
     numeric/lexical vectors and never a rights-approved or human corpus.
     """
     need(__debug__,"oracle-asserts-required")
-    need(all(r.get("role")==("MECHANICAL-TEST" if mechanical else "HUMAN-DEVELOPMENT-SEED")
-             for r in rows),"core-role")
+    need(not (mechanical and synthetic),"core-mode")
+    role="MECHANICAL-TEST" if mechanical else "AI-SYNTHETIC-DEVELOPMENT" if synthetic else "HUMAN-DEVELOPMENT-SEED"
+    need(all(r.get("role")==role for r in rows),"core-role")
+    if synthetic:
+        need(candidate["role"]=="LOCKED-SYNTHETIC-LEXICAL-DEVELOPMENT" and
+             lock["owner_decision_ref"]=="DEC-011" and candidate["manifest_sha256"]==
+             sha(encoded({k:v for k,v in candidate.items() if k!="manifest_sha256"})) and
+             candidate["record_sha256"]=={r["id"]:sha(encoded(r)) for r in rows},"synthetic-lock")
     oracle=load_oracle(probe,cli)
     from wire import Reject as OracleReject
     oracle.raw_gold=raw_gold
@@ -263,15 +273,15 @@ def _compare_core(rows,raw_gold,candidate,lock,source,binaries,probe,cli,b2_prob
             result.append(a)
         return {"metrics":score_rows(rows,result),"results":result}
 
-    base={"schema_version":1,"role":"MECHANICAL-COMPARATOR-SMOKE" if mechanical else "PRIVATE-DEVELOPMENT-RESULTS","source_commit":source,
+    base={"schema_version":1,"role":"MECHANICAL-COMPARATOR-SMOKE" if mechanical else "SYNTHETIC-LEXICAL-DEVELOPMENT-RESULTS" if synthetic else "PRIVATE-DEVELOPMENT-RESULTS","source_commit":source,
           "candidate_manifest_sha256":candidate["manifest_sha256"],"rights_sha256":candidate["rights_sha256"],
           "owner_decision_ref":lock["owner_decision_ref"],"binaries_sha256":binaries,
-          "budget":BUDGET,"weight_sha256":weight_sha,"training_supported_rows":len(fit_rows),
+          "budget":SYNTHETIC_BUDGET if synthetic else BUDGET,"weight_sha256":weight_sha,"training_supported_rows":len(fit_rows),
           "numeric_fit_wall_ms":fit_ms,"model_int16_bytes":len(model_frame(model,1))-4,
           "coverage_deficits":candidate["missing_supported_intents"],"blind":"NOT RUN",
           "reference_vm":"NOT RUN","FES":"NOT RUN","release_gate":"NOT EVALUATED",
           "timing":"cold subprocess wall time including model transport; no warm/RSS/reference claim",
-          "rights_review":"MECHANICAL-NOT-AUTHORIZED" if mechanical else "external decision recorded; not independently attested by program"}
+          "rights_review":"MECHANICAL-NOT-AUTHORIZED" if mechanical else "DEC-011 project-original synthetic development only" if synthetic else "external decision recorded; not independently attested by program"}
     dev=partitions["dev"]
     need(any(suite_of(r)=="supported" for r in dev),"dev-supported-empty")
     dev_scores={}
@@ -282,11 +292,13 @@ def _compare_core(rows,raw_gold,candidate,lock,source,binaries,probe,cli,b2_prob
     if any(d["metrics"]["statuses"].get("complete",0)!=len(dev) for d in dev_scores.values()):
         base.update(status="INVALID-DEV-RUN",selected_margin=None,test="NOT RUN")
         return base
-    selected=max(MARGINS,key=lambda m:(dev_scores[str(m)]["metrics"]["suite_counts"]["supported"]["correct"],m))
+    selected=max(MARGINS,key=lambda m:(
+        dev_scores[str(m)]["metrics"]["suite_counts"]["supported"]["correct"],
+        dev_scores[str(m)]["metrics"]["suite_counts"]["supported"]["raw_intent"] if synthetic else 0,m))
     base["selected_margin"]=selected
     test=partitions["test"]
     base["test"]={m:evaluate(test,m,selected if m=="B2" else None) for m in ("B0","B1","B2")}
-    base["status"]=("COMPLETE-MECHANICAL-SMOKE" if mechanical else "COMPLETE-DEVELOPMENT") if all(
+    base["status"]=("COMPLETE-MECHANICAL-SMOKE" if mechanical else "COMPLETE-SYNTHETIC-DEVELOPMENT" if synthetic else "COMPLETE-DEVELOPMENT") if all(
         v["metrics"]["statuses"].get("complete",0)==len(test) for v in base["test"].values()) else "COMPLETE-WITH-FAILURES"
     return base
 

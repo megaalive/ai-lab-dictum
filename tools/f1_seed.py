@@ -261,7 +261,7 @@ def check_row(row,contract,sources,mechanical):
         raw_slots={}
         if suite=="ambiguity":
             keys(e,common|{"unresolved","alternatives"},"ambiguity-shape")
-            need(decision=="clarify" and e["state"] in {"ambiguous","incomplete"} and
+            need(decision=="clarify" and (e["state"],e["reason"]) in {("ambiguous","ambiguous"),("incomplete","missing-slot")} and
                  type(e["unresolved"]) is list and type(e["alternatives"]) is list,"ambiguity")
             need(len(e["alternatives"])==len(set(e["alternatives"]))<=2 and
                  all(i in contract["catalog"] for i in e["alternatives"]),"alternatives")
@@ -277,7 +277,9 @@ def check_row(row,contract,sources,mechanical):
             keys(e,common,"negative-shape")
             need((suite=="ood" and decision in {"unsupported","deny"}) or
                  (suite=="security" and decision=="deny"),"negative-outcome")
-            need(e["state"]==("unsupported" if decision=="unsupported" else "invalid") and intent is None,"negative-state")
+            need(e["state"]==("unsupported" if decision=="unsupported" else "invalid") and intent is None and
+                 e["reason"] in ({"unsupported-intent"} if decision=="unsupported" else {"invalid-candidate"}),
+                 "negative-state")
         need(row["fixture_id"]==(contract["catalog"][intent]["fixture_id"] if intent else "NO-INTENT"),"negative-fixture")
     # Derive semantic identity from canonical label+fixture, not author-claimed
     # grouping IDs; negative outcome alone is not a semantic scenario.
@@ -302,6 +304,7 @@ def prepare(seed_bytes,rights_bytes,*,mechanical=False,regression=None):
         regression=read_regression_texts()
     by_id={}
     normal={}
+    normalized_labels={}
     suites=Counter()
     supported=set()
     src_rows={i:[] for i in sources}
@@ -312,6 +315,8 @@ def prepare(seed_bytes,rights_bytes,*,mechanical=False,regression=None):
         n=normalize(g["text"])
         # Reject exact or detected fuzzy matches to visible regression/S2.
         need(n not in regression and not any(similar(n,t) for t in regression),"regression-contamination")
+        label=sha(encoded({"fixture":row["fixture_id"],"expected":row["expected"]}))
+        need(normalized_labels.setdefault(n,label)==label,"duplicate-label-conflict")
         by_id[i]=g
         normal[i]=n
         suites[suite]+=1

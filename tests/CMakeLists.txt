@@ -181,3 +181,26 @@ endif()
 add_test(NAME research.b2_mechanics COMMAND "${Python3_EXECUTABLE}" -B
     "${CMAKE_CURRENT_SOURCE_DIR}/research/b2_linear.py" "$<TARGET_FILE:b2_probe>")
 set_tests_properties(research.b2_mechanics PROPERTIES TIMEOUT 120)
+
+# Separate research executable compiles the identical native pipeline with
+# an explicitly test-only B2 guard. Product dictum_pipeline has no B2 link.
+add_executable(b2_pipeline_probe research/b2_pipeline_probe.c
+    "${PROJECT_SOURCE_DIR}/runtime/native/pipeline.c"
+    "${PROJECT_SOURCE_DIR}/runtime/native/b2_linear.c")
+add_dependencies(b2_pipeline_probe dictum_pipeline)
+target_include_directories(b2_pipeline_probe PRIVATE "${PROJECT_BINARY_DIR}")
+target_compile_definitions(b2_pipeline_probe PRIVATE DICTUM_DEV_B2=1)
+target_link_libraries(b2_pipeline_probe PRIVATE dictum_pipeline)
+set_target_properties(b2_pipeline_probe PROPERTIES C_STANDARD 17 C_STANDARD_REQUIRED YES C_EXTENSIONS NO)
+target_compile_options(b2_pipeline_probe PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wformat=2
+    -Wstrict-prototypes -Wmissing-prototypes -Wundef -Wvla)
+if(dictum_sanitizers)
+    target_compile_options(b2_pipeline_probe PRIVATE "${dictum_sanitizer_flag}" -fno-omit-frame-pointer)
+    if(DICTUM_ENABLE_UBSAN)
+        target_compile_options(b2_pipeline_probe PRIVATE -fno-sanitize-recover=undefined)
+    endif()
+endif()
+add_test(NAME research.b2_common_extractor COMMAND "${Python3_EXECUTABLE}" -B
+    "${CMAKE_CURRENT_SOURCE_DIR}/research/b2_pipeline.py" "$<TARGET_FILE:pipeline_probe>"
+    "$<TARGET_FILE:dictum>" "$<TARGET_FILE:b2_pipeline_probe>")
+set_tests_properties(research.b2_common_extractor PROPERTIES TIMEOUT 240)

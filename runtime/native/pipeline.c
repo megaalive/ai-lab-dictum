@@ -1,4 +1,7 @@
 #include "pipeline.h"
+#ifdef DICTUM_DEV_B2
+#include "pipeline_b2_dev.h"
+#endif
 #include "ir_digest.h"
 #include "renderer.h"
 
@@ -816,9 +819,61 @@ static bool render(const struct request *q,const struct resolved_ir *r,struct po
     return w.ok;
 }
 
-bool pipeline_run(const unsigned char *input,size_t size,int64_t reference_unix_s,
-                  uint64_t request_sequence,enum pipeline_model model,struct pipeline_result *out)
+#ifdef DICTUM_DEV_B2
+static bool development_rank(const struct request *q,const struct nlu_proposal *n,
+                             const struct resolved_ir *r,const struct b2_weights *weights,
+                             uint32_t margin,struct b2_dev_trace *trace)
 {
+    /* Spans come solely from the same deterministic NLU, never gold labels.
+     * Sort and union duplicate/overlapping spans before lexical extraction. */
+    for (size_t i=0;i<n->used;++i) {
+        const struct token t=n->candidates[i].token;
+        if (trace->mask_count>=B2_MASK_MAX) return false;
+        size_t j=trace->mask_count++;
+        while (j>0 && trace->masks[j-1].start>t.start) {
+            trace->masks[j]=trace->masks[j-1]; --j;
+        }
+        trace->masks[j]=(struct b2_span){t.start,t.end};
+    }
+    size_t used=0;
+    for (size_t i=0;i<trace->mask_count;++i) {
+        const struct b2_span span0=trace->masks[i];
+        if (!ir_check_span(q->data,q->size,span0.start,span0.end)) return false;
+        if (used!=0 && trace->masks[used-1].end>span0.start) {
+            if (span0.end>trace->masks[used-1].end) trace->masks[used-1].end=span0.end;
+        } else trace->masks[used++]=span0;
+    }
+    trace->mask_count=used;
+    if (!b2_extract(q->data,q->size,trace->masks,used,&trace->features) ||
+        !b2_scores(weights,&trace->features,trace->scores)) return false;
+    trace->features_valid=true;
+    trace->rank=b2_rank(&trace->features,trace->scores,margin);
+    if (policy(q,r).outcome==PIPE_PROPOSAL) {
+        if (r->state!=RES_RESOLVED || r->intent==NO_INTENT) return false;
+        /* Registry ordinal and grammar rule array order are not identical. */
+        for (size_t i=0;i<COUNT(catalog_entries);++i)
+            if (strcmp(catalog_entries[i].id,rules[r->intent].id)==0) {
+                trace->grammar_class=(int)i; break;
+            }
+        if (trace->grammar_class<0) return false;
+    }
+    return true;
+}
+#endif
+
+static bool pipeline_run_common(const unsigned char *input,size_t size,int64_t reference_unix_s,
+                  uint64_t request_sequence,enum pipeline_model model,
+#ifdef DICTUM_DEV_B2
+                  const struct b2_weights *weights,uint32_t margin,struct b2_dev_trace *trace,
+#endif
+                  struct pipeline_result *out)
+{
+#ifdef DICTUM_DEV_B2
+    if (trace!=NULL) {
+        *trace=(struct b2_dev_trace){.rank=-1,.grammar_class=-1};
+        if (weights==NULL || margin==0 || model!=PIPE_B0) return false;
+    }
+#endif
     if (out==NULL) return false;
     *out=(struct pipeline_result){.outcome=PIPE_INTERNAL};
     if (model!=PIPE_B0 && model!=PIPE_B1) return false;
@@ -834,8 +889,15 @@ bool pipeline_run(const unsigned char *input,size_t size,int64_t reference_unix_
     /* Ranking is an abstention guard for fully resolved proposals only.
      * A failed retrieval may not erase deterministic invalid/missing/conflict
      * diagnoses. This preflight is pure typed validation, not permission. */
-    if (model==PIPE_B1 && r.state==RES_RESOLVED &&
-        retrieve(&q,&n)!=n.intents[0]) {
+    bool abstain=model==PIPE_B1 && r.state==RES_RESOLVED &&
+        retrieve(&q,&n)!=n.intents[0];
+#ifdef DICTUM_DEV_B2
+    if (trace!=NULL) {
+        if (!development_rank(&q,&n,&r,weights,margin,trace)) return false;
+        abstain=trace->grammar_class>=0 && trace->rank!=trace->grammar_class;
+    }
+#endif
+    if (abstain) {
         n=(struct nlu_proposal){0};
         r=resolve(&q,&n);
     }
@@ -848,6 +910,25 @@ bool pipeline_run(const unsigned char *input,size_t size,int64_t reference_unix_
     out->outcome=p.outcome;
     return true;
 }
+bool pipeline_run(const unsigned char *input,size_t size,int64_t reference_unix_s,
+                  uint64_t request_sequence,enum pipeline_model model,struct pipeline_result *out)
+{
+    return pipeline_run_common(input,size,reference_unix_s,request_sequence,model,
+#ifdef DICTUM_DEV_B2
+                               NULL,0,NULL,
+#endif
+                               out);
+}
+#ifdef DICTUM_DEV_B2
+bool pipeline_run_b2_dev(const unsigned char *input,size_t size,int64_t reference_unix_s,
+                  uint64_t request_sequence,const struct b2_weights *weights,uint32_t margin,
+                  struct b2_dev_trace *trace,struct pipeline_result *out)
+{
+    if (trace==NULL) return false;
+    return pipeline_run_common(input,size,reference_unix_s,request_sequence,PIPE_B0,
+                               weights,margin,trace,out);
+}
+#endif
 bool pipeline_search(const char *id,char out[PIPE_FRAME])
 {
     if (id==NULL || out==NULL) return false;

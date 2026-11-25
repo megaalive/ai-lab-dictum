@@ -51,3 +51,10 @@ Fill author drafts manually before making the review sheet. The reviewer indepen
 ## Scope of orchestration smoke tests
 
 The native comparator smoke deliberately assigns arbitrary classes to eight abstract toy input strings which are not language gold. Four toy rows exercise feature extraction and numeric fitting; two dev rows exercise all six margins; two test rows exercise the identical B0/B1/B2 denominator. It checks real native transport, shared oracle, fit orchestration, dev selection and test accounting. It is not actual Dictum fit, human gold, language accuracy or authorization. Actual private runner reports numeric fit wall time and serialized integer matrix size; these are not total process resource use or reference-VM performance.
+
+
+## Byte-exact checkout on Windows
+
+The first actual local C1 review and collection initialization were rejected because a Windows Git checkout converted LF bytes to CRLF. Exporting exact commit bytes made both commands succeed. This was correct fail-closed behavior, not a hash bug. The repository now uses a root `.gitattributes` with `* -text` so checkout preserves exact tracked blob bytes irrespective of `core.autocrlf`. Existing pinned blobs and hash validators remain unchanged. Author new text with LF; do not use `git add --renormalize` on pinned history or normalize input/evidence to make a hash pass. The checkout regression checks all tracked files with `core.autocrlf=true` on Linux and Windows.
+
+For an existing modified working tree, preserve changes and use a fresh clean checkout of the reviewed commit rather than overwriting local files. Previously prepared private corpus files and C1 reports are outside Git; do not recreate or normalize them. The C1 report and collection workspace have already been prepared and need no rerun. See [operator-reported sanitized C1 summary](evidence/f1-c1-operator-summary-v1.json). Original report/review artifacts remain local; package-version matches do not establish executable identity against S5 samples, rights or semantic compatibility.

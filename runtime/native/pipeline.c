@@ -370,7 +370,7 @@ static size_t retrieve(const struct request *q,const struct nlu_proposal *n)
  * in the product. This is a limited semantic hypothesis, not gold. */
 struct compose_frame { const char *id,*first,*second,*extra; };
 static const struct compose_frame compose_frames[]={
-    {"system.os.info","os operating distro distribution linux sistem operasi","kernel release version architecture rilis versi arsitektur","machine platform host identity identity information info identitas informasi tipe jenis serta and dan with beserta"},
+    {"system.os.info","os operating distro distribution linux operasi","kernel release version architecture rilis versi arsitektur","machine platform host identity identity information info identitas informasi tipe jenis serta and dan with beserta"},
     {"system.uptime.summary","uptime startup boot menyala berjalan hidup","load beban average rerata rata-rata","duration elapsed running time since lama durasi sejak mesin host system sistem together with beserta serta averages rata durasi saat"},
     {"network.connection.active","connection connections sambungan koneksi","active current currently aktif sedang sekarang","network jaringan local lokal visible terlihat entries daftar status state existing currently machine mesin session sessions sesi"},
     {"network.interface.list","interface interfaces adapter adapters nic antarmuka kartu","address addresses link alamat status keadaan","network jaringan assigned visible local lokal available tersedia states state kondisi sambungan fisik beserta serta per setiap tiap detected terdeteksi"},
@@ -380,14 +380,14 @@ static const struct compose_frame compose_frames[]={
     {"service.failed.list","service services layanan unit units","failed gagal","state keadaan current currently marked presently berstatus status sekarang masih dalam terakhirnya"},
     {"service.enabled.list","service services layanan unit units","enabled enablement diaktifkan","boot startup start mulai next process proses configured konfigurasi saat ketika untuk ditetapkan"},
     {"log.boot.messages","kernel boot startup","messages message records log catatan pesan","accessible visible available last latest recent terakhir terkini terlihat lokal locally sesi ketika setelah"},
-    {"storage.filesystem.usage","filesystem filesystems filesystem lokal berkas file systems","capacity usage used free space available kapasitas penggunaan pemakaian terpakai bebas sisa ruang storage penyimpanan","byte bytes accounting mounted terpasang disk per each tiap setiap system sistem local lokal statistics statistik available"},
+    {"storage.filesystem.usage","filesystem filesystems berkas","capacity usage used free space available kapasitas penggunaan pemakaian terpakai bebas sisa ruang storage penyimpanan","byte bytes accounting mounted terpasang disk per each tiap setiap file systems system sistem local lokal statistics statistik available"},
     {"storage.inode.usage","inode inodes","usage utilization allocation counts count used free availability penggunaan terpakai tersisa bebas jumlah kapasitas persentase","filesystem filesystems file systems sistem berkas local lokal mounted across per each tiap setiap statistik allocation"},
     {"storage.block.list","block blok","device devices disk perangkat partition partitions partisi","storage penyimpanan topology susunan attached visible detected terdeteksi lokal local mount mounts points locations lokasi"},
     {"storage.mount.list","mount mounts mounted pemasangan terpasang","filesystem filesystems locations location table points titik options opsi","file systems sistem berkas permitted allowed boleh aman safe metadata tipe type active aktif current sekarang local lokal"},
     {"process.list.top_cpu","process processes proses","cpu processor prosesor","highest greatest most top intensive usage consumption utilization rank urutkan teratas dominan persentase penggunaan pemakaian membebani running tinggi terbesar paling saat sekarang"},
     {"process.list.top_mem","process processes proses","rss resident","memory ram memori highest largest most top consumption usage occupy rank urutkan teratas dominan pemakaian penggunaan konsumsi tinggi terbesar paling"},
     {"process.tree.view","process processes proses antarproses","parent child ancestry parentage induk anak keturunan","tree hierarchy hierarki pohon relationships hubungan susunan structure struktur pid among between antar"},
-    {"memory.summary","memory ram memori","available free cache swap tersedia bebas kapasitas","physical system sistem mesin machine local lokal summary ringkasan summarize total remaining remains usage penggunaan pemakaian kondisi keadaan gambaran tekanan pressure beserta dan and dengan"},
+    {"memory.summary","memory ram memori","available free cache swap tersedia bebas kapasitas","physical fisik system sistem mesin machine local lokal summary ringkasan summarize total remaining remains usage penggunaan pemakaian kondisi keadaan gambaran tekanan pressure beserta dan and dengan"},
     {"cpu.hardware.info","cpu processor prosesor","architecture topology arsitektur topologi","hardware cores core threads thread frequency frekuensi jumlah logical logical spesifikasi karakteristik perangkat keras details detail configuration konfigurasi tipe jenis berapa present"},
     {"user.session.who","session sessions sesi","login logged-in masuk","user users pengguna visible currently current existing aktif tercatat terlihat present sedang sekarang mempunyai daftar siapa"},
     {"user.identity.info","uid gid","identity credentials identitas","numeric current user group groups supplementary membership memberships nomor pengguna grup keanggotaan saya my sedang digunakan values value nilai"},
@@ -423,7 +423,7 @@ static bool compose_prefix(const struct request *q,size_t *start)
         if (i+1<n && word(q,i,two[j][0]) && word(q,i+1,two[j][1])) {
             *start=i+2; return true;
         }
-    if (compose_wordlist(q,i,"show report summarize list enumerate identify inspect describe outline guide give find locate compare check display which what how tampilkan perlihatkan ringkas rangkum rinci rincikan jelaskan beri berikan daftar cari cek periksa apa apakah berapa bagaimana bantu")) {
+    if (compose_wordlist(q,i,"show report summarize list enumerate identify inspect describe outline guide give find locate compare check display rank urutkan which what how tampilkan perlihatkan ringkas rangkum rinci rincikan jelaskan beri berikan daftar cari cek periksa apa apakah berapa bagaimana bantu")) {
         *start=i+1; return true;
     }
     return false;

@@ -19,6 +19,8 @@ from f1_compare import (_compare_core, SYNTHETIC_BUDGET, bounded)
 
 SPEC=ROOT/"data/synthetic/f1-template-families-v1.json"
 SPEC_BLOB="d962635f082ed29b155f0bb46771654c48b467ca"
+DIAGNOSTIC_SPEC=ROOT/"data/synthetic/f1-diagnostic-families-v1.json"
+DIAGNOSTIC_BLOB="4720cafe0508c90e2329206740d74cc9cbb6b2a1"
 DECISION_BLOB="235bbe0e82f5caf38662e6f9527b0c999be3d4a4"
 SPLITS=("train","dev","test")
 SPEC_KEYS={"schema_version","role","decision","author","generator_version","generation_seed",
@@ -232,6 +234,89 @@ def prepare():
          "source-or-decision-drift")
     return freeze(parse(raw),load_contract(),read_regression_texts())
 
+def prepare_diagnostic(base_rows,base_manifest):
+    """Freeze a separate original AI diagnostic before any new model outcome.
+
+    No diagnostic record or label is used in fitting or margin selection.
+    Quarantine collisions with the entire original 420-row experiment,
+    visible regressions and other diagnostic families; report every loss.
+    This is not a blind/human holdout or representative distribution.
+    """
+    raw=DIAGNOSTIC_SPEC.read_bytes()
+    need(blob(raw)==DIAGNOSTIC_BLOB,"diagnostic-source-drift")
+    spec=parse(raw)
+    keys(spec,{"schema_version","role","decision","author","families","negatives"},"diagnostic-spec")
+    need(type(spec["schema_version"]) is int and spec["schema_version"]==1 and
+         spec["role"]=="PROJECT-ORIGINAL-LOCKED-DIAGNOSTIC" and spec["decision"]=="DEC-011" and
+         spec["author"]=="ChatGPT-GPT-6.2-SELF","diagnostic-identity")
+    contract=load_contract()
+    families=spec["families"]
+    negatives=spec["negatives"]
+    need(type(families) is list and len(families)==96 and type(negatives) is list and
+         len(negatives)==12,"diagnostic-size")
+    seen=set()
+    rows=[]
+    gold={}
+    for f in families:
+        keys(f,FAMILY_KEYS,"diagnostic-family")
+        need(f["intent"] in contract["catalog"] and f["split"]=="diagnostic" and
+             f["language"] in {"id","en"} and type(f["id"]) is str and
+             re.fullmatch(r"DIA-F[0-9]{2}-(id|en)",f["id"]) and
+             f["id"].endswith("-"+f["language"]) and f["id"] not in seen,"diagnostic-family-id")
+        seen.add(f["id"])
+        exact_text(f["template"])
+        row,g=supported(f,contract)
+        rows.append(row)
+        gold[row["id"]]=g
+    need(Counter((f["intent"],f["language"]) for f in families)==
+         Counter({(i,l):1 for i in contract["catalog"] for l in ("id","en")}),"diagnostic-class-coverage")
+    for n in negatives:
+        keys(n,NEGATIVE_KEYS,"diagnostic-negative")
+        need(n["split"]=="diagnostic" and n["language"] in {"id","en"} and
+             n["suite"] in SUITES-{"supported"} and type(n["id"]) is str and
+             re.fullmatch(r"DIA-N[0-9]{2}",n["id"]) and n["id"] not in seen,"diagnostic-negative-id")
+        seen.add(n["id"])
+        exact_text(n["text"])
+        rows.append(negative(n,contract))
+    need(Counter((n["suite"],n["language"]) for n in negatives)==
+         Counter({(k,l):2 for k in SUITES-{"supported"} for l in ("id","en")}),"diagnostic-negative-coverage")
+    for row in rows:
+        row["role"]="AI-SYNTHETIC-DIAGNOSTIC"
+    normal={r["id"]:normalize(r["text"]) for r in rows}
+    base_normal={normalize(r["text"]) for r in base_rows}|set(read_regression_texts())
+    rejected={}
+    for row in rows:
+        i=row["id"]
+        n=normal[i]
+        if n in base_normal or any(similar(n,x) for x in base_normal):
+            rejected[i]={"reason":"PREVIOUS-DEVELOPMENT-COLLISION"}
+    for k,a in enumerate(rows):
+        for b in rows[k+1:]:
+            ai,bi=a["id"],b["id"]
+            if normal[ai]==normal[bi] or similar(normal[ai],normal[bi]):
+                for i,other in ((ai,bi),(bi,ai)):
+                    rejected.setdefault(i,{"reason":"DIAGNOSTIC-FAMILY-COLLISION","peer":other})
+    rows=[r for r in rows if r["id"] not in rejected]
+    gold={i:g for i,g in gold.items() if i not in rejected}
+    coverage=sorted({r["expected"]["intent"] for r in rows if "supported" in r["tags"]})
+    suites=Counter(next(t for t in r["tags"] if t in SUITES) for r in rows)
+    need(len(coverage)>=36 and set(suites)==SUITES and
+         {r["language"] for r in rows if "supported" in r["tags"]}=={"id","en"},
+         "diagnostic-coverage-after-quarantine")
+    manifest={"schema_version":1,"role":"LOCKED-SYNTHETIC-DIAGNOSTIC","decision":"DEC-011",
+              "source_spec_blob":DIAGNOSTIC_BLOB,"source_spec_sha256":sha(raw),
+              "base_manifest_sha256":base_manifest["manifest_sha256"],
+              "fit_allowed":False,"human_gold_count":0,"blind":"NOT RUN",
+              "candidate_rows":108,"accepted_rows":len(rows),"quarantine":rejected,
+              "suite_counts":dict(suites),"coverage":coverage,
+              "missing_supported_intents":sorted(set(contract["catalog"])-set(coverage)),
+              "language_counts":dict(Counter(r["language"] for r in rows)),
+              "record_sha256":{r["id"]:sha(encoded(r)) for r in rows},
+              "gold_sha256":sha(encoded(gold))}
+    manifest["manifest_sha256"]=sha(encoded(manifest))
+    return rows,gold,manifest
+
+
 def summary(manifest):
     return {k:manifest[k] for k in ("manifest_sha256","source_template_sha256","candidate_rows","accepted_rows",
         "counts","suite_counts","language_counts","missing_supported_intents","human_gold_count",
@@ -242,6 +327,7 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--prepare-only",action="store_true")
     parser.add_argument("--diagnostic-replay",action="store_true")
+    parser.add_argument("--locked-diagnostic",action="store_true")
     for arg in ("probe","cli","b2-probe","output"):
         parser.add_argument("--"+arg,type=Path)
     a=parser.parse_args()
@@ -252,6 +338,10 @@ def main():
             need(manifest["manifest_sha256"]=="aa4c817e14e7901d25e062bdd3d60943ea4f927e178ec904492cd3673882c68e",
                  "observed-diagnostic-manifest-drift")
         print("F1_SYNTHETIC_MANIFEST "+json.dumps(summary(manifest),sort_keys=True),flush=True)
+        diagnostic=prepare_diagnostic(rows,manifest) if a.locked_diagnostic else None
+        if diagnostic is not None:
+            print("F1_LOCKED_DIAGNOSTIC_MANIFEST "+json.dumps(
+                {k:v for k,v in diagnostic[2].items() if k!="record_sha256"},sort_keys=True),flush=True)
         if a.prepare_only:
             need(all(x is None for x in (a.probe,a.cli,a.b2_probe,a.output)),"prepare-arguments")
             return
@@ -264,9 +354,12 @@ def main():
         need(re.fullmatch(r"[0-9a-f]{40}",source) and not git("status","--porcelain"),"source")
         probes={k:v.resolve() for k,v in {"probe":a.probe,"cli":a.cli,"b2_probe":a.b2_probe}.items()}
         binaries={k:sha(bounded(v,128*1024*1024)) for k,v in probes.items()}
-        out=_compare_core(rows,gold,manifest,{"owner_decision_ref":"DEC-011"},source,binaries,**probes,synthetic=True)
+        out=_compare_core(rows,gold,manifest,{"owner_decision_ref":"DEC-011"},source,binaries,**probes,synthetic=True,diagnostic=diagnostic)
         out["evaluation_role"]="OBSERVED-TEST-DIAGNOSTIC-REPLAY" if a.diagnostic_replay else "FROZEN-LEXICAL-BASELINE-REPRODUCTION"
-        data=json.dumps({"manifest":manifest,"results":out},sort_keys=True,ensure_ascii=False,
+        payload={"manifest":manifest,"results":out}
+        if diagnostic is not None:
+            payload["diagnostic_manifest"]=diagnostic[2]
+        data=json.dumps(payload,sort_keys=True,ensure_ascii=False,
                         separators=(",",":"),allow_nan=False).encode()+b"\n"
         with output.open("xb") as f:
             f.write(data)
@@ -277,8 +370,19 @@ def main():
         result["dev_margin_counts"]={k:v["metrics"]["suite_counts"] for k,v in out["dev_margin_evaluation"].items()}
         result["test"]={m:v["metrics"] for m,v in out["test"].items()} if type(out["test"]) is dict else out["test"]
         result["evaluation_role"]=out["evaluation_role"]
+        if diagnostic is not None:
+            result["diagnostic_manifest_sha256"]=diagnostic[2]["manifest_sha256"]
+            result["diagnostic_status"]=out.get("diagnostic_status","NOT RUN")
+            result["diagnostic"]={m:v["metrics"] for m,v in out.get("diagnostic",{}).items()}
         print(("F1_COMPOSITION_B2_RESULT " if a.diagnostic_replay else "F1_SYNTHETIC_B2_RESULT ")+json.dumps(result,sort_keys=True),flush=True)
         need(out["status"]=="COMPLETE-SYNTHETIC-DEVELOPMENT","incomplete-run")
+        if diagnostic is not None:
+            need(out.get("diagnostic_status")=="COMPLETE-DIAGNOSTIC","incomplete-diagnostic")
+            # Report outcomes first; an unexpected negative proposal is not
+            # a passing boundary even if the product is non-executable.
+            need(all(v["metrics"]["suite_counts"][k]["accepted"]==0
+                     for v in out["diagnostic"].values() for k in SUITES-{"supported"}),
+                 "diagnostic-negative-proposal")
     except (Reject,ValueError,TypeError,KeyError,AssertionError,OSError,subprocess.SubprocessError,RecursionError) as exc:
         # No actual private inputs are accepted. Only fixed project data here.
         raise SystemExit("F1 synthetic experiment rejected: "+type(exc).__name__+" "+str(exc)[:160]) from None

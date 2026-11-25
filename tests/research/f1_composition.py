@@ -83,7 +83,7 @@ for text in ("Report service active and failed","Show active network connections
              "Show memory available and CPU architecture","Report cpu processes",
              "Report process resident memory","Guide diagnosis disk","Report UID GID for other user",
              "Show enabled services in previous boot","Show failed services since yesterday",
-             "Report CPU architecture 4","Report file metadata /fixture/data/report.txt",
+             "Report CPU architecture 4","Report file metadata /outside/report.txt",
              "Propose restarting demo.service and inspect active services"):
     obj=invoke(compose,text.encode())
     assert obj["view"]["decision"]!="allow-proposal",(text,obj["view"])
@@ -95,6 +95,8 @@ print("F1_COMPOSITION_BOUNDARY 574 old B0 outputs identical;",len(positive),"pos
 # Original project-authored train/dev-inspired hypotheses, not observed
 # test rows. Check typed values, explicit spans, defaults and B2 veto.
 typed=[
+ # Intentional migration of a slotless-only contrast: valid explicit path now supported.
+ ("Report file metadata /fixture/data/report.txt","file.metadata.stat",{"path":"/fixture/data/report.txt"}),
  ("Rinci keadaan unit layanan demo.service sekarang","service.status.get",{"unit":"demo.service"}),
  ("Describe runtime status of service worker.service","service.status.get",{"unit":"worker.service"}),
  ("Temukan subdirektori terbesar di /fixture/projects","storage.directory.usage",{"root":"/fixture/projects"}),

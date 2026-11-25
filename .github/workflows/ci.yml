@@ -89,10 +89,10 @@ jobs:
         run: |
           result_dir=$(mktemp -d)
           trap 'rm -rf "$result_dir"' EXIT
-          python3 -B tools/f1_synthetic.py --probe build/ci/tests/pipeline_probe \
+          python3 -B tools/f1_synthetic.py --locked-diagnostic --probe build/ci/tests/pipeline_probe \
             --cli build/ci/dictum --b2-probe build/ci/tests/b2_pipeline_probe \
             --output "$result_dir/results.json"
-          python3 -B tools/f1_synthetic.py --diagnostic-replay \
+          python3 -B tools/f1_synthetic.py --diagnostic-replay --locked-diagnostic \
             --probe build/ci/tests/composition_pipeline_probe --cli build/ci/dictum \
             --b2-probe build/ci/tests/composition_b2_probe --output "$result_dir/composition.json"
 
@@ -165,4 +165,4 @@ jobs:
         run: python3 -B tests/research/f1_collect.py
 
       - name: Validate and freeze original synthetic development corpus
-        run: python3 -B tools/f1_synthetic.py --prepare-only
+        run: python3 -B tools/f1_synthetic.py --prepare-only --locked-diagnostic

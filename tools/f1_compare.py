@@ -189,7 +189,7 @@ def run_private(seed_bytes,rights_bytes,candidate,lock,source,binaries,probe,cli
     return _compare_core(rows,raw_gold,candidate,lock,source,binaries,probe,cli,b2_probe)
 
 
-def _compare_core(rows,raw_gold,candidate,lock,source,binaries,probe,cli,b2_probe,*,mechanical=False,synthetic=False):
+def _compare_core(rows,raw_gold,candidate,lock,source,binaries,probe,cli,b2_probe,*,mechanical=False,synthetic=False,diagnostic=None):
     """Shared orchestration; private CLI always enters via validated run_private.
 
     The test-only mechanical invocation uses explicitly tagged artificial
@@ -204,6 +204,18 @@ def _compare_core(rows,raw_gold,candidate,lock,source,binaries,probe,cli,b2_prob
              lock["owner_decision_ref"]=="DEC-011" and candidate["manifest_sha256"]==
              sha(encoded({k:v for k,v in candidate.items() if k!="manifest_sha256"})) and
              candidate["record_sha256"]=={r["id"]:sha(encoded(r)) for r in rows},"synthetic-lock")
+    if diagnostic is not None:
+        need(synthetic,"diagnostic-mode")
+        diagnostic_rows,diagnostic_gold,dm=diagnostic
+        need(dm["role"]=="LOCKED-SYNTHETIC-DIAGNOSTIC" and dm["fit_allowed"] is False and
+             dm["base_manifest_sha256"]==candidate["manifest_sha256"] and
+             dm["manifest_sha256"]==sha(encoded({k:v for k,v in dm.items() if k!="manifest_sha256"})) and
+             dm["record_sha256"]=={r["id"]:sha(encoded(r)) for r in diagnostic_rows} and
+             dm["accepted_rows"]==len(diagnostic_rows)==len(dm["record_sha256"]) and
+             dm["gold_sha256"]==sha(encoded(diagnostic_gold)) and
+             set(diagnostic_gold)=={r["id"] for r in diagnostic_rows if suite_of(r)=="supported"} and
+             all(r["role"]=="AI-SYNTHETIC-DIAGNOSTIC" and r["split"]=="diagnostic" for r in diagnostic_rows) and
+             not set(dm["record_sha256"])&set(candidate["rows"]),"diagnostic-lock")
     oracle=load_oracle(probe,cli)
     from wire import Reject as OracleReject
     oracle.raw_gold=raw_gold
@@ -300,6 +312,16 @@ def _compare_core(rows,raw_gold,candidate,lock,source,binaries,probe,cli,b2_prob
     base["test"]={m:evaluate(test,m,selected if m=="B2" else None) for m in ("B0","B1","B2")}
     base["status"]=("COMPLETE-MECHANICAL-SMOKE" if mechanical else "COMPLETE-SYNTHETIC-DEVELOPMENT" if synthetic else "COMPLETE-DEVELOPMENT") if all(
         v["metrics"]["statuses"].get("complete",0)==len(test) for v in base["test"].values()) else "COMPLETE-WITH-FAILURES"
+    if diagnostic is not None:
+        # Only now expose diagnostic labels to the semantic oracle, after
+        # fitting, margin selection and frozen test evaluation are complete.
+        oracle.raw_gold=diagnostic_gold
+        base["diagnostic_manifest_sha256"]=dm["manifest_sha256"]
+        base["diagnostic"]={m:evaluate(diagnostic_rows,m,selected if m=="B2" else None)
+                            for m in ("B0","B1","B2")}
+        base["diagnostic_status"]="COMPLETE-DIAGNOSTIC" if all(
+            v["metrics"]["statuses"].get("complete",0)==len(diagnostic_rows)
+            for v in base["diagnostic"].values()) else "COMPLETE-WITH-FAILURES"
     return base
 
 

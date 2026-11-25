@@ -545,7 +545,7 @@ static const struct typed_frame typed_frames[]={
         "extension ekstensi berekstensi akhiran suffix",
         "ending beneath below under within inside folder directory directories direktori jenis berada bawah pencarian",
         {S_ROOT,S_EXTENSION},2,NULL,0u},
-    {"network.listener.lookup","listener listening socket pendengar",
+    {"network.listener.lookup","listener listening socket pendengar menunggu accepting",
         "port",
         "associated accepting accepts connections connection koneksi waiting menunggu opens membuka process processes proses layanan milik siapa mana menggunakan",
         {S_PORT,S_PROTOCOL},2,NULL,2u},

@@ -105,6 +105,8 @@ def read_regression_texts():
     s2=json.loads(pinned("tests/spikes/s2/development-v1.json"))
     for r in s2["reference"]+s2["development"]:
         seen.add(normalize(r["text"]))
+    for r in json.loads((ROOT/"spec/pipeline/f1-fixture-v2.json").read_bytes())["additional_references"]:
+        seen.add(normalize(r["text"]))
     return seen
 
 
@@ -307,6 +309,7 @@ def prepare(seed_bytes,rights_bytes,*,mechanical=False,regression=None):
     normalized_labels={}
     suites=Counter()
     supported=set()
+    supported_ids=set()
     src_rows={i:[] for i in sources}
     for row in rows:
         g,_,suite=check_row(row,contract,sources,mechanical)
@@ -322,6 +325,7 @@ def prepare(seed_bytes,rights_bytes,*,mechanical=False,regression=None):
         suites[suite]+=1
         if suite=="supported":
             supported.add(g["intent"])
+            supported_ids.add(i)
         src_rows[row["source_id"]].append(row)
     for i,items in src_rows.items():
         need(bool(items) and source_digest(items)==sources[i]["record_set_sha256"],"source-record-set")
@@ -331,7 +335,7 @@ def prepare(seed_bytes,rights_bytes,*,mechanical=False,regression=None):
     out=group_partition(by_id,normal)
     out.pop("manifest_sha256")
     coverage={s:sorted({g["intent"] for i,g in by_id.items()
-                        if out["rows"][i]["split"]==s and g["intent"] in supported})
+                        if out["rows"][i]["split"]==s and i in supported_ids})
               for s in ("train","dev","test")}
     deficits={s:sorted(supported-set(v)) for s,v in coverage.items()}
     out.update(role="MECHANICAL-TEST" if mechanical else "PRIVATE-SPLIT-CANDIDATE",

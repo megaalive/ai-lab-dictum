@@ -145,3 +145,6 @@ jobs:
 
       - name: Uji lock comparator privat dan denominator (mechanical only)
         run: python3 -B tests/research/f1_compare.py
+
+      - name: Uji review konten laporan C1 (mechanical only)
+        run: python3 -B tests/catalog/f1_c1_review.py

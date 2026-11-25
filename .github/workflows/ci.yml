@@ -132,3 +132,6 @@ jobs:
 
       - name: Uji shape inventory Debian F1 (synthetic only)
         run: python3 -B tests/catalog/f1_inventory.py
+
+      - name: Uji persiapan seed privat (mechanical only)
+        run: python3 -B tests/research/f1_seed.py

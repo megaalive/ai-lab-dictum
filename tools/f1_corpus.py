@@ -131,6 +131,18 @@ def partition_mechanical(records):
         need(row["parent"] is None or type(row["parent"]) is str,"parent")
         by_id[row["id"]]=row
         normal[row["id"]]=normalize(row["text"])
+    report=group_partition(by_id,normal)
+    report.pop("manifest_sha256")
+    report.pop("fuzzy_pairs")
+    report["status"]="MECHANICAL-ONLY-NOT-ACTUAL-SPLIT"
+    report["human_gold_count"]=0
+    report["manifest_sha256"]=sha(encoded(report))
+    return report
+
+
+def group_partition(by_id,normal):
+    """Pure grouping mechanics; caller validates records and authorization.
+    A partition is never approval, reviewed gold or an actual locked split."""
     for i,row in by_id.items():
         parent=row["parent"]
         if parent is not None:
@@ -210,11 +222,11 @@ def partition_mechanical(records):
     need(set(result)==set(ids),"partition")
     for _,items in groups:
         need(len({result[i]["split"] for i in items})==1,"split-leak")
-    report={"status":"MECHANICAL-ONLY-NOT-ACTUAL-SPLIT","seed":SEED,"target_percent":SPLITS,
+    report={"status":"CANDIDATE-ONLY-NOT-A-LOCK","seed":SEED,"target_percent":SPLITS,
             "rows":result,"counts":{s:dict(sorted(c.items())) for s,c in assigned.items()},
             "component_count":len(groups),"fuzzy_candidate_count":len(fuzzy),
-            "fuzzy_review_required":bool(fuzzy),"training_allowed":False,
-            "distribution_allowed":False,"human_gold_count":0}
+            "fuzzy_review_required":bool(fuzzy),"fuzzy_pairs":[list(p) for p in fuzzy],
+            "training_allowed":False,"distribution_allowed":False}
     report["manifest_sha256"]=sha(encoded(report))
     return report
 

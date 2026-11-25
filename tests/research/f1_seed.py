@@ -48,6 +48,8 @@ assert a==b
 assert a["rows"]["toy-1"]["component"]==a["rows"]["toy-2"]["component"]
 assert a["training_allowed"] is False and a["readiness"]=="REVIEW-REQUIRED"
 assert a["human_review_evidence_status"]=="SHAPE-ONLY-NOT-ATTESTED"
+assert not a["missing_supported_intents"]["train"]
+assert a["algorithm"]=="f1-group-v2-train-reservation" and a["train_reserved_components"]==5
 assert sum(c.get("all",0) for c in a["counts"].values())==len(rows)
 assert a["manifest_sha256"]==sha(encoded({k:v for k,v in a.items() if k!="manifest_sha256"}))
 def change(i,path,value):

@@ -140,7 +140,7 @@ def partition_mechanical(records):
     return report
 
 
-def group_partition(by_id,normal):
+def group_partition(by_id,normal,*,train_labels=None):
     """Pure grouping mechanics; caller validates records and authorization.
     A partition is never approval, reviewed gold or an actual locked split."""
     for i,row in by_id.items():
@@ -200,9 +200,23 @@ def group_partition(by_id,normal):
                 "joint:"+x["intent"]+"/"+x["language"])
     for i in ids:
         totals.update(strata(i))
+    # Reserve entire connected components for every available training class.
+    reserved=set()
+    if train_labels is not None:
+        need(type(train_labels) is dict and train_labels.keys()<=by_id.keys(),"train-labels")
+        labels={gid:{train_labels[i] for i in items if i in train_labels}
+                for gid,items in groups}
+        missing=set(train_labels.values())
+        while missing:
+            available=[(gid,items) for gid,items in groups if labels[gid]&missing]
+            need(bool(available),"train-coverage-impossible")
+            gid,items=min(available,key=lambda x:(-len(labels[x[0]]&missing),len(x[1]),
+                                                 sha(f"{SEED}/reserve/{x[0]}".encode())))
+            reserved.add(gid)
+            missing-=labels[gid]
     assigned={s:Counter() for s in SPLITS}
     result={}
-    for gid,items in groups:
+    for gid,items in sorted(groups,key=lambda x:x[0] not in reserved):
         add=Counter(k for i in items for k in strata(i))
         # Squared deviation, integer arithmetic, stable ties. Normalize the
         # delta by stratum size to avoid common categories swamping rare ones.
@@ -213,7 +227,7 @@ def group_partition(by_id,normal):
                 after=before+100*n
                 delta+=(after*after-before*before)*1000//totals[k]
             return delta,sha(f"{SEED}/{gid}/{s}".encode())
-        split=min(SPLITS,key=cost)
+        split="train" if gid in reserved else min(SPLITS,key=cost)
         assigned[split].update(add)
         for i in items:
             result[i]={"component":gid,"split":split,
@@ -227,6 +241,10 @@ def group_partition(by_id,normal):
             "component_count":len(groups),"fuzzy_candidate_count":len(fuzzy),
             "fuzzy_review_required":bool(fuzzy),"fuzzy_pairs":[list(p) for p in fuzzy],
             "training_allowed":False,"distribution_allowed":False}
+    if train_labels is not None:
+        need({train_labels[i] for i in train_labels if result[i]["split"]=="train"}==
+             set(train_labels.values()),"train-coverage")
+        report["train_reserved_components"]=len(reserved)
     report["manifest_sha256"]=sha(encoded(report))
     return report
 

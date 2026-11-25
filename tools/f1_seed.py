@@ -87,7 +87,7 @@ def load_contract():
     validator=Draft202012Validator({"$ref":"#/$defs/slot_value","$defs":schema["$defs"]})
     domain,domain_schema=load_domains()
     policy=json.loads(raw["spec/ir/policy-decision-v2.schema.json"])
-    return {"catalog":catalog,"scope":fixture["scope"],"domains":domain,
+    return {"catalog":catalog,"scope":fixture["scope"],"max_window_seconds":fixture["max_window_seconds"],"domains":domain,
             "domain_schema":domain_schema,"validator":validator,
             "reasons":set(policy["properties"]["reason"]["enum"]),
             "narratives":set(overlay["narrative_only"]),
@@ -181,7 +181,7 @@ def check_slots(row,raw,catalog,contract):
         spans.append((a,b))
         if v["kind"]=="time-window":
             need(src["kind"]=="context-ref" and re.fullmatch(r"[0-9]{1,16}",value)
-                 and 1<=int(value)<=1440 and
+                 and 1<=int(value) and int(value)*60<=contract["max_window_seconds"].get(e["intent"],0) and
                  re.match(rb" (?:minutes|menit)(?: |[?]?$)",raw[b:],re.I) is not None and
                  v["start_unix_s"]==REFERENCE-int(value)*60 and v["end_unix_s"]==REFERENCE,
                  "window-provenance")
@@ -332,7 +332,7 @@ def prepare(seed_bytes,rights_bytes,*,mechanical=False,regression=None):
     if not mechanical:
         need(supported==set(contract["catalog"]) and set(suites)==SUITES,"seed-coverage")
         need({r["language"] for r in rows}>={"id","en"},"language-coverage")
-    out=group_partition(by_id,normal)
+    out=group_partition(by_id,normal,train_labels={i:by_id[i]["intent"] for i in supported_ids})
     out.pop("manifest_sha256")
     coverage={s:sorted({g["intent"] for i,g in by_id.items()
                         if out["rows"][i]["split"]==s and i in supported_ids})
@@ -340,7 +340,7 @@ def prepare(seed_bytes,rights_bytes,*,mechanical=False,regression=None):
     deficits={s:sorted(supported-set(v)) for s,v in coverage.items()}
     out.update(role="MECHANICAL-TEST" if mechanical else "PRIVATE-SPLIT-CANDIDATE",
                seed_sha256=seed_sha,rights_sha256=sha(rights_bytes),contract=contract["identities"],
-               algorithm="f1-group-v1",python_version=sys.version.split()[0],
+               algorithm="f1-group-v2-train-reservation",python_version=sys.version.split()[0],
                suites=dict(suites),supported_intents=len(supported),coverage=coverage,
                missing_supported_intents=deficits,
                record_sha256={r["id"]:sha(encoded(r)) for r in rows},

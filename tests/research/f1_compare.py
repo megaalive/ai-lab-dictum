@@ -30,7 +30,8 @@ for k,v in [
     ("allow_distribution",True),("schema_version",True),("source_commit","0"*40),
     ("seed_sha256","0"*64),("rights_sha256","0"*64),("candidate_manifest_sha256","0"*64),
     ("review_evidence_sha256",""),("reviewer",""),("binaries_sha256",{}),
-    ("budget",{**BUDGET,"epochs":13}),("fuzzy_review",[]),
+    ("budget",{**BUDGET,"epochs":13}),
+    ("budget",{**BUDGET,"margin_candidates":[True,2,4,8,16,32]}),("fuzzy_review",[]),
     ("fuzzy_review",[{"pair":["toy-a","toy-b"],"decision":"SPLIT","review_ref":"toy-ref"}]),
     ("fuzzy_review",[{"pair":["toy-b","toy-a"],"decision":"KEEP-TOGETHER","review_ref":"toy-ref"}]),
 ]:

@@ -52,7 +52,7 @@ def validate_lock(lock,candidate,source,binaries,*,mechanical=False):
          all(match(x,SHA) for x in binaries.values()),"lock-build")
     need(match(lock["owner_decision_ref"],ID) and match(lock["reviewer"],ID) and
          match(lock["review_evidence_sha256"],SHA),"lock-review")
-    need(lock["budget"]==BUDGET,"budget")
+    need(encoded(lock["budget"])==encoded(BUDGET),"budget")
     expected={tuple(x) for x in candidate["fuzzy_pairs"]}
     need(type(lock["fuzzy_review"]) is list and len(lock["fuzzy_review"])==len(expected),"fuzzy-review")
     seen=set()
@@ -68,6 +68,8 @@ def validate_lock(lock,candidate,source,binaries,*,mechanical=False):
         need(all(candidate["counts"][s].get("all",0)>0 for s in ("train","dev","test")),"empty-split")
         need(not candidate["missing_supported_intents"]["train"] and candidate["supported_intents"]==48,
              "train-class-coverage")
+        need(bool(candidate["coverage"]["dev"]) and bool(candidate["coverage"]["test"]),
+             "evaluation-supported-empty")
         # All 48 classes must occur in train. Never break canonical/lineage
         # groups just to improve dev/test class coverage. Report deficits.
         need(candidate["readiness"]=="REVIEW-REQUIRED" and candidate["blind"]=="NOT RUN","candidate")
@@ -175,6 +177,7 @@ def run_private(seed_bytes,rights_bytes,candidate,lock,source,binaries,probe,cli
     rights=rights_check(parse(rights_bytes),sha(seed_bytes),False)
     contract=load_contract()
     oracle=load_oracle(probe,cli)
+    from wire import Reject as OracleReject
     # Gold is human-supplied; only the native extractor supplies model features.
     oracle.raw_gold={}
     for row in rows:
@@ -194,7 +197,10 @@ def run_private(seed_bytes,rights_bytes,candidate,lock,source,binaries,probe,cli
         raw=row["text"].encode("utf-8")
         value,stdout=call(b2_probe,zero,raw)
         trace=value.pop("trace")
-        oracle.check_invariants(value,raw,stdout)
+        try:
+            oracle.check_invariants(value,raw,stdout)
+        except (AssertionError,OracleReject,ValueError,KeyError,TypeError):
+            raise Reject("training-invariant") from None
         need(trace["features_valid"],"training-feature-invalid")
         # Empty features are not silently dropped. Such a corpus cannot be
         # used with this baseline without a documented revision and lock.
@@ -234,7 +240,7 @@ def run_private(seed_bytes,rights_bytes,candidate,lock,source,binaries,probe,cli
                          raw_joint=joint,raw_intent=bool(supported and predicted==row["expected"]["intent"]))
             except subprocess.TimeoutExpired:
                 a["status"]="timeout"
-            except (AssertionError,ValueError,TypeError,KeyError,RuntimeError):
+            except (AssertionError,OracleReject,ValueError,TypeError,KeyError,RuntimeError):
                 a["status"]="invalid"
             except OSError:
                 a["status"]="failure"

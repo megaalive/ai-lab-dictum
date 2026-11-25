@@ -211,6 +211,12 @@ for sentence in (
     "Report system error journal records over the last 42 minutes and 12 minutes",
     "Find service journal entries of worker.service within the past 25 minutes and system errors",
     "Report system journal records over the last 42 minutes",
+    'Locate exact literal /fixture/data in text files under "café"',
+    'Locate exact literal "café" /fixture/data in text files',
+    "Find process identifiers demo-worker associated with name",
+    'Find packages cache "demo" matching local names',
+    "Describe runtime status demo.service of service",
+    "Rinci atribut /fixture/data/report.txt berkas",
 ):
     assert invoke(compose,sentence.encode())["view"]["decision"]!="allow-proposal",sentence
     typed_neg+=1

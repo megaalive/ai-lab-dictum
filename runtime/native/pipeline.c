@@ -514,8 +514,8 @@ static const struct typed_frame typed_frames[]={
         "ownership modification modified changed time waktu perubahan details detail termasuk",
         {S_PATH},1,NULL,0u},
     {"file.permission.check","file files berkas",
-        "permission permissions access hak izin",
-        "effective allowed mode modes read write baca tulis identity identitas terhadap",
+        "permission permissions access akses hak izin",
+        "effective efektif allowed mode modes read write baca tulis identity identitas terhadap",
         {S_PATH},1,NULL,0u},
     {"archive.contents.list","archive archives arsip",
         "member members entries contents entry anggota isi entri",
@@ -523,8 +523,8 @@ static const struct typed_frame typed_frames[]={
         {S_PATH},1,NULL,0u},
     {"process.lookup.name","process processes proses",
         "name named nama bernama pid identifiers identifier",
-        "exact tepat literal running berjalan associated allowed details detail memiliki",
-        {S_NAME},1,"named bernama pid identifiers identifier exact tepat literal",0u},
+        "exact tepat persis literal running berjalan associated allowed details detail memiliki",
+        {S_NAME},1,"named bernama pid identifiers identifier exact tepat persis literal",0u},
     {"package.installed.check","package packages paket",
         "installed installation install terpasang terinstal instalasi",
         "version versions versi status presence local database basis data informasi apakah berapa versinya",
@@ -581,6 +581,20 @@ static bool typed_prefix(const struct request *q,size_t *start)
  * exist and denote the past, never a new timestamp guessed by NLU. */
 static bool typed_role_anchor(const struct request *q,const struct typed_frame *f,size_t i,enum slot_name name)
 {
+    if (name==S_TEXT)
+        return i>0u && compose_wordlist(q,i-1u,"literal text string teks persis exact");
+    if (name==S_ROOT)
+        return i>0u && compose_wordlist(q,i-1u,"under beneath below within inside in at from folder directory directories root di pada dalam bawah direktori dari");
+    if (name==S_QUERY)
+        return i>0u && compose_wordlist(q,i-1u,"matching match matches literal keyword query kata nama pencarian for");
+    if (name==S_NAME)
+        return i>0u && compose_wordlist(q,i-1u,"name named nama bernama exact tepat persis literal");
+    if (name==S_UNIT)
+        return i>0u && compose_wordlist(q,i-1u,"service unit layanan named bernama");
+    if (name==S_PACKAGE)
+        return i>0u && compose_wordlist(q,i-1u,"package paket version versi");
+    if (name==S_PATH)
+        return i>0u && compose_wordlist(q,i-1u,"file files berkas archive arsip metadata of for from to dari terhadap pada");
     if (name==S_PORT) return i>0u && word(q,i-1u,"port");
     if (name==S_EXTENSION) return i>0u && compose_wordlist(q,i-1u,"extension ekstensi berekstensi akhiran suffix");
     if (name==S_WINDOW) {

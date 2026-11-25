@@ -119,10 +119,12 @@ bool ir_plan_digest(const struct ir_document *doc,char out[65])
 {
     if (out==NULL) return false;
     out[0]='\0';
-    if (ir_validate(doc,IR_PLAN)!=IR_OK) return false;
+    const char *prefix=NULL;
+    if (ir_validate(doc,IR_PLAN)==IR_OK) prefix="dictum:execution-plan:v1\n";
+    else if (ir_validate(doc,IR_PLAN_V2)==IR_OK) prefix="dictum:execution-plan:v2\n";
+    else return false;
     struct buffer b={0};
-    const char prefix[]="dictum:execution-plan:v1\n";
-    return append(&b,prefix,sizeof(prefix)-1) && canonical(&b,doc,1,true)
+    return append(&b,prefix,strlen(prefix)) && canonical(&b,doc,1,true)
         && ir_sha256_hex(b.bytes,b.used,out);
 }
 

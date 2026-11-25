@@ -18,7 +18,8 @@ static size_t get(const struct ir_document *d,size_t i,const char *s)
 }
 bool renderer_structured_plan(const struct ir_document *plan)
 {
-    if (ir_validate(plan,IR_PLAN)!=IR_OK || !ir_plan_digest_matches(plan)) return false;
+    if ((ir_validate(plan,IR_PLAN)!=IR_OK && ir_validate(plan,IR_PLAN_V2)!=IR_OK) ||
+        !ir_plan_digest_matches(plan)) return false;
     const size_t action=get(plan,1,"action");
     return eq(plan,get(plan,action,"kind"),"structured-proposal") &&
         eq(plan,get(plan,get(plan,action,"operation"),"kind"),"native");

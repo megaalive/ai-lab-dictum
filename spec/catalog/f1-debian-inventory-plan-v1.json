@@ -1,0 +1,593 @@
+{
+  "schema_version": 1,
+  "status": "NOT RUN",
+  "target": "disposable Debian 13 x86_64 guest only",
+  "source_git_blob": "2cc5431daaf3da0dcaaa7fdcacefdb7b04a8cae9",
+  "metadata_only": true,
+  "execution_allowed": false,
+  "network_allowed": false,
+  "actual_binding_status": "BLOCKED",
+  "utilities": [
+    {
+      "id": "ss",
+      "package_candidate": "iproute2",
+      "path_candidates": [
+        "/usr/bin/ss",
+        "/usr/sbin/ss"
+      ],
+      "status": "NOT RUN"
+    },
+    {
+      "id": "ip",
+      "package_candidate": "iproute2",
+      "path_candidates": [
+        "/usr/bin/ip",
+        "/usr/sbin/ip"
+      ],
+      "status": "NOT RUN"
+    },
+    {
+      "id": "dig",
+      "package_candidate": "bind9-dnsutils",
+      "path_candidates": [
+        "/usr/bin/dig"
+      ],
+      "status": "NOT RUN"
+    },
+    {
+      "id": "ping",
+      "package_candidate": "iputils-ping",
+      "path_candidates": [
+        "/usr/bin/ping"
+      ],
+      "status": "NOT RUN"
+    },
+    {
+      "id": "systemctl",
+      "package_candidate": "systemd",
+      "path_candidates": [
+        "/usr/bin/systemctl"
+      ],
+      "status": "NOT RUN"
+    },
+    {
+      "id": "journalctl",
+      "package_candidate": "systemd",
+      "path_candidates": [
+        "/usr/bin/journalctl"
+      ],
+      "status": "NOT RUN"
+    },
+    {
+      "id": "dmesg",
+      "package_candidate": "util-linux",
+      "path_candidates": [
+        "/usr/bin/dmesg"
+      ],
+      "status": "NOT RUN"
+    },
+    {
+      "id": "df",
+      "package_candidate": "coreutils",
+      "path_candidates": [
+        "/usr/bin/df"
+      ],
+      "status": "NOT RUN"
+    },
+    {
+      "id": "lsblk",
+      "package_candidate": "util-linux",
+      "path_candidates": [
+        "/usr/bin/lsblk"
+      ],
+      "status": "NOT RUN"
+    },
+    {
+      "id": "findmnt",
+      "package_candidate": "util-linux",
+      "path_candidates": [
+        "/usr/bin/findmnt"
+      ],
+      "status": "NOT RUN"
+    },
+    {
+      "id": "tar",
+      "package_candidate": "tar",
+      "path_candidates": [
+        "/usr/bin/tar"
+      ],
+      "status": "NOT RUN"
+    },
+    {
+      "id": "unzip",
+      "package_candidate": "unzip",
+      "path_candidates": [
+        "/usr/bin/unzip"
+      ],
+      "status": "NOT RUN"
+    },
+    {
+      "id": "free",
+      "package_candidate": "procps",
+      "path_candidates": [
+        "/usr/bin/free"
+      ],
+      "status": "NOT RUN"
+    },
+    {
+      "id": "lscpu",
+      "package_candidate": "util-linux",
+      "path_candidates": [
+        "/usr/bin/lscpu"
+      ],
+      "status": "NOT RUN"
+    },
+    {
+      "id": "dpkg-query",
+      "package_candidate": "dpkg",
+      "path_candidates": [
+        "/usr/bin/dpkg-query"
+      ],
+      "status": "NOT RUN"
+    },
+    {
+      "id": "apt-cache",
+      "package_candidate": "apt",
+      "path_candidates": [
+        "/usr/bin/apt-cache"
+      ],
+      "status": "NOT RUN"
+    },
+    {
+      "id": "who",
+      "package_candidate": "coreutils",
+      "path_candidates": [
+        "/usr/bin/who"
+      ],
+      "status": "NOT RUN"
+    }
+  ],
+  "intents": [
+    {
+      "intent": "help.command.explain",
+      "operation_surface": "indexed-docs",
+      "utility_candidates": [],
+      "compatibility_obligation": "Compare exact indexed entry with pinned build source; no man or help spawn.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "help.intent.list",
+      "operation_surface": "indexed-docs",
+      "utility_candidates": [],
+      "compatibility_obligation": "Compare projected list against exact registry and profile; no spawn.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "system.os.info",
+      "operation_surface": "native-candidate",
+      "utility_candidates": [],
+      "compatibility_obligation": "Compare fixture OS metadata and uname fields for same host identity.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "system.uptime.summary",
+      "operation_surface": "native-candidate",
+      "utility_candidates": [],
+      "compatibility_obligation": "Compare same time/PID namespace and sampled uptime/load with bounded tolerance.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "network.listener.lookup",
+      "operation_surface": "command-candidate",
+      "utility_candidates": [
+        "ss"
+      ],
+      "compatibility_obligation": "Compare known lab listeners and PID visibility in intended network/PID namespaces; no active probe.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "network.connection.active",
+      "operation_surface": "command-candidate",
+      "utility_candidates": [
+        "ss"
+      ],
+      "compatibility_obligation": "Compare seeded local socket states; normalize changing ephemeral state; no DNS.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "network.interface.list",
+      "operation_surface": "command-candidate",
+      "utility_candidates": [
+        "ip"
+      ],
+      "compatibility_obligation": "Compare lab links and addresses with host snapshot; namespace mismatch is failure.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "network.route.table",
+      "operation_surface": "command-candidate",
+      "utility_candidates": [
+        "ip"
+      ],
+      "compatibility_obligation": "Compare pinned lab routes and default gateway in intended namespace.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "network.dns.config",
+      "operation_surface": "native-ipc-candidate",
+      "utility_candidates": [],
+      "compatibility_obligation": "Compare controlled resolver configuration and effective mode; no queries or daemon proxy egress.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "network.dns.lookup",
+      "operation_surface": "command-candidate",
+      "utility_candidates": [
+        "dig"
+      ],
+      "compatibility_obligation": "MVP proposal oracle only; compare exact DNS name, explicit initial A record type and NET effect; reject leading dash, at-sign or plus option-like operands, arbitrary resolver and non-A request; never run.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "network.connectivity.ping",
+      "operation_surface": "command-candidate",
+      "utility_candidates": [
+        "ping"
+      ],
+      "compatibility_obligation": "MVP proposal oracle only; compare validated hostname or IP, count <=4 and NET effect; reject leading dash, at-sign or plus option-like operands and arbitrary flags; no traffic.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "diagnosis.connectivity",
+      "operation_surface": "narrative-only",
+      "utility_candidates": [],
+      "compatibility_obligation": "Proposal oracle: bounded non-copyable narrative only; no argv, handler, child operation IR or host observation. ordered bounded local checks; no automatic probe or agent loop.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "service.status.get",
+      "operation_surface": "command-candidate",
+      "utility_candidates": [
+        "systemctl"
+      ],
+      "compatibility_obligation": "MVP proposal oracle: exact unit and current status, no D-Bus access.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "service.list.active",
+      "operation_surface": "command-candidate",
+      "utility_candidates": [
+        "systemctl"
+      ],
+      "compatibility_obligation": "MVP proposal oracle: current active state, not enabled or historical.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "service.failed.list",
+      "operation_surface": "command-candidate",
+      "utility_candidates": [
+        "systemctl"
+      ],
+      "compatibility_obligation": "MVP proposal oracle: currently failed vs since-boot history; no D-Bus access.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "service.enabled.list",
+      "operation_surface": "command-candidate",
+      "utility_candidates": [
+        "systemctl"
+      ],
+      "compatibility_obligation": "MVP proposal oracle: enabled state distinct from active.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "log.service.query",
+      "operation_surface": "command-candidate",
+      "utility_candidates": [
+        "journalctl"
+      ],
+      "compatibility_obligation": "MVP proposal oracle: unit, half-open pinned time range and limit; no raw journal read.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "log.system.errors",
+      "operation_surface": "command-candidate",
+      "utility_candidates": [
+        "journalctl"
+      ],
+      "compatibility_obligation": "MVP proposal oracle: err..emerg and pinned time window, never raw read.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "log.boot.messages",
+      "operation_surface": "command-candidate",
+      "utility_candidates": [
+        "dmesg",
+        "journalctl"
+      ],
+      "compatibility_obligation": "MVP proposal oracle: current boot scope and visible messages, not privilege bypass.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "storage.filesystem.usage",
+      "operation_surface": "command-candidate",
+      "utility_candidates": [
+        "df"
+      ],
+      "compatibility_obligation": "Compare fixed local mount fixture capacities; exclude unapproved remote/sensitive mounts.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "storage.inode.usage",
+      "operation_surface": "command-candidate",
+      "utility_candidates": [
+        "df"
+      ],
+      "compatibility_obligation": "Compare inode counts on seeded allowed local filesystem.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "storage.directory.usage",
+      "operation_surface": "native-candidate",
+      "utility_candidates": [],
+      "compatibility_obligation": "Native descriptor-based fixture tree, allocated blocks, hardlink policy and depth; compare to independent lab oracle, not a du invocation by product.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "storage.block.list",
+      "operation_surface": "command-candidate",
+      "utility_candidates": [
+        "lsblk"
+      ],
+      "compatibility_obligation": "Compare lab block topology and allowed fields; no raw device/serial disclosure.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "storage.mount.list",
+      "operation_surface": "command-candidate",
+      "utility_candidates": [
+        "findmnt"
+      ],
+      "compatibility_obligation": "Compare lab mount namespace and projected options; omit credentials.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "file.search",
+      "operation_surface": "native-candidate",
+      "utility_candidates": [],
+      "compatibility_obligation": "Native descriptor-based traversal with literal names, Unicode, dash, half-open mtime bounds, sensitive canary and no mount escape; compare with fixed lab tree.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "file.text.search",
+      "operation_surface": "native-candidate",
+      "utility_candidates": [],
+      "compatibility_obligation": "Compare seeded text including canary, binary/oversized files and literal pattern.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "file.metadata.stat",
+      "operation_surface": "native-candidate",
+      "utility_candidates": [],
+      "compatibility_obligation": "Compare pinned fixture inode metadata; deny symlink race/outside scope.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "file.permission.check",
+      "operation_surface": "native-candidate",
+      "utility_candidates": [],
+      "compatibility_obligation": "Compare lab ACL and effective identity without opening write or executing file.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "file.head_tail.view",
+      "operation_surface": "native-candidate",
+      "utility_candidates": [],
+      "compatibility_obligation": "Compare fixed text with byte cap, last-line handling and canary; no raw secret.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "archive.contents.list",
+      "operation_surface": "command-candidate",
+      "utility_candidates": [
+        "tar",
+        "unzip"
+      ],
+      "compatibility_obligation": "Candidate archive listing command, never extraction; compare member metadata with independent fixture; malformed/link/traversal names remain data; spawn only hypothetical future effect.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "process.list.top_cpu",
+      "operation_surface": "native-candidate",
+      "utility_candidates": [],
+      "compatibility_obligation": "Compare fixed process fixture and CPU sampling definition/window; tie-break PID.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "process.list.top_mem",
+      "operation_surface": "native-candidate",
+      "utility_candidates": [],
+      "compatibility_obligation": "Compare seeded process RSS snapshot and deterministic tie-break.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "process.lookup.name",
+      "operation_surface": "native-candidate",
+      "utility_candidates": [],
+      "compatibility_obligation": "Compare seeded exact comm names, duplicate names and hidepid.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "process.tree.view",
+      "operation_surface": "native-candidate",
+      "utility_candidates": [],
+      "compatibility_obligation": "Compare seeded parent-child hierarchy, disappeared parents and depth cap.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "memory.summary",
+      "operation_surface": "command-candidate",
+      "utility_candidates": [
+        "free"
+      ],
+      "compatibility_obligation": "Compare known MemAvailable, cache and swap fixture; distinguish host from cgroup.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "cpu.hardware.info",
+      "operation_surface": "command-candidate",
+      "utility_candidates": [
+        "lscpu"
+      ],
+      "compatibility_obligation": "Compare fixed topology and frequency visibility; do not infer host topology from guest.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "package.installed.check",
+      "operation_surface": "command-candidate",
+      "utility_candidates": [
+        "dpkg-query"
+      ],
+      "compatibility_obligation": "Compare pinned dpkg database installed/not installed/version.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "package.search.local",
+      "operation_surface": "command-candidate",
+      "utility_candidates": [
+        "apt-cache"
+      ],
+      "compatibility_obligation": "Compare literal query against pinned offline cache and stale/missing-cache outcome. Test regex metacharacters, backslash and leading dash, option-like operands and rejected flags; verify exact literal-match semantics against independent fixture oracle. If candidate grammar cannot guarantee literal behavior, BLOCKED/non-copyable; no cache update or download.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "user.session.who",
+      "operation_surface": "command-candidate",
+      "utility_candidates": [
+        "who"
+      ],
+      "compatibility_obligation": "Compare synthetic utmp snapshot and redaction of remote origin; history separate.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "user.identity.info",
+      "operation_surface": "native-candidate",
+      "utility_candidates": [],
+      "compatibility_obligation": "Compare current numeric IDs under intended user namespace; no remote NSS.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "diagnosis.disk_full",
+      "operation_surface": "narrative-only",
+      "utility_candidates": [],
+      "compatibility_obligation": "Proposal oracle: bounded non-copyable narrative only; no argv, handler, child operation IR or host observation. capacity, inode and bounded explicit-root checks; no automatic deletion.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "diagnosis.high_load",
+      "operation_surface": "narrative-only",
+      "utility_candidates": [],
+      "compatibility_obligation": "Proposal oracle: bounded non-copyable narrative only; no argv, handler, child operation IR or host observation. CPU/load, memory and I/O distinctions; no process kill.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "diagnosis.service_crash",
+      "operation_surface": "narrative-only",
+      "utility_candidates": [],
+      "compatibility_obligation": "Proposal oracle: bounded non-copyable narrative only; no argv, handler, child operation IR or host observation. status, bounded logs and listener checks; no restart.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "diagnosis.dns_failure",
+      "operation_surface": "narrative-only",
+      "utility_candidates": [],
+      "compatibility_obligation": "Proposal oracle: bounded non-copyable narrative only; no argv, handler, child operation IR or host observation. config vs resolution; NET subproposal explicitly marked, no query.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "service.restart",
+      "operation_surface": "command-candidate",
+      "utility_candidates": [
+        "systemctl"
+      ],
+      "compatibility_obligation": "Proposal oracle only: exact unit, restart intent and warning; hard deny execute.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "service.reload",
+      "operation_surface": "command-candidate",
+      "utility_candidates": [
+        "systemctl"
+      ],
+      "compatibility_obligation": "Proposal oracle only: reload distinct from restart, not guaranteed disruption-free.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "archive.extract.safe",
+      "operation_surface": "command-candidate",
+      "utility_candidates": [
+        "tar",
+        "unzip"
+      ],
+      "compatibility_obligation": "Proposal oracle only: inspect traversal/link entries and new destination; no extraction or safety guarantee.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    },
+    {
+      "intent": "file.compress.archive",
+      "operation_surface": "command-candidate",
+      "utility_candidates": [
+        "tar"
+      ],
+      "compatibility_obligation": "Proposal oracle only: explicit source/new archive, bounds and sensitive exclusion; no writes.",
+      "semantic_status": "NOT RUN",
+      "binding_status": "BLOCKED"
+    }
+  ]
+}

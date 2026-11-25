@@ -5,10 +5,10 @@ set(expected_stderr "")
 
 if(EXPECT STREQUAL "help")
     set(expected_code 0)
-    set(expected_stdout [=[Dictum - F0-C synthetic proposal-only
+    set(expected_stdout [=[Dictum - F1 catalog / synthetic proposal-only
   dictum ask "instruksi"      Usulan terstruktur, tanpa eksekusi.
   dictum explain "instruksi" Penjelasan usulan stateless.
-  dictum search intent.id     Cari ID katalog skeleton.
+  dictum search intent.id     Cari ID katalog (48 intent).
   dictum inspect              Identitas katalog dan status.
   dictum run                  Eksekusi dinonaktifkan.
 ]=])

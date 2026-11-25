@@ -9,13 +9,21 @@
 #include <sys/resource.h>
 #include <time.h>
 
-#define CASES 140u
+#define CASES_MAX 4096u
 #define REPEATS 10u
 
 int main(int argc,char *argv[])
 {
     enum pipeline_model model;
-    if (argc!=2) return 2;
+    if (argc!=3 || argv[2][0]=='\0') return 2;
+    unsigned int cases=0;
+    for (const char *p=argv[2];*p!='\0';++p) {
+        if (*p<'0'||*p>'9') return 2;
+        const unsigned int digit=(unsigned int)(*p-'0');
+        if (cases>(CASES_MAX-digit)/10u) return 2;
+        cases=cases*10u+digit;
+    }
+    if (cases==0) return 2;
     if (strcmp(argv[1],"B0")==0) model=PIPE_B0;
     else if (strcmp(argv[1],"B1")==0) model=PIPE_B1;
     else return 2;
@@ -23,7 +31,7 @@ int main(int argc,char *argv[])
     struct pipeline_result result;
     uint64_t sequence=1;
     for (unsigned int rep=0;rep<=REPEATS;++rep) {
-        for (unsigned int i=0;i<CASES;++i) {
+        for (unsigned int i=0;i<cases;++i) {
             unsigned char header[4];
             if (fread(header,1,sizeof(header),stdin)!=sizeof(header)) return 2;
             const uint32_t size=(uint32_t)header[0]|((uint32_t)header[1]<<8)|

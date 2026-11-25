@@ -1,0 +1,17 @@
+# F1-C1 — Codex desktop handoff: disposable Debian inventory
+
+Issue #37, parent #28. **Actual run NOT RUN / BLOCKED**. This packet is not authorization, S3 attestation or a recipe. [Baseline](../../plans/baseline-v3.md), [lab contract](../../spec/security/lab-harness-v1.md), [inventory plan](../../spec/catalog/f1-debian-inventory-plan-v1.json). The plan lists 17 candidate utility/package identities and all 48 per-intent obligations; package/path hypotheses remain unverified until actual guest evidence. The data-only validator cannot establish isolation.
+
+## Before any guest inspection
+
+Use Codex desktop only with a specifically authorized disposable Debian 13 x86_64 guest (2 vCPU / 2 GiB reference where practical). Do not run on Windows host, Proxmox management node, shared development machine or production. Obtain independent owner/controller evidence of exact scope, VM/snapshot identity, no host mounts/credentials/passthrough, isolated network/no egress, intended UID and existing permissions. No new sudo, package installs, network test traffic or production target. If any prerequisite is absent, record BLOCKED and stop without inspecting the target. Do not claim S3 from metadata alone.
+
+## First batch — metadata only
+
+Use a checked-out exact integrated candidate source SHA, not an unpinned branch. Inspect only the authorized guest's local installed package metadata and exact reviewed candidate executable paths; do not invoke the candidate utilities themselves (including their --help/--version). Confirm package ownership/version from existing package database, exact file identity and SHA-256 without following unapproved symlinks or path search; if a path, owner, version, access or package differs from the plan, mark UNKNOWN and return a sanitized finding for review. No arbitrary target files, process info, journal, service manager, package cache search/update, DNS or ping. No command target operations. Record absent entries as ABSENT, unknown as UNKNOWN; do not assume compatibility based on installation.
+
+Private actual evidence: exact source SHA, plan hash, independently authorized scope decision ref and preflight evidence SHA-256, guest environment/snapshot identity in separate sanitized operator report. Per utility fixed ID, PRESENT-METADATA with exact candidate package, version, path and digest; or ABSENT/UNKNOWN with metadata fields null. No hostnames, real IPs, secrets, raw package dump or private credentials in Git. The report shape is documented by `tools/f1_inventory_review.py` and synthetic vector in `tests/catalog/f1_inventory.py`; validate a sanitized local report with `python3 -B tools/f1_inventory_review.py /path/to/report.json`. A shape-valid result is not proof of authorization, actual identity or semantics. Return only sanitized findings/counts and artifact hashes; do not publish private evidence automatically.
+
+## Stop condition and follow-up
+
+Do not change registry/profile statuses from metadata results. All 48 actual bindings remain BLOCKED / NOT VERIFIED; semantic recipe, scope/rights, host-equivalence and executable fixtures remain NOT RUN. Full S3 requires every separate lab contract preflight and owner decision, not this packet. NET/CHANGE stay proposal-only, no DNS/ping or mutation. Human gold/rights and B2 remain separate. GitHub can continue native IR v2 and synthetic NLU work independently; no F1 acceptance/F2/training/executor authorization from this handoff.

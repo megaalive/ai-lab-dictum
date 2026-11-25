@@ -1,4 +1,7 @@
 #include "pipeline.h"
+#ifdef DICTUM_DEV_B2
+#include "pipeline_b2_dev.h"
+#endif
 #include "ir_digest.h"
 #include "renderer.h"
 
@@ -10,9 +13,13 @@
 #define TOKENS 64u
 #define SLOTS 16u
 #define NO_INTENT SIZE_MAX
-enum slot_name { S_PORT, S_PROTOCOL, S_UNIT, S_WINDOW, S_LIMIT, S_ROOT, S_DEPTH, S_EXTENSION, S_FILENAME };
-enum slot_kind { K_INTEGER, K_PROTOCOL, K_LITERAL, K_TIME };
-static const char *const slot_names[]={"port","protocol","unit","window","limit","root","depth","extension","filename"};
+enum slot_name { S_PORT, S_PROTOCOL, S_UNIT, S_WINDOW, S_LIMIT, S_ROOT, S_DEPTH, S_EXTENSION, S_FILENAME, S_PATH,
+    S_UTILITY, S_OPTION, S_DOMAIN, S_TARGET, S_TEXT, S_DIRECTION, S_NAME, S_PACKAGE, S_QUERY,
+    S_RECORD_TYPE, S_COUNT, S_ARCHIVE, S_SOURCE, S_DESTINATION };
+enum slot_kind { K_INTEGER, K_PROTOCOL, K_LITERAL, K_TIME, K_DOMAIN };
+static const char *const slot_names[]={"port","protocol","unit","window","limit","root","depth","extension","filename","path",
+    "utility","option","domain","target","text","direction","name","package","query",
+    "record_type","count","archive","source","destination"};
 
 struct slot_rule {
     enum slot_name name;
@@ -23,12 +30,15 @@ struct slot_rule {
     const char *literal;
 };
 struct intent_rule {
-    const char *id,*handler,*effect_class,*effect_json,*description_id,*description_en;
+    const char *id,*handler,*effect_class,*effect_json,*description_id,*description_en,*guidance;
     struct slot_rule slots[SLOTS];
     size_t count;
 };
 struct grammar { size_t intent; const char *pattern; };
-struct reference { size_t intent; const char *text; };
+struct lexical_term { const char *word; uint64_t intents; unsigned int weight; };
+struct domain_pair { const char *kind,*value; };
+struct help_entry { const char *utility,*option,*text; };
+struct catalog_entry { const char *id; const char *metadata_json; };
 #include "pipeline_generated.inc"
 
 struct token { size_t start,end; bool quoted; };
@@ -182,6 +192,12 @@ static bool id_from(const struct request *q,const char *label,char out[33])
     if (n<=0 || (size_t)n>=sizeof(input) || !ir_sha256_hex((const unsigned char *)input,(size_t)n,hash)) return false;
     memcpy(out,hash,32); out[32]='\0'; return true;
 }
+static size_t polite_start(const struct request *q,size_t first,size_t end)
+{
+    if (first<end && (word(q,first,"tolong")||word(q,first,"please")||word(q,first,"mohon"))) return first+1;
+    if (end-first>=2u && (word(q,first,"could")||word(q,first,"can")) && word(q,first+1,"you")) return first+2;
+    return first;
+}
 static bool unsafe(const struct request *q)
 {
     /* Only a narrow authored grammar is accepted. These are additional
@@ -193,7 +209,12 @@ static bool unsafe(const struct request *q)
     }
     for (size_t i=0;i<q->tokens.count;++i)
         for (size_t j=0;j<COUNT(deny_tokens);++j)
-            if (word(q,i,deny_tokens[j])) return true;
+            if (word(q,i,deny_tokens[j])) {
+                const size_t start=polite_start(q,0,q->tokens.count);
+                if (strcmp(deny_tokens[j],"ping")==0 && i==start+1u &&
+                    (word(q,start,"propose")||word(q,start,"usulkan"))) continue;
+                return true;
+            }
     return false;
 }
 static bool context(struct request *q,uint64_t sequence,char out[2048])
@@ -207,7 +228,7 @@ static bool context(struct request *q,uint64_t sequence,char out[2048])
         if (!word(q,i,"minutes") && !word(q,i,"menit")) continue;
         ++time_hits;
         int64_t mins=0;
-        if (ascii_integer(q,q->tokens.item[i-1],1,1440,&mins) && q->reference>=mins*60) {
+        if (ascii_integer(q,q->tokens.item[i-1],1,FIXTURE_MAX_WINDOW_SECONDS/60,&mins) && q->reference>=mins*60) {
             q->time_token=q->tokens.item[i-1]; q->time_start=q->reference-mins*60; q->time_valid=true;
         }
     }
@@ -215,9 +236,10 @@ static bool context(struct request *q,uint64_t sequence,char out[2048])
     char input_hash[65];
     if (!ir_sha256_hex(q->data,q->size,input_hash)) return false;
     struct writer w=writer(out,2048);
-    add(&w,"{"); field(&w,"mode","synthetic-request-v1"); add(&w,",");
+    add(&w,"{"); field(&w,"mode","synthetic-request-v2"); add(&w,",");
     field(&w,"input_sha256",input_hash); add(&w,","); field(&w,"catalog_sha256",FIXTURE_CATALOG_SHA);
     add(&w,","); field(&w,"profile_sha256",FIXTURE_PROFILE_SHA); add(&w,",");
+    field(&w,"registry_sha256",FIXTURE_REGISTRY_SHA); add(&w,",");
     field(&w,"policy_sha256",FIXTURE_POLICY_SHA); add(&w,",\"sequence\":"); number(&w,(int64_t)sequence);
     add(&w,",\"reference_unix_s\":"); number(&w,q->reference);
     add(&w,",\"time_candidate\":");
@@ -275,8 +297,10 @@ static bool match_grammar(const struct request *q,const struct grammar *g,
     }
     while (i<end) {
         enum slot_name name;
-        if (word(q,i,"limit")) name=S_LIMIT;
-        else if (word(q,i,"depth")) name=S_DEPTH;
+        if (word(q,i,"limit")||word(q,i,"batas")) name=S_LIMIT;
+        else if (word(q,i,"depth")||word(q,i,"kedalaman")) name=S_DEPTH;
+        else if (word(q,i,"count")||word(q,i,"jumlah")) name=S_COUNT;
+        else if (word(q,i,"protocol")||word(q,i,"protokol")) name=S_PROTOCOL;
         else return false;
         if (end-i<2 || find_slot(g->intent,name)==NULL ||
             !candidate_add(n,name,q->tokens.item[i+1])) return false;
@@ -287,7 +311,8 @@ static bool match_grammar(const struct request *q,const struct grammar *g,
 static bool match(const struct request *q,size_t first,size_t end,struct nlu_proposal *n)
 {
     *n=(struct nlu_proposal){0};
-    if (first<end && (word(q,first,"tolong")||word(q,first,"please"))) ++first;
+    first=polite_start(q,first,end);
+    if (first<end && (word(q,end-1,"please")||word(q,end-1,"tolong"))) --end;
     bool found=false;
     size_t best_specificity=0;
     for (size_t i=0;i<COUNT(grammar);++i) {
@@ -311,41 +336,37 @@ static bool match(const struct request *q,size_t first,size_t end,struct nlu_pro
 }
 static size_t retrieve(const struct request *q,const struct nlu_proposal *n)
 {
-    /* Deterministic word-overlap retrieval over the 32 pinned S2 refs.
-     * Slots are masked before ranking. A tie or zero score abstains.
-     * Retrieval cannot bypass complete grammar or introduce authority. */
-    size_t scores[COUNT(rules)]={0};
-    for (size_t r=0;r<COUNT(references);++r) {
-        const char *p=references[r].text;
-        size_t hits=0;
-        while (*p!='\0') {
-            size_t len=0;
-            while (p[len]!='\0'&&p[len]!=' ') ++len;
-            for (size_t i=0;i<q->tokens.count;++i) {
-                const struct token t=q->tokens.item[i];
-                bool masked=false;
-                for (size_t j=0;j<n->used;++j)
-                    if (n->candidates[j].token.start==t.start) masked=true;
-                if (!masked && token_eq(q->data,t,p,len)) { ++hits; break; }
+    /* Weighted distinct lexical matches over pinned reference descriptions.
+     * All explicit slot tokens masked, common words excluded at build time.
+     * No grammar bypass, no fitting against development labels. */
+    unsigned int scores[COUNT(rules)]={0};
+    for (size_t j=0;j<COUNT(lexical_terms);++j) {
+        const struct lexical_term *term=&lexical_terms[j];
+        bool present=false;
+        for (size_t i=0;i<q->tokens.count;++i) {
+            const struct token t=q->tokens.item[i];
+            bool masked=false;
+            for (size_t k=0;k<n->used;++k)
+                if (n->candidates[k].token.start==t.start) masked=true;
+            if (!masked && token_eq(q->data,t,term->word,strlen(term->word))) {
+                present=true; break;
             }
-            p+=len; if (*p==' ') ++p;
         }
-        const size_t intent=references[r].intent;
-        if (hits>scores[intent]) scores[intent]=hits;
+        if (present) for (size_t i=0;i<COUNT(rules);++i)
+            if ((term->intents & (UINT64_C(1)<<i))!=0) scores[i]+=term->weight;
     }
-    size_t best=NO_INTENT,score=0; bool tie=false;
+    size_t best=NO_INTENT; unsigned int score=0; bool tie=false;
     for (size_t i=0;i<COUNT(rules);++i) {
         if (scores[i]>score) { best=i; score=scores[i]; tie=false; }
         else if (scores[i]==score && score!=0) tie=true;
     }
     return tie ? NO_INTENT : best;
 }
-static struct nlu_proposal propose(const struct request *q,enum pipeline_model model)
+static struct nlu_proposal propose(const struct request *q)
 {
     struct nlu_proposal n={0};
     if (q->invalid) return n;
     if (match(q,0,q->tokens.count,&n)) {
-        if (model==PIPE_B1 && retrieve(q,&n)!=n.intents[0]) return (struct nlu_proposal){0};
         return n;
     }
     /* Only recognize explicit alternatives when both sides are supported
@@ -372,7 +393,7 @@ static void span(struct writer *w,struct token t)
 static bool serialize_nlu(const struct request *q,const struct nlu_proposal *n,char out[PIPE_FRAME])
 {
     struct writer w=writer(out,PIPE_FRAME);
-    add(&w,"{\"schema_version\":1,\"intent_candidates\":[");
+    add(&w,"{\"schema_version\":2,\"intent_candidates\":[");
     for (size_t i=0;i<n->count;++i) {
         if (i!=0) add(&w,",");
         add(&w,"{"); field(&w,"intent",rules[n->intents[i]].id); add(&w,",\"slot_candidate_ids\":[");
@@ -394,7 +415,7 @@ static bool serialize_nlu(const struct request *q,const struct nlu_proposal *n,c
         add(&w,"}}");
     }
     add(&w,"],"); field(&w,"abstain_hint",n->count==2 ? "ambiguous" : n->count==0 ? "out-of-domain" : "none"); add(&w,"}");
-    return validate_frame(&w,IR_NLU);
+    return validate_frame(&w,IR_NLU_V2);
 }
 static bool listed(const char *s,const char *const *list,size_t count)
 {
@@ -408,19 +429,32 @@ static bool value_from(const struct request *q,const struct candidate *c,const s
     *v=(struct value){.rule=r,.token=t};
     if (r->kind==K_INTEGER) return ascii_integer(q,t,r->min,r->max,&v->number);
     if (r->kind==K_TIME) {
-        if (!time_candidate(q,c)) return false;
+        if (!time_candidate(q,c) || q->time_start>=q->reference ||
+            q->reference-q->time_start>FIXTURE_MAX_WINDOW_SECONDS) return false;
         v->context_ref=true; v->number=q->time_start; v->end=q->reference; return true;
     }
     const size_t len=t.end-t.start;
     if (len>=sizeof(v->literal)) return false;
     memcpy(v->literal,q->data+t.start,len); v->literal[len]='\0';
+    if (r->kind==K_DOMAIN) {
+        for (size_t i=0;i<COUNT(domain_values);++i)
+            if (strcmp(r->type,domain_values[i].kind)==0 && strcmp(v->literal,domain_values[i].value)==0) return true;
+        return false;
+    }
     switch (r->name) {
     case S_PROTOCOL: return !t.quoted && (strcmp(v->literal,"tcp")==0 || strcmp(v->literal,"udp")==0 || strcmp(v->literal,"all")==0);
     case S_UNIT: return !t.quoted && listed(v->literal,units,COUNT(units));
     case S_ROOT: return listed(v->literal,roots,COUNT(roots));
+    case S_PATH: return listed(v->literal,files,COUNT(files));
+    case S_ARCHIVE: return listed(v->literal,archives,COUNT(archives));
+    case S_SOURCE: return listed(v->literal,compress_sources,COUNT(compress_sources));
+    case S_DESTINATION: return listed(v->literal,extract_destinations,COUNT(extract_destinations)) ||
+        listed(v->literal,compress_destinations,COUNT(compress_destinations));
     case S_EXTENSION: return listed(v->literal,extensions,COUNT(extensions));
     case S_FILENAME: return listed(v->literal,filenames,COUNT(filenames));
-    case S_PORT: case S_WINDOW: case S_LIMIT: case S_DEPTH: return false;
+    case S_PORT: case S_WINDOW: case S_LIMIT: case S_DEPTH: case S_COUNT:
+    case S_UTILITY: case S_OPTION: case S_DOMAIN: case S_TARGET: case S_TEXT: case S_DIRECTION:
+    case S_NAME: case S_PACKAGE: case S_QUERY: case S_RECORD_TYPE: return false;
     }
     return false;
 }
@@ -433,6 +467,51 @@ static bool has_pending(const struct resolved_ir *r,enum slot_name name)
 {
     for (size_t i=0;i<r->pending_count;++i) if (r->pending[i].name==name) return true;
     return false;
+}
+static const char *literal_slot(const struct resolved_ir *r,enum slot_name name)
+{
+    for (size_t i=0;i<r->count;++i) if (r->slots[i].rule->name==name) return r->slots[i].literal;
+    return NULL;
+}
+static const char *help_text(const struct resolved_ir *r)
+{
+    const char *utility=literal_slot(r,S_UTILITY),*option=literal_slot(r,S_OPTION);
+    if (utility==NULL) return NULL;
+    for (size_t i=0;i<COUNT(help_entries);++i) {
+        const struct help_entry *e=&help_entries[i];
+        if (strcmp(utility,e->utility)==0 &&
+            ((option==NULL && e->option==NULL) ||
+             (option!=NULL && e->option!=NULL && strcmp(option,e->option)==0))) return e->text;
+    }
+    return NULL;
+}
+static bool slot_scope(const struct intent_rule *rule,const struct value *v)
+{
+    if (v->rule->name==S_PATH) {
+        if (strcmp(rule->id,"archive.contents.list")==0) return listed(v->literal,archives,COUNT(archives));
+        if (strcmp(rule->id,"file.head_tail.view")==0) return !listed(v->literal,archives,COUNT(archives));
+    }
+    if (v->rule->name==S_DESTINATION) {
+        if (strcmp(rule->id,"archive.extract.safe")==0)
+            return listed(v->literal,extract_destinations,COUNT(extract_destinations));
+        if (strcmp(rule->id,"file.compress.archive")==0)
+            return listed(v->literal,compress_destinations,COUNT(compress_destinations));
+        return false;
+    }
+    return true;
+}
+static bool cross_constraints(const struct resolved_ir *r)
+{
+    const char *id=rules[r->intent].id;
+    if (strcmp(id,"help.command.explain")==0) return help_text(r)!=NULL;
+    if (strcmp(id,"archive.extract.safe")==0 || strcmp(id,"file.compress.archive")==0) {
+        const char *src=literal_slot(r,strcmp(id,"archive.extract.safe")==0 ? S_ARCHIVE:S_SOURCE);
+        const char *dst=literal_slot(r,S_DESTINATION);
+        if (src==NULL || dst==NULL || strcmp(src,dst)==0) return false;
+        const size_t len=strlen(src);
+        if (strncmp(src,dst,len)==0 && dst[len]=='/') return false;
+    }
+    return true;
 }
 static struct resolved_ir resolve(const struct request *q,const struct nlu_proposal *n)
 {
@@ -457,6 +536,7 @@ static struct resolved_ir resolve(const struct request *q,const struct nlu_propo
         for (size_t j=0;j<n->used;++j) {
             if (n->candidates[j].name!=s->name) continue;
             if (!value_from(q,&n->candidates[j],s,&v)) return invalid;
+            if (!slot_scope(rule,&v)) return invalid;
             ++hits;
         }
         if (hits>1) {
@@ -484,15 +564,16 @@ static struct resolved_ir resolve(const struct request *q,const struct nlu_propo
     }
     if (ambiguous) r.state=RES_AMBIGUOUS;
     else if (r.pending_count!=0) r.state=RES_INCOMPLETE;
+    else if (!cross_constraints(&r)) return invalid;
     return r;
 }
 static void identity(struct writer *w,const char *hash)
 {
-    add(w,"{\"version\":1,"); field(w,"sha256",hash); add(w,"}");
+    add(w,"{\"version\":2,"); field(w,"sha256",hash); add(w,"}");
 }
 static void common(struct writer *w,const struct request *q)
 {
-    add(w,"{\"schema_version\":1,"); field(w,"request_id",q->request_id); add(w,",");
+    add(w,"{\"schema_version\":2,"); field(w,"request_id",q->request_id); add(w,",");
     field(w,"resolution_id",q->resolution_id); add(w,","); field(w,"context_id",q->context_id);
     add(w,",\"catalog\":"); identity(w,FIXTURE_CATALOG_SHA);
 }
@@ -548,7 +629,7 @@ static bool serialize_ir(const struct request *q,const struct resolved_ir *r,cha
     add(&w,",\"alternatives\":[");
     for (size_t i=0;i<r->alternative_count;++i) { if (i!=0) add(&w,","); quote(&w,rules[r->alternatives[i]].id); }
     add(&w,"]}}");
-    return validate_frame(&w,IR_RESOLVED);
+    return validate_frame(&w,IR_RESOLVED_V2);
 }
 static bool verified_values(const struct request *q,const struct resolved_ir *r)
 {
@@ -568,13 +649,15 @@ static bool verified_values(const struct request *q,const struct resolved_ir *r)
             if (!value_from(q,&c,v->rule,&actual) || actual.number!=v->number ||
                 actual.end!=v->end || actual.context_ref!=v->context_ref ||
                 strcmp(actual.literal,v->literal)!=0) return false;
+            if (!slot_scope(rule,&actual)) return false;
         }
     }
     for (size_t i=0;i<rule->count;++i)
         if (rule->slots[i].required && !has_slot(r,rule->slots[i].name)) return false;
     if (strcmp(rule->id,"network.listener.lookup")==0 && !has_slot(r,S_PORT)) return false;
     if (strcmp(rule->id,"file.search")==0 && !has_slot(r,S_EXTENSION)&&!has_slot(r,S_FILENAME)&&!has_slot(r,S_WINDOW)) return false;
-    return strcmp(rule->effect_class,"READ")==0 || strcmp(rule->effect_class,"CHANGE")==0;
+    return cross_constraints(r) && (strcmp(rule->effect_class,"INFO")==0 || strcmp(rule->effect_class,"READ")==0 ||
+        strcmp(rule->effect_class,"CHANGE")==0);
 }
 static struct policy_decision policy(const struct request *q,const struct resolved_ir *r)
 {
@@ -611,14 +694,20 @@ static void decision_identity(struct writer *w,const struct request *q)
 {
     add(w,","); field(w,"decision_id",q->decision_id); add(w,",\"policy\":"); identity(w,FIXTURE_POLICY_SHA);
 }
+static const char *representation(const struct resolved_ir *r,struct policy_decision p)
+{
+    if (p.outcome!=PIPE_PROPOSAL) return "none";
+    return rules[r->intent].guidance!=NULL ? "narrative-guidance":"structured-proposal";
+}
 static bool serialize_policy(const struct request *q,const struct resolved_ir *r,
                              struct policy_decision p,char out[PIPE_FRAME])
 {
     struct writer w=writer(out,PIPE_FRAME);
     common(&w,q); decision_identity(&w,q);
     add(&w,","); field(&w,"decision",decision_name(p.outcome)); effect_scope(&w,q,r,p.outcome==PIPE_PROPOSAL);
-    add(&w,","); field(&w,"reason",p.reason); add(&w,"}");
-    return validate_frame(&w,IR_POLICY);
+    add(&w,","); field(&w,"reason",p.reason); add(&w,",");
+    field(&w,"representation",representation(r,p)); add(&w,"}");
+    return validate_frame(&w,IR_POLICY_V2);
 }
 static bool serialize_plan(const struct request *q,const struct resolved_ir *r,
                            const char *digest,char out[PIPE_FRAME])
@@ -630,7 +719,8 @@ static bool serialize_plan(const struct request *q,const struct resolved_ir *r,
     bool comma=false;
     for (size_t i=0;i<r->count;++i) {
         const enum slot_name name=r->slots[i].rule->name;
-        if (name!=S_UNIT && name!=S_ROOT) continue;
+        if (name!=S_UNIT && name!=S_ROOT && name!=S_PATH && name!=S_DOMAIN && name!=S_TARGET &&
+            name!=S_ARCHIVE && name!=S_SOURCE && name!=S_DESTINATION && name!=S_PACKAGE && name!=S_NAME) continue;
         char id[33];
         if (!id_from(q,slot_names[name],id)) return false;
         if (comma) add(&w,",");
@@ -640,12 +730,12 @@ static bool serialize_plan(const struct request *q,const struct resolved_ir *r,
     field(&w,"handler",rules[r->intent].handler); add(&w,",\"input_slots\":[");
     for (size_t i=0;i<r->count;++i) { if (i!=0) add(&w,","); quote(&w,slot_names[r->slots[i].rule->name]); }
     add(&w,"]}},"); field(&w,"digest",digest); add(&w,"}");
-    return validate_frame(&w,IR_PLAN);
+    return validate_frame(&w,IR_PLAN_V2);
 }
 static bool compile(const struct request *q,const struct resolved_ir *r,struct policy_decision p,char out[PIPE_FRAME])
 {
     if (p.outcome!=PIPE_PROPOSAL || r->state!=RES_RESOLVED || r->intent>=COUNT(rules) ||
-        r->pending_count!=0 || r->alternative_count!=0) return false;
+        r->pending_count!=0 || r->alternative_count!=0 || rules[r->intent].guidance!=NULL) return false;
     char digest[65];
     struct ir_document doc={0};
     const char placeholder_digest[]="0000000000000000000000000000000000000000000000000000000000000000";
@@ -660,8 +750,10 @@ static bool compile(const struct request *q,const struct resolved_ir *r,struct p
 static bool render(const struct request *q,const struct resolved_ir *r,struct policy_decision p,const char *plan,char out[PIPE_FRAME])
 {
     struct writer w=writer(out,PIPE_FRAME);
-    if ((p.outcome==PIPE_PROPOSAL)!=(plan[0]!='\0')) return false;
-    if (p.outcome==PIPE_PROPOSAL) {
+    const bool structured_expected=p.outcome==PIPE_PROPOSAL && rules[r->intent].guidance==NULL;
+    if (structured_expected!=(plan[0]!='\0')) return false;
+    if (p.outcome==PIPE_PROPOSAL && !verified_values(q,r)) return false;
+    if (structured_expected) {
         char expected[PIPE_FRAME];
         if (!verified_values(q,r) || !compile(q,r,p,expected) || strcmp(expected,plan)!=0) return false;
         struct ir_document doc={0};
@@ -673,16 +765,43 @@ static bool render(const struct request *q,const struct resolved_ir *r,struct po
     add(&w,"{\"copyability\":\"NON_COPYABLE\",");
     field(&w,"decision",decision_name(p.outcome)); add(&w,","); field(&w,"reason",p.reason);
     add(&w,",\"execution_allowed\":false,\"observed_os_data\":false,");
-    field(&w,"source","F0-C synthetic catalog; actual Debian binding NOT VERIFIED");
+    field(&w,"source","F1 synthetic catalog; actual Debian binding NOT VERIFIED");
+    add(&w,","); field(&w,"representation",representation(r,p));
     if (r->intent!=NO_INTENT) {
         add(&w,","); field(&w,"intent",rules[r->intent].id);
         add(&w,","); field(&w,"description",rules[r->intent].description_id);
     }
     if (p.outcome==PIPE_PROPOSAL) {
         add(&w,","); field(&w,"effect",rules[r->intent].effect_class);
-        add(&w,","); field(&w,"scope","synthetic fixture; no filesystem or service access");
-        if (strcmp(rules[r->intent].effect_class,"CHANGE")==0) {
-            add(&w,","); field(&w,"warning","CHANGE; may require privilege; no sudo and no execution");
+        add(&w,","); field(&w,"scope","synthetic fixture; no target, filesystem or service access");
+        add(&w,",\"effect_envelope\":"); add(&w,rules[r->intent].effect_json);
+        if (rules[r->intent].guidance!=NULL) {
+            add(&w,","); field(&w,"guidance_text",rules[r->intent].guidance);
+            add(&w,","); field(&w,"limitations","Narrative only; no host observation, child operation or automatic check");
+            add(&w,","); field(&w,"warning","No automatic probe, mutation or execution; NET requires separate proposal");
+            add(&w,"}"); return w.ok;
+        }
+        if (strstr(rules[r->intent].effect_json,"\"network\"")!=NULL) {
+            add(&w,","); field(&w,"warning","NET; synthetic proposal only; no traffic, DNS resolution or execution");
+        } else if (strcmp(rules[r->intent].effect_class,"CHANGE")==0) {
+            add(&w,","); field(&w,"warning","CHANGE; interruption or mutation possible; no safety guarantee, no sudo and no execution");
+        }
+        if (strcmp(rules[r->intent].id,"archive.extract.safe")==0 || strcmp(rules[r->intent].id,"file.compress.archive")==0) {
+            add(&w,","); field(&w,"limitations","Synthetic new destination only; existence, content, traversal and overwrite safety NOT VERIFIED");
+        }
+        if (strcmp(rules[r->intent].id,"help.command.explain")==0) {
+            const char *text=help_text(r);
+            if (text==NULL) return false;
+            add(&w,","); field(&w,"guidance_text",text);
+            add(&w,","); field(&w,"limitations","Original internal metadata summary; actual utility option compatibility NOT VERIFIED");
+        }
+        if (strcmp(rules[r->intent].id,"help.intent.list")==0) {
+            add(&w,",\"catalogued_ids\":[");
+            for (size_t i=0;i<COUNT(catalog_entries);++i) {
+                if (i!=0) add(&w,",");
+                quote(&w,catalog_entries[i].id);
+            }
+            add(&w,"]");
         }
         add(&w,",\"slots\":{");
         for (size_t i=0;i<r->count;++i) {
@@ -700,9 +819,61 @@ static bool render(const struct request *q,const struct resolved_ir *r,struct po
     return w.ok;
 }
 
-bool pipeline_run(const unsigned char *input,size_t size,int64_t reference_unix_s,
-                  uint64_t request_sequence,enum pipeline_model model,struct pipeline_result *out)
+#ifdef DICTUM_DEV_B2
+static bool development_rank(const struct request *q,const struct nlu_proposal *n,
+                             const struct resolved_ir *r,const struct b2_weights *weights,
+                             uint32_t margin,struct b2_dev_trace *trace)
 {
+    /* Spans come solely from the same deterministic NLU, never gold labels.
+     * Sort and union duplicate/overlapping spans before lexical extraction. */
+    for (size_t i=0;i<n->used;++i) {
+        const struct token t=n->candidates[i].token;
+        if (trace->mask_count>=B2_MASK_MAX) return false;
+        size_t j=trace->mask_count++;
+        while (j>0 && trace->masks[j-1].start>t.start) {
+            trace->masks[j]=trace->masks[j-1]; --j;
+        }
+        trace->masks[j]=(struct b2_span){t.start,t.end};
+    }
+    size_t used=0;
+    for (size_t i=0;i<trace->mask_count;++i) {
+        const struct b2_span span0=trace->masks[i];
+        if (!ir_check_span(q->data,q->size,span0.start,span0.end)) return false;
+        if (used!=0 && trace->masks[used-1].end>span0.start) {
+            if (span0.end>trace->masks[used-1].end) trace->masks[used-1].end=span0.end;
+        } else trace->masks[used++]=span0;
+    }
+    trace->mask_count=used;
+    if (!b2_extract(q->data,q->size,trace->masks,used,&trace->features) ||
+        !b2_scores(weights,&trace->features,trace->scores)) return false;
+    trace->features_valid=true;
+    trace->rank=b2_rank(&trace->features,trace->scores,margin);
+    if (policy(q,r).outcome==PIPE_PROPOSAL) {
+        if (r->state!=RES_RESOLVED || r->intent==NO_INTENT) return false;
+        /* Registry ordinal and grammar rule array order are not identical. */
+        for (size_t i=0;i<COUNT(catalog_entries);++i)
+            if (strcmp(catalog_entries[i].id,rules[r->intent].id)==0) {
+                trace->grammar_class=(int)i; break;
+            }
+        if (trace->grammar_class<0) return false;
+    }
+    return true;
+}
+#endif
+
+static bool pipeline_run_common(const unsigned char *input,size_t size,int64_t reference_unix_s,
+                  uint64_t request_sequence,enum pipeline_model model,
+#ifdef DICTUM_DEV_B2
+                  const struct b2_weights *weights,uint32_t margin,struct b2_dev_trace *trace,
+#endif
+                  struct pipeline_result *out)
+{
+#ifdef DICTUM_DEV_B2
+    if (trace!=NULL) {
+        *trace=(struct b2_dev_trace){.rank=-1,.grammar_class=-1};
+        if (weights==NULL || margin==0 || model!=PIPE_B0) return false;
+    }
+#endif
     if (out==NULL) return false;
     *out=(struct pipeline_result){.outcome=PIPE_INTERNAL};
     if (model!=PIPE_B0 && model!=PIPE_B1) return false;
@@ -713,25 +884,60 @@ bool pipeline_run(const unsigned char *input,size_t size,int64_t reference_unix_
     }
     struct request q={.data=input,.size=size,.reference=reference_unix_s};
     if (!context(&q,request_sequence,out->context)) return false;
-    const struct nlu_proposal n=propose(&q,model);
+    struct nlu_proposal n=propose(&q);
+    struct resolved_ir r=resolve(&q,&n);
+    /* Ranking is an abstention guard for fully resolved proposals only.
+     * A failed retrieval may not erase deterministic invalid/missing/conflict
+     * diagnoses. This preflight is pure typed validation, not permission. */
+    bool abstain=model==PIPE_B1 && r.state==RES_RESOLVED &&
+        retrieve(&q,&n)!=n.intents[0];
+#ifdef DICTUM_DEV_B2
+    if (trace!=NULL) {
+        if (!development_rank(&q,&n,&r,weights,margin,trace)) return false;
+        abstain=trace->grammar_class>=0 && trace->rank!=trace->grammar_class;
+    }
+#endif
+    if (abstain) {
+        n=(struct nlu_proposal){0};
+        r=resolve(&q,&n);
+    }
     if (!serialize_nlu(&q,&n,out->nlu)) return false;
-    const struct resolved_ir r=resolve(&q,&n);
     if (!serialize_ir(&q,&r,out->ir)) return false;
     const struct policy_decision p=policy(&q,&r);
     if (!serialize_policy(&q,&r,p,out->policy)) return false;
-    if (p.outcome==PIPE_PROPOSAL && !compile(&q,&r,p,out->plan)) return false;
+    if (p.outcome==PIPE_PROPOSAL && rules[r.intent].guidance==NULL && !compile(&q,&r,p,out->plan)) return false;
     if (!render(&q,&r,p,out->plan,out->view)) return false;
     out->outcome=p.outcome;
     return true;
 }
+bool pipeline_run(const unsigned char *input,size_t size,int64_t reference_unix_s,
+                  uint64_t request_sequence,enum pipeline_model model,struct pipeline_result *out)
+{
+    return pipeline_run_common(input,size,reference_unix_s,request_sequence,model,
+#ifdef DICTUM_DEV_B2
+                               NULL,0,NULL,
+#endif
+                               out);
+}
+#ifdef DICTUM_DEV_B2
+bool pipeline_run_b2_dev(const unsigned char *input,size_t size,int64_t reference_unix_s,
+                  uint64_t request_sequence,const struct b2_weights *weights,uint32_t margin,
+                  struct b2_dev_trace *trace,struct pipeline_result *out)
+{
+    if (trace==NULL) return false;
+    return pipeline_run_common(input,size,reference_unix_s,request_sequence,PIPE_B0,
+                               weights,margin,trace,out);
+}
+#endif
 bool pipeline_search(const char *id,char out[PIPE_FRAME])
 {
     if (id==NULL || out==NULL) return false;
     struct writer w=writer(out,PIPE_FRAME);
-    for (size_t i=0;i<COUNT(rules);++i) if (strcmp(id,rules[i].id)==0) {
-        add(&w,"{"); field(&w,"intent",rules[i].id); add(&w,","); field(&w,"id",rules[i].description_id);
-        add(&w,","); field(&w,"en",rules[i].description_en);
-        add(&w,",\"copyable\":false,\"execution_allowed\":false}"); return w.ok;
+    for (size_t i=0;i<COUNT(catalog_entries);++i) {
+        if (strcmp(id,catalog_entries[i].id)==0) {
+            add(&w,catalog_entries[i].metadata_json);
+            return w.ok;
+        }
     }
     return false;
 }
@@ -739,9 +945,16 @@ bool pipeline_inspect(char out[PIPE_FRAME])
 {
     if (out==NULL) return false;
     struct writer w=writer(out,PIPE_FRAME);
-    add(&w,"{\"mode\":\"F0-C synthetic proposal-only\",\"primary\":\"B0-rules\",\"alternative\":\"B1-guarded-word-retrieval\","
-        "\"neural_parameters\":0,\"intent_count\":8,\"profile\":\"debian-13 NOT VERIFIED\",");
-    field(&w,"catalog_sha256",FIXTURE_CATALOG_SHA); add(&w,","); field(&w,"profile_sha256",FIXTURE_PROFILE_SHA);
+    add(&w,"{\"mode\":\"F1 synthetic proposal-only pipeline; all real bindings blocked\",\"primary\":\"B0-rules\",\"alternative\":\"B1-guarded-weighted-lexical-retrieval\","
+        "\"neural_parameters\":0,\"intent_count\":");
+    number(&w,(int64_t)COUNT(rules));
+    add(&w,",\"implemented_synthetic_intent_count\":");
+    number(&w,(int64_t)COUNT(rules));
+    add(&w,",\"catalogued_intent_count\":");
+    number(&w,(int64_t)COUNT(catalog_entries));
+    add(&w,",\"f0_skeleton_intent_count\":8,\"verified_binding_count\":0,\"profile\":\"debian-13 NOT VERIFIED\",");
+    field(&w,"catalog_sha256",FIXTURE_CATALOG_SHA); add(&w,","); field(&w,"catalog_registry_sha256",FIXTURE_REGISTRY_SHA);
+    add(&w,",\"ir_schema_version\":2,"); field(&w,"profile_sha256",FIXTURE_PROFILE_SHA);
     add(&w,","); field(&w,"policy_sha256",FIXTURE_POLICY_SHA);
     add(&w,",\"execution_allowed\":false,\"latency\":\"not measured by inspect\"}");
     return w.ok;

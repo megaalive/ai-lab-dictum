@@ -14,7 +14,7 @@ int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
 {
     struct ir_document d = {0};
     const enum ir_status first = ir_parse(&d, data, size);
-    enum ir_status results[4] = {IR_ARGUMENT, IR_ARGUMENT, IR_ARGUMENT, IR_ARGUMENT};
+    enum ir_status results[8] = {IR_ARGUMENT};
     if (first == IR_OK) {
         need(d.used > 0 && d.used <= size && d.string_used <= size);
         for (size_t j = 1; j <= d.used; ++j) {
@@ -24,8 +24,8 @@ int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
             if (n->kind == IR_STRING)
                 need(n->offset <= d.string_used && n->length <= d.string_used - n->offset);
         }
-        for (size_t j = 0; j < 4; ++j) results[j] = ir_validate(&d, (enum ir_stage)j);
-        if (results[IR_PLAN] == IR_OK) {
+        for (size_t j = 0; j < 8; ++j) results[j] = ir_validate(&d, (enum ir_stage)j);
+        if (results[IR_PLAN] == IR_OK || results[IR_PLAN_V2] == IR_OK) {
             char digest[65];
             need(ir_plan_digest(&d,digest));
             (void)ir_plan_digest_matches(&d);
@@ -35,7 +35,7 @@ int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
     }
     need(ir_parse(&d, data, size) == first);
     if (first == IR_OK)
-        for (size_t j = 0; j < 4; ++j) need(ir_validate(&d, (enum ir_stage)j) == results[j]);
+        for (size_t j = 0; j < 8; ++j) need(ir_validate(&d, (enum ir_stage)j) == results[j]);
     (void)ir_check_input(data, size);
     ir_destroy(&d);
     ir_destroy(&d);

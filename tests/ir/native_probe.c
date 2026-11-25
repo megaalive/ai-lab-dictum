@@ -57,11 +57,11 @@ int main(int argc, char **argv)
         st = ir_check_input(data, size);
     } else {
         st = ir_parse(&d, data, size);
-        const char *names[] = {"nlu", "ir", "policy", "plan"};
+        const char *names[] = {"nlu", "ir", "policy", "plan", "nlu-v2", "ir-v2", "policy-v2", "plan-v2"};
         if (strcmp(argv[1], "raw") != 0) {
             size_t i = 0;
-            while (i < 4 && strcmp(argv[1], names[i]) != 0) ++i;
-            if (i == 4) { ir_destroy(&d); return 2; }
+            while (i < 8 && strcmp(argv[1], names[i]) != 0) ++i;
+            if (i == 8) { ir_destroy(&d); return 2; }
             if (st == IR_OK) st = ir_validate(&d, (enum ir_stage)i);
         }
     }

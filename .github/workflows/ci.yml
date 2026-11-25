@@ -72,6 +72,13 @@ jobs:
         run: |
           ldd build/ci/dictum
           ldd build/ci/tests/ir_probe
+          nm build/ci/dictum > build/ci/product.symbols
+          nm build/ci/tests/b2_pipeline_probe > build/ci/research.symbols
+          if grep -E ' [Tt] (pipeline_run_b2_dev|b2_extract|b2_scores|b2_rank)$' build/ci/product.symbols; then
+            echo "B2 research symbols in product" >&2; exit 1
+          fi
+          grep -E ' [Tt] pipeline_run_b2_dev$' build/ci/research.symbols
+          echo "B2_PRODUCT_LINK_BOUNDARY PASS"
           grep -m 1 '^License:' /usr/share/doc/libssl-dev/copyright
 
       - name: Uji CLI dan native IR
@@ -121,3 +128,26 @@ jobs:
 
       - name: Uji registry dan profil katalog A3
         run: python3 -B tests/catalog/run.py
+
+      - name: Uji domain kandidat F1 (data-only)
+        run: python3 -B tests/catalog/f1_domains.py
+
+      - name: Uji inventory dan grouping corpus mekanis F1
+        run: |
+          python3 -B tools/f1_corpus.py
+          python3 -B tests/research/f1_corpus.py
+
+      - name: Uji shape inventory Debian F1 (synthetic only)
+        run: python3 -B tests/catalog/f1_inventory.py
+
+      - name: Uji persiapan seed privat (mechanical only)
+        run: python3 -B tests/research/f1_seed.py
+
+      - name: Uji lock comparator privat dan denominator (mechanical only)
+        run: python3 -B tests/research/f1_compare.py
+
+      - name: Uji review konten laporan C1 (mechanical only)
+        run: python3 -B tests/catalog/f1_c1_review.py
+
+      - name: Uji paket kerja corpus manusia (mechanical only)
+        run: python3 -B tests/research/f1_collect.py

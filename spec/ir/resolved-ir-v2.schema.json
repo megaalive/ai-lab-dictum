@@ -1,0 +1,611 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dictum.invalid/spec/ir/resolved-ir-v2.schema.json",
+  "title": "ResolvedIR v2",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "request_id",
+    "resolution_id",
+    "context_id",
+    "catalog",
+    "slots",
+    "resolution"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "const": 2
+    },
+    "request_id": {
+      "$ref": "nlu-proposal-v2.schema.json#/$defs/opaque_id"
+    },
+    "resolution_id": {
+      "$ref": "nlu-proposal-v2.schema.json#/$defs/opaque_id"
+    },
+    "context_id": {
+      "$ref": "#/$defs/sha256"
+    },
+    "catalog": {
+      "$ref": "#/$defs/versioned_identity"
+    },
+    "intent": {
+      "$ref": "nlu-proposal-v2.schema.json#/$defs/intent_id"
+    },
+    "slots": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 16,
+      "items": {
+        "$ref": "#/$defs/slot"
+      }
+    },
+    "resolution": {
+      "type": "object",
+      "required": [
+        "state",
+        "unresolved",
+        "alternatives"
+      ],
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": [
+            "resolved",
+            "incomplete",
+            "ambiguous",
+            "unsupported",
+            "invalid"
+          ]
+        },
+        "unresolved": {
+          "type": "array",
+          "minItems": 0,
+          "maxItems": 16,
+          "items": {
+            "type": "object",
+            "required": [
+              "slot",
+              "problem"
+            ],
+            "properties": {
+              "slot": {
+                "$ref": "nlu-proposal-v2.schema.json#/$defs/slot_name"
+              },
+              "problem": {
+                "type": "string",
+                "enum": [
+                  "missing",
+                  "ambiguous",
+                  "conflict"
+                ]
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "alternatives": {
+          "type": "array",
+          "minItems": 0,
+          "maxItems": 8,
+          "items": {
+            "$ref": "nlu-proposal-v2.schema.json#/$defs/intent_id"
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "minLength": 64,
+      "maxLength": 64,
+      "pattern": "^[0-9a-f]{64}(?![\\s\\S])"
+    },
+    "versioned_identity": {
+      "type": "object",
+      "required": [
+        "version",
+        "sha256"
+      ],
+      "properties": {
+        "version": {
+          "type": "integer",
+          "const": 2
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "additionalProperties": false
+    },
+    "slot": {
+      "type": "object",
+      "required": [
+        "name",
+        "value",
+        "provenance"
+      ],
+      "properties": {
+        "name": {
+          "$ref": "nlu-proposal-v2.schema.json#/$defs/slot_name"
+        },
+        "value": {
+          "$ref": "#/$defs/slot_value"
+        },
+        "provenance": {
+          "$ref": "#/$defs/provenance"
+        }
+      },
+      "additionalProperties": false
+    },
+    "provenance": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "span"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "input-span"
+            },
+            "span": {
+              "$ref": "nlu-proposal-v2.schema.json#/$defs/span"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "catalog-default"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "candidate_id"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "context-ref"
+            },
+            "candidate_id": {
+              "$ref": "nlu-proposal-v2.schema.json#/$defs/opaque_id"
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "slot_value": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "port"
+            },
+            "value": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 65535
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "protocol"
+            },
+            "value": {
+              "type": "string",
+              "enum": [
+                "tcp",
+                "udp",
+                "all"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "positive-int"
+            },
+            "value": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "depth"
+            },
+            "value": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 32
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "duration-seconds"
+            },
+            "value": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 604800
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "start_unix_s",
+            "end_unix_s"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "time-window"
+            },
+            "start_unix_s": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 253402300799
+            },
+            "end_unix_s": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 253402300799
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "path"
+            },
+            "value": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1024
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "unit-name"
+            },
+            "value": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 255,
+              "pattern": "^[A-Za-z0-9_][A-Za-z0-9_.:@-]*(?![\\s\\S])"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "extension"
+            },
+            "value": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 32
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "filename"
+            },
+            "value": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 255
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "utility-id"
+            },
+            "value": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "option-id"
+            },
+            "value": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 64
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "dns-name"
+            },
+            "value": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 253
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "network-target"
+            },
+            "value": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 253
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "local-service"
+            },
+            "value": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 255,
+              "pattern": "^[A-Za-z0-9_][A-Za-z0-9_.:@-]*(?![\\s\\S])"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "literal-text"
+            },
+            "value": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "head-tail-direction"
+            },
+            "value": {
+              "type": "string",
+              "enum": [
+                "first",
+                "last"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "process-name"
+            },
+            "value": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "package-id"
+            },
+            "value": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 128
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "package-query"
+            },
+            "value": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "dns-record-type"
+            },
+            "value": {
+              "type": "string",
+              "const": "A"
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    }
+  }
+}

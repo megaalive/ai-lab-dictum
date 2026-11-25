@@ -8,13 +8,16 @@ from schema_profile import prepare_validators
 from wire import read_source
 from run import SCHEMAS
 
-schemas = {name: read_source(ROOT / "spec/ir" / name) for name in SCHEMAS.values()}
+v1 = list(SCHEMAS.values())
+v2 = [name.replace("-v1.schema.json","-v2.schema.json") for name in v1]
+schemas = {name: read_source(ROOT / "spec/ir" / name) for name in v1+v2}
 prepare_validators(schemas)
 # Match the typed-slot vocabulary across the four schemas, as in the oracle.
-nlu = schemas[SCHEMAS["nlu"]]["$defs"]["slot_kind"]["enum"]
-variants = schemas[SCHEMAS["ir"]]["$defs"]["slot_value"]["oneOf"]
-if set(nlu) != {x["properties"]["kind"]["const"] for x in variants}:
-    raise ValueError("Inconsistent typed-slot vocabulary")
+for family in (v1,v2):
+    nlu = schemas[family[0]]["$defs"]["slot_kind"]["enum"]
+    variants = schemas[family[1]]["$defs"]["slot_value"]["oneOf"]
+    if set(nlu) != {x["properties"]["kind"]["const"] for x in variants}:
+        raise ValueError("Inconsistent typed-slot vocabulary")
 functions = []
 definitions = {}
 patterns = {
@@ -83,10 +86,10 @@ def compile_node(file, node):
     return name
 
 
-roots = [compile_node(file, schemas[file]) for file in SCHEMAS.values()]
+roots = [compile_node(file, schemas[file]) for file in v1+v2]
 output = "/* Generated; do not edit. */\n" + "\n".join(functions)
 output += "\nstatic bool root_valid(const struct ir_document *d, enum ir_stage stage)\n{\n    switch (stage) {\n"
-for stage, fn in zip(("IR_NLU", "IR_RESOLVED", "IR_POLICY", "IR_PLAN"), roots):
+for stage, fn in zip(("IR_NLU", "IR_RESOLVED", "IR_POLICY", "IR_PLAN", "IR_NLU_V2", "IR_RESOLVED_V2", "IR_POLICY_V2", "IR_PLAN_V2"), roots):
     output += f"    case {stage}: return {fn}(d, 1);\n"
 output += "    }\n    return false;\n}\n"
 Path(sys.argv[1]).write_text(output, encoding="ascii")

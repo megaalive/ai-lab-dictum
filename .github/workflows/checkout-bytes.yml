@@ -1,0 +1,33 @@
+name: Exact checkout bytes
+
+on: [push, pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  checkout-bytes:
+    name: Byte identity / ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-24.04
+            python: python3
+          - os: windows-2025
+            python: python
+    steps:
+      - name: Simulate Windows-style newline conversion
+        run: git config --global core.autocrlf true
+
+      - name: Checkout exact source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Verify every tracked working-tree byte
+        run: |
+          git rev-parse HEAD
+          ${{ matrix.python }} -B tests/research/checkout_bytes.py

@@ -14,7 +14,8 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT / "tests/ir"))
-from run import SCHEMAS, SCHEMA_DIR
+from run import SCHEMAS as V1_SCHEMAS, SCHEMA_DIR
+SCHEMAS={stage:name.replace("-v1.schema.json","-v2.schema.json") for stage,name in V1_SCHEMAS.items()}
 from schema_profile import prepare_validators
 from semantics import validate_chain
 from wire import decode_frame, read_source
@@ -22,17 +23,37 @@ from wire import decode_frame, read_source
 probe, cli = sys.argv[1:3]
 manifest_raw = (HERE / "functional-v1.json").read_bytes()
 manifest = json.loads(manifest_raw)
-fixture_raw = (ROOT / "spec/pipeline/f0-c-fixture-v1.json").read_bytes()
+fixture_raw = (ROOT / "spec/pipeline/f1-fixture-v2.json").read_bytes()
 fixture = json.loads(fixture_raw)
 registry_raw = (ROOT / "catalog/core/intents-v1.json").read_bytes()
 profile_raw = (ROOT / "catalog/debian-13/v1.json").read_bytes()
-registry = {x["id"]: x for x in json.loads(registry_raw)["intents"] if x["skeleton"]}
+all_registry = {x["id"]: x for x in json.loads(registry_raw)["intents"]}
+skeleton = {i:x for i,x in all_registry.items() if x["skeleton"]}
+prior = json.loads((ROOT/"spec/pipeline/f1-fixture-v1.json").read_bytes())
+overlay_raw=(ROOT/"spec/catalog/f1-runtime-catalog-v2.json").read_bytes()
+overlay=json.loads(overlay_raw)
+domains=json.loads((ROOT/"spec/catalog/f1-slot-domains-v1.json").read_bytes())
+assert overlay["deferred_slots"]==domains["deferred"] and overlay["additional_slots"]==domains["additional"]
+assert overlay["narrative_only"]==domains["narrative_only"]
+for path,digest in overlay["source_git_blobs"].items():
+    raw=(ROOT/path).read_bytes()
+    assert hashlib.sha1(f"blob {len(raw)}\0".encode()+raw).hexdigest()==digest
+registry = {i:{**all_registry[i],"slots":list(all_registry[i]["slots"])} for i in fixture["patterns"]}
+for row in overlay["deferred_slots"]+overlay["additional_slots"]:
+    registry[row["intent"]]["slots"].append({"name":row["slot"],"kind":row["kind"],
+        "required":row["required"],"default":row["default"],"minimum":None,"maximum":None})
+assert set(registry)==set(all_registry) and len(registry)==48
+narratives=set(domains["narrative_only"])
+sys.path.insert(0,str(ROOT/"tools"))
+from f1_slot_domains import load as load_domains, validate_value as domain_validate
+domain_contract,domain_validator=load_domains()
+
 catalog = {i: {"intent": i, "effect": x["effect"], "proposal_eligible": x["proposal_eligible"],
                "execute_eligible": False, "slots": {s["name"]: s for s in x["slots"]}}
            for i, x in registry.items()}
 recipes = {x["intent"]: x for x in fixture["recipes"]}
-identities = {"catalog": {"version": 1, "sha256": hashlib.sha256(registry_raw).hexdigest()},
-              "policy": {"version": 1, "sha256": hashlib.sha256(fixture_raw).hexdigest()}}
+identities = {"catalog": {"version": 2, "sha256": hashlib.sha256(overlay_raw).hexdigest()},
+              "policy": {"version": 2, "sha256": hashlib.sha256(fixture_raw).hexdigest()}}
 validators, _, retrievals = prepare_validators({name: read_source(SCHEMA_DIR/name)
                                                  for name in SCHEMAS.values()})
 reference = manifest["reference_unix_s"]
@@ -71,11 +92,12 @@ def check_invariants(result, raw, stdout):
         assert all(result[s] is None for s in SCHEMAS) and view["decision"] == "deny"
         return
     context = result["context"]
-    assert context["mode"] == "synthetic-request-v1" and context["sequence"] == 1
+    assert context["mode"] == "synthetic-request-v2" and context["sequence"] == 1
     assert context["input_sha256"] == hash_bytes(raw) and context["reference_unix_s"] == reference
     assert context["catalog_sha256"] == identities["catalog"]["sha256"]
     assert context["policy_sha256"] == identities["policy"]["sha256"]
     assert context["profile_sha256"] == hash_bytes(profile_raw)
+    assert context["registry_sha256"] == hash_bytes(registry_raw)
     # The probe embeds exact context snapshot bytes as its first JSON member.
     prefix = '{"context":'
     assert stdout.startswith(prefix)
@@ -101,36 +123,80 @@ def check_invariants(result, raw, stdout):
     nlu, ir, policy = stages["nlu"],stages["ir"],stages["policy"]
     assert view["decision"] == policy["decision"] and view["reason"] == policy["reason"]
     allowed = policy["decision"] == "allow-proposal"
-    assert allowed == ("plan" in stages)
     assert policy["decision"] != "allow-execute-eligible"
     values = {s["name"]:s["value"] for s in ir["slots"]}
     intent = ir.get("intent")
-    if allowed:
-        assert intent in registry and view["intent"] == intent and view["slots"] == values
-        assert view["effect"] == registry[intent]["effect"]["class"]
+    representation="narrative-guidance" if allowed and intent in narratives else "structured-proposal" if allowed else "none"
+    assert policy["representation"]==view["representation"]==representation
+    assert ("plan" in stages)==(representation=="structured-proposal")
+    if intent is not None:
+        assert intent in registry
         for name,v in values.items():
             spec = catalog[intent]["slots"][name]
             if spec["minimum"] is not None:
                 assert spec["minimum"] <= v["value"] <= spec["maximum"]
-            if name in {"root","unit","extension","filename"}:
-                key = {"root":"roots","unit":"units","extension":"extensions","filename":"filenames"}[name]
+            if v["kind"] in domains["scope"]:
+                domain_validate(v,domain_contract,domain_validator)
+            if name in {"root","unit","extension","filename","path","archive","source","destination"}:
+                key = {"root":"roots","unit":"units","extension":"extensions","filename":"filenames",
+                       "path":"files","archive":"archives","source":"compress_sources",
+                       "destination":"extract_destinations" if intent=="archive.extract.safe" else "compress_destinations"}[name]
                 assert v["value"] in fixture["scope"][key]
+            if v["kind"]=="time-window":
+                assert 0 <= v["start_unix_s"] < v["end_unix_s"] <= reference
+                assert v["end_unix_s"]-v["start_unix_s"]<=fixture["max_window_seconds"][intent]
+        if intent=="archive.contents.list" and "path" in values:
+            assert values["path"]["value"] in fixture["scope"]["archives"]
+        if intent=="file.head_tail.view" and "path" in values:
+            assert values["path"]["value"] not in fixture["scope"]["archives"]
+    if allowed:
+        assert intent in registry and view["intent"] == intent
+        assert view["effect"] == registry[intent]["effect"]["class"]
+        assert view["effect_envelope"] == registry[intent]["effect"]
         if intent == "network.listener.lookup":
             assert "port" in values and "protocol" in values
         if intent == "file.search":
             assert "root" in values and {"filename","extension","window"} & values.keys()
-        if intent == "service.restart":
+        if intent == "help.intent.list":
+            assert view["catalogued_ids"] == list(all_registry)
+        if intent=="help.command.explain":
+            u=values["utility"]["value"]
+            opt=values.get("option",{}).get("value")
+            assert u in domains["utility_options"]
+            if opt is not None:
+                assert opt in domains["utility_options"][u]
+            expected=fixture["help_index"][u]["summary"]
+            if opt is not None:
+                expected+=" "+fixture["help_index"][u]["options"][opt]
+            assert view["guidance_text"]==expected and "NOT VERIFIED" in view["limitations"]
+        if intent in {"archive.extract.safe","file.compress.archive"}:
+            src=values["archive" if intent=="archive.extract.safe" else "source"]["value"]
+            dst=values["destination"]["value"]
+            assert src!=dst and not dst.startswith(src+"/")
+            assert "NOT VERIFIED" in view["limitations"]
+        if "network" in registry[intent]["effect"]["axes"]:
+            assert "NET" in view["warning"] and "no traffic" in view["warning"]
+        if registry[intent]["effect"]["class"] == "CHANGE":
             assert "CHANGE" in view["warning"] and "no sudo" in view["warning"]
-        plan = stages["plan"]
-        operation = {"kind":"native","handler":recipes[intent]["handler"],
-                     "input_slots":[s["name"] for s in registry[intent]["slots"] if s["name"] in values]}
-        bindings = [{"slot":n,"binding_id":opaque(cid,n)} for n in operation["input_slots"] if n in {"root","unit"}]
-        assert plan["action"] == {"kind":"structured-proposal","operation":operation}
-        assert plan["target_bindings"] == bindings
-        unsigned = {k:v for k,v in plan.items() if k!="digest"}
-        assert plan["digest"] == hash_bytes(b"dictum:execution-plan:v1\n" +
-            json.dumps(unsigned,sort_keys=True,separators=(",",":"),ensure_ascii=False).encode())
-        trusted["recipe"] = {"slots":values,"operation":operation,"target_bindings":bindings}
+        if intent in narratives:
+            assert view["guidance_text"]==fixture["narratives"][intent]
+            assert "Narrative only" in view["limitations"] and "No automatic" in view["warning"]
+            assert set(view)=={"copyability","decision","reason","execution_allowed","observed_os_data",
+                "source","representation","intent","description","effect","scope","effect_envelope",
+                "guidance_text","limitations","warning"}
+        else:
+            assert view["slots"]==values
+            plan = stages["plan"]
+            operation = {"kind":"native","handler":recipes[intent]["handler"],
+                         "input_slots":[s["name"] for s in registry[intent]["slots"] if s["name"] in values]}
+            bindings = [{"slot":n,"binding_id":opaque(cid,n)} for n in operation["input_slots"]
+                        if n in {"root","unit","path","domain","target","archive","source","destination","package","name"}]
+            assert plan["action"] == {"kind":"structured-proposal","operation":operation}
+            assert plan["target_bindings"] == bindings
+            unsigned = {k:v for k,v in plan.items() if k!="digest"}
+            assert plan["digest"] == hash_bytes(b"dictum:execution-plan:v2\n" +
+                json.dumps(unsigned,sort_keys=True,separators=(",",":"),ensure_ascii=False).encode())
+            trusted["recipe"] = {"slots":values,"operation":operation,"target_bindings":bindings}
     else:
         assert "slots" not in view and "plan" not in stages
     # Existing oracle independently rechecks typed provenance, request identity,
@@ -187,7 +253,7 @@ def raw_joint_correct(row,result):
     return actual==expected["slots"]
 
 
-def run(model):
+def run(model, report_name="PIPELINE_METRICS"):
     stats=Counter()
     timing=[]
     confusions=Counter()
@@ -227,7 +293,9 @@ def run(model):
                 print("GOLD_MISS",model,row["id"],"expected",row["expected"]["decision"],
                       "actual",actual)
             if row["suite"]=="security":
-                assert not accepted, "security-proposal"
+                assert not accepted and correct, "security-outcome"
+            if row["suite"] in {"ambiguity","ood"}:
+                assert correct, "deterministic-negative-outcome"
         except (AssertionError,ValueError,KeyError) as exc:
             # Never print raw bytes, paths, projected data or exception payload.
             print("INVARIANT_FAIL",model,row["id"],type(exc).__name__)
@@ -239,7 +307,7 @@ def run(model):
     all_a=sum(stats[x,"accepted"] for x in ("supported","ambiguity","ood","security"))
     all_c=sum(stats[x,"correct"] for x in ("supported","ambiguity","ood","security"))
     ordered=sorted(timing)
-    print("PIPELINE_METRICS",model,json.dumps({
+    print(report_name,model,json.dumps({
         "suite_counts":{x:{k:stats[x,k] for k in ("total","accepted","correct")} for x in ("supported","ambiguity","ood","security")},
         "raw_intent_accuracy":stats["supported","raw_intent_correct"]/n,
         "raw_JIA":stats["supported","raw_joint_correct"]/n,
@@ -270,6 +338,10 @@ def cli_checks():
             assert view["intent"]==expected["intent"]
         if view["decision"]=="allow-proposal":
             assert view["observed_os_data"] is False and view["execution_allowed"] is False
+            if expected["intent"] in narratives:
+                assert "slots" not in view and view["representation"]=="narrative-guidance"
+                count+=1
+                continue
             actual=view["slots"]
             for k,v in expected["slots"].items():
                 if v["kind"]=="time-window":
@@ -291,7 +363,7 @@ def main():
     assert len(ids)==len(cases) and len({data(r) for r in cases})==len(cases)
     counts=Counter(r["suite"] for r in cases)
     assert counts["supported"]>=40 and counts["ambiguity"]+counts["ood"]>=20 and counts["security"]>=40
-    for i in registry:
+    for i in skeleton:
         items=[r for r in cases if r["suite"]=="supported" and r["expected"]["intent"]==i]
         assert len(items)>=5 and {r["language"] for r in items}=={"id","en"}
     assert set(raw_gold)=={r["id"] for r in cases if r["suite"]=="supported"}

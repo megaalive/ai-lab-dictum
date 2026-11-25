@@ -1,0 +1,4 @@
+# Source and evidence identities are defined over exact Git blob bytes.
+# Prevent core.autocrlf/eol from silently changing any tracked file on checkout.
+# Keep new text authored with LF; do not renormalize historical pinned blobs.
+* -text

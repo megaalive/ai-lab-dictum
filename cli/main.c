@@ -7,10 +7,10 @@ enum { EXIT_OK=0, EXIT_IO_ERROR=1, EXIT_INVALID_ARGUMENTS=2,
        EXIT_UNSUPPORTED=3, EXIT_EXECUTION_DENIED=4, EXIT_CLARIFY=5, EXIT_INTERNAL=6 };
 
 static const char help[] =
-    "Dictum - F0-C synthetic proposal-only\n"
+    "Dictum - F1 catalog / synthetic proposal-only\n"
     "  dictum ask \"instruksi\"      Usulan terstruktur, tanpa eksekusi.\n"
     "  dictum explain \"instruksi\" Penjelasan usulan stateless.\n"
-    "  dictum search intent.id     Cari ID katalog skeleton.\n"
+    "  dictum search intent.id     Cari ID katalog (48 intent).\n"
     "  dictum inspect              Identitas katalog dan status.\n"
     "  dictum run                  Eksekusi dinonaktifkan.\n";
 static const char invalid_arguments[]="dictum: argumen tidak valid. Gunakan --help.\n";

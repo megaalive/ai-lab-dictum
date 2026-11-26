@@ -222,3 +222,45 @@ for sentence in (
     typed_neg+=1
 print("F1_TYPED_COMPOSITION",len(typed),"positive frames;",typed_novel,"previously unsupported;",
       len(typed)*2,"B2 guard transitions;",typed_neg,"contrast inputs rejected from proposal; research only")
+
+# Closed-frame incompleteness and conflict: no additional authority.
+# Each example is authored against the frame contract, not a held-out row.
+clarifications=[
+ ("Describe runtime status of service","service.status.get","incomplete",["unit"]),
+ ("Rinci atribut ukuran berkas","file.metadata.stat","incomplete",["path"]),
+ ("Determine installed version of package","package.installed.check","incomplete",["package"]),
+ ("Identifikasi PID proses bernama","process.lookup.name","incomplete",["name"]),
+ ("Rinci pesan galat jurnal sistem","log.system.errors","incomplete",["window"]),
+ ("Find service journal entries","log.service.query","incomplete",["unit","window"]),
+ ('Locate exact literal "café" in text files',"file.text.search","incomplete",["root"]),
+ ("Rinci nama anggota arsip","archive.contents.list","incomplete",["path"]),
+ ("Locate files of extension md beneath folder","file.search","incomplete",["root"]),
+ ("Find packages matching in local cache","package.search.local","incomplete",["query"]),
+ ("Rinci keadaan unit layanan demo.service serta layanan worker.service","service.status.get","ambiguous",["unit"]),
+ ("Describe owner and metadata of file /fixture/data/notes.md and file /fixture/data/report.txt","file.metadata.stat","ambiguous",["path"]),
+ ('Find packages matching "demo" and matching "demo+tools" in local cache',"package.search.local","ambiguous",["query"]),
+ ('Locate exact literal "café" and literal "teks uji" in text files under /fixture/data',"file.text.search","ambiguous",["text"]),
+ ("Locate files of extension md and extension txt beneath /fixture/data","file.search","ambiguous",["extension"]),
+ ("Identify listening socket associated with port 5432 and port 8080","network.listener.lookup","ambiguous",["port"]),
+ ("Display active tcp connections with a maximum of 15 entries and limit 10","network.connection.active","ambiguous",["limit"]),
+]
+for sentence,intent,state,names in clarifications:
+    raw=sentence.encode("utf-8")
+    obj=invoke(compose,raw)
+    assert obj["view"]["decision"]=="clarify",(sentence,obj["view"])
+    assert obj["ir"]["intent"]==intent and obj["ir"]["resolution"]["state"]==state,(sentence,obj["ir"])
+    expected=[{"slot":k,"problem":"missing" if state=="incomplete" else "ambiguous"} for k in names]
+    assert obj["view"]["unresolved"]==expected and obj["ir"]["resolution"]["unresolved"]==expected,(sentence,obj["view"])
+    assert obj["view"]["reason"]==("missing-slot" if state=="incomplete" else "ambiguous")
+    assert obj["plan"] is None and obj["view"]["execution_allowed"] is False
+    model=Linear.zero()
+    model.bias[registry[intent]]=100
+    for weights in (zero,model):
+        actual,stdout=call(b2,model_frame(weights,1),raw)
+        trace=actual.pop("trace")
+        o.check_invariants(actual,raw,stdout)
+        assert trace["grammar_class"]==-1 and actual==obj,(sentence,trace)
+    for mutant in (raw+b" arbitrarytoken",raw+b";",b"jangan "+raw):
+        assert invoke(compose,mutant)["view"]["decision"]!="allow-proposal",mutant
+print("F1_CLARIFICATION_BOUNDARY",len(clarifications),"exact missing/conflict cases;",
+      len(clarifications)*2,"B2 unchanged;",len(clarifications)*3,"negative mutations; no plans")

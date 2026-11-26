@@ -20,7 +20,7 @@ from pathlib import Path
 from f1_seed import (ROOT, MAX_PACKET, ID, SHA, SUITES, check_row, keys, load_contract,
                      match, parse, prepare, rights_check)
 from f1_corpus import Reject, need, sha, encoded
-from b2_linear import Linear, fit_numeric
+from b2_linear import Linear, fit_numeric, fit_averaged_numeric, extract, rank
 from b2_dev_protocol import call, model_frame
 
 SEED=20261124
@@ -29,6 +29,14 @@ MARGINS=(1,2,4,8,16,32)
 BUDGET={"seed":SEED,"epochs":EPOCHS,"margin_candidates":list(MARGINS),
         "fit_only":"supported-train","margin_selection":"max-dev-supported-exact-then-largest-margin"}
 SYNTHETIC_BUDGET={**BUDGET,"margin_selection":"max-dev-supported-exact-then-raw-intent-then-largest-margin"}
+# Separately identified research selection protocol. Historical frozen
+# manifests and fixed 12-epoch reproduction budget are not changed.
+CALIBRATION_GRID=(("plain-12",12,1),("plain-4",4,1),("averaged-12",12,8),("averaged-24",24,8))
+CALIBRATION_PROTOCOL={"candidates":[{"id":i,"epochs":e,"scale":s,
+    "margins":list(sorted({1,*(m*s for m in MARGINS)}))} for i,e,s in CALIBRATION_GRID],
+    "fit_only":"supported-train","selection_only":"dev",
+    "selection":"zero-negative-proposals; min-wrong-supported-accepts; max-supported-exact; max-raw-intent; max-normalized-margin; fixed-grid-order",
+    "seed":SEED,"native_guard":"unchanged-veto-only"}
 LOCK_KEYS={"schema_version","role","scope","candidate_manifest_sha256","seed_sha256",
            "rights_sha256","owner_decision_ref","reviewer","review_evidence_sha256",
            "source_commit","binaries_sha256","fuzzy_review","budget",
@@ -189,14 +197,14 @@ def run_private(seed_bytes,rights_bytes,candidate,lock,source,binaries,probe,cli
     return _compare_core(rows,raw_gold,candidate,lock,source,binaries,probe,cli,b2_probe)
 
 
-def _compare_core(rows,raw_gold,candidate,lock,source,binaries,probe,cli,b2_probe,*,mechanical=False,synthetic=False,diagnostic=None):
+def _compare_core(rows,raw_gold,candidate,lock,source,binaries,probe,cli,b2_probe,*,mechanical=False,synthetic=False,diagnostic=None,calibrated=False):
     """Shared orchestration; private CLI always enters via validated run_private.
 
     The test-only mechanical invocation uses explicitly tagged artificial
     numeric/lexical vectors and never a rights-approved or human corpus.
     """
     need(__debug__,"oracle-asserts-required")
-    need(not (mechanical and synthetic),"core-mode")
+    need(not (mechanical and synthetic) and (not calibrated or synthetic),"core-mode")
     role="MECHANICAL-TEST" if mechanical else "AI-SYNTHETIC-DEVELOPMENT" if synthetic else "HUMAN-DEVELOPMENT-SEED"
     need(all(r.get("role")==role for r in rows),"core-role")
     if synthetic:
@@ -262,6 +270,14 @@ def _compare_core(rows,raw_gold,candidate,lock,source,binaries,probe,cli,b2_prob
                     trace=obj.pop("trace")
                     r=trace["rank"]
                     need(type(r) is int and -1<=r<len(ids),"rank")
+                    if calibrated:
+                        if trace["features_valid"]:
+                            features=extract(raw,tuple(tuple(x) for x in trace["masks"]))
+                            scores=model.scores(features)
+                            need(tuple(trace["features"])==features and tuple(trace["scores"])==scores and
+                                 r==rank(features,scores,margin),"calibration-native-parity")
+                        else:
+                            need(r==-1 and obj["context"] is None,"calibration-invalid-feature")
                     predicted=ids[r] if r>=0 else None
                 else:
                     obj,stdout=probe_result(probe,model_name,raw)
@@ -296,17 +312,63 @@ def _compare_core(rows,raw_gold,candidate,lock,source,binaries,probe,cli,b2_prob
           "rights_review":"MECHANICAL-NOT-AUTHORIZED" if mechanical else "DEC-011 project-original synthetic development only" if synthetic else "external decision recorded; not independently attested by program"}
     dev=partitions["dev"]
     need(any(suite_of(r)=="supported" for r in dev),"dev-supported-empty")
-    dev_scores={}
-    for margin in MARGINS:
-        dev_scores[str(margin)]=evaluate(dev,"B2",margin)
-    base["dev_margin_evaluation"]=dev_scores
-    # Do not tune through timeouts/invalid execution or on the held-out test.
-    if any(d["metrics"]["statuses"].get("complete",0)!=len(dev) for d in dev_scores.values()):
-        base.update(status="INVALID-DEV-RUN",selected_margin=None,test="NOT RUN")
-        return base
-    selected=max(MARGINS,key=lambda m:(
-        dev_scores[str(m)]["metrics"]["suite_counts"]["supported"]["correct"],
-        dev_scores[str(m)]["metrics"]["suite_counts"]["supported"]["raw_intent"] if synthetic else 0,m))
+    if calibrated:
+        # Hide other gold from the outcome oracle until selection completes.
+        # The fitting input has already been built solely from supported train.
+        oracle.raw_gold={r["id"]:raw_gold[r["id"]] for r in dev if suite_of(r)=="supported"}
+        attempts=[]
+        eligible=[]
+        for grid_index,(name,epochs,scale) in enumerate(CALIBRATION_GRID):
+            started=time.perf_counter_ns()
+            model=(fit_numeric(fit_rows,epochs=epochs,seed=SEED) if scale==1 else
+                   fit_averaged_numeric(fit_rows,epochs=epochs,seed=SEED,scale=scale))
+            elapsed=(time.perf_counter_ns()-started)/1e6
+            digest=sha(model_frame(model,1)[4:])
+            for margin in sorted({1,*(m*scale for m in MARGINS)}):
+                measured=evaluate(dev,"B2",margin)
+                metrics=measured["metrics"]
+                counts=metrics["suite_counts"]
+                supp=counts["supported"]
+                negatives=sum(counts[k]["accepted"] for k in SUITES-{"supported"})
+                record={"candidate":name,"epochs":epochs,"scale":scale,"margin":margin,
+                        "weight_sha256":digest,"fit_wall_ms":elapsed,"counts":counts,
+                        "by_language":metrics["by_language"],"statuses":metrics["statuses"]}
+                attempts.append(record)
+                if metrics["statuses"].get("complete",0)!=len(dev):
+                    base.update(status="INVALID-DEV-RUN",selected_margin=None,test="NOT RUN",
+                                calibration={"protocol":CALIBRATION_PROTOCOL,"attempts":attempts})
+                    return base
+                if negatives==0:
+                    # Compare margins in unscaled update units. Integer
+                    # cross-multiplication avoids floating tie drift.
+                    key=(-(supp["accepted"]-supp["correct"]),supp["correct"],supp["raw_intent"],
+                         margin*(8//scale),-grid_index)
+                    eligible.append((key,model,record,measured))
+        if not eligible:
+            base.update(status="NO-ELIGIBLE-CALIBRATION",selected_margin=None,test="NOT RUN",
+                        calibration={"protocol":CALIBRATION_PROTOCOL,"attempts":attempts})
+            return base
+        _,model,chosen,measurement=max(eligible,key=lambda x:x[0])
+        selected=chosen["margin"]
+        base["weight_sha256"]=chosen["weight_sha256"]
+        base["numeric_fit_wall_ms"]=chosen["fit_wall_ms"]
+        base["budget"]={**SYNTHETIC_BUDGET,"calibration":CALIBRATION_PROTOCOL}
+        base["calibration"]={"protocol":CALIBRATION_PROTOCOL,"attempts":attempts,"selected":chosen,
+                             "eligible_candidates":len(eligible),"dev_rows":len(dev)}
+        base["dev_margin_evaluation"]={str(selected):measurement}
+        oracle.raw_gold=raw_gold
+    else:
+        dev_scores={}
+        for margin in MARGINS:
+            dev_scores[str(margin)]=evaluate(dev,"B2",margin)
+        base["dev_margin_evaluation"]=dev_scores
+        # Do not tune through timeouts/invalid execution or on the held-out test.
+        if any(d["metrics"]["statuses"].get("complete",0)!=len(dev) for d in dev_scores.values()):
+            base.update(status="INVALID-DEV-RUN",selected_margin=None,test="NOT RUN")
+            return base
+        selected=max(MARGINS,key=lambda m:(
+            dev_scores[str(m)]["metrics"]["suite_counts"]["supported"]["correct"],
+            dev_scores[str(m)]["metrics"]["suite_counts"]["supported"]["raw_intent"] if synthetic else 0,m))
     base["selected_margin"]=selected
     test=partitions["test"]
     base["test"]={m:evaluate(test,m,selected if m=="B2" else None) for m in ("B0","B1","B2")}

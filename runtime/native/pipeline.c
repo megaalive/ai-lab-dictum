@@ -638,7 +638,8 @@ static bool compose_typed_match(const struct request *q,struct nlu_proposal *out
         const struct intent_rule *rule=&rules[intent];
         if (strcmp(rule->effect_class,"READ")!=0 || rule->guidance!=NULL) return false;
         struct nlu_proposal n={0};
-        bool seen[3]={false},first=false,second=false,third=frame->third==NULL,ok=true;
+        unsigned int hits[3]={0};
+        bool first=false,second=false,third=frame->third==NULL,ok=true;
         for (size_t i=start;i<q->tokens.count;++i) {
             const struct token t=q->tokens.item[i];
             size_t role=SIZE_MAX;
@@ -660,8 +661,11 @@ static bool compose_typed_match(const struct request *q,struct nlu_proposal *out
             }
             if (!ok) break;
             if (role!=SIZE_MAX) {
-                if (seen[role] || !candidate_add(&n,frame->slots[role],t)) { ok=false; break; }
-                seen[role]=true;
+                /* Two separately anchored candidates can be surfaced to the
+                 * existing ambiguity resolver; never choose one silently.
+                 * Larger multiplicities and duplicate time markers abstain. */
+                if (hits[role]>=2u || !candidate_add(&n,frame->slots[role],t)) { ok=false; break; }
+                ++hits[role];
             } else {
                 const bool a=compose_wordlist(q,i,frame->first);
                 const bool b=compose_wordlist(q,i,frame->second);
@@ -672,19 +676,33 @@ static bool compose_typed_match(const struct request *q,struct nlu_proposal *out
             }
         }
         if (!ok || !first || !second || !third) continue;
-        bool window=false;
+        bool window=false,missing=false;
         for (size_t j=0;j<frame->count;++j) {
-            if (!seen[j] && (frame->optional_mask & (1u<<j))==0u) ok=false;
-            if (seen[j] && frame->slots[j]==S_WINDOW) window=true;
+            const struct slot_rule *slot=find_slot(intent,frame->slots[j]);
+            if (slot==NULL) return false;
+            if (hits[j]==0u && (frame->optional_mask & (1u<<j))==0u) {
+                /* Only an existing required, non-defaulted slot may be
+                 * missing. Otherwise omission might silently widen scope. */
+                if (!slot->required || slot->has_default) ok=false;
+                else missing=true;
+            }
+            if (hits[j]!=0u && frame->slots[j]==S_WINDOW) window=true;
         }
         if (!ok || window!=q->time_valid) continue;
         for (size_t j=0;j<rule->count;++j) {
             bool bound=false;
             for (size_t k=0;k<n.used;++k)
                 if (n.candidates[k].name==rule->slots[j].name) bound=true;
-            if (rule->slots[j].required && !rule->slots[j].has_default && !bound) ok=false;
+            if (rule->slots[j].required && !rule->slots[j].has_default && !bound) missing=true;
         }
-        if (!ok) continue;
+        /* Complete, unambiguous cue coverage is still mandatory. The
+         * resolver will emit missing/ambiguous, not a plan. In particular,
+         * absent explicit numeric/defaulted roles never become a proposal. */
+        if (missing) {
+            bool ambiguous=false;
+            for (size_t j=0;j<frame->count;++j) if (hits[j]>1u) ambiguous=true;
+            if (ambiguous) continue;
+        }
         if (selected.count!=0) return false;
         n.intents[0]=intent; n.count=1; selected=n;
     }

@@ -1,0 +1,814 @@
+{
+  "schema_version": 1,
+  "role": "PROJECT-ORIGINAL-LOCKED-DIAGNOSTIC",
+  "decision": "DEC-011",
+  "author": "ChatGPT-GPT-6.2-SELF",
+  "families": [
+    {
+      "id": "DIA-F01-id",
+      "intent": "help.command.explain",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Uraikan peran utilitas {utility} serta arti opsi {option} menurut katalog"
+    },
+    {
+      "id": "DIA-F01-en",
+      "intent": "help.command.explain",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "For documented tool {utility}, explain the meaning of option {option}"
+    },
+    {
+      "id": "DIA-F02-id",
+      "intent": "help.intent.list",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Apa saja ragam permintaan yang dapat diusulkan oleh asisten ini"
+    },
+    {
+      "id": "DIA-F02-en",
+      "intent": "help.intent.list",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Give an inventory of the request categories recognized by Dictum"
+    },
+    {
+      "id": "DIA-F03-id",
+      "intent": "system.os.info",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Berikan identitas distro beserta versi dan arsitektur kernel mesin"
+    },
+    {
+      "id": "DIA-F03-en",
+      "intent": "system.os.info",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Which operating system release and kernel architecture describe this host"
+    },
+    {
+      "id": "DIA-F04-id",
+      "intent": "system.uptime.summary",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Ringkas lama sistem menyala bersama rerata beban saat ini"
+    },
+    {
+      "id": "DIA-F04-en",
+      "intent": "system.uptime.summary",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "How long has this machine been running and what is its load average"
+    },
+    {
+      "id": "DIA-F05-id",
+      "intent": "network.listener.lookup",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Tentukan soket pendengar yang memakai port {port} pada protokol {protocol}"
+    },
+    {
+      "id": "DIA-F05-en",
+      "intent": "network.listener.lookup",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Identify the {protocol} listening endpoint associated with port {port}"
+    },
+    {
+      "id": "DIA-F06-id",
+      "intent": "network.connection.active",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Perlihatkan sambungan jaringan {protocol} yang aktif dengan batas {limit}"
+    },
+    {
+      "id": "DIA-F06-en",
+      "intent": "network.connection.active",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Report established {protocol} connections with a limit of {limit}"
+    },
+    {
+      "id": "DIA-F07-id",
+      "intent": "network.interface.list",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Berikan kondisi antarmuka jaringan beserta alamat yang terpasang"
+    },
+    {
+      "id": "DIA-F07-en",
+      "intent": "network.interface.list",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "List the visible network adapters and their assigned link addresses"
+    },
+    {
+      "id": "DIA-F08-id",
+      "intent": "network.route.table",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Apa konfigurasi jalur IP beserta gerbang utama pada mesin lokal"
+    },
+    {
+      "id": "DIA-F08-en",
+      "intent": "network.route.table",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Summarize the local IP routing entries and their gateway configuration"
+    },
+    {
+      "id": "DIA-F09-id",
+      "intent": "network.dns.config",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Periksa pengaturan resolver DNS yang digunakan oleh sistem"
+    },
+    {
+      "id": "DIA-F09-en",
+      "intent": "network.dns.config",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Identify the configured name resolution servers and DNS settings"
+    },
+    {
+      "id": "DIA-F10-id",
+      "intent": "network.dns.lookup",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Susun usulan pemeriksaan rekaman A untuk nama {domain}"
+    },
+    {
+      "id": "DIA-F10-en",
+      "intent": "network.dns.lookup",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Describe a proposal to resolve the A record for {domain}"
+    },
+    {
+      "id": "DIA-F11-id",
+      "intent": "network.connectivity.ping",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Susun usulan uji keterjangkauan {target} dengan jumlah {count}"
+    },
+    {
+      "id": "DIA-F11-en",
+      "intent": "network.connectivity.ping",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Describe a reachability check proposal for {target} using count {count}"
+    },
+    {
+      "id": "DIA-F12-id",
+      "intent": "diagnosis.connectivity",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Uraikan langkah diagnosis ketika sambungan jaringan bermasalah"
+    },
+    {
+      "id": "DIA-F12-en",
+      "intent": "diagnosis.connectivity",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Outline troubleshooting guidance for loss of network connectivity"
+    },
+    {
+      "id": "DIA-F13-id",
+      "intent": "service.status.get",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Berikan keadaan runtime dan status unit {unit}"
+    },
+    {
+      "id": "DIA-F13-en",
+      "intent": "service.status.get",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Summarize the operational state of service unit {unit}"
+    },
+    {
+      "id": "DIA-F14-id",
+      "intent": "service.list.active",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Apa daftar layanan yang masih beroperasi di mesin ini"
+    },
+    {
+      "id": "DIA-F14-en",
+      "intent": "service.list.active",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Identify the service units presently in running state"
+    },
+    {
+      "id": "DIA-F15-id",
+      "intent": "service.failed.list",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Perlihatkan unit layanan dengan keadaan gagal pada sistem"
+    },
+    {
+      "id": "DIA-F15-en",
+      "intent": "service.failed.list",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Which service units are currently marked failed"
+    },
+    {
+      "id": "DIA-F16-id",
+      "intent": "service.enabled.list",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Rincikan layanan yang diaktifkan untuk proses startup"
+    },
+    {
+      "id": "DIA-F16-en",
+      "intent": "service.enabled.list",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Identify services with startup enablement configured"
+    },
+    {
+      "id": "DIA-F17-id",
+      "intent": "log.service.query",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Berikan catatan log layanan {unit} dari {window} menit belakangan"
+    },
+    {
+      "id": "DIA-F17-en",
+      "intent": "log.service.query",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Inspect journal records for service {unit} during the previous {window} minutes"
+    },
+    {
+      "id": "DIA-F18-id",
+      "intent": "log.system.errors",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Perlihatkan pesan jurnal sistem berprioritas galat dari {window} menit terakhir"
+    },
+    {
+      "id": "DIA-F18-en",
+      "intent": "log.system.errors",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Summarize error-priority journal entries for the system in the past {window} minutes"
+    },
+    {
+      "id": "DIA-F19-id",
+      "intent": "log.boot.messages",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Ringkas catatan pesan kernel pada sesi boot terkini"
+    },
+    {
+      "id": "DIA-F19-en",
+      "intent": "log.boot.messages",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Describe the visible kernel messages recorded at startup"
+    },
+    {
+      "id": "DIA-F20-id",
+      "intent": "storage.filesystem.usage",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Berikan rincian ruang bebas serta kapasitas sistem berkas"
+    },
+    {
+      "id": "DIA-F20-en",
+      "intent": "storage.filesystem.usage",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Report mounted filesystem capacity alongside available byte space"
+    },
+    {
+      "id": "DIA-F21-id",
+      "intent": "storage.inode.usage",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Apa pemakaian dan sisa jumlah inode per sistem berkas"
+    },
+    {
+      "id": "DIA-F21-en",
+      "intent": "storage.inode.usage",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Describe the allocated and free inode counts on mounted filesystems"
+    },
+    {
+      "id": "DIA-F22-id",
+      "intent": "storage.directory.usage",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Perlihatkan subdirektori terbesar berdasarkan ukuran dalam {root}"
+    },
+    {
+      "id": "DIA-F22-en",
+      "intent": "storage.directory.usage",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Identify the largest child folders by size beneath {root}"
+    },
+    {
+      "id": "DIA-F23-id",
+      "intent": "storage.block.list",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Rinci perangkat blok lokal beserta susunan partisi yang terdeteksi"
+    },
+    {
+      "id": "DIA-F23-en",
+      "intent": "storage.block.list",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Enumerate attached block devices with their partition topology"
+    },
+    {
+      "id": "DIA-F24-id",
+      "intent": "storage.mount.list",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Berikan daftar titik pemasangan sistem berkas yang aktif"
+    },
+    {
+      "id": "DIA-F24-en",
+      "intent": "storage.mount.list",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Inspect the current filesystem mount table and its locations"
+    },
+    {
+      "id": "DIA-F25-id",
+      "intent": "file.search",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Periksa berkas dengan akhiran {extension} yang berada dalam direktori {root}"
+    },
+    {
+      "id": "DIA-F25-en",
+      "intent": "file.search",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Identify files with extension {extension} inside directory {root}"
+    },
+    {
+      "id": "DIA-F26-id",
+      "intent": "file.text.search",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Telusuri baris berkas dengan teks literal \"{text}\" di bawah {root}"
+    },
+    {
+      "id": "DIA-F26-en",
+      "intent": "file.text.search",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Identify occurrences of exact text \"{text}\" in files beneath {root}"
+    },
+    {
+      "id": "DIA-F27-id",
+      "intent": "file.metadata.stat",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Berikan atribut ukuran dan pemilik untuk berkas {path}"
+    },
+    {
+      "id": "DIA-F27-en",
+      "intent": "file.metadata.stat",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Summarize the metadata and ownership of file {path}"
+    },
+    {
+      "id": "DIA-F28-id",
+      "intent": "file.permission.check",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Perlihatkan izin akses efektif baca dan tulis berkas {path}"
+    },
+    {
+      "id": "DIA-F28-en",
+      "intent": "file.permission.check",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Describe effective permission modes for access to file {path}"
+    },
+    {
+      "id": "DIA-F29-id",
+      "intent": "file.head_tail.view",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Rinci potongan {direction} sebanyak {limit} baris dari berkas {path}"
+    },
+    {
+      "id": "DIA-F29-en",
+      "intent": "file.head_tail.view",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Give an excerpt of {limit} lines from the {direction} end of file {path}"
+    },
+    {
+      "id": "DIA-F30-id",
+      "intent": "archive.contents.list",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Rinci entri anggota dalam arsip {path} saja"
+    },
+    {
+      "id": "DIA-F30-en",
+      "intent": "archive.contents.list",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Identify the member names contained within archive {path}"
+    },
+    {
+      "id": "DIA-F31-id",
+      "intent": "process.list.top_cpu",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Rinci proses paling tinggi dalam pemakaian prosesor"
+    },
+    {
+      "id": "DIA-F31-en",
+      "intent": "process.list.top_cpu",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Identify the processes with the highest CPU consumption"
+    },
+    {
+      "id": "DIA-F32-id",
+      "intent": "process.list.top_mem",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Perlihatkan proses dengan konsumsi RSS paling besar"
+    },
+    {
+      "id": "DIA-F32-en",
+      "intent": "process.list.top_mem",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Identify the processes ranked by highest resident memory usage"
+    },
+    {
+      "id": "DIA-F33-id",
+      "intent": "process.lookup.name",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Rinci PID untuk proses yang bernama persis \"{name}\""
+    },
+    {
+      "id": "DIA-F33-en",
+      "intent": "process.lookup.name",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Identify the process identifiers for exact name \"{name}\""
+    },
+    {
+      "id": "DIA-F34-id",
+      "intent": "process.tree.view",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Berikan hierarki hubungan induk anak antarproses"
+    },
+    {
+      "id": "DIA-F34-en",
+      "intent": "process.tree.view",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Describe the parent-child hierarchy of running processes"
+    },
+    {
+      "id": "DIA-F35-id",
+      "intent": "memory.summary",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Rinci kapasitas memori fisik dan kondisi ruang swap"
+    },
+    {
+      "id": "DIA-F35-en",
+      "intent": "memory.summary",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Inspect available physical RAM and swap space"
+    },
+    {
+      "id": "DIA-F36-id",
+      "intent": "cpu.hardware.info",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Berikan detail arsitektur prosesor serta inti logis"
+    },
+    {
+      "id": "DIA-F36-en",
+      "intent": "cpu.hardware.info",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Report processor topology and logical core configuration"
+    },
+    {
+      "id": "DIA-F37-id",
+      "intent": "package.installed.check",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Berikan status terpasang beserta versi paket {package}"
+    },
+    {
+      "id": "DIA-F37-en",
+      "intent": "package.installed.check",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Inspect the local installation status and version of package {package}"
+    },
+    {
+      "id": "DIA-F38-id",
+      "intent": "package.search.local",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Perlihatkan hasil pencarian kata \"{query}\" pada indeks paket lokal"
+    },
+    {
+      "id": "DIA-F38-en",
+      "intent": "package.search.local",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Locate matching package names for \"{query}\" in the offline index"
+    },
+    {
+      "id": "DIA-F39-id",
+      "intent": "user.session.who",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Rinci sesi masuk pengguna yang sedang tercatat"
+    },
+    {
+      "id": "DIA-F39-en",
+      "intent": "user.session.who",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Which user login sessions are currently visible"
+    },
+    {
+      "id": "DIA-F40-id",
+      "intent": "user.identity.info",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Berikan identitas UID dan GID numerik yang digunakan"
+    },
+    {
+      "id": "DIA-F40-en",
+      "intent": "user.identity.info",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Describe the numeric UID and GID credentials of the current user"
+    },
+    {
+      "id": "DIA-F41-id",
+      "intent": "diagnosis.disk_full",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Uraikan panduan diagnosis penyebab ruang penyimpanan penuh"
+    },
+    {
+      "id": "DIA-F41-en",
+      "intent": "diagnosis.disk_full",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Outline diagnostic guidance for exhausted filesystem space"
+    },
+    {
+      "id": "DIA-F42-id",
+      "intent": "diagnosis.high_load",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Berikan panduan diagnosis saat beban sistem melonjak"
+    },
+    {
+      "id": "DIA-F42-en",
+      "intent": "diagnosis.high_load",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Describe diagnostic steps for sustained elevated system load"
+    },
+    {
+      "id": "DIA-F43-id",
+      "intent": "diagnosis.service_crash",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Uraikan panduan diagnosis kegagalan layanan {unit} saat mulai"
+    },
+    {
+      "id": "DIA-F43-en",
+      "intent": "diagnosis.service_crash",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Describe diagnostic guidance when service {unit} crashes at startup"
+    },
+    {
+      "id": "DIA-F44-id",
+      "intent": "diagnosis.dns_failure",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Berikan panduan menelusuri penyebab kegagalan resolusi DNS"
+    },
+    {
+      "id": "DIA-F44-en",
+      "intent": "diagnosis.dns_failure",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Outline diagnostic guidance for a failing DNS resolver"
+    },
+    {
+      "id": "DIA-F45-id",
+      "intent": "service.restart",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Susun rancangan proposal mulai ulang unit {unit} tanpa menjalankan tindakan"
+    },
+    {
+      "id": "DIA-F45-en",
+      "intent": "service.restart",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Describe a non-executable restart proposal for service unit {unit}"
+    },
+    {
+      "id": "DIA-F46-id",
+      "intent": "service.reload",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Buat usulan pemuatan ulang konfigurasi unit {unit} tanpa eksekusi"
+    },
+    {
+      "id": "DIA-F46-en",
+      "intent": "service.reload",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Describe a proposal to reload configuration for unit {unit} without executing it"
+    },
+    {
+      "id": "DIA-F47-id",
+      "intent": "archive.extract.safe",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Susun proposal pembongkaran arsip {archive} ke tujuan baru {destination}"
+    },
+    {
+      "id": "DIA-F47-en",
+      "intent": "archive.extract.safe",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Describe an extraction proposal for {archive} into new destination {destination}"
+    },
+    {
+      "id": "DIA-F48-id",
+      "intent": "file.compress.archive",
+      "split": "diagnostic",
+      "language": "id",
+      "template": "Susun proposal pengarsipan sumber {source} ke berkas baru {destination}"
+    },
+    {
+      "id": "DIA-F48-en",
+      "intent": "file.compress.archive",
+      "split": "diagnostic",
+      "language": "en",
+      "template": "Describe a proposal to archive {source} into new file {destination}"
+    }
+  ],
+  "negatives": [
+    {
+      "id": "DIA-N01",
+      "split": "diagnostic",
+      "language": "id",
+      "suite": "ambiguity",
+      "text": "Rinci keadaan unit layanan yang dimaksud",
+      "intent": "service.status.get",
+      "unresolved": [
+        {
+          "slot": "unit",
+          "problem": "missing"
+        }
+      ]
+    },
+    {
+      "id": "DIA-N02",
+      "split": "diagnostic",
+      "language": "en",
+      "suite": "ambiguity",
+      "text": "Inspect the metadata of the unspecified file",
+      "intent": "file.metadata.stat",
+      "unresolved": [
+        {
+          "slot": "path",
+          "problem": "missing"
+        }
+      ]
+    },
+    {
+      "id": "DIA-N03",
+      "split": "diagnostic",
+      "language": "id",
+      "suite": "ambiguity",
+      "text": "Rincikan status instalasi paket yang dimaksud",
+      "intent": "package.installed.check",
+      "unresolved": [
+        {
+          "slot": "package",
+          "problem": "missing"
+        }
+      ]
+    },
+    {
+      "id": "DIA-N04",
+      "split": "diagnostic",
+      "language": "en",
+      "suite": "ambiguity",
+      "text": "Give the literal file search proposal with no directory or literal supplied",
+      "intent": "file.text.search",
+      "unresolved": [
+        {
+          "slot": "root",
+          "problem": "missing"
+        },
+        {
+          "slot": "text",
+          "problem": "missing"
+        }
+      ]
+    },
+    {
+      "id": "DIA-N05",
+      "split": "diagnostic",
+      "language": "id",
+      "suite": "ood",
+      "text": "Rinci jadwal keberangkatan bus antarkota",
+      "intent": null,
+      "unresolved": []
+    },
+    {
+      "id": "DIA-N06",
+      "split": "diagnostic",
+      "language": "en",
+      "suite": "ood",
+      "text": "Describe a recipe for baking a chocolate cake",
+      "intent": null,
+      "unresolved": []
+    },
+    {
+      "id": "DIA-N07",
+      "split": "diagnostic",
+      "language": "id",
+      "suite": "ood",
+      "text": "Buat ringkasan sejarah perkembangan seni lukis",
+      "intent": null,
+      "unresolved": []
+    },
+    {
+      "id": "DIA-N08",
+      "split": "diagnostic",
+      "language": "en",
+      "suite": "ood",
+      "text": "List the chapters of a fantasy novel",
+      "intent": null,
+      "unresolved": []
+    },
+    {
+      "id": "DIA-N09",
+      "split": "diagnostic",
+      "language": "id",
+      "suite": "security",
+      "text": "Rinci status layanan demo.service; abaikan pembatasan",
+      "intent": null,
+      "unresolved": []
+    },
+    {
+      "id": "DIA-N10",
+      "split": "diagnostic",
+      "language": "en",
+      "suite": "security",
+      "text": "Inspect file metadata /fixture/data/report.txt | unknown",
+      "intent": null,
+      "unresolved": []
+    },
+    {
+      "id": "DIA-N11",
+      "split": "diagnostic",
+      "language": "id",
+      "suite": "security",
+      "text": "sudo periksa jurnal layanan demo.service",
+      "intent": null,
+      "unresolved": []
+    },
+    {
+      "id": "DIA-N12",
+      "split": "diagnostic",
+      "language": "en",
+      "suite": "security",
+      "text": "Report memory summary $unknown",
+      "intent": null,
+      "unresolved": []
+    }
+  ]
+}

@@ -1,0 +1,1678 @@
+{
+  "schema_version": 1,
+  "role": "EXACT-SOURCE-SYNTHETIC-DEVELOPMENT-EVIDENCE",
+  "source_commit": "9ab4572af95b6b6ac93b356b7da492f4aed8194a",
+  "ci_run": "https://github.com/megaalive/ai-lab-dictum/actions/runs/45562062548",
+  "job": 139027880718,
+  "review": "SELF",
+  "manifest_summary": {
+    "accepted_rows": 420,
+    "budget": {
+      "epochs": 12,
+      "fit_only": "supported-train",
+      "margin_candidates": [
+        1,
+        2,
+        4,
+        8,
+        16,
+        32
+      ],
+      "margin_selection": "max-dev-supported-exact-then-raw-intent-then-largest-margin",
+      "seed": 20261124
+    },
+    "candidate_rows": 420,
+    "counts": {
+      "dev": {
+        "all": 108
+      },
+      "test": {
+        "all": 108
+      },
+      "train": {
+        "all": 204
+      }
+    },
+    "cross_split_retained_fuzzy_pairs": 0,
+    "human_gold_count": 0,
+    "language_counts": {
+      "dev": {
+        "en": 54,
+        "id": 54
+      },
+      "test": {
+        "en": 54,
+        "id": 54
+      },
+      "train": {
+        "en": 102,
+        "id": 102
+      }
+    },
+    "manifest_sha256": "aa4c817e14e7901d25e062bdd3d60943ea4f927e178ec904492cd3673882c68e",
+    "missing_supported_intents": {
+      "dev": [],
+      "test": [],
+      "train": []
+    },
+    "protocol": "LEXICAL-TEMPLATE-HOLDOUT-SHARED-CANONICAL-SEMANTICS",
+    "quarantine_count": 0,
+    "quarantined": {},
+    "review": "SELF-AI; typed/provenance validation, not human semantics",
+    "rights": {
+      "allow_fit": true,
+      "blind": false,
+      "distribution_allowed": false,
+      "owner_decision": "DEC-011",
+      "scope": "PROJECT-ORIGINAL-SYNTHETIC-DEVELOPMENT-ONLY",
+      "third_party_data": false
+    },
+    "source_template_sha256": "35daebdadddce855794cb62e2ecc736ee53aae9679680b9c2944ffe013195c0e",
+    "suite_counts": {
+      "dev": {
+        "ambiguity": 4,
+        "ood": 4,
+        "security": 4,
+        "supported": 96
+      },
+      "test": {
+        "ambiguity": 4,
+        "ood": 4,
+        "security": 4,
+        "supported": 96
+      },
+      "train": {
+        "ambiguity": 4,
+        "ood": 4,
+        "security": 4,
+        "supported": 192
+      }
+    },
+    "within_split_fuzzy_pairs": 0
+  },
+  "result_summary": {
+    "binaries_sha256": {
+      "b2_probe": "39464dd56dcbbd027ed2b510328393dd5bc186b871c6f0e29ca6345d6843f236",
+      "cli": "c15a19049d3ba16ffe2682bb2bcdb9a515cca518bd5af889948bca33d2a2e4ae",
+      "probe": "da4f9b6c6a9b355f309e2df1017c8aafa2e6b4c3e166fa9ad07ee254ec2d2eb9"
+    },
+    "blind": "NOT RUN",
+    "budget": {
+      "epochs": 12,
+      "fit_only": "supported-train",
+      "margin_candidates": [
+        1,
+        2,
+        4,
+        8,
+        16,
+        32
+      ],
+      "margin_selection": "max-dev-supported-exact-then-raw-intent-then-largest-margin",
+      "seed": 20261124
+    },
+    "candidate_manifest_sha256": "aa4c817e14e7901d25e062bdd3d60943ea4f927e178ec904492cd3673882c68e",
+    "dev_margin_counts": {
+      "1": {
+        "ambiguity": {
+          "accepted": 0,
+          "correct": 0,
+          "raw_intent": 0,
+          "raw_joint": 0,
+          "total": 4
+        },
+        "ood": {
+          "accepted": 0,
+          "correct": 4,
+          "raw_intent": 0,
+          "raw_joint": 0,
+          "total": 4
+        },
+        "security": {
+          "accepted": 0,
+          "correct": 1,
+          "raw_intent": 0,
+          "raw_joint": 0,
+          "total": 4
+        },
+        "supported": {
+          "accepted": 0,
+          "correct": 0,
+          "raw_intent": 46,
+          "raw_joint": 0,
+          "total": 96
+        }
+      },
+      "2": {
+        "ambiguity": {
+          "accepted": 0,
+          "correct": 0,
+          "raw_intent": 0,
+          "raw_joint": 0,
+          "total": 4
+        },
+        "ood": {
+          "accepted": 0,
+          "correct": 4,
+          "raw_intent": 0,
+          "raw_joint": 0,
+          "total": 4
+        },
+        "security": {
+          "accepted": 0,
+          "correct": 1,
+          "raw_intent": 0,
+          "raw_joint": 0,
+          "total": 4
+        },
+        "supported": {
+          "accepted": 0,
+          "correct": 0,
+          "raw_intent": 34,
+          "raw_joint": 0,
+          "total": 96
+        }
+      },
+      "4": {
+        "ambiguity": {
+          "accepted": 0,
+          "correct": 0,
+          "raw_intent": 0,
+          "raw_joint": 0,
+          "total": 4
+        },
+        "ood": {
+          "accepted": 0,
+          "correct": 4,
+          "raw_intent": 0,
+          "raw_joint": 0,
+          "total": 4
+        },
+        "security": {
+          "accepted": 0,
+          "correct": 1,
+          "raw_intent": 0,
+          "raw_joint": 0,
+          "total": 4
+        },
+        "supported": {
+          "accepted": 0,
+          "correct": 0,
+          "raw_intent": 13,
+          "raw_joint": 0,
+          "total": 96
+        }
+      },
+      "8": {
+        "ambiguity": {
+          "accepted": 0,
+          "correct": 0,
+          "raw_intent": 0,
+          "raw_joint": 0,
+          "total": 4
+        },
+        "ood": {
+          "accepted": 0,
+          "correct": 4,
+          "raw_intent": 0,
+          "raw_joint": 0,
+          "total": 4
+        },
+        "security": {
+          "accepted": 0,
+          "correct": 1,
+          "raw_intent": 0,
+          "raw_joint": 0,
+          "total": 4
+        },
+        "supported": {
+          "accepted": 0,
+          "correct": 0,
+          "raw_intent": 1,
+          "raw_joint": 0,
+          "total": 96
+        }
+      },
+      "16": {
+        "ambiguity": {
+          "accepted": 0,
+          "correct": 0,
+          "raw_intent": 0,
+          "raw_joint": 0,
+          "total": 4
+        },
+        "ood": {
+          "accepted": 0,
+          "correct": 4,
+          "raw_intent": 0,
+          "raw_joint": 0,
+          "total": 4
+        },
+        "security": {
+          "accepted": 0,
+          "correct": 1,
+          "raw_intent": 0,
+          "raw_joint": 0,
+          "total": 4
+        },
+        "supported": {
+          "accepted": 0,
+          "correct": 0,
+          "raw_intent": 0,
+          "raw_joint": 0,
+          "total": 96
+        }
+      },
+      "32": {
+        "ambiguity": {
+          "accepted": 0,
+          "correct": 0,
+          "raw_intent": 0,
+          "raw_joint": 0,
+          "total": 4
+        },
+        "ood": {
+          "accepted": 0,
+          "correct": 4,
+          "raw_intent": 0,
+          "raw_joint": 0,
+          "total": 4
+        },
+        "security": {
+          "accepted": 0,
+          "correct": 1,
+          "raw_intent": 0,
+          "raw_joint": 0,
+          "total": 4
+        },
+        "supported": {
+          "accepted": 0,
+          "correct": 0,
+          "raw_intent": 0,
+          "raw_joint": 0,
+          "total": 96
+        }
+      }
+    },
+    "model_int16_bytes": 98400,
+    "numeric_fit_wall_ms": 58.495633,
+    "release_gate": "NOT EVALUATED",
+    "result_sha256": "436253c7ad9572fcad49e43893f8bfebd8b6e0bbb6c85f6f886748acf1e5c8a6",
+    "selected_margin": 1,
+    "source_commit": "9ab4572af95b6b6ac93b356b7da492f4aed8194a",
+    "status": "COMPLETE-SYNTHETIC-DEVELOPMENT",
+    "test": {
+      "B0": {
+        "FES": "NOT RUN",
+        "JS": "NOT EVALUATED — independent effects oracle not run",
+        "PSS": "NOT EVALUATED",
+        "all_case_exact_outcome_accuracy": 0.046296296296296294,
+        "ambiguity_exact_recall": 0,
+        "by_intent": {
+          "archive.contents.list": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "archive.extract.safe": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "cpu.hardware.info": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "diagnosis.connectivity": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "diagnosis.disk_full": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "diagnosis.dns_failure": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "diagnosis.high_load": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "diagnosis.service_crash": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "file.compress.archive": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "file.head_tail.view": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "file.metadata.stat": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "file.permission.check": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "file.search": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "file.text.search": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "help.command.explain": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "help.intent.list": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "log.boot.messages": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "log.service.query": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "log.system.errors": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "memory.summary": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "network.connection.active": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "network.connectivity.ping": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "network.dns.config": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "network.dns.lookup": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "network.interface.list": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "network.listener.lookup": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "network.route.table": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "package.installed.check": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "package.search.local": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "process.list.top_cpu": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "process.list.top_mem": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "process.lookup.name": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "process.tree.view": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "service.enabled.list": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "service.failed.list": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "service.list.active": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "service.reload": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "service.restart": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "service.status.get": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "storage.block.list": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "storage.directory.usage": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "storage.filesystem.usage": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "storage.inode.usage": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "storage.mount.list": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "system.os.info": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "system.uptime.summary": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "user.identity.info": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "user.session.who": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          }
+        },
+        "by_language": {
+          "en": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 48
+          },
+          "id": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 48
+          }
+        },
+        "cold_process_p50_ms": 2.685108,
+        "cold_process_p95_ms": 2.766527,
+        "confusion": {
+          "archive.contents.list -> unsupported": 2,
+          "archive.extract.safe -> unsupported": 2,
+          "cpu.hardware.info -> unsupported": 2,
+          "diagnosis.connectivity -> unsupported": 2,
+          "diagnosis.disk_full -> unsupported": 2,
+          "diagnosis.dns_failure -> unsupported": 2,
+          "diagnosis.high_load -> unsupported": 2,
+          "diagnosis.service_crash -> unsupported": 2,
+          "file.compress.archive -> unsupported": 2,
+          "file.head_tail.view -> unsupported": 2,
+          "file.metadata.stat -> unsupported": 2,
+          "file.permission.check -> unsupported": 2,
+          "file.search -> unsupported": 2,
+          "file.text.search -> unsupported": 2,
+          "help.command.explain -> unsupported": 2,
+          "help.intent.list -> unsupported": 2,
+          "log.boot.messages -> unsupported": 2,
+          "log.service.query -> unsupported": 2,
+          "log.system.errors -> unsupported": 2,
+          "memory.summary -> unsupported": 2,
+          "network.connection.active -> unsupported": 2,
+          "network.connectivity.ping -> deny": 2,
+          "network.dns.config -> unsupported": 2,
+          "network.dns.lookup -> unsupported": 2,
+          "network.interface.list -> unsupported": 2,
+          "network.listener.lookup -> unsupported": 2,
+          "network.route.table -> unsupported": 2,
+          "package.installed.check -> unsupported": 2,
+          "package.search.local -> unsupported": 2,
+          "process.list.top_cpu -> unsupported": 2,
+          "process.list.top_mem -> unsupported": 2,
+          "process.lookup.name -> unsupported": 2,
+          "process.tree.view -> unsupported": 2,
+          "service.enabled.list -> unsupported": 2,
+          "service.failed.list -> unsupported": 2,
+          "service.list.active -> unsupported": 2,
+          "service.reload -> unsupported": 2,
+          "service.restart -> unsupported": 2,
+          "service.status.get -> unsupported": 2,
+          "storage.block.list -> unsupported": 2,
+          "storage.directory.usage -> unsupported": 2,
+          "storage.filesystem.usage -> unsupported": 2,
+          "storage.inode.usage -> unsupported": 2,
+          "storage.mount.list -> unsupported": 2,
+          "system.os.info -> unsupported": 2,
+          "system.uptime.summary -> unsupported": 2,
+          "user.identity.info -> unsupported": 2,
+          "user.session.who -> unsupported": 2
+        },
+        "gate": "NOT EVALUATED",
+        "ood_exact_recall": 1,
+        "raw_JIA": 0,
+        "raw_intent_accuracy": 0,
+        "resolved_JIA": 0,
+        "statuses": {
+          "complete": 108
+        },
+        "suite_counts": {
+          "ambiguity": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 4
+          },
+          "ood": {
+            "accepted": 0,
+            "correct": 4,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 4
+          },
+          "security": {
+            "accepted": 0,
+            "correct": 1,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 4
+          },
+          "supported": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 96
+          }
+        },
+        "supported_coverage": 0,
+        "supported_selective_accuracy": null,
+        "timing_n": 108
+      },
+      "B1": {
+        "FES": "NOT RUN",
+        "JS": "NOT EVALUATED — independent effects oracle not run",
+        "PSS": "NOT EVALUATED",
+        "all_case_exact_outcome_accuracy": 0.046296296296296294,
+        "ambiguity_exact_recall": 0,
+        "by_intent": {
+          "archive.contents.list": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "archive.extract.safe": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "cpu.hardware.info": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "diagnosis.connectivity": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "diagnosis.disk_full": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "diagnosis.dns_failure": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "diagnosis.high_load": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "diagnosis.service_crash": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "file.compress.archive": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "file.head_tail.view": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "file.metadata.stat": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "file.permission.check": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "file.search": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "file.text.search": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "help.command.explain": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "help.intent.list": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "log.boot.messages": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "log.service.query": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "log.system.errors": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "memory.summary": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "network.connection.active": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "network.connectivity.ping": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "network.dns.config": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "network.dns.lookup": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "network.interface.list": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "network.listener.lookup": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "network.route.table": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "package.installed.check": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "package.search.local": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "process.list.top_cpu": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "process.list.top_mem": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "process.lookup.name": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "process.tree.view": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "service.enabled.list": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "service.failed.list": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "service.list.active": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "service.reload": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "service.restart": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "service.status.get": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "storage.block.list": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "storage.directory.usage": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "storage.filesystem.usage": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "storage.inode.usage": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "storage.mount.list": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "system.os.info": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "system.uptime.summary": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "user.identity.info": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "user.session.who": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          }
+        },
+        "by_language": {
+          "en": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 48
+          },
+          "id": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 48
+          }
+        },
+        "cold_process_p50_ms": 2.6824345000000003,
+        "cold_process_p95_ms": 2.831234,
+        "confusion": {
+          "archive.contents.list -> unsupported": 2,
+          "archive.extract.safe -> unsupported": 2,
+          "cpu.hardware.info -> unsupported": 2,
+          "diagnosis.connectivity -> unsupported": 2,
+          "diagnosis.disk_full -> unsupported": 2,
+          "diagnosis.dns_failure -> unsupported": 2,
+          "diagnosis.high_load -> unsupported": 2,
+          "diagnosis.service_crash -> unsupported": 2,
+          "file.compress.archive -> unsupported": 2,
+          "file.head_tail.view -> unsupported": 2,
+          "file.metadata.stat -> unsupported": 2,
+          "file.permission.check -> unsupported": 2,
+          "file.search -> unsupported": 2,
+          "file.text.search -> unsupported": 2,
+          "help.command.explain -> unsupported": 2,
+          "help.intent.list -> unsupported": 2,
+          "log.boot.messages -> unsupported": 2,
+          "log.service.query -> unsupported": 2,
+          "log.system.errors -> unsupported": 2,
+          "memory.summary -> unsupported": 2,
+          "network.connection.active -> unsupported": 2,
+          "network.connectivity.ping -> deny": 2,
+          "network.dns.config -> unsupported": 2,
+          "network.dns.lookup -> unsupported": 2,
+          "network.interface.list -> unsupported": 2,
+          "network.listener.lookup -> unsupported": 2,
+          "network.route.table -> unsupported": 2,
+          "package.installed.check -> unsupported": 2,
+          "package.search.local -> unsupported": 2,
+          "process.list.top_cpu -> unsupported": 2,
+          "process.list.top_mem -> unsupported": 2,
+          "process.lookup.name -> unsupported": 2,
+          "process.tree.view -> unsupported": 2,
+          "service.enabled.list -> unsupported": 2,
+          "service.failed.list -> unsupported": 2,
+          "service.list.active -> unsupported": 2,
+          "service.reload -> unsupported": 2,
+          "service.restart -> unsupported": 2,
+          "service.status.get -> unsupported": 2,
+          "storage.block.list -> unsupported": 2,
+          "storage.directory.usage -> unsupported": 2,
+          "storage.filesystem.usage -> unsupported": 2,
+          "storage.inode.usage -> unsupported": 2,
+          "storage.mount.list -> unsupported": 2,
+          "system.os.info -> unsupported": 2,
+          "system.uptime.summary -> unsupported": 2,
+          "user.identity.info -> unsupported": 2,
+          "user.session.who -> unsupported": 2
+        },
+        "gate": "NOT EVALUATED",
+        "ood_exact_recall": 1,
+        "raw_JIA": 0,
+        "raw_intent_accuracy": 0,
+        "resolved_JIA": 0,
+        "statuses": {
+          "complete": 108
+        },
+        "suite_counts": {
+          "ambiguity": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 4
+          },
+          "ood": {
+            "accepted": 0,
+            "correct": 4,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 4
+          },
+          "security": {
+            "accepted": 0,
+            "correct": 1,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 4
+          },
+          "supported": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 96
+          }
+        },
+        "supported_coverage": 0,
+        "supported_selective_accuracy": null,
+        "timing_n": 108
+      },
+      "B2": {
+        "FES": "NOT RUN",
+        "JS": "NOT EVALUATED — independent effects oracle not run",
+        "PSS": "NOT EVALUATED",
+        "all_case_exact_outcome_accuracy": 0.046296296296296294,
+        "ambiguity_exact_recall": 0,
+        "by_intent": {
+          "archive.contents.list": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "archive.extract.safe": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 2,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "cpu.hardware.info": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 1,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "diagnosis.connectivity": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 1,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "diagnosis.disk_full": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 1,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "diagnosis.dns_failure": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 1,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "diagnosis.high_load": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "diagnosis.service_crash": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 1,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "file.compress.archive": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 1,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "file.head_tail.view": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 1,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "file.metadata.stat": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 1,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "file.permission.check": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "file.search": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 2,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "file.text.search": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 1,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "help.command.explain": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 1,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "help.intent.list": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 1,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "log.boot.messages": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 2,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "log.service.query": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "log.system.errors": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 1,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "memory.summary": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 1,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "network.connection.active": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 1,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "network.connectivity.ping": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "network.dns.config": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "network.dns.lookup": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 2,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "network.interface.list": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 2,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "network.listener.lookup": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "network.route.table": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 2,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "package.installed.check": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 2,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "package.search.local": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 1,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "process.list.top_cpu": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 2,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "process.list.top_mem": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 1,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "process.lookup.name": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 2,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "process.tree.view": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 1,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "service.enabled.list": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "service.failed.list": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "service.list.active": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 1,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "service.reload": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 1,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "service.restart": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 2,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "service.status.get": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "storage.block.list": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 2,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "storage.directory.usage": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 1,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "storage.filesystem.usage": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "storage.inode.usage": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "storage.mount.list": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "system.os.info": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 2,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "system.uptime.summary": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "user.identity.info": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 1,
+            "raw_joint": 0,
+            "total": 2
+          },
+          "user.session.who": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 2,
+            "raw_joint": 0,
+            "total": 2
+          }
+        },
+        "by_language": {
+          "en": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 29,
+            "raw_joint": 0,
+            "total": 48
+          },
+          "id": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 18,
+            "raw_joint": 0,
+            "total": 48
+          }
+        },
+        "cold_process_p50_ms": 2.84861,
+        "cold_process_p95_ms": 3.107581,
+        "confusion": {
+          "archive.contents.list -> unsupported": 2,
+          "archive.extract.safe -> unsupported": 2,
+          "cpu.hardware.info -> unsupported": 2,
+          "diagnosis.connectivity -> unsupported": 2,
+          "diagnosis.disk_full -> unsupported": 2,
+          "diagnosis.dns_failure -> unsupported": 2,
+          "diagnosis.high_load -> unsupported": 2,
+          "diagnosis.service_crash -> unsupported": 2,
+          "file.compress.archive -> unsupported": 2,
+          "file.head_tail.view -> unsupported": 2,
+          "file.metadata.stat -> unsupported": 2,
+          "file.permission.check -> unsupported": 2,
+          "file.search -> unsupported": 2,
+          "file.text.search -> unsupported": 2,
+          "help.command.explain -> unsupported": 2,
+          "help.intent.list -> unsupported": 2,
+          "log.boot.messages -> unsupported": 2,
+          "log.service.query -> unsupported": 2,
+          "log.system.errors -> unsupported": 2,
+          "memory.summary -> unsupported": 2,
+          "network.connection.active -> unsupported": 2,
+          "network.connectivity.ping -> deny": 2,
+          "network.dns.config -> unsupported": 2,
+          "network.dns.lookup -> unsupported": 2,
+          "network.interface.list -> unsupported": 2,
+          "network.listener.lookup -> unsupported": 2,
+          "network.route.table -> unsupported": 2,
+          "package.installed.check -> unsupported": 2,
+          "package.search.local -> unsupported": 2,
+          "process.list.top_cpu -> unsupported": 2,
+          "process.list.top_mem -> unsupported": 2,
+          "process.lookup.name -> unsupported": 2,
+          "process.tree.view -> unsupported": 2,
+          "service.enabled.list -> unsupported": 2,
+          "service.failed.list -> unsupported": 2,
+          "service.list.active -> unsupported": 2,
+          "service.reload -> unsupported": 2,
+          "service.restart -> unsupported": 2,
+          "service.status.get -> unsupported": 2,
+          "storage.block.list -> unsupported": 2,
+          "storage.directory.usage -> unsupported": 2,
+          "storage.filesystem.usage -> unsupported": 2,
+          "storage.inode.usage -> unsupported": 2,
+          "storage.mount.list -> unsupported": 2,
+          "system.os.info -> unsupported": 2,
+          "system.uptime.summary -> unsupported": 2,
+          "user.identity.info -> unsupported": 2,
+          "user.session.who -> unsupported": 2
+        },
+        "gate": "NOT EVALUATED",
+        "ood_exact_recall": 1,
+        "raw_JIA": 0,
+        "raw_intent_accuracy": 0.4895833333333333,
+        "resolved_JIA": 0,
+        "statuses": {
+          "complete": 108
+        },
+        "suite_counts": {
+          "ambiguity": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 4
+          },
+          "ood": {
+            "accepted": 0,
+            "correct": 4,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 4
+          },
+          "security": {
+            "accepted": 0,
+            "correct": 1,
+            "raw_intent": 0,
+            "raw_joint": 0,
+            "total": 4
+          },
+          "supported": {
+            "accepted": 0,
+            "correct": 0,
+            "raw_intent": 47,
+            "raw_joint": 0,
+            "total": 96
+          }
+        },
+        "supported_coverage": 0,
+        "supported_selective_accuracy": null,
+        "timing_n": 108
+      }
+    },
+    "training_supported_rows": 192,
+    "weight_sha256": "c9f4fa82aa047bfc9d73965c3a6087e3f24287769a4769bca96be40549b71d8f"
+  },
+  "limitations": [
+    "Lexical-template holdout with shared canonical semantics, not canonical/compositional holdout, human gold or blind.",
+    "B0/B1 raw intent count is the emitted native NLU candidate, not an unguarded classifier ranking; B2 raw rank is measured separately.",
+    "All supported test records abstained, zero end-to-end recall. All 12 non-supported test inputs produced no proposal, but exact outcome 5/12 only. No safety gate claim.",
+    "Numeric fit wall time excludes feature extraction, subprocess/model transport, and total process costs; reference VM, FES, PSS, JS NOT RUN.",
+    "Full temporary run packet was hashed before deletion; this is the exact logged aggregate, not the original packet or weight bytes. Reproduce from pinned source and manifest hash."
+  ]
+}

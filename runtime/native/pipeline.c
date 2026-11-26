@@ -362,6 +362,357 @@ static size_t retrieve(const struct request *q,const struct nlu_proposal *n)
     }
     return tie ? NO_INTENT : best;
 }
+#ifdef DICTUM_DEV_COMPOSE
+/* Research-only closed lexical composition for default-only/slotless
+ * INFO/READ. Unlike a similarity threshold, every token is consumed by
+ * a finite vocabulary and two intent-specific cue groups are mandatory.
+ * No slot extraction, command strings, NET/CHANGE, authority or fallback
+ * in the product. This is a limited semantic hypothesis, not gold. */
+struct compose_frame { const char *id,*first,*second,*extra; };
+static const struct compose_frame compose_frames[]={
+    {"system.os.info","os operating distro distribution linux operasi","kernel release version architecture rilis versi arsitektur","machine platform host identity identity information info identitas informasi tipe jenis serta and dan with beserta"},
+    {"system.uptime.summary","uptime startup boot menyala berjalan hidup","load beban average rerata rata-rata","duration elapsed running time since lama durasi sejak mesin host system sistem together with beserta serta averages rata durasi saat"},
+    {"network.connection.active","connection connections sambungan koneksi","active current currently aktif sedang sekarang","network jaringan local lokal visible terlihat entries daftar status state existing currently machine mesin session sessions sesi"},
+    {"network.interface.list","interface interfaces adapter adapters nic antarmuka kartu","address addresses link alamat status keadaan","network jaringan assigned visible local lokal available tersedia states state kondisi sambungan fisik beserta serta per setiap tiap detected terdeteksi"},
+    {"network.route.table","route routes routing rute jalur","gateway table next gerbang tabel default utama","ip traffic lalu lintas lokal local host machine mesin hop entries entry konfigurasi configuration yang dikenal berlaku"},
+    {"network.dns.config","dns resolver resolvers resolusi","configuration settings configured konfigurasi pengaturan dikonfigurasi","name nama server local lokal active aktif host mesin currently used digunakan"},
+    {"service.list.active","service services layanan unit units","active running aktif berjalan","state keadaan currently current presently sedang sekarang kondisi masih operational operasional"},
+    {"service.failed.list","service services layanan unit units","failed gagal","state keadaan current currently marked presently berstatus status sekarang masih dalam terakhirnya"},
+    {"service.enabled.list","service services layanan unit units","enabled enablement diaktifkan","boot startup start mulai next process proses configured konfigurasi saat ketika untuk ditetapkan"},
+    {"log.boot.messages","kernel boot startup","messages message records log catatan pesan","accessible visible available last latest recent terakhir terkini terlihat lokal locally sesi ketika setelah"},
+    {"storage.filesystem.usage","filesystem filesystems berkas","capacity usage used free space available kapasitas penggunaan pemakaian terpakai bebas sisa ruang storage penyimpanan","byte bytes accounting mounted terpasang disk per each tiap setiap file systems system sistem local lokal statistics statistik available"},
+    {"storage.inode.usage","inode inodes","usage utilization allocation counts count used free availability penggunaan terpakai tersisa bebas jumlah kapasitas persentase","filesystem filesystems file systems sistem berkas local lokal mounted across per each tiap setiap statistik allocation"},
+    {"storage.block.list","block blok","device devices disk perangkat partition partitions partisi","storage penyimpanan topology susunan attached visible detected terdeteksi lokal local mount mounts points locations lokasi"},
+    {"storage.mount.list","mount mounts mounted pemasangan terpasang","filesystem filesystems locations location table points titik options opsi","file systems sistem berkas permitted allowed boleh aman safe metadata tipe type active aktif current sekarang local lokal"},
+    {"process.list.top_cpu","process processes proses","cpu processor prosesor","highest greatest most top intensive usage consumption utilization rank urutkan teratas dominan persentase penggunaan pemakaian membebani running tinggi terbesar paling saat sekarang"},
+    {"process.list.top_mem","process processes proses","rss resident","memory ram memori highest largest most top consumption usage occupy rank urutkan teratas dominan pemakaian penggunaan konsumsi tinggi terbesar paling"},
+    {"process.tree.view","process processes proses antarproses","parent child ancestry parentage induk anak keturunan","tree hierarchy hierarki pohon relationships hubungan susunan structure struktur pid among between antar"},
+    {"memory.summary","memory ram memori","available free cache swap tersedia bebas kapasitas","physical fisik system sistem mesin machine local lokal summary ringkasan summarize total remaining remains usage penggunaan pemakaian kondisi keadaan gambaran tekanan pressure beserta dan and dengan"},
+    {"cpu.hardware.info","cpu processor prosesor","architecture topology arsitektur topologi","hardware cores core threads thread frequency frekuensi jumlah logical logical spesifikasi karakteristik perangkat keras details detail configuration konfigurasi tipe jenis berapa present"},
+    {"user.session.who","session sessions sesi","login logged-in masuk","user users pengguna visible currently current existing aktif tercatat terlihat present sedang sekarang mempunyai daftar siapa"},
+    {"user.identity.info","uid gid","identity credentials identitas","numeric current user group groups supplementary membership memberships nomor pengguna grup keanggotaan saya my sedang digunakan values value nilai"},
+    {"diagnosis.disk_full","diagnosis diagnose diagnostic troubleshooting investigate panduan diagnosis telusuri","disk storage filesystem penyimpanan","full exhaustion shortage penuh habis kehabisan ruang space capacity kapasitas cause penyebab langkah guidance guidance mencari sebab investigate"},
+    {"diagnosis.high_load","diagnosis diagnose diagnostic troubleshooting investigate panduan analisis","load beban","high elevated excessive pressure tinggi berlebihan melonjak sustained abnormally cause penyebab langkah mencari sebab guidance sistem system mesin machine average"},
+    {"diagnosis.dns_failure","diagnosis diagnose diagnostic troubleshooting investigate panduan","dns resolver resolusi","failure failed unsuccessful gagal kegagalan bermasalah lookup resolution name nama hostname diresolusi cause penyebab langkah mencari sebab guidance"},
+};
+static bool compose_wordlist(const struct request *q,size_t i,const char *list)
+{
+    const struct token t=q->tokens.item[i];
+    for (const char *p=list;*p!='\0';) {
+        while (*p==' ') ++p;
+        if (*p=='\0') break;
+        size_t len=0;
+        while (p[len]!='\0' && p[len]!=' ') ++len;
+        if (token_eq(q->data,t,p,len)) return true;
+        p+=len;
+    }
+    return false;
+}
+static bool compose_prefix(const struct request *q,size_t *start)
+{
+    const size_t n=q->tokens.count;
+    *start=polite_start(q,0,n);
+    if (*start>=n) return false;
+    const size_t i=*start;
+    static const char *const two[][2]={
+        {"saya","ingin"},{"saya","perlu"},{"saya","butuh"},{"tell","me"},
+        {"give","me"},{"i","need"},{"i","want"},{"what","is"},{"what","are"},
+        {"how","long"},{"how","much"},{"which","of"}
+    };
+    for (size_t j=0;j<COUNT(two);++j)
+        if (i+1<n && word(q,i,two[j][0]) && word(q,i+1,two[j][1])) {
+            *start=i+2; return true;
+        }
+    if (compose_wordlist(q,i,"show report summarize list enumerate identify inspect describe outline guide give find locate compare check display rank urutkan which what how tampilkan perlihatkan ringkas rangkum rinci rincikan jelaskan beri berikan daftar cari cek periksa apa apakah berapa bagaimana bantu")) {
+        *start=i+1; return true;
+    }
+    return false;
+}
+static bool compose_match(const struct request *q,struct nlu_proposal *n)
+{
+    *n=(struct nlu_proposal){0};
+    size_t start=0;
+    if (q->invalid || q->time_valid || q->tokens.count>32u || !compose_prefix(q,&start) ||
+        q->tokens.count-start<2u) return false;
+    /* Words carry no authority by themselves. Reject negation, alternatives,
+     * unknown syntax, quoted or literal/numeric targets rather than ignore. */
+    for (size_t i=0;i<q->tokens.count;++i)
+        if (q->tokens.item[i].quoted || compose_wordlist(q,i,
+            "not no never dont don't without except or versus vs bukan tidak jangan tanpa kecuali atau abaikan ignore bypass")) return false;
+    static const char *const common=
+        "a an the of for from to in on at by with and as is are was were be being me my this that it i "
+        "want need know information details about see currently now local machine host system "
+        "saya ingin perlu butuh mengetahui tahu melihat informasi tentang pada dalam di dari ke "
+        "yang dan serta dengan untuk saat kini ini itu tersebut mesin sistem host lokal sekarang tiap setiap per berdasarkan bagaimana apa berapa saja mana";
+    size_t selected=NO_INTENT;
+    for (size_t f=0;f<COUNT(compose_frames);++f) {
+        const struct compose_frame *frame=&compose_frames[f];
+        bool first=false,second=false,ok=true;
+        for (size_t i=start;i<q->tokens.count;++i) {
+            if (compose_wordlist(q,i,frame->first)) first=true;
+            else if (compose_wordlist(q,i,frame->second)) second=true;
+            else if (!compose_wordlist(q,i,frame->extra) && !compose_wordlist(q,i,common)) {
+                ok=false; break;
+            }
+        }
+        if (!ok || !first || !second) continue;
+        if (strcmp(frame->id,"process.list.top_cpu")==0 || strcmp(frame->id,"process.list.top_mem")==0) {
+            bool ranking=false;
+            for (size_t i=0;i<q->tokens.count;++i)
+                if (compose_wordlist(q,i,"rank highest greatest most top largest teratas tertinggi terbesar dominan paling urutkan")) ranking=true;
+            if (!ranking) continue;
+        }
+        if (strncmp(frame->id,"diagnosis.",10u)==0) {
+            bool topic=false;
+            const char *cue=strcmp(frame->id,"diagnosis.disk_full")==0 ? "full exhaustion shortage penuh habis kehabisan" :
+                strcmp(frame->id,"diagnosis.high_load")==0 ? "high elevated excessive pressure tinggi berlebihan melonjak" :
+                "failure failed unsuccessful gagal kegagalan bermasalah";
+            for (size_t i=0;i<q->tokens.count;++i) if (compose_wordlist(q,i,cue)) topic=true;
+            if (!topic) continue;
+        }
+        size_t candidate=NO_INTENT;
+        for (size_t i=0;i<COUNT(rules);++i)
+            if (strcmp(rules[i].id,frame->id)==0) { candidate=i; break; }
+        if (candidate==NO_INTENT) return false;
+        const struct intent_rule *rule=&rules[candidate];
+        if (strcmp(rule->effect_class,"READ")!=0 && strcmp(rule->effect_class,"INFO")!=0) return false;
+        for (size_t j=0;j<rule->count;++j)
+            if (!rule->slots[j].required || !rule->slots[j].has_default) return false;
+        if (selected!=NO_INTENT && selected!=candidate) return false;
+        selected=candidate;
+    }
+    if (selected==NO_INTENT) return false;
+    n->intents[0]=selected;
+    n->count=1;
+    return true;
+}
+
+/* Typed research frames. Each explicitly bound role consumes exactly one
+ * original token. Values must already satisfy the existing typed resolver
+ * and scope; no new normalizer, inference, target, default or authority.
+ * Closed cue vocabulary is separate from the slotless experiment. */
+static bool value_from(const struct request *q,const struct candidate *c,const struct slot_rule *r,struct value *v);
+static bool slot_scope(const struct intent_rule *rule,const struct value *v);
+struct typed_frame {
+    const char *id,*first,*second,*extra;
+    enum slot_name slots[3];
+    size_t count;
+    const char *third;
+    unsigned int optional_mask;
+};
+static const struct typed_frame typed_frames[]={
+    {"service.status.get","service services unit units layanan",
+        "status state keadaan kondisi",
+        "runtime current active aktif utama main process proses pid information informasi named bernama",
+        {S_UNIT},1,NULL,0u},
+    {"storage.directory.usage","directory directories subdirectories folder folders subfolder subfolders direktori subdirektori",
+        "largest heaviest size sizes space capacity terbesar ukuran ruang",
+        "child anak consume consumption consuming use usage occupied penggunaan pemakaian berdasarkan contained within below under bawah di paling rank",
+        {S_ROOT},1,NULL,0u},
+    {"file.metadata.stat","file files berkas",
+        "metadata attributes attribute atribut timestamps timestamp ukuran size kepemilikan owner pemilik",
+        "ownership modification modified changed time waktu perubahan details detail termasuk",
+        {S_PATH},1,NULL,0u},
+    {"file.permission.check","file files berkas",
+        "permission permissions access akses hak izin",
+        "effective efektif allowed mode modes read write baca tulis identity identitas terhadap",
+        {S_PATH},1,NULL,0u},
+    {"archive.contents.list","archive archives arsip",
+        "member members entries contents entry anggota isi entri",
+        "names name nama stored inside contained paket list daftar hanya only",
+        {S_PATH},1,NULL,0u},
+    {"process.lookup.name","process processes proses",
+        "name named nama bernama pid identifiers identifier",
+        "exact tepat persis literal running berjalan associated allowed details detail memiliki",
+        {S_NAME},1,"named bernama pid identifiers identifier exact tepat persis literal",0u},
+    {"package.installed.check","package packages paket",
+        "installed installation install terpasang terinstal instalasi",
+        "version versions versi status presence local database basis data informasi apakah berapa versinya",
+        {S_PACKAGE},1,NULL,0u},
+    {"package.search.local","package packages paket",
+        "cache cached index indeks offline repositori repository",
+        "literal matching match matches pencarian kecocokan kata nama metadata results hasil search",
+        {S_QUERY},1,NULL,0u},
+    {"file.text.search","text teks string literal",
+        "file files berkas line lines baris occurrences occurrence kemunculan",
+        "exact persis matching contained berisi below under within bawah bounded search",
+        {S_ROOT,S_TEXT},2,NULL,0u},
+    {"file.head_tail.view","line lines baris",
+        "file berkas excerpt potongan",
+        "text teks end akhir bagian contained sebanyak arah",
+        {S_PATH,S_DIRECTION,S_LIMIT},3,NULL,0u},
+    {"file.search","file files berkas entries",
+        "extension ekstensi berekstensi akhiran suffix",
+        "ending beneath below under within inside folder directory directories direktori jenis berada bawah pencarian",
+        {S_ROOT,S_EXTENSION},2,NULL,0u},
+    {"network.listener.lookup","listener listening socket pendengar menunggu accepting",
+        "port",
+        "associated accepting accepts connections connection koneksi waiting menunggu opens membuka process processes proses layanan milik siapa mana menggunakan",
+        {S_PORT,S_PROTOCOL},2,NULL,2u},
+    {"network.connection.active","connection connections sambungan koneksi",
+        "active current currently established aktif sedang sekarang",
+        "network jaringan entries entry daftar maximum maksimum batas limit protocol protokol",
+        {S_PROTOCOL,S_LIMIT},2,NULL,0u},
+    {"log.service.query","journal journals log logs jurnal catatan",
+        "service services unit units layanan",
+        "entries entry records record pesan messages message over within during selama sepanjang interval minutes menit last past previous terakhir belakangan",
+        {S_UNIT,S_WINDOW},2,NULL,0u},
+    {"log.system.errors","journal journals log logs jurnal catatan",
+        "system sistem",
+        "error errors severity priority high emergency emerg galat kesalahan prioritas pesan messages entries records over within selama sepanjang interval minutes menit last past previous terakhir belakangan",
+        {S_WINDOW},1,"error errors galat kesalahan",0u},
+};
+static bool typed_prefix(const struct request *q,size_t *start)
+{
+    if (compose_prefix(q,start)) return true;
+    const size_t i=polite_start(q,0,q->tokens.count);
+    if (i>=q->tokens.count) return false;
+    if (compose_wordlist(q,i,"determine search retrieve temukan identifikasi telusuri ambil")) {
+        *start=i+1; return true;
+    }
+    if ((word(q,i,"look") && word(q,i+1,"for")) ||
+        (word(q,i,"saya") && (word(q,i+1,"mencari") || word(q,i+1,"mau")))) {
+        *start=i+2; return true;
+    }
+    return false;
+}
+/* A value is not evidence for a role by itself. Numeric/time/filter
+ * roles require local lexical anchors; a context window must already
+ * exist and denote the past, never a new timestamp guessed by NLU. */
+static bool typed_role_anchor(const struct request *q,const struct typed_frame *f,size_t i,enum slot_name name)
+{
+    if (name==S_TEXT)
+        return i>0u && compose_wordlist(q,i-1u,"literal text string teks persis exact");
+    if (name==S_ROOT)
+        return i>0u && compose_wordlist(q,i-1u,"under beneath below within inside in at from folder directory directories root di pada dalam bawah direktori dari");
+    if (name==S_QUERY)
+        return i>0u && compose_wordlist(q,i-1u,"matching match matches literal keyword query kata nama pencarian for");
+    if (name==S_NAME)
+        return i>0u && compose_wordlist(q,i-1u,"name named nama bernama exact tepat persis literal");
+    if (name==S_UNIT) {
+        if (i>0u && compose_wordlist(q,i-1u,"service unit layanan named bernama")) return true;
+        return strcmp(f->id,"log.service.query")==0 && i>1u &&
+            compose_wordlist(q,i-1u,"of for from") &&
+            compose_wordlist(q,i-2u,"journal journals log logs entries entry records record");
+    }
+    if (name==S_PACKAGE)
+        return i>0u && compose_wordlist(q,i-1u,"package paket version versi");
+    if (name==S_PATH)
+        return i>0u && compose_wordlist(q,i-1u,"file files berkas archive arsip metadata of for from to dari terhadap pada");
+    if (name==S_PORT) return i>0u && word(q,i-1u,"port");
+    if (name==S_EXTENSION) return i>0u && compose_wordlist(q,i-1u,"extension ekstensi berekstensi akhiran suffix");
+    if (name==S_WINDOW) {
+        if (!q->time_valid) return false;
+        const bool before=i>0u && compose_wordlist(q,i-1u,"last past previous");
+        const bool after=i+2u<q->tokens.count && compose_wordlist(q,i+2u,"terakhir belakangan");
+        return before || after;
+    }
+    if (name==S_LIMIT && strcmp(f->id,"network.connection.active")==0) {
+        return (i>0u && compose_wordlist(q,i-1u,"limit batas maximum maksimum")) ||
+            (i>1u && word(q,i-1u,"of") && word(q,i-2u,"maximum"));
+    }
+    if (name==S_PROTOCOL && word(q,i,"all"))
+        return i>0u && compose_wordlist(q,i-1u,"protocol protokol");
+    return true;
+}
+static bool compose_typed_match(const struct request *q,struct nlu_proposal *out)
+{
+    size_t start=0;
+    if (q->invalid || q->tokens.count>32u ||
+        !typed_prefix(q,&start) || q->tokens.count-start<3u) return false;
+    for (size_t i=0;i<q->tokens.count;++i)
+        if (compose_wordlist(q,i,
+            "not no never dont don't without except or versus vs bukan tidak jangan tanpa kecuali atau abaikan ignore bypass")) return false;
+    static const char *const common=
+        "a an the of for from to in on at by with and as is are me my this "
+        "current currently now local information details about "
+        "yang dan serta dengan untuk pada dalam di dari ke ini itu tersebut "
+        "saat kini sekarang lokal informasi berdasarkan saja apa berapa tahu mengetahui melihat";
+    struct nlu_proposal selected={0};
+    for (size_t f=0;f<COUNT(typed_frames);++f) {
+        const struct typed_frame *frame=&typed_frames[f];
+        size_t intent=NO_INTENT;
+        for (size_t j=0;j<COUNT(rules);++j)
+            if (strcmp(rules[j].id,frame->id)==0) { intent=j; break; }
+        if (intent==NO_INTENT) return false;
+        const struct intent_rule *rule=&rules[intent];
+        if (strcmp(rule->effect_class,"READ")!=0 || rule->guidance!=NULL) return false;
+        struct nlu_proposal n={0};
+        unsigned int hits[3]={0};
+        bool first=false,second=false,third=frame->third==NULL,ok=true;
+        for (size_t i=start;i<q->tokens.count;++i) {
+            const struct token t=q->tokens.item[i];
+            size_t role=SIZE_MAX;
+            for (size_t j=0;j<frame->count;++j) {
+                const enum slot_name name=frame->slots[j];
+                const struct slot_rule *s=find_slot(intent,name);
+                if (s==NULL) return false;
+                /* Quoting is mandatory for text/query, forbidden for
+                 * direction/numeric roles, and preserved in byte spans. */
+                if ((name==S_TEXT || name==S_QUERY) && !t.quoted) continue;
+                if ((name==S_DIRECTION || name==S_LIMIT) && t.quoted) continue;
+                const struct candidate c={name,t};
+                struct value v;
+                if (value_from(q,&c,s,&v) && slot_scope(rule,&v)) {
+                    if (!typed_role_anchor(q,frame,i,name)) { ok=false; break; }
+                    if (role!=SIZE_MAX) { ok=false; break; }
+                    role=j;
+                }
+            }
+            if (!ok) break;
+            if (role!=SIZE_MAX) {
+                /* Two separately anchored candidates can be surfaced to the
+                 * existing ambiguity resolver; never choose one silently.
+                 * Larger multiplicities and duplicate time markers abstain. */
+                if (hits[role]>=2u || !candidate_add(&n,frame->slots[role],t)) { ok=false; break; }
+                ++hits[role];
+            } else {
+                const bool a=compose_wordlist(q,i,frame->first);
+                const bool b=compose_wordlist(q,i,frame->second);
+                const bool c=frame->third!=NULL && compose_wordlist(q,i,frame->third);
+                first=first||a; second=second||b; third=third||c;
+                if (t.quoted || (!a && !b && !c && !compose_wordlist(q,i,frame->extra) &&
+                                  !compose_wordlist(q,i,common))) { ok=false; break; }
+            }
+        }
+        if (!ok || !first || !second || !third) continue;
+        bool window=false,missing=false;
+        for (size_t j=0;j<frame->count;++j) {
+            const struct slot_rule *slot=find_slot(intent,frame->slots[j]);
+            if (slot==NULL) return false;
+            if (hits[j]==0u && (frame->optional_mask & (1u<<j))==0u) {
+                /* Only an existing required, non-defaulted slot may be
+                 * missing. Otherwise omission might silently widen scope. */
+                if (!slot->required || slot->has_default) ok=false;
+                else missing=true;
+            }
+            if (hits[j]!=0u && frame->slots[j]==S_WINDOW) window=true;
+        }
+        if (!ok || window!=q->time_valid) continue;
+        for (size_t j=0;j<rule->count;++j) {
+            bool bound=false;
+            for (size_t k=0;k<n.used;++k)
+                if (n.candidates[k].name==rule->slots[j].name) bound=true;
+            if (rule->slots[j].required && !rule->slots[j].has_default && !bound) missing=true;
+        }
+        /* Complete, unambiguous cue coverage is still mandatory. The
+         * resolver will emit missing/ambiguous, not a plan. In particular,
+         * absent explicit numeric/defaulted roles never become a proposal. */
+        if (missing) {
+            bool ambiguous=false;
+            for (size_t j=0;j<frame->count;++j) if (hits[j]>1u) ambiguous=true;
+            if (ambiguous) continue;
+        }
+        if (selected.count!=0) return false;
+        n.intents[0]=intent; n.count=1; selected=n;
+    }
+    if (selected.count!=1) return false;
+    *out=selected;
+    return true;
+}
+
+#endif
+
 static struct nlu_proposal propose(const struct request *q)
 {
     struct nlu_proposal n={0};
@@ -379,6 +730,9 @@ static struct nlu_proposal propose(const struct request *q)
             n.intents[0]=a.intents[0]; n.intents[1]=b.intents[0]; return n;
         }
     }
+#ifdef DICTUM_DEV_COMPOSE
+    if (compose_match(q,&n) || compose_typed_match(q,&n)) return n;
+#endif
     return (struct nlu_proposal){0};
 }
 static bool time_candidate(const struct request *q,const struct candidate *c)
@@ -820,10 +1174,65 @@ static bool render(const struct request *q,const struct resolved_ir *r,struct po
 }
 
 #ifdef DICTUM_DEV_B2
+#ifdef DICTUM_DEV_B2_STABLE_MASKS
+/* Research-only grammar-independent masks. No gold, intent, or resolver
+ * information is used to identify lexical values. No added authority. */
+static bool exact_token_bytes(const struct request *q,struct token t,const char *value)
+{
+    const size_t len=strlen(value);
+    return t.end-t.start==len && memcmp(q->data+t.start,value,len)==0;
+}
+static bool lexical_slot_value(const struct request *q,struct token t)
+{
+    if (t.quoted || q->data[t.start]=='/') return true;
+    bool digits=true;
+    for (size_t i=t.start;i<t.end;++i)
+        if (q->data[i]<'0' || q->data[i]>'9') digits=false;
+    if (digits) return true;
+    static const char *const protocols[]={"tcp","udp","all"};
+    static const struct {const char *const *values;size_t count;} scopes[]={
+        {roots,COUNT(roots)},{units,COUNT(units)},{extensions,COUNT(extensions)},
+        {filenames,COUNT(filenames)},{files,COUNT(files)},{archives,COUNT(archives)},
+        {extract_destinations,COUNT(extract_destinations)},
+        {compress_destinations,COUNT(compress_destinations)},
+        {compress_sources,COUNT(compress_sources)},{protocols,COUNT(protocols)}
+    };
+    for (size_t i=0;i<COUNT(scopes);++i)
+        for (size_t j=0;j<scopes[i].count;++j)
+            if (exact_token_bytes(q,t,scopes[i].values[j])) return true;
+    for (size_t i=0;i<COUNT(domain_values);++i)
+        if (exact_token_bytes(q,t,domain_values[i].value)) return true;
+    return false;
+}
+static bool stable_mask_tokens(const struct request *q,struct b2_dev_trace *trace)
+{
+    bool previous=false;
+    for (size_t i=0;i<q->tokens.count;++i) {
+        const struct token t=q->tokens.item[i];
+        if (!ir_check_span(q->data,q->size,t.start,t.end)) return false;
+        const bool masked=lexical_slot_value(q,t);
+        if (masked) {
+            /* Coalesce adjacent masked tokens; at most 32 runs for 64 tokens. */
+            if (previous) trace->masks[trace->mask_count-1u].end=t.end;
+            else {
+                if (trace->mask_count>=B2_MASK_MAX) return false;
+                trace->masks[trace->mask_count++]=(struct b2_span){t.start,t.end};
+            }
+        }
+        previous=masked;
+    }
+    return true;
+}
+#endif
 static bool development_rank(const struct request *q,const struct nlu_proposal *n,
                              const struct resolved_ir *r,const struct b2_weights *weights,
                              uint32_t margin,struct b2_dev_trace *trace)
 {
+#ifdef DICTUM_DEV_B2_STABLE_MASKS
+    (void)n;
+    if (!stable_mask_tokens(q,trace)) return false;
+    const size_t used=trace->mask_count;
+#else
     /* Spans come solely from the same deterministic NLU, never gold labels.
      * Sort and union duplicate/overlapping spans before lexical extraction. */
     for (size_t i=0;i<n->used;++i) {
@@ -844,6 +1253,7 @@ static bool development_rank(const struct request *q,const struct nlu_proposal *
         } else trace->masks[used++]=span0;
     }
     trace->mask_count=used;
+#endif
     if (!b2_extract(q->data,q->size,trace->masks,used,&trace->features) ||
         !b2_scores(weights,&trace->features,trace->scores)) return false;
     trace->features_valid=true;

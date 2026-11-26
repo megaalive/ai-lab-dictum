@@ -1,7 +1,7 @@
 """Development-only B2 numeric mechanics; no corpus reader or model loader.
 
-The eventual eligible corpus/feature manifest must be approved independently.
-Nothing here reads repository gold, fits Dictum, or authorizes product use.
+Eligible corpus/feature manifest must be bound to actual owner scope.
+Nothing here reads repository gold or authorizes product use.
 """
 from dataclasses import dataclass
 import random
@@ -91,8 +91,8 @@ def fit_numeric(rows, *, epochs, seed):
     """Bounded multiclass perceptron on *already authorized* numeric rows.
 
     No text ingestion, split construction, evaluation or serialization.
-    Caller owns the independent rights/human-review gate. In current CI
-    only handcrafted abstract numeric vectors are used.
+    Caller owns the rights/label gate: private human evidence or DEC-011
+    original synthetic development. Never use visible regression/holdout labels.
     """
     if type(epochs) is not int or not 1 <= epochs <= 32 or not 1 <= len(rows) <= 10000:
         raise ValueError("budget")
@@ -116,3 +116,56 @@ def fit_numeric(rows, *, epochs, seed):
                 for i in f:
                     model.weights[c][i] = max(-32767, min(32767, model.weights[c][i] + delta))
     return model
+
+
+def fit_averaged_numeric(rows, *, epochs, seed, scale=8):
+    """Averaged multiclass perceptron on authorized numeric train rows only.
+
+    Exact integer timestamp accumulation of post-update weights, with a
+    fixed signed round-to-nearest (ties away from zero) int16 quantization.
+    No features or labels outside the supplied training rows.
+    """
+    if (type(epochs) is not int or not 1 <= epochs <= 32 or
+            not 1 <= len(rows) <= 10000 or type(scale) is not int or not 1 <= scale <= 16):
+        raise ValueError("budget")
+    for f, c in rows:
+        validate_features(f)
+        if not f or type(c) is not int or not 0 <= c < CLASSES:
+            raise ValueError("row")
+    model = Linear.zero()
+    totals = {}
+    last = {}
+    rng = random.Random(seed)
+    indices = list(range(len(rows)))
+    step = 0
+    for _ in range(epochs):
+        rng.shuffle(indices)
+        for j in indices:
+            f, expected = rows[j]
+            scores = model.scores(f)
+            predicted = max(range(CLASSES), key=lambda c: scores[c])
+            if expected != predicted:
+                for c, delta in ((expected, 1), (predicted, -1)):
+                    # DIM is a separate bias coordinate, not a feature ID.
+                    for i in (*f, DIM):
+                        key = (c, i)
+                        old = model.bias[c] if i == DIM else model.weights[c][i]
+                        totals[key] = totals.get(key, 0) + (step-last.get(key, 0))*old
+                        last[key] = step
+                        new = max(-32767, min(32767, old+delta))
+                        if i == DIM:
+                            model.bias[c] = new
+                        else:
+                            model.weights[c][i] = new
+            step += 1
+    result = Linear.zero()
+    for (c, i), total in totals.items():
+        old = model.bias[c] if i == DIM else model.weights[c][i]
+        summed = total+(step-last[(c,i)])*old
+        magnitude = (2*abs(summed)*scale+step)//(2*step)
+        quantized = max(-32767,min(32767,-magnitude if summed < 0 else magnitude))
+        if i == DIM:
+            result.bias[c] = quantized
+        else:
+            result.weights[c][i] = quantized
+    return result

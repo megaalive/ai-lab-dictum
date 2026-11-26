@@ -78,11 +78,31 @@ jobs:
             echo "B2 research symbols in product" >&2; exit 1
           fi
           grep -E ' [Tt] pipeline_run_b2_dev$' build/ci/research.symbols
+          nm build/ci/tests/composition_b2_stable_probe > build/ci/stable-research.symbols
+          grep -E ' [Tt] pipeline_run_b2_dev$' build/ci/stable-research.symbols
           echo "B2_PRODUCT_LINK_BOUNDARY PASS"
           grep -m 1 '^License:' /usr/share/doc/libssl-dev/copyright
 
       - name: Uji CLI dan native IR
         run: ctest --test-dir build/ci --verbose --output-on-failure --no-tests=error
+
+      - name: Actual B2 synthetic development (DEC-011)
+        if: matrix.compiler == 'gcc' && matrix.config.type == 'Release'
+        run: |
+          result_dir=$(mktemp -d)
+          trap 'rm -rf "$result_dir"' EXIT
+          python3 -B tools/f1_synthetic.py --locked-diagnostic --probe build/ci/tests/pipeline_probe \
+            --cli build/ci/dictum --b2-probe build/ci/tests/b2_pipeline_probe \
+            --output "$result_dir/results.json"
+          python3 -B tools/f1_synthetic.py --diagnostic-replay --locked-diagnostic \
+            --probe build/ci/tests/composition_pipeline_probe --cli build/ci/dictum \
+            --b2-probe build/ci/tests/composition_b2_probe --output "$result_dir/composition.json"
+          python3 -B tools/f1_synthetic.py --diagnostic-replay --locked-diagnostic --calibrated \
+            --probe build/ci/tests/composition_pipeline_probe --cli build/ci/dictum \
+            --b2-probe build/ci/tests/composition_b2_probe --output "$result_dir/calibrated.json"
+          python3 -B tools/f1_synthetic.py --diagnostic-replay --locked-diagnostic --calibrated --stable-masks \
+            --probe build/ci/tests/composition_pipeline_probe --cli build/ci/dictum \
+            --b2-probe build/ci/tests/composition_b2_stable_probe --output "$result_dir/stable-masks.json"
 
       - name: Fuzz parser langsung
         if: matrix.compiler == 'clang' && matrix.config.sanitizers == 'ON'
@@ -151,3 +171,6 @@ jobs:
 
       - name: Uji paket kerja corpus manusia (mechanical only)
         run: python3 -B tests/research/f1_collect.py
+
+      - name: Validate and freeze original synthetic development corpus
+        run: python3 -B tools/f1_synthetic.py --prepare-only --locked-diagnostic

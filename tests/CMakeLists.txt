@@ -209,3 +209,38 @@ add_test(NAME research.f1_comparator_native_smoke COMMAND "${Python3_EXECUTABLE}
     "${CMAKE_CURRENT_SOURCE_DIR}/research/f1_compare_native_smoke.py" "$<TARGET_FILE:pipeline_probe>"
     "$<TARGET_FILE:dictum>" "$<TARGET_FILE:b2_pipeline_probe>")
 set_tests_properties(research.f1_comparator_native_smoke PROPERTIES TIMEOUT 120)
+
+# Research-only composition prototypes. Do not modify product dictum_pipeline.
+function(dictum_composition_probe target source)
+    add_executable(${target} ${source} "${PROJECT_SOURCE_DIR}/runtime/native/pipeline.c" ${ARGN})
+    add_dependencies(${target} dictum_pipeline)
+    target_include_directories(${target} PRIVATE "${PROJECT_BINARY_DIR}")
+    target_compile_definitions(${target} PRIVATE DICTUM_DEV_COMPOSE=1)
+    target_link_libraries(${target} PRIVATE dictum_pipeline)
+    set_target_properties(${target} PROPERTIES C_STANDARD 17 C_STANDARD_REQUIRED YES C_EXTENSIONS NO)
+    target_compile_options(${target} PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wformat=2
+        -Wstrict-prototypes -Wmissing-prototypes -Wundef -Wvla)
+    if(dictum_sanitizers)
+        target_compile_options(${target} PRIVATE "${dictum_sanitizer_flag}" -fno-omit-frame-pointer)
+        if(DICTUM_ENABLE_UBSAN)
+            target_compile_options(${target} PRIVATE -fno-sanitize-recover=undefined)
+        endif()
+    endif()
+endfunction()
+dictum_composition_probe(composition_pipeline_probe ir/pipeline_probe.c)
+dictum_composition_probe(composition_b2_probe research/b2_pipeline_probe.c
+    "${PROJECT_SOURCE_DIR}/runtime/native/b2_linear.c")
+target_compile_definitions(composition_b2_probe PRIVATE DICTUM_DEV_B2=1)
+add_test(NAME research.composition_boundary COMMAND "${Python3_EXECUTABLE}" -B
+    "${CMAKE_CURRENT_SOURCE_DIR}/research/f1_composition.py" "$<TARGET_FILE:pipeline_probe>"
+    "$<TARGET_FILE:dictum>" "$<TARGET_FILE:composition_pipeline_probe>" "$<TARGET_FILE:composition_b2_probe>")
+set_tests_properties(research.composition_boundary PROPERTIES TIMEOUT 180)
+
+# Separate mask hypothesis. Product and existing research probes unchanged.
+dictum_composition_probe(composition_b2_stable_probe research/b2_pipeline_probe.c
+    "${PROJECT_SOURCE_DIR}/runtime/native/b2_linear.c")
+target_compile_definitions(composition_b2_stable_probe PRIVATE DICTUM_DEV_B2=1 DICTUM_DEV_B2_STABLE_MASKS=1)
+add_test(NAME research.f1_b2_stable_masks COMMAND "${Python3_EXECUTABLE}" -B
+    "${CMAKE_CURRENT_SOURCE_DIR}/research/f1_b2_stable_masks.py" "$<TARGET_FILE:composition_pipeline_probe>"
+    "$<TARGET_FILE:dictum>" "$<TARGET_FILE:composition_b2_stable_probe>")
+set_tests_properties(research.f1_b2_stable_masks PROPERTIES TIMEOUT 240)

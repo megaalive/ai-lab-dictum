@@ -1174,10 +1174,65 @@ static bool render(const struct request *q,const struct resolved_ir *r,struct po
 }
 
 #ifdef DICTUM_DEV_B2
+#ifdef DICTUM_DEV_B2_STABLE_MASKS
+/* Research-only grammar-independent masks. No gold, intent, or resolver
+ * information is used to identify lexical values. No added authority. */
+static bool exact_token_bytes(const struct request *q,struct token t,const char *value)
+{
+    const size_t len=strlen(value);
+    return t.end-t.start==len && memcmp(q->data+t.start,value,len)==0;
+}
+static bool lexical_slot_value(const struct request *q,struct token t)
+{
+    if (t.quoted || q->data[t.start]=='/') return true;
+    bool digits=true;
+    for (size_t i=t.start;i<t.end;++i)
+        if (q->data[i]<'0' || q->data[i]>'9') digits=false;
+    if (digits) return true;
+    static const char *const protocols[]={"tcp","udp","all"};
+    static const struct {const char *const *values;size_t count;} scopes[]={
+        {roots,COUNT(roots)},{units,COUNT(units)},{extensions,COUNT(extensions)},
+        {filenames,COUNT(filenames)},{files,COUNT(files)},{archives,COUNT(archives)},
+        {extract_destinations,COUNT(extract_destinations)},
+        {compress_destinations,COUNT(compress_destinations)},
+        {compress_sources,COUNT(compress_sources)},{protocols,COUNT(protocols)}
+    };
+    for (size_t i=0;i<COUNT(scopes);++i)
+        for (size_t j=0;j<scopes[i].count;++j)
+            if (exact_token_bytes(q,t,scopes[i].values[j])) return true;
+    for (size_t i=0;i<COUNT(domain_values);++i)
+        if (exact_token_bytes(q,t,domain_values[i].value)) return true;
+    return false;
+}
+static bool stable_mask_tokens(const struct request *q,struct b2_dev_trace *trace)
+{
+    bool previous=false;
+    for (size_t i=0;i<q->tokens.count;++i) {
+        const struct token t=q->tokens.item[i];
+        if (!ir_check_span(q->data,q->size,t.start,t.end)) return false;
+        const bool masked=lexical_slot_value(q,t);
+        if (masked) {
+            /* Coalesce adjacent masked tokens; at most 32 runs for 64 tokens. */
+            if (previous) trace->masks[trace->mask_count-1u].end=t.end;
+            else {
+                if (trace->mask_count>=B2_MASK_MAX) return false;
+                trace->masks[trace->mask_count++]=(struct b2_span){t.start,t.end};
+            }
+        }
+        previous=masked;
+    }
+    return true;
+}
+#endif
 static bool development_rank(const struct request *q,const struct nlu_proposal *n,
                              const struct resolved_ir *r,const struct b2_weights *weights,
                              uint32_t margin,struct b2_dev_trace *trace)
 {
+#ifdef DICTUM_DEV_B2_STABLE_MASKS
+    (void)n;
+    if (!stable_mask_tokens(q,trace)) return false;
+    const size_t used=trace->mask_count;
+#else
     /* Spans come solely from the same deterministic NLU, never gold labels.
      * Sort and union duplicate/overlapping spans before lexical extraction. */
     for (size_t i=0;i<n->used;++i) {
@@ -1198,6 +1253,7 @@ static bool development_rank(const struct request *q,const struct nlu_proposal *
         } else trace->masks[used++]=span0;
     }
     trace->mask_count=used;
+#endif
     if (!b2_extract(q->data,q->size,trace->masks,used,&trace->features) ||
         !b2_scores(weights,&trace->features,trace->scores)) return false;
     trace->features_valid=true;

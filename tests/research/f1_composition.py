@@ -240,7 +240,7 @@ clarifications=[
  ("Describe owner and metadata of file /fixture/data/notes.md and file /fixture/data/report.txt","file.metadata.stat","ambiguous",["path"]),
  ('Find packages matching "demo" and matching "demo+tools" in local cache',"package.search.local","ambiguous",["query"]),
  ('Locate exact literal "café" and literal "teks uji" in text files under /fixture/data',"file.text.search","ambiguous",["text"]),
- ("Locate files of extension md and extension txt beneath /fixture/data","file.search","ambiguous",["extension"]),
+ ("Locate files of extension md and extension txt beneath /fixture/data","file.search","ambiguous",["extension","filename"]),
  ("Identify listening socket associated with port 5432 and port 8080","network.listener.lookup","ambiguous",["port"]),
  ("Display active tcp connections with a maximum of 15 entries and limit 10","network.connection.active","ambiguous",["limit"]),
 ]

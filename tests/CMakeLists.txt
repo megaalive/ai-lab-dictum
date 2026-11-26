@@ -235,3 +235,12 @@ add_test(NAME research.composition_boundary COMMAND "${Python3_EXECUTABLE}" -B
     "${CMAKE_CURRENT_SOURCE_DIR}/research/f1_composition.py" "$<TARGET_FILE:pipeline_probe>"
     "$<TARGET_FILE:dictum>" "$<TARGET_FILE:composition_pipeline_probe>" "$<TARGET_FILE:composition_b2_probe>")
 set_tests_properties(research.composition_boundary PROPERTIES TIMEOUT 180)
+
+# Separate mask hypothesis. Product and existing research probes unchanged.
+dictum_composition_probe(composition_b2_stable_probe research/b2_pipeline_probe.c
+    "${PROJECT_SOURCE_DIR}/runtime/native/b2_linear.c")
+target_compile_definitions(composition_b2_stable_probe PRIVATE DICTUM_DEV_B2=1 DICTUM_DEV_B2_STABLE_MASKS=1)
+add_test(NAME research.f1_b2_stable_masks COMMAND "${Python3_EXECUTABLE}" -B
+    "${CMAKE_CURRENT_SOURCE_DIR}/research/f1_b2_stable_masks.py" "$<TARGET_FILE:composition_pipeline_probe>"
+    "$<TARGET_FILE:dictum>" "$<TARGET_FILE:composition_b2_stable_probe>")
+set_tests_properties(research.f1_b2_stable_masks PROPERTIES TIMEOUT 240)

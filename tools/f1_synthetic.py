@@ -329,12 +329,17 @@ def main():
     parser.add_argument("--diagnostic-replay",action="store_true")
     parser.add_argument("--locked-diagnostic",action="store_true")
     parser.add_argument("--calibrated",action="store_true")
+    parser.add_argument("--stable-masks",action="store_true")
     for arg in ("probe","cli","b2-probe","output"):
         parser.add_argument("--"+arg,type=Path)
     a=parser.parse_args()
     try:
         need(__debug__,"asserts-required")
         need(not a.calibrated or (a.diagnostic_replay and a.locked_diagnostic and not a.prepare_only),"calibration-mode")
+        need(not a.stable_masks or (a.calibrated and a.b2_probe is not None and
+             a.b2_probe.name=="composition_b2_stable_probe"),"stable-mask-mode")
+        if a.calibrated and not a.stable_masks:
+            need(a.b2_probe is not None and a.b2_probe.name=="composition_b2_probe","calibrated-probe")
         rows,gold,manifest=prepare()
         if a.diagnostic_replay:
             need(manifest["manifest_sha256"]=="aa4c817e14e7901d25e062bdd3d60943ea4f927e178ec904492cd3673882c68e",
@@ -358,6 +363,7 @@ def main():
         binaries={k:sha(bounded(v,128*1024*1024)) for k,v in probes.items()}
         out=_compare_core(rows,gold,manifest,{"owner_decision_ref":"DEC-011"},source,binaries,**probes,synthetic=True,diagnostic=diagnostic,calibrated=a.calibrated)
         out["evaluation_role"]="OBSERVED-COHORT-CALIBRATION-REPLAY" if a.calibrated else "OBSERVED-TEST-DIAGNOSTIC-REPLAY" if a.diagnostic_replay else "FROZEN-LEXICAL-BASELINE-REPRODUCTION"
+        out["feature_policy"]="LEXICAL-SCOPE-VALUE-MASKS" if a.stable_masks else "NLU-CANDIDATE-SPANS"
         payload={"manifest":manifest,"results":out}
         if diagnostic is not None:
             payload["diagnostic_manifest"]=diagnostic[2]
@@ -372,13 +378,14 @@ def main():
         result["dev_margin_counts"]={k:v["metrics"]["suite_counts"] for k,v in out["dev_margin_evaluation"].items()}
         result["test"]={m:v["metrics"] for m,v in out["test"].items()} if type(out["test"]) is dict else out["test"]
         result["evaluation_role"]=out["evaluation_role"]
+        result["feature_policy"]=out["feature_policy"]
         if a.calibrated:
             result["calibration"]=out.get("calibration")
         if diagnostic is not None:
             result["diagnostic_manifest_sha256"]=diagnostic[2]["manifest_sha256"]
             result["diagnostic_status"]=out.get("diagnostic_status","NOT RUN")
             result["diagnostic"]={m:v["metrics"] for m,v in out.get("diagnostic",{}).items()}
-        print(("F1_CALIBRATED_B2_RESULT " if a.calibrated else "F1_COMPOSITION_B2_RESULT " if a.diagnostic_replay else "F1_SYNTHETIC_B2_RESULT ")+json.dumps(result,sort_keys=True),flush=True)
+        print(("F1_STABLE_MASK_B2_RESULT " if a.stable_masks else "F1_CALIBRATED_B2_RESULT " if a.calibrated else "F1_COMPOSITION_B2_RESULT " if a.diagnostic_replay else "F1_SYNTHETIC_B2_RESULT ")+json.dumps(result,sort_keys=True),flush=True)
         need(out["status"]=="COMPLETE-SYNTHETIC-DEVELOPMENT","incomplete-run")
         if diagnostic is not None:
             need(out.get("diagnostic_status")=="COMPLETE-DIAGNOSTIC","incomplete-diagnostic")
